@@ -1,0 +1,346 @@
+syntax = "proto3";
+package pronto.entities;
+
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/duration.proto";
+import "google/protobuf/struct.proto";
+
+message AccordionMultiDemo {
+  optional string id = 1 [json_name = "id"];
+  optional string open = 2 [json_name = "open"];
+}
+
+message AccordionSingleDemo {
+  optional string id = 1 [json_name = "id"];
+  optional string open = 2 [json_name = "open"];
+  optional string exp_shipping = 3 [json_name = "exp_shipping"];
+  optional string exp_returns = 4 [json_name = "exp_returns"];
+  optional string exp_support = 5 [json_name = "exp_support"];
+  optional string caret = 6 [json_name = "caret"];
+  optional string cur_shipping = 7 [json_name = "cur_shipping"];
+  optional string cur_returns = 8 [json_name = "cur_returns"];
+  optional string cur_support = 9 [json_name = "cur_support"];
+}
+
+message CalendarCell {
+  optional string id = 1 [json_name = "id"];
+  optional string grid = 2 [json_name = "grid"];
+  optional string month = 3 [json_name = "month"];
+  optional string week = 4 [json_name = "week"];
+  optional string dow = 5 [json_name = "dow"];
+  optional int32 pos = 6 [json_name = "pos"];
+  optional int32 colpos = 7 [json_name = "colpos"];
+  optional string day = 8 [json_name = "day"];
+  optional string date = 9 [json_name = "date"];
+}
+
+message CalendarDemo {
+  optional string id = 1 [json_name = "id"];
+  optional string state = 2 [json_name = "state"];
+  optional string month = 3 [json_name = "month"];
+  optional string label = 4 [json_name = "label"];
+  optional string value = 5 [json_name = "value"];
+  optional string active = 6 [json_name = "active"];
+}
+
+message CarouselDemo {
+  optional string id = 1 [json_name = "id"];
+  optional string slide = 2 [json_name = "slide"];
+  optional string cur_s1 = 3 [json_name = "cur_s1"];
+  optional string cur_s2 = 4 [json_name = "cur_s2"];
+  optional string cur_s3 = 5 [json_name = "cur_s3"];
+  optional string cur_s4 = 6 [json_name = "cur_s4"];
+  optional string dis_prev = 7 [json_name = "dis_prev"];
+  optional string dis_next = 8 [json_name = "dis_next"];
+}
+
+message ChartCursor {
+  optional string id = 1 [json_name = "id"];
+  optional string active = 2 [json_name = "active"];
+}
+
+message ChartPoint {
+  optional string id = 1 [json_name = "id"];
+  optional string label = 2 [json_name = "label"];
+  optional int32 value = 3 [json_name = "value"];
+  optional int32 pos = 4 [json_name = "pos"];
+  optional int32 nxt_value = 5 [json_name = "nxt_value"];
+}
+
+message ChatDemo {
+  optional string id = 1 [json_name = "id"];
+}
+
+message ChatRow {
+  optional string id = 1 [json_name = "id"];
+  optional string kind = 2 [json_name = "kind"];
+  optional string seat = 3 [json_name = "seat"];
+  optional string who = 4 [json_name = "who"];
+  optional string initials = 5 [json_name = "initials"];
+  optional string body = 6 [json_name = "body"];
+  optional string note = 7 [json_name = "note"];
+  optional string when = 8 [json_name = "when"];
+  optional string at = 9 [json_name = "at"];
+  optional string state = 10 [json_name = "state"];
+}
+
+message CheckboxDemo {
+  optional string id = 1 [json_name = "id"];
+  optional string checked = 2 [json_name = "checked"];
+}
+
+message CollapsibleDemo {
+  optional string id = 1 [json_name = "id"];
+  optional string open = 2 [json_name = "open"];
+}
+
+message ComboboxDemo {
+  optional string id = 1 [json_name = "id"];
+  optional string choice = 2 [json_name = "choice"];
+}
+
+message CommandDemo {
+  optional string id = 1 [json_name = "id"];
+  optional string state = 2 [json_name = "state"];
+  optional string query = 3 [json_name = "query"];
+  optional string active = 4 [json_name = "active"];
+  optional string chosen = 5 [json_name = "chosen"];
+}
+
+message CommandItem {
+  optional string id = 1 [json_name = "id"];
+  optional string label = 2 [json_name = "label"];
+  optional string group = 3 [json_name = "group"];
+  optional int32 pos = 4 [json_name = "pos"];
+}
+
+message CompositionDemo {
+  optional string id = 1 [json_name = "id"];
+  optional string phase = 2 [json_name = "phase"];
+  optional string query = 3 [json_name = "query"];
+  optional string last = 4 [json_name = "last"];
+}
+
+message ContextMenuDemo {
+  optional string id = 1 [json_name = "id"];
+  optional string open = 2 [json_name = "open"];
+  optional int32 x = 3 [json_name = "x"];
+  optional int32 y = 4 [json_name = "y"];
+  optional string caret = 5 [json_name = "caret"];
+  optional string cur_popover = 6 [json_name = "cur_popover"];
+  optional string cur_sheet = 7 [json_name = "cur_sheet"];
+  optional string cur_overlays = 8 [json_name = "cur_overlays"];
+  optional string prefix = 9 [json_name = "prefix"];
+}
+
+message DataCursor {
+  optional string id = 1 [json_name = "id"];
+  optional string state = 2 [json_name = "state"];
+  optional string query = 3 [json_name = "query"];
+  optional string cursor = 4 [json_name = "cursor"];
+  optional string sort = 5 [json_name = "sort"];
+  optional string srt_id = 6 [json_name = "srt_id"];
+  optional string srt_amount = 7 [json_name = "srt_amount"];
+}
+
+message DataRow {
+  optional string id = 1 [json_name = "id"];
+  optional string payer = 2 [json_name = "payer"];
+  optional string status = 3 [json_name = "status"];
+  optional string amount = 4 [json_name = "amount"];
+}
+
+message FormDemo {
+  optional string id = 1 [json_name = "id"];
+  optional string handle = 2 [json_name = "handle"];
+  optional string bio = 3 [json_name = "bio"];
+}
+
+message MenubarDemo {
+  optional string id = 1 [json_name = "id"];
+  optional string caret = 2 [json_name = "caret"];
+  optional string cur_view = 3 [json_name = "cur_view"];
+  optional string cur_go = 4 [json_name = "cur_go"];
+}
+
+message MenuGoDemo {
+  optional string id = 1 [json_name = "id"];
+  optional string caret = 2 [json_name = "caret"];
+  optional string cur_tabs = 3 [json_name = "cur_tabs"];
+  optional string cur_accordion = 4 [json_name = "cur_accordion"];
+  optional string cur_toast = 5 [json_name = "cur_toast"];
+  optional string prefix = 6 [json_name = "prefix"];
+}
+
+message MenuOptionDemo {
+  optional string id = 1 [json_name = "id"];
+  optional string chk_bookmarks = 2 [json_name = "chk_bookmarks"];
+  optional string chk_urls = 3 [json_name = "chk_urls"];
+  optional string caret = 4 [json_name = "caret"];
+  optional string cur_bookmarks = 5 [json_name = "cur_bookmarks"];
+  optional string cur_urls = 6 [json_name = "cur_urls"];
+  optional string prefix = 7 [json_name = "prefix"];
+}
+
+message MenuProfileDemo {
+  optional string id = 1 [json_name = "id"];
+  optional string profile = 2 [json_name = "profile"];
+  optional string chk_andy = 3 [json_name = "chk_andy"];
+  optional string chk_benoit = 4 [json_name = "chk_benoit"];
+  optional string chk_luis = 5 [json_name = "chk_luis"];
+  optional string caret = 6 [json_name = "caret"];
+  optional string cur_switch = 7 [json_name = "cur_switch"];
+  optional string cur_checkbox = 8 [json_name = "cur_checkbox"];
+  optional string cur_radio_group = 9 [json_name = "cur_radio_group"];
+  optional string cur_andy = 10 [json_name = "cur_andy"];
+  optional string cur_benoit = 11 [json_name = "cur_benoit"];
+  optional string cur_luis = 12 [json_name = "cur_luis"];
+  optional string prefix = 13 [json_name = "prefix"];
+}
+
+message NavRailItem {
+  optional string id = 1 [json_name = "id"];
+  optional string label = 2 [json_name = "label"];
+  optional string route = 3 [json_name = "route"];
+  optional int32 pos = 4 [json_name = "pos"];
+}
+
+message NavSidebarDemo {
+  optional string id = 1 [json_name = "id"];
+  optional string open = 2 [json_name = "open"];
+}
+
+message NavState {
+  optional string id = 1 [json_name = "id"];
+  optional string current = 2 [json_name = "current"];
+}
+
+message OtpDemo {
+  optional string id = 1 [json_name = "id"];
+  optional string state = 2 [json_name = "state"];
+  optional string code = 3 [json_name = "code"];
+  optional string invalid = 4 [json_name = "invalid"];
+  optional string blocked = 5 [json_name = "blocked"];
+}
+
+message PaginationDemo {
+  optional string id = 1 [json_name = "id"];
+  optional string page = 2 [json_name = "page"];
+  optional string cur_p1 = 3 [json_name = "cur_p1"];
+  optional string cur_p2 = 4 [json_name = "cur_p2"];
+  optional string cur_p3 = 5 [json_name = "cur_p3"];
+  optional string cur_p4 = 6 [json_name = "cur_p4"];
+  optional string cur_p5 = 7 [json_name = "cur_p5"];
+  optional string dis_prev = 8 [json_name = "dis_prev"];
+  optional string dis_next = 9 [json_name = "dis_next"];
+}
+
+message PickerDemo {
+  optional string id = 1 [json_name = "id"];
+  optional string choice = 2 [json_name = "choice"];
+  optional string label = 3 [json_name = "label"];
+  optional string sel_apple = 4 [json_name = "sel_apple"];
+  optional string sel_banana = 5 [json_name = "sel_banana"];
+  optional string sel_cherry = 6 [json_name = "sel_cherry"];
+}
+
+message ProgressDemo {
+  optional string id = 1 [json_name = "id"];
+  optional int32 done = 2 [json_name = "done"];
+}
+
+message QuizDemo {
+  optional string id = 1 [json_name = "id"];
+  optional string step = 2 [json_name = "step"];
+  optional string a_shape = 3 [json_name = "a_shape"];
+  optional string a_state = 4 [json_name = "a_state"];
+  optional string a_note = 5 [json_name = "a_note"];
+  optional string blocked = 6 [json_name = "blocked"];
+  optional string sel_one_markup = 7 [json_name = "sel_one_markup"];
+  optional string sel_one_chart = 8 [json_name = "sel_one_chart"];
+  optional string sel_one_library = 9 [json_name = "sel_one_library"];
+  optional string sel_two_row = 10 [json_name = "sel_two_row"];
+  optional string sel_two_dom = 11 [json_name = "sel_two_dom"];
+  optional string sel_two_memory = 12 [json_name = "sel_two_memory"];
+}
+
+message RadioGroupDemo {
+  optional string id = 1 [json_name = "id"];
+  optional string value = 2 [json_name = "value"];
+  optional string chk_starter = 3 [json_name = "chk_starter"];
+  optional string chk_pro = 4 [json_name = "chk_pro"];
+  optional string chk_team = 5 [json_name = "chk_team"];
+}
+
+message ResizableDemo {
+  optional string id = 1 [json_name = "id"];
+  optional string state = 2 [json_name = "state"];
+  optional int32 split = 3 [json_name = "split"];
+}
+
+message SelectAllDemo {
+  optional string id = 1 [json_name = "id"];
+  optional string phase = 2 [json_name = "phase"];
+  optional string checked = 3 [json_name = "checked"];
+  optional string inc_docs = 4 [json_name = "inc_docs"];
+  optional string inc_images = 5 [json_name = "inc_images"];
+  optional string inc_archive = 6 [json_name = "inc_archive"];
+}
+
+message SelectDemo {
+  optional string id = 1 [json_name = "id"];
+  optional string choice = 2 [json_name = "choice"];
+}
+
+message SelectOption {
+  optional string id = 1 [json_name = "id"];
+}
+
+message SliderDemo {
+  optional string id = 1 [json_name = "id"];
+  optional string phase = 2 [json_name = "phase"];
+  optional int32 volume = 3 [json_name = "volume"];
+}
+
+message SwitchDemo {
+  optional string id = 1 [json_name = "id"];
+  optional string checked = 2 [json_name = "checked"];
+}
+
+message TableQuery {
+  optional string id = 1 [json_name = "id"];
+  optional string state = 2 [json_name = "state"];
+  optional string query = 3 [json_name = "query"];
+}
+
+message TableRow {
+  optional string id = 1 [json_name = "id"];
+  optional string payer = 2 [json_name = "payer"];
+  optional string status = 3 [json_name = "status"];
+  optional string amount = 4 [json_name = "amount"];
+}
+
+message TabsDemo {
+  optional string id = 1 [json_name = "id"];
+  optional string active = 2 [json_name = "active"];
+  optional string sel_account = 3 [json_name = "sel_account"];
+  optional string sel_password = 4 [json_name = "sel_password"];
+}
+
+message ToastDemo {
+  optional string id = 1 [json_name = "id"];
+  optional string state = 2 [json_name = "state"];
+}
+
+message ToggleDemo {
+  optional string id = 1 [json_name = "id"];
+  optional string pressed = 2 [json_name = "pressed"];
+}
+
+message ToggleGroupDemo {
+  optional string id = 1 [json_name = "id"];
+  optional string value = 2 [json_name = "value"];
+  optional string chk_left = 3 [json_name = "chk_left"];
+  optional string chk_center = 4 [json_name = "chk_center"];
+  optional string chk_right = 5 [json_name = "chk_right"];
+}

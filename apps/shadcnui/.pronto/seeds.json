@@ -1,0 +1,978 @@
+{
+  "switch_demo": [
+    {
+      "id": "switch_demo_0001",
+      "checked": "true"
+    },
+    {
+      "id": "switch_demo_0002",
+      "checked": "false"
+    },
+    {
+      "id": "switch_demo_0003",
+      "checked": "true"
+    }
+  ],
+  "tabs_demo": [
+    {
+      "id": "tabs_demo_0001",
+      "active": "account",
+      "sel_account": "true",
+      "sel_password": "true"
+    },
+    {
+      "id": "tabs_demo_0002",
+      "active": "password",
+      "sel_account": "false",
+      "sel_password": "false"
+    },
+    {
+      "id": "tabs_demo_0003",
+      "active": "account",
+      "sel_account": "true",
+      "sel_password": "true"
+    }
+  ],
+  "picker_demo": [
+    {
+      "id": "picker_demo_0001",
+      "choice": "apple",
+      "label": "seed_label_1",
+      "sel_apple": "true",
+      "sel_banana": "true",
+      "sel_cherry": "true"
+    },
+    {
+      "id": "picker_demo_0002",
+      "choice": "banana",
+      "label": "seed_label_2",
+      "sel_apple": "false",
+      "sel_banana": "false",
+      "sel_cherry": "false"
+    },
+    {
+      "id": "picker_demo_0003",
+      "choice": "cherry",
+      "label": "seed_label_3",
+      "sel_apple": "true",
+      "sel_banana": "true",
+      "sel_cherry": "true"
+    }
+  ],
+  "toggle_group_demo": [
+    {
+      "id": "toggle_group_demo_0001",
+      "value": "left",
+      "chk_left": "true",
+      "chk_center": "false",
+      "chk_right": "false"
+    },
+    {
+      "id": "toggle_group_demo_0002",
+      "value": "center",
+      "chk_left": "false",
+      "chk_center": "true",
+      "chk_right": "false"
+    },
+    {
+      "id": "toggle_group_demo_0003",
+      "value": "right",
+      "chk_left": "false",
+      "chk_center": "false",
+      "chk_right": "true"
+    }
+  ],
+  "accordion_single_demo": [
+    {
+      "id": "accordion_single_demo_0001",
+      "open": "none",
+      "exp_shipping": "true",
+      "exp_returns": "false",
+      "exp_support": "false",
+      "caret": "shipping",
+      "cur_shipping": "true",
+      "cur_returns": "false",
+      "cur_support": "false"
+    },
+    {
+      "id": "accordion_single_demo_0002",
+      "open": "shipping",
+      "exp_shipping": "false",
+      "exp_returns": "true",
+      "exp_support": "false",
+      "caret": "returns",
+      "cur_shipping": "false",
+      "cur_returns": "true",
+      "cur_support": "false"
+    },
+    {
+      "id": "accordion_single_demo_0003",
+      "open": "returns",
+      "exp_shipping": "false",
+      "exp_returns": "false",
+      "exp_support": "true",
+      "caret": "support",
+      "cur_shipping": "false",
+      "cur_returns": "false",
+      "cur_support": "true"
+    }
+  ],
+  "accordion_multi_demo": [
+    {
+      "id": "accordion_multi_demo_0001",
+      "open": "true"
+    },
+    {
+      "id": "accordion_multi_demo_0002",
+      "open": "false"
+    },
+    {
+      "id": "accordion_multi_demo_0003",
+      "open": "true"
+    }
+  ],
+  "combobox_demo": [
+    {
+      "id": "combobox_demo_0001",
+      "choice": "Next.js"
+    },
+    {
+      "id": "combobox_demo_0002",
+      "choice": "SvelteKit"
+    },
+    {
+      "id": "combobox_demo_0003",
+      "choice": "Nuxt"
+    }
+  ],
+  "checkbox_demo": [
+    {
+      "id": "checkbox_demo_0001",
+      "checked": "true"
+    },
+    {
+      "id": "checkbox_demo_0002",
+      "checked": "false"
+    },
+    {
+      "id": "checkbox_demo_0003",
+      "checked": "true"
+    }
+  ],
+  "select_all_demo": [
+    {
+      "id": "select_all_demo_0001",
+      "phase": "live",
+      "checked": "true",
+      "inc_docs": "true",
+      "inc_images": "true",
+      "inc_archive": "true"
+    },
+    {
+      "id": "select_all_demo_0002",
+      "phase": "live",
+      "checked": "false",
+      "inc_docs": "false",
+      "inc_images": "false",
+      "inc_archive": "false"
+    },
+    {
+      "id": "select_all_demo_0003",
+      "phase": "live",
+      "checked": "mixed",
+      "inc_docs": "true",
+      "inc_images": "true",
+      "inc_archive": "true"
+    }
+  ],
+  "toggle_demo": [
+    {
+      "id": "toggle_demo_0001",
+      "pressed": "true"
+    },
+    {
+      "id": "toggle_demo_0002",
+      "pressed": "false"
+    },
+    {
+      "id": "toggle_demo_0003",
+      "pressed": "true"
+    }
+  ],
+  "collapsible_demo": [
+    {
+      "id": "collapsible_demo_0001",
+      "open": "true"
+    },
+    {
+      "id": "collapsible_demo_0002",
+      "open": "false"
+    },
+    {
+      "id": "collapsible_demo_0003",
+      "open": "true"
+    }
+  ],
+  "radio_group_demo": [
+    {
+      "id": "radio_group_demo_0001",
+      "value": "starter",
+      "chk_starter": "true",
+      "chk_pro": "false",
+      "chk_team": "false"
+    },
+    {
+      "id": "radio_group_demo_0002",
+      "value": "pro",
+      "chk_starter": "false",
+      "chk_pro": "true",
+      "chk_team": "false"
+    },
+    {
+      "id": "radio_group_demo_0003",
+      "value": "team",
+      "chk_starter": "false",
+      "chk_pro": "false",
+      "chk_team": "true"
+    }
+  ],
+  "pagination_demo": [
+    {
+      "id": "pagination_demo_0001",
+      "page": "p1",
+      "cur_p1": "true",
+      "cur_p2": "false",
+      "cur_p3": "false",
+      "cur_p4": "false",
+      "cur_p5": "false",
+      "dis_prev": "",
+      "dis_next": ""
+    },
+    {
+      "id": "pagination_demo_0002",
+      "page": "p2",
+      "cur_p1": "false",
+      "cur_p2": "true",
+      "cur_p3": "false",
+      "cur_p4": "false",
+      "cur_p5": "false",
+      "dis_prev": "disabled",
+      "dis_next": "disabled"
+    },
+    {
+      "id": "pagination_demo_0003",
+      "page": "p3",
+      "cur_p1": "false",
+      "cur_p2": "false",
+      "cur_p3": "true",
+      "cur_p4": "false",
+      "cur_p5": "false",
+      "dis_prev": "",
+      "dis_next": ""
+    }
+  ],
+  "carousel_demo": [
+    {
+      "id": "carousel_demo_0001",
+      "slide": "s1",
+      "cur_s1": "true",
+      "cur_s2": "false",
+      "cur_s3": "false",
+      "cur_s4": "false",
+      "dis_prev": "",
+      "dis_next": ""
+    },
+    {
+      "id": "carousel_demo_0002",
+      "slide": "s2",
+      "cur_s1": "false",
+      "cur_s2": "true",
+      "cur_s3": "false",
+      "cur_s4": "false",
+      "dis_prev": "disabled",
+      "dis_next": "disabled"
+    },
+    {
+      "id": "carousel_demo_0003",
+      "slide": "s3",
+      "cur_s1": "false",
+      "cur_s2": "false",
+      "cur_s3": "true",
+      "cur_s4": "false",
+      "dis_prev": "",
+      "dis_next": ""
+    }
+  ],
+  "toast_demo": [
+    {
+      "id": "toast_demo_0001",
+      "state": "closed"
+    },
+    {
+      "id": "toast_demo_0002",
+      "state": "open"
+    },
+    {
+      "id": "toast_demo_0003",
+      "state": "closed"
+    }
+  ],
+  "slider_demo": [
+    {
+      "id": "slider_demo_0001",
+      "phase": "live",
+      "volume": 0
+    },
+    {
+      "id": "slider_demo_0002",
+      "phase": "live",
+      "volume": 1
+    },
+    {
+      "id": "slider_demo_0003",
+      "phase": "live",
+      "volume": 2
+    }
+  ],
+  "progress_demo": [
+    {
+      "id": "progress_demo_0001",
+      "done": 0
+    },
+    {
+      "id": "progress_demo_0002",
+      "done": 1
+    },
+    {
+      "id": "progress_demo_0003",
+      "done": 2
+    }
+  ],
+  "resizable_demo": [
+    {
+      "id": "resizable_demo_0001",
+      "state": "seed_state_1",
+      "split": 15
+    },
+    {
+      "id": "resizable_demo_0002",
+      "state": "seed_state_2",
+      "split": 16
+    },
+    {
+      "id": "resizable_demo_0003",
+      "state": "seed_state_3",
+      "split": 17
+    }
+  ],
+  "command_demo": [
+    {
+      "id": "command_demo_0001",
+      "state": "seed_state_1",
+      "query": "seed_query_1",
+      "active": "seed_active_1",
+      "chosen": "seed_chosen_1"
+    },
+    {
+      "id": "command_demo_0002",
+      "state": "seed_state_2",
+      "query": "seed_query_2",
+      "active": "seed_active_2",
+      "chosen": "seed_chosen_2"
+    },
+    {
+      "id": "command_demo_0003",
+      "state": "seed_state_3",
+      "query": "seed_query_3",
+      "active": "seed_active_3",
+      "chosen": "seed_chosen_3"
+    }
+  ],
+  "command_item": [
+    {
+      "id": "command_item_0001",
+      "label": "seed_label_1",
+      "group": "seed_group_1",
+      "pos": 10
+    },
+    {
+      "id": "command_item_0002",
+      "label": "seed_label_2",
+      "group": "seed_group_2",
+      "pos": 20
+    },
+    {
+      "id": "command_item_0003",
+      "label": "seed_label_3",
+      "group": "seed_group_3",
+      "pos": 30
+    }
+  ],
+  "select_demo": [
+    {
+      "id": "select_demo_0001",
+      "choice": "seed_choice_1"
+    },
+    {
+      "id": "select_demo_0002",
+      "choice": "seed_choice_2"
+    },
+    {
+      "id": "select_demo_0003",
+      "choice": "seed_choice_3"
+    }
+  ],
+  "select_option": [
+    {
+      "id": "select_option_0001"
+    },
+    {
+      "id": "select_option_0002"
+    },
+    {
+      "id": "select_option_0003"
+    }
+  ],
+  "menu_option_demo": [
+    {
+      "id": "menu_option_demo_0001",
+      "chk_bookmarks": "true",
+      "chk_urls": "false",
+      "caret": "bookmarks",
+      "cur_bookmarks": "true",
+      "cur_urls": "false",
+      "prefix": "seed_prefix_1"
+    },
+    {
+      "id": "menu_option_demo_0002",
+      "chk_bookmarks": "false",
+      "chk_urls": "true",
+      "caret": "urls",
+      "cur_bookmarks": "false",
+      "cur_urls": "true",
+      "prefix": "seed_prefix_2"
+    },
+    {
+      "id": "menu_option_demo_0003",
+      "chk_bookmarks": "true",
+      "chk_urls": "false",
+      "caret": "bookmarks",
+      "cur_bookmarks": "true",
+      "cur_urls": "false",
+      "prefix": "seed_prefix_3"
+    }
+  ],
+  "menu_go_demo": [
+    {
+      "id": "menu_go_demo_0001",
+      "caret": "tabs",
+      "cur_tabs": "true",
+      "cur_accordion": "false",
+      "cur_toast": "false",
+      "prefix": "seed_prefix_1"
+    },
+    {
+      "id": "menu_go_demo_0002",
+      "caret": "accordion",
+      "cur_tabs": "false",
+      "cur_accordion": "true",
+      "cur_toast": "false",
+      "prefix": "seed_prefix_2"
+    },
+    {
+      "id": "menu_go_demo_0003",
+      "caret": "toast",
+      "cur_tabs": "false",
+      "cur_accordion": "false",
+      "cur_toast": "true",
+      "prefix": "seed_prefix_3"
+    }
+  ],
+  "menubar_demo": [
+    {
+      "id": "menubar_demo_0001",
+      "caret": "view",
+      "cur_view": "true",
+      "cur_go": "false"
+    },
+    {
+      "id": "menubar_demo_0002",
+      "caret": "go",
+      "cur_view": "false",
+      "cur_go": "true"
+    },
+    {
+      "id": "menubar_demo_0003",
+      "caret": "view",
+      "cur_view": "true",
+      "cur_go": "false"
+    }
+  ],
+  "context_menu_demo": [
+    {
+      "id": "context_menu_demo_0001",
+      "open": "true",
+      "x": 0,
+      "y": 0,
+      "caret": "popover",
+      "cur_popover": "true",
+      "cur_sheet": "false",
+      "cur_overlays": "false",
+      "prefix": "seed_prefix_1"
+    },
+    {
+      "id": "context_menu_demo_0002",
+      "open": "false",
+      "x": 1,
+      "y": 1,
+      "caret": "sheet",
+      "cur_popover": "false",
+      "cur_sheet": "true",
+      "cur_overlays": "false",
+      "prefix": "seed_prefix_2"
+    },
+    {
+      "id": "context_menu_demo_0003",
+      "open": "true",
+      "x": 2,
+      "y": 2,
+      "caret": "overlays",
+      "cur_popover": "false",
+      "cur_sheet": "false",
+      "cur_overlays": "true",
+      "prefix": "seed_prefix_3"
+    }
+  ],
+  "menu_profile_demo": [
+    {
+      "id": "menu_profile_demo_0001",
+      "profile": "andy",
+      "chk_andy": "true",
+      "chk_benoit": "false",
+      "chk_luis": "false",
+      "caret": "switch",
+      "cur_switch": "true",
+      "cur_checkbox": "false",
+      "cur_radio_group": "false",
+      "cur_andy": "false",
+      "cur_benoit": "false",
+      "cur_luis": "false",
+      "prefix": "seed_prefix_1"
+    },
+    {
+      "id": "menu_profile_demo_0002",
+      "profile": "benoit",
+      "chk_andy": "false",
+      "chk_benoit": "true",
+      "chk_luis": "false",
+      "caret": "checkbox",
+      "cur_switch": "false",
+      "cur_checkbox": "true",
+      "cur_radio_group": "false",
+      "cur_andy": "false",
+      "cur_benoit": "false",
+      "cur_luis": "false",
+      "prefix": "seed_prefix_2"
+    },
+    {
+      "id": "menu_profile_demo_0003",
+      "profile": "luis",
+      "chk_andy": "false",
+      "chk_benoit": "false",
+      "chk_luis": "true",
+      "caret": "radio_group",
+      "cur_switch": "false",
+      "cur_checkbox": "false",
+      "cur_radio_group": "true",
+      "cur_andy": "false",
+      "cur_benoit": "false",
+      "cur_luis": "false",
+      "prefix": "seed_prefix_3"
+    }
+  ],
+  "form_demo": [
+    {
+      "id": "form_demo_0001",
+      "handle": "seed_handle_1",
+      "bio": "seed_bio_1"
+    },
+    {
+      "id": "form_demo_0002",
+      "handle": "seed_handle_2",
+      "bio": "seed_bio_2"
+    },
+    {
+      "id": "form_demo_0003",
+      "handle": "seed_handle_3",
+      "bio": "seed_bio_3"
+    }
+  ],
+  "table_row": [
+    {
+      "id": "table_row_0001",
+      "payer": "seed_payer_1",
+      "status": "Paid",
+      "amount": "seed_amount_1"
+    },
+    {
+      "id": "table_row_0002",
+      "payer": "seed_payer_2",
+      "status": "Pending",
+      "amount": "seed_amount_2"
+    },
+    {
+      "id": "table_row_0003",
+      "payer": "seed_payer_3",
+      "status": "Unpaid",
+      "amount": "seed_amount_3"
+    }
+  ],
+  "table_query": [
+    {
+      "id": "table_query_0001",
+      "state": "pending",
+      "query": "seed_query_1"
+    },
+    {
+      "id": "table_query_0002",
+      "state": "typing",
+      "query": "seed_query_2"
+    },
+    {
+      "id": "table_query_0003",
+      "state": "pending",
+      "query": "seed_query_3"
+    }
+  ],
+  "data_row": [
+    {
+      "id": "data_row_0001",
+      "payer": "seed_payer_1",
+      "status": "Paid",
+      "amount": "seed_amount_1"
+    },
+    {
+      "id": "data_row_0002",
+      "payer": "seed_payer_2",
+      "status": "Pending",
+      "amount": "seed_amount_2"
+    },
+    {
+      "id": "data_row_0003",
+      "payer": "seed_payer_3",
+      "status": "Unpaid",
+      "amount": "seed_amount_3"
+    }
+  ],
+  "data_cursor": [
+    {
+      "id": "data_cursor_0001",
+      "state": "seed_state_1",
+      "query": "seed_query_1",
+      "cursor": "seed_cursor_1",
+      "sort": "id_asc",
+      "srt_id": "seed_srt_id_1",
+      "srt_amount": "ascending"
+    },
+    {
+      "id": "data_cursor_0002",
+      "state": "seed_state_2",
+      "query": "seed_query_2",
+      "cursor": "seed_cursor_2",
+      "sort": "id_desc",
+      "srt_id": "seed_srt_id_2",
+      "srt_amount": "descending"
+    },
+    {
+      "id": "data_cursor_0003",
+      "state": "seed_state_3",
+      "query": "seed_query_3",
+      "cursor": "seed_cursor_3",
+      "sort": "amount_asc",
+      "srt_id": "seed_srt_id_3",
+      "srt_amount": "none"
+    }
+  ],
+  "nav_rail_item": [
+    {
+      "id": "nav_rail_item_0001",
+      "label": "seed_label_1",
+      "route": "accordion",
+      "pos": 1
+    },
+    {
+      "id": "nav_rail_item_0002",
+      "label": "seed_label_2",
+      "route": "accordion",
+      "pos": 2
+    },
+    {
+      "id": "nav_rail_item_0003",
+      "label": "seed_label_3",
+      "route": "accordion",
+      "pos": 3
+    }
+  ],
+  "nav_state": [
+    {
+      "id": "nav_state_0001",
+      "current": "yes"
+    },
+    {
+      "id": "nav_state_0002",
+      "current": "no"
+    },
+    {
+      "id": "nav_state_0003",
+      "current": "no"
+    }
+  ],
+  "nav_sidebar_demo": [
+    {
+      "id": "nav_sidebar_demo_0001",
+      "open": "true"
+    },
+    {
+      "id": "nav_sidebar_demo_0002",
+      "open": "false"
+    },
+    {
+      "id": "nav_sidebar_demo_0003",
+      "open": "true"
+    }
+  ],
+  "otp_demo": [
+    {
+      "id": "otp_demo_0001",
+      "state": "typing",
+      "code": "seed_code_1",
+      "invalid": "true",
+      "blocked": ""
+    },
+    {
+      "id": "otp_demo_0002",
+      "state": "complete",
+      "code": "seed_code_2",
+      "invalid": "false",
+      "blocked": "disabled"
+    },
+    {
+      "id": "otp_demo_0003",
+      "state": "verified",
+      "code": "seed_code_3",
+      "invalid": "true",
+      "blocked": ""
+    }
+  ],
+  "chart_point": [
+    {
+      "id": "chart_point_0001",
+      "label": "seed_label_1",
+      "value": 10,
+      "pos": 1,
+      "nxt_value": 10
+    },
+    {
+      "id": "chart_point_0002",
+      "label": "seed_label_2",
+      "value": 20,
+      "pos": 2,
+      "nxt_value": 20
+    },
+    {
+      "id": "chart_point_0003",
+      "label": "seed_label_3",
+      "value": 30,
+      "pos": 3,
+      "nxt_value": 30
+    }
+  ],
+  "chart_cursor": [
+    {
+      "id": "chart_cursor_0001",
+      "active": "seed_active_1"
+    },
+    {
+      "id": "chart_cursor_0002",
+      "active": "seed_active_2"
+    },
+    {
+      "id": "chart_cursor_0003",
+      "active": "seed_active_3"
+    }
+  ],
+  "composition_demo": [
+    {
+      "id": "composition_demo_0001",
+      "phase": "live",
+      "query": "seed_query_1",
+      "last": "seed_last_1"
+    },
+    {
+      "id": "composition_demo_0002",
+      "phase": "live",
+      "query": "seed_query_2",
+      "last": "seed_last_2"
+    },
+    {
+      "id": "composition_demo_0003",
+      "phase": "live",
+      "query": "seed_query_3",
+      "last": "seed_last_3"
+    }
+  ],
+  "chat_row": [
+    {
+      "id": "chat_row_0001",
+      "kind": "message",
+      "seat": "you",
+      "who": "seed_who_1",
+      "initials": "seed_initials_1",
+      "body": "seed_body_1",
+      "note": "seed_note_1",
+      "when": "seed_when_1",
+      "at": "2026-09-23T23:00:00Z",
+      "state": "done"
+    },
+    {
+      "id": "chat_row_0002",
+      "kind": "marker",
+      "seat": "them",
+      "who": "seed_who_2",
+      "initials": "seed_initials_2",
+      "body": "seed_body_2",
+      "note": "seed_note_2",
+      "when": "seed_when_2",
+      "at": "2026-09-23T22:00:00Z",
+      "state": "uploading"
+    },
+    {
+      "id": "chat_row_0003",
+      "kind": "file",
+      "seat": "none",
+      "who": "seed_who_3",
+      "initials": "seed_initials_3",
+      "body": "seed_body_3",
+      "note": "seed_note_3",
+      "when": "seed_when_3",
+      "at": "2026-09-23T21:00:00Z",
+      "state": "error"
+    }
+  ],
+  "chat_demo": [
+    {
+      "id": "chat_demo_0001"
+    },
+    {
+      "id": "chat_demo_0002"
+    },
+    {
+      "id": "chat_demo_0003"
+    }
+  ],
+  "quiz_demo": [
+    {
+      "id": "quiz_demo_0001",
+      "step": "one",
+      "a_shape": "seed_a_shape_1",
+      "a_state": "seed_a_state_1",
+      "a_note": "seed_a_note_1",
+      "blocked": "",
+      "sel_one_markup": "true",
+      "sel_one_chart": "true",
+      "sel_one_library": "true",
+      "sel_two_row": "true",
+      "sel_two_dom": "true",
+      "sel_two_memory": "true"
+    },
+    {
+      "id": "quiz_demo_0002",
+      "step": "two",
+      "a_shape": "seed_a_shape_2",
+      "a_state": "seed_a_state_2",
+      "a_note": "seed_a_note_2",
+      "blocked": "disabled",
+      "sel_one_markup": "false",
+      "sel_one_chart": "false",
+      "sel_one_library": "false",
+      "sel_two_row": "false",
+      "sel_two_dom": "false",
+      "sel_two_memory": "false"
+    },
+    {
+      "id": "quiz_demo_0003",
+      "step": "three",
+      "a_shape": "seed_a_shape_3",
+      "a_state": "seed_a_state_3",
+      "a_note": "seed_a_note_3",
+      "blocked": "",
+      "sel_one_markup": "true",
+      "sel_one_chart": "true",
+      "sel_one_library": "true",
+      "sel_two_row": "true",
+      "sel_two_dom": "true",
+      "sel_two_memory": "true"
+    }
+  ],
+  "calendar_demo": [
+    {
+      "id": "calendar_demo_0001",
+      "state": "browsing",
+      "month": "seed_month_1",
+      "label": "seed_label_1",
+      "value": "seed_value_1",
+      "active": "seed_active_1"
+    },
+    {
+      "id": "calendar_demo_0002",
+      "state": "browsing",
+      "month": "seed_month_2",
+      "label": "seed_label_2",
+      "value": "seed_value_2",
+      "active": "seed_active_2"
+    },
+    {
+      "id": "calendar_demo_0003",
+      "state": "browsing",
+      "month": "seed_month_3",
+      "label": "seed_label_3",
+      "value": "seed_value_3",
+      "active": "seed_active_3"
+    }
+  ],
+  "calendar_cell": [
+    {
+      "id": "calendar_cell_0001",
+      "grid": "seed_grid_1",
+      "month": "seed_month_1",
+      "week": "w1",
+      "dow": "d0",
+      "pos": 1,
+      "colpos": 0,
+      "day": "seed_day_1",
+      "date": "2026-09-23T23:00:00Z"
+    },
+    {
+      "id": "calendar_cell_0002",
+      "grid": "seed_grid_2",
+      "month": "seed_month_2",
+      "week": "w2",
+      "dow": "d1",
+      "pos": 2,
+      "colpos": 1,
+      "day": "seed_day_2",
+      "date": "2026-09-23T22:00:00Z"
+    },
+    {
+      "id": "calendar_cell_0003",
+      "grid": "seed_grid_3",
+      "month": "seed_month_3",
+      "week": "w3",
+      "dow": "d2",
+      "pos": 3,
+      "colpos": 2,
+      "day": "seed_day_3",
+      "date": "2026-09-23T21:00:00Z"
+    }
+  ]
+}

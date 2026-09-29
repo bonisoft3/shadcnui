@@ -1,0 +1,127 @@
+@import "./shared/chrome.css";
+
+/* Switch demo — the skin lives with the app, the structure with the
+   component. Styling keys on the ARIA attribute the machine writes
+   (aria-checked), never on a second spelling of the state. */
+.screen-switch {
+  max-width: 44rem;
+  margin: 0 auto;
+  padding: var(--sp-xl) var(--sp-lg);
+}
+.screen-switch .demo-head h1 {
+  margin: 0 0 var(--sp-sm);
+  font-size: 1.6rem;
+  letter-spacing: -0.02em;
+  color: var(--primary);
+}
+.screen-switch .lede {
+  margin: 0 0 var(--sp-lg);
+  color: var(--secondary);
+  line-height: 1.6;
+}
+.screen-switch .demo-stage {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--sp-lg) var(--sp-xl);
+  min-height: 7rem;
+  padding: var(--sp-lg);
+  border: var(--border-size-1) solid var(--border);
+  border-radius: var(--r-md);
+  background: var(--surface);
+}
+
+/* The control: a real button wearing role="switch". */
+.screen-switch .switch {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-md);
+  padding: 0;
+  border: 0;
+  background: none;
+  font: inherit;
+  color: var(--primary);
+  cursor: pointer;
+}
+.screen-switch .switch-track {
+  display: inline-flex;
+  align-items: center;
+  /* w-11 kept: shadcn's own track width. The width, the height, the rule and
+     the thumb are one arithmetic system, and the inset and the travel are what
+     is left over on each axis, so no length here can move on its own. */
+  --switch-track-w: 44px;
+  --switch-thumb: var(--size-3);
+  /* The thumb's own rule is part of the box the track has to hold. */
+  --switch-thumb-box: calc(var(--switch-thumb) + 2 * var(--border-size-1));
+  --switch-inset: calc((var(--min-touch) - 2 * var(--border-size-1)
+    - var(--switch-thumb-box)) / 2);
+  width: var(--switch-track-w);
+  height: var(--min-touch);
+  padding: var(--switch-inset);
+  box-sizing: border-box;
+  border-radius: var(--r-full);
+  background: var(--surface-muted);
+  border: var(--border-size-1) solid var(--border);
+  transition: background var(--motion-fast) var(--motion-ease);
+}
+.screen-switch .switch-thumb {
+  width: var(--switch-thumb);
+  height: var(--switch-thumb);
+  border-radius: var(--r-full);
+  background: var(--surface);
+  border: var(--border-size-1) solid var(--border);
+  transition: transform var(--motion-fast) var(--motion-ease);
+}
+.screen-switch .switch[aria-checked="true"] .switch-track {
+  background: var(--accent);
+  border-color: var(--accent);
+}
+.screen-switch .switch[aria-checked="true"] .switch-thumb {
+  /* The track's inner width less the thumb's outer box: both rules and both
+     insets are counted, so the thumb cannot leave the track. */
+  transform: translateX(calc(var(--switch-track-w) - 2 * var(--border-size-1)
+    - 2 * var(--switch-inset) - var(--switch-thumb-box)));
+}
+.screen-switch .switch:focus-visible .switch-track {
+  outline: var(--border-size-2) solid var(--accent);
+  outline-offset: var(--border-size-2);
+}
+
+.screen-switch .demo-pane {
+  margin-top: var(--sp-lg);
+}
+.screen-switch .demo-pane h2 {
+  margin: 0 0 var(--size-1);
+  font-size: 1rem;
+  color: var(--primary);
+}
+.screen-switch .pane-note {
+  margin: 0 0 var(--sp-sm);
+  font-size: 0.875rem;
+  color: var(--secondary);
+  line-height: 1.5;
+}
+.screen-switch .rowview + .rowview {
+  margin-top: var(--sp-sm);
+}
+.screen-switch .rowview {
+  padding: var(--sp-sm) var(--sp-md);
+  border: var(--border-size-1) solid var(--border);
+  border-radius: var(--r-sm);
+  background: var(--surface-muted);
+}
+.screen-switch .row-readout {
+  font-size: 0.85rem;
+  color: var(--primary);
+}
+.screen-switch .machine-json {
+  margin: 0;
+  padding: var(--sp-md);
+  overflow-x: auto;
+  font-size: 0.8rem;
+  line-height: 1.5;
+  color: var(--primary);
+  border: var(--border-size-1) solid var(--border);
+  border-radius: var(--r-sm);
+  background: var(--surface);
+}

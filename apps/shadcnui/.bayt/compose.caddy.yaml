@@ -1,0 +1,385 @@
+# generated from bayt.cue — do not edit
+services:
+  apps_shadcnui-caddy:
+    build:
+      additional_contexts:
+        root: ../../..
+      context: ..
+      dockerfile: .bayt/Dockerfile.caddy
+      target: caddy
+      args:
+        BUILDKIT_SYNTAX: >-
+          docker/dockerfile:1.26@sha256:ecfaec9ed6d810b56388c508f4121597bfbba70d41a6dfeee4d8cad5f295fc32
+    develop:
+      watch:
+      - action: sync+restart
+        path: ../docker/Caddyfile
+        target: /etc/caddy/Caddyfile
+      - action: sync+restart
+        path: ../shell/index.html
+        target: /srv/shell/index.html
+      - action: sync+restart
+        path: ../shell/shell.css
+        target: /srv/shell/shell.css
+      - action: sync+restart
+        path: ../shell/boot.js
+        target: /srv/shell/boot.js
+      - action: sync+restart
+        path: ../offline-first-sw.js
+        target: /srv/offline-first-sw.js
+      - action: sync+restart
+        path: ../shell/shell.yaml
+        target: /srv/shell/shell.yaml
+      - action: sync+restart
+        path: ../shell/shell.json
+        target: /srv/shell/shell.json
+      - action: sync+restart
+        path: ../shell/design.css
+        target: /srv/shell/design.css
+      - action: sync+restart
+        path: ../shell/screens/catalog.html
+        target: /srv/shell/screens/catalog.html
+      - action: sync+restart
+        path: ../shell/screens/catalog.css
+        target: /srv/shell/screens/catalog.css
+      - action: sync+restart
+        path: ../shell/screens/switch.html
+        target: /srv/shell/screens/switch.html
+      - action: sync+restart
+        path: ../shell/screens/switch.css
+        target: /srv/shell/screens/switch.css
+      - action: sync+restart
+        path: ../shell/screens/tabs.html
+        target: /srv/shell/screens/tabs.html
+      - action: sync+restart
+        path: ../shell/screens/tabs.css
+        target: /srv/shell/screens/tabs.css
+      - action: sync+restart
+        path: ../shell/screens/picker.html
+        target: /srv/shell/screens/picker.html
+      - action: sync+restart
+        path: ../shell/screens/picker.css
+        target: /srv/shell/screens/picker.css
+      - action: sync+restart
+        path: ../shell/screens/toggle-group.html
+        target: /srv/shell/screens/toggle-group.html
+      - action: sync+restart
+        path: ../shell/screens/toggle-group.css
+        target: /srv/shell/screens/toggle-group.css
+      - action: sync+restart
+        path: ../shell/screens/accordion.html
+        target: /srv/shell/screens/accordion.html
+      - action: sync+restart
+        path: ../shell/screens/accordion.css
+        target: /srv/shell/screens/accordion.css
+      - action: sync+restart
+        path: ../shell/screens/overlays.html
+        target: /srv/shell/screens/overlays.html
+      - action: sync+restart
+        path: ../shell/screens/overlays.css
+        target: /srv/shell/screens/overlays.css
+      - action: sync+restart
+        path: ../shell/screens/primitives.html
+        target: /srv/shell/screens/primitives.html
+      - action: sync+restart
+        path: ../shell/screens/primitives.css
+        target: /srv/shell/screens/primitives.css
+      - action: sync+restart
+        path: ../shell/screens/combobox.html
+        target: /srv/shell/screens/combobox.html
+      - action: sync+restart
+        path: ../shell/screens/combobox.css
+        target: /srv/shell/screens/combobox.css
+      - action: sync+restart
+        path: ../shell/screens/checkbox.html
+        target: /srv/shell/screens/checkbox.html
+      - action: sync+restart
+        path: ../shell/screens/checkbox.css
+        target: /srv/shell/screens/checkbox.css
+      - action: sync+restart
+        path: ../shell/screens/radio-group.html
+        target: /srv/shell/screens/radio-group.html
+      - action: sync+restart
+        path: ../shell/screens/radio-group.css
+        target: /srv/shell/screens/radio-group.css
+      - action: sync+restart
+        path: ../shell/screens/pagination.html
+        target: /srv/shell/screens/pagination.html
+      - action: sync+restart
+        path: ../shell/screens/pagination.css
+        target: /srv/shell/screens/pagination.css
+      - action: sync+restart
+        path: ../shell/screens/toast.html
+        target: /srv/shell/screens/toast.html
+      - action: sync+restart
+        path: ../shell/screens/toast.css
+        target: /srv/shell/screens/toast.css
+      - action: sync+restart
+        path: ../shell/screens/slider.html
+        target: /srv/shell/screens/slider.html
+      - action: sync+restart
+        path: ../shell/screens/slider.css
+        target: /srv/shell/screens/slider.css
+      - action: sync+restart
+        path: ../shell/screens/resizable.html
+        target: /srv/shell/screens/resizable.html
+      - action: sync+restart
+        path: ../shell/screens/resizable.css
+        target: /srv/shell/screens/resizable.css
+      - action: sync+restart
+        path: ../shell/screens/command.html
+        target: /srv/shell/screens/command.html
+      - action: sync+restart
+        path: ../shell/screens/command.css
+        target: /srv/shell/screens/command.css
+      - action: sync+restart
+        path: ../shell/screens/select.html
+        target: /srv/shell/screens/select.html
+      - action: sync+restart
+        path: ../shell/screens/select.css
+        target: /srv/shell/screens/select.css
+      - action: sync+restart
+        path: ../shell/screens/breadcrumb.html
+        target: /srv/shell/screens/breadcrumb.html
+      - action: sync+restart
+        path: ../shell/screens/breadcrumb.css
+        target: /srv/shell/screens/breadcrumb.css
+      - action: sync+restart
+        path: ../shell/screens/menu.html
+        target: /srv/shell/screens/menu.html
+      - action: sync+restart
+        path: ../shell/screens/menu.css
+        target: /srv/shell/screens/menu.css
+      - action: sync+restart
+        path: ../shell/screens/sheet.html
+        target: /srv/shell/screens/sheet.html
+      - action: sync+restart
+        path: ../shell/screens/sheet.css
+        target: /srv/shell/screens/sheet.css
+      - action: sync+restart
+        path: ../shell/screens/form.html
+        target: /srv/shell/screens/form.html
+      - action: sync+restart
+        path: ../shell/screens/form.css
+        target: /srv/shell/screens/form.css
+      - action: sync+restart
+        path: ../shell/screens/table.html
+        target: /srv/shell/screens/table.html
+      - action: sync+restart
+        path: ../shell/screens/table.css
+        target: /srv/shell/screens/table.css
+      - action: sync+restart
+        path: ../shell/screens/data-table.html
+        target: /srv/shell/screens/data-table.html
+      - action: sync+restart
+        path: ../shell/screens/data-table.css
+        target: /srv/shell/screens/data-table.css
+      - action: sync+restart
+        path: ../shell/screens/navigation.html
+        target: /srv/shell/screens/navigation.html
+      - action: sync+restart
+        path: ../shell/screens/navigation.css
+        target: /srv/shell/screens/navigation.css
+      - action: sync+restart
+        path: ../shell/screens/popover.html
+        target: /srv/shell/screens/popover.html
+      - action: sync+restart
+        path: ../shell/screens/popover.css
+        target: /srv/shell/screens/popover.css
+      - action: sync+restart
+        path: ../shell/screens/input-otp.html
+        target: /srv/shell/screens/input-otp.html
+      - action: sync+restart
+        path: ../shell/screens/input-otp.css
+        target: /srv/shell/screens/input-otp.css
+      - action: sync+restart
+        path: ../shell/screens/hover-card.html
+        target: /srv/shell/screens/hover-card.html
+      - action: sync+restart
+        path: ../shell/screens/hover-card.css
+        target: /srv/shell/screens/hover-card.css
+      - action: sync+restart
+        path: ../shell/screens/chart.html
+        target: /srv/shell/screens/chart.html
+      - action: sync+restart
+        path: ../shell/screens/chart.css
+        target: /srv/shell/screens/chart.css
+      - action: sync+restart
+        path: ../shell/screens/atoms.html
+        target: /srv/shell/screens/atoms.html
+      - action: sync+restart
+        path: ../shell/screens/atoms.css
+        target: /srv/shell/screens/atoms.css
+      - action: sync+restart
+        path: ../shell/screens/composition.html
+        target: /srv/shell/screens/composition.html
+      - action: sync+restart
+        path: ../shell/screens/composition.css
+        target: /srv/shell/screens/composition.css
+      - action: sync+restart
+        path: ../shell/screens/chat.html
+        target: /srv/shell/screens/chat.html
+      - action: sync+restart
+        path: ../shell/screens/chat.css
+        target: /srv/shell/screens/chat.css
+      - action: sync+restart
+        path: ../shell/screens/questionnaire.html
+        target: /srv/shell/screens/questionnaire.html
+      - action: sync+restart
+        path: ../shell/screens/questionnaire.css
+        target: /srv/shell/screens/questionnaire.css
+      - action: sync+restart
+        path: ../shell/screens/calendar.html
+        target: /srv/shell/screens/calendar.html
+      - action: sync+restart
+        path: ../shell/screens/calendar.css
+        target: /srv/shell/screens/calendar.css
+      - action: sync+restart
+        path: ../shell/handlers/flip-of.js
+        target: /srv/shell/handlers/flip-of.js
+      - action: sync+restart
+        path: ../shell/handlers/has-nondigit.js
+        target: /srv/shell/handlers/has-nondigit.js
+      - action: sync+restart
+        path: ../shell/handlers/has-prefix.js
+        target: /srv/shell/handlers/has-prefix.js
+      - action: sync+restart
+        path: ../shell/handlers/is-code.js
+        target: /srv/shell/handlers/is-code.js
+      - action: sync+restart
+        path: ../shell/handlers/is-digits.js
+        target: /srv/shell/handlers/is-digits.js
+      - action: sync+restart
+        path: ../shell/handlers/is-key.js
+        target: /srv/shell/handlers/is-key.js
+      - action: sync+restart
+        path: ../shell/handlers/is-printable.js
+        target: /srv/shell/handlers/is-printable.js
+      - action: sync+restart
+        path: ../shell/handlers/month-step.js
+        target: /srv/shell/handlers/month-step.js
+      - action: sync+restart
+        path: ../shell/handlers/roll-up.js
+        target: /srv/shell/handlers/roll-up.js
+      - action: sync+restart
+        path: ../shell/handlers/starts-with.js
+        target: /srv/shell/handlers/starts-with.js
+      - action: sync+restart
+        path: ../shell/handlers/type-into.js
+        target: /srv/shell/handlers/type-into.js
+      - action: sync+restart
+        path: ../shell/handlers/unless-answered.js
+        target: /srv/shell/handlers/unless-answered.js
+      - action: sync+restart
+        path: ../shell/handlers/unless-typed.js
+        target: /srv/shell/handlers/unless-typed.js
+      - action: sync+restart
+        path: ../shell/shared/chrome.css
+        target: /srv/shell/shared/chrome.css
+      - action: sync+restart
+        path: ../../../plugins/omnishell/interpreter/shell.js
+        target: /omnishell/interpreter/shell.js
+      - action: sync+restart
+        path: ../../../plugins/omnishell/interpreter/chrome.js
+        target: /omnishell/interpreter/chrome.js
+      - action: sync+restart
+        path: ../../../plugins/omnishell/interpreter/screen.js
+        target: /omnishell/interpreter/screen.js
+      - action: sync+restart
+        path: ../../../plugins/omnishell/interpreter/fragment.js
+        target: /omnishell/interpreter/fragment.js
+      - action: sync+restart
+        path: ../../../plugins/omnishell/interpreter/data-sync.js
+        target: /omnishell/interpreter/data-sync.js
+      - action: sync+restart
+        path: ../../../plugins/omnishell/interpreter/validate.js
+        target: /omnishell/interpreter/validate.js
+      - action: sync+restart
+        path: ../../../plugins/omnishell/interpreter/render.js
+        target: /omnishell/interpreter/render.js
+      - action: sync+restart
+        path: ../../../plugins/omnishell/interpreter/hatch.js
+        target: /omnishell/interpreter/hatch.js
+      - action: sync+restart
+        path: ../../../plugins/omnishell/interpreter/hatch-worker.js
+        target: /omnishell/interpreter/hatch-worker.js
+      - action: sync+restart
+        path: ../../../plugins/omnishell/interpreter/storybook.js
+        target: /omnishell/interpreter/storybook.js
+      - action: sync+restart
+        path: ../../../plugins/omnishell/interpreter/jessie.js
+        target: /omnishell/interpreter/jessie.js
+      - action: sync+restart
+        path: ../../../plugins/omnishell/interpreter/vendor/mecha-client.js
+        target: /omnishell/interpreter/vendor/mecha-client.js
+      - action: sync+restart
+        path: ../../../plugins/omnishell/interpreter/vendor/js-yaml.js
+        target: /omnishell/interpreter/vendor/js-yaml.js
+      - action: sync+restart
+        path: ../../../plugins/omnishell/interpreter/vendor/ses.umd.min.js
+        target: /omnishell/interpreter/vendor/ses.umd.min.js
+      - action: sync+restart
+        path: ../../../plugins/omnishell/interpreter/vendor/morphlex.js
+        target: /omnishell/interpreter/vendor/morphlex.js
+      - action: sync+restart
+        path: ../../../plugins/omnishell/components/wallclock.js
+        target: /omnishell/components/wallclock.js
+      - action: sync+restart
+        path: ../brief.html
+        target: /srv/docs/brief.html
+      - action: sync+restart
+        path: ../ir.html
+        target: /srv/docs/ir.html
+      - action: sync+restart
+        path: ../acceptance.md
+        target: /srv/docs/acceptance.md
+      - action: sync+restart
+        path: ../DESIGN.md
+        target: /srv/docs/DESIGN.md
+      - action: sync+restart
+        path: ../robots.txt
+        target: /srv/robots.txt
+      - action: sync+restart
+        path: ../sitemap.xml
+        target: /srv/sitemap.xml
+    environment:
+      ELECTRIC_SECRET: ${ELECTRIC_SECRET:-dev-electric-secret}
+    healthcheck:
+      test:
+      - CMD
+      - httpcheck
+      - http://127.0.0.1:8080/health
+      interval: 5s
+      timeout: 5s
+      retries: 30
+      start_period: 10s
+      start_interval: 500ms
+    image: bayt-apps_shadcnui-caddy:${BAYT_IMAGE_TAG:-latest}
+    networks:
+      default:
+        aliases:
+        - caddy
+    ports:
+    - ${CADDY_TLS_HOST_PORT:-8443}:8443
+    volumes:
+    - ../.certs:/certs:ro
+  apps_shadcnui-caddy_bayt:
+    build:
+      context: ..
+      dockerfile: .bayt/Dockerfile.caddy
+      target: caddy_bayt
+      args:
+        BUILDKIT_SYNTAX: >-
+          docker/dockerfile:1.26@sha256:ecfaec9ed6d810b56388c508f4121597bfbba70d41a6dfeee4d8cad5f295fc32
+    image: bayt-apps_shadcnui-caddy_bayt:latest
+    scale: 0
+  apps_shadcnui-caddy_srcs:
+    build:
+      context: ..
+      dockerfile: .bayt/Dockerfile.caddy
+      target: caddy_srcs
+      args:
+        BUILDKIT_SYNTAX: >-
+          docker/dockerfile:1.26@sha256:ecfaec9ed6d810b56388c508f4121597bfbba70d41a6dfeee4d8cad5f295fc32
+    image: bayt-apps_shadcnui-caddy_srcs:latest
+    scale: 0

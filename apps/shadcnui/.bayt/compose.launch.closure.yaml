@@ -1,0 +1,12 @@
+# generated from bayt.cue — do not edit
+include:
+- path: ../../../apps/shadcnui/.bayt/compose.launch.yaml
+  required: false
+- path: ../../../apps/shadcnui/.bayt/compose.caddy.yaml
+  required: false
+services:
+  bayt:
+    extends:
+      file: ./compose.launch.yaml
+      service: apps_shadcnui-launch
+    scale: 1

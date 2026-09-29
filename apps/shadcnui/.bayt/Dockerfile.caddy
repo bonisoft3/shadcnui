@@ -1,0 +1,135 @@
+# generated from bayt.cue — do not edit
+FROM caddy:2.9-alpine@sha256:b4e3952384eb9524a887633ce65c752dd7c71314d2c2acf98cd5c715aaa534f0 AS caddy
+WORKDIR /monorepo/apps/shadcnui
+COPY --chmod=755 --from=tarampampam/microcheck:1@sha256:79c187c05bfa67518078bf4db117771942fa8fe107dc79a905861c75ddf28dfa /bin/httpcheck /usr/local/bin/httpcheck
+COPY docker/Caddyfile /etc/caddy/Caddyfile
+COPY shell/index.html /srv/shell/index.html
+COPY shell/shell.css /srv/shell/shell.css
+COPY shell/boot.js /srv/shell/boot.js
+COPY offline-first-sw.js /srv/offline-first-sw.js
+COPY shell/shell.yaml /srv/shell/shell.yaml
+COPY shell/shell.json /srv/shell/shell.json
+COPY shell/design.css /srv/shell/design.css
+COPY shell/screens/catalog.html /srv/shell/screens/catalog.html
+COPY shell/screens/catalog.css /srv/shell/screens/catalog.css
+COPY shell/screens/switch.html /srv/shell/screens/switch.html
+COPY shell/screens/switch.css /srv/shell/screens/switch.css
+COPY shell/screens/tabs.html /srv/shell/screens/tabs.html
+COPY shell/screens/tabs.css /srv/shell/screens/tabs.css
+COPY shell/screens/picker.html /srv/shell/screens/picker.html
+COPY shell/screens/picker.css /srv/shell/screens/picker.css
+COPY shell/screens/toggle-group.html /srv/shell/screens/toggle-group.html
+COPY shell/screens/toggle-group.css /srv/shell/screens/toggle-group.css
+COPY shell/screens/accordion.html /srv/shell/screens/accordion.html
+COPY shell/screens/accordion.css /srv/shell/screens/accordion.css
+COPY shell/screens/overlays.html /srv/shell/screens/overlays.html
+COPY shell/screens/overlays.css /srv/shell/screens/overlays.css
+COPY shell/screens/primitives.html /srv/shell/screens/primitives.html
+COPY shell/screens/primitives.css /srv/shell/screens/primitives.css
+COPY shell/screens/combobox.html /srv/shell/screens/combobox.html
+COPY shell/screens/combobox.css /srv/shell/screens/combobox.css
+COPY shell/screens/checkbox.html /srv/shell/screens/checkbox.html
+COPY shell/screens/checkbox.css /srv/shell/screens/checkbox.css
+COPY shell/screens/radio-group.html /srv/shell/screens/radio-group.html
+COPY shell/screens/radio-group.css /srv/shell/screens/radio-group.css
+COPY shell/screens/pagination.html /srv/shell/screens/pagination.html
+COPY shell/screens/pagination.css /srv/shell/screens/pagination.css
+COPY shell/screens/toast.html /srv/shell/screens/toast.html
+COPY shell/screens/toast.css /srv/shell/screens/toast.css
+COPY shell/screens/slider.html /srv/shell/screens/slider.html
+COPY shell/screens/slider.css /srv/shell/screens/slider.css
+COPY shell/screens/resizable.html /srv/shell/screens/resizable.html
+COPY shell/screens/resizable.css /srv/shell/screens/resizable.css
+COPY shell/screens/command.html /srv/shell/screens/command.html
+COPY shell/screens/command.css /srv/shell/screens/command.css
+COPY shell/screens/select.html /srv/shell/screens/select.html
+COPY shell/screens/select.css /srv/shell/screens/select.css
+COPY shell/screens/breadcrumb.html /srv/shell/screens/breadcrumb.html
+COPY shell/screens/breadcrumb.css /srv/shell/screens/breadcrumb.css
+COPY shell/screens/menu.html /srv/shell/screens/menu.html
+COPY shell/screens/menu.css /srv/shell/screens/menu.css
+COPY shell/screens/sheet.html /srv/shell/screens/sheet.html
+COPY shell/screens/sheet.css /srv/shell/screens/sheet.css
+COPY shell/screens/form.html /srv/shell/screens/form.html
+COPY shell/screens/form.css /srv/shell/screens/form.css
+COPY shell/screens/table.html /srv/shell/screens/table.html
+COPY shell/screens/table.css /srv/shell/screens/table.css
+COPY shell/screens/data-table.html /srv/shell/screens/data-table.html
+COPY shell/screens/data-table.css /srv/shell/screens/data-table.css
+COPY shell/screens/navigation.html /srv/shell/screens/navigation.html
+COPY shell/screens/navigation.css /srv/shell/screens/navigation.css
+COPY shell/screens/popover.html /srv/shell/screens/popover.html
+COPY shell/screens/popover.css /srv/shell/screens/popover.css
+COPY shell/screens/input-otp.html /srv/shell/screens/input-otp.html
+COPY shell/screens/input-otp.css /srv/shell/screens/input-otp.css
+COPY shell/screens/hover-card.html /srv/shell/screens/hover-card.html
+COPY shell/screens/hover-card.css /srv/shell/screens/hover-card.css
+COPY shell/screens/chart.html /srv/shell/screens/chart.html
+COPY shell/screens/chart.css /srv/shell/screens/chart.css
+COPY shell/screens/atoms.html /srv/shell/screens/atoms.html
+COPY shell/screens/atoms.css /srv/shell/screens/atoms.css
+COPY shell/screens/composition.html /srv/shell/screens/composition.html
+COPY shell/screens/composition.css /srv/shell/screens/composition.css
+COPY shell/screens/chat.html /srv/shell/screens/chat.html
+COPY shell/screens/chat.css /srv/shell/screens/chat.css
+COPY shell/screens/questionnaire.html /srv/shell/screens/questionnaire.html
+COPY shell/screens/questionnaire.css /srv/shell/screens/questionnaire.css
+COPY shell/screens/calendar.html /srv/shell/screens/calendar.html
+COPY shell/screens/calendar.css /srv/shell/screens/calendar.css
+COPY shell/handlers/flip-of.js /srv/shell/handlers/flip-of.js
+COPY shell/handlers/has-nondigit.js /srv/shell/handlers/has-nondigit.js
+COPY shell/handlers/has-prefix.js /srv/shell/handlers/has-prefix.js
+COPY shell/handlers/is-code.js /srv/shell/handlers/is-code.js
+COPY shell/handlers/is-digits.js /srv/shell/handlers/is-digits.js
+COPY shell/handlers/is-key.js /srv/shell/handlers/is-key.js
+COPY shell/handlers/is-printable.js /srv/shell/handlers/is-printable.js
+COPY shell/handlers/month-step.js /srv/shell/handlers/month-step.js
+COPY shell/handlers/roll-up.js /srv/shell/handlers/roll-up.js
+COPY shell/handlers/starts-with.js /srv/shell/handlers/starts-with.js
+COPY shell/handlers/type-into.js /srv/shell/handlers/type-into.js
+COPY shell/handlers/unless-answered.js /srv/shell/handlers/unless-answered.js
+COPY shell/handlers/unless-typed.js /srv/shell/handlers/unless-typed.js
+COPY shell/shared/chrome.css /srv/shell/shared/chrome.css
+COPY --from=root plugins/omnishell/interpreter/shell.js /omnishell/interpreter/shell.js
+COPY --from=root plugins/omnishell/interpreter/chrome.js /omnishell/interpreter/chrome.js
+COPY --from=root plugins/omnishell/interpreter/screen.js /omnishell/interpreter/screen.js
+COPY --from=root plugins/omnishell/interpreter/fragment.js /omnishell/interpreter/fragment.js
+COPY --from=root plugins/omnishell/interpreter/data-sync.js /omnishell/interpreter/data-sync.js
+COPY --from=root plugins/omnishell/interpreter/validate.js /omnishell/interpreter/validate.js
+COPY --from=root plugins/omnishell/interpreter/render.js /omnishell/interpreter/render.js
+COPY --from=root plugins/omnishell/interpreter/hatch.js /omnishell/interpreter/hatch.js
+COPY --from=root plugins/omnishell/interpreter/hatch-worker.js /omnishell/interpreter/hatch-worker.js
+COPY --from=root plugins/omnishell/interpreter/storybook.js /omnishell/interpreter/storybook.js
+COPY --from=root plugins/omnishell/interpreter/jessie.js /omnishell/interpreter/jessie.js
+COPY --from=root plugins/omnishell/interpreter/vendor/mecha-client.js /omnishell/interpreter/vendor/mecha-client.js
+COPY --from=root plugins/omnishell/interpreter/vendor/js-yaml.js /omnishell/interpreter/vendor/js-yaml.js
+COPY --from=root plugins/omnishell/interpreter/vendor/ses.umd.min.js /omnishell/interpreter/vendor/ses.umd.min.js
+COPY --from=root plugins/omnishell/interpreter/vendor/morphlex.js /omnishell/interpreter/vendor/morphlex.js
+COPY --from=root plugins/omnishell/components/wallclock.js /omnishell/components/wallclock.js
+COPY brief.html /srv/docs/brief.html
+COPY ir.html /srv/docs/ir.html
+COPY acceptance.md /srv/docs/acceptance.md
+COPY DESIGN.md /srv/docs/DESIGN.md
+COPY robots.txt /srv/robots.txt
+COPY sitemap.xml /srv/sitemap.xml
+COPY --parents docker/Caddyfile shell/index.html shell/shell.css shell/boot.js offline-first-sw.js shell/shell.yaml shell/shell.json shell/design.css shell/screens/catalog.html shell/screens/catalog.css shell/screens/switch.html shell/screens/switch.css shell/screens/tabs.html shell/screens/tabs.css shell/screens/picker.html shell/screens/picker.css shell/screens/toggle-group.html shell/screens/toggle-group.css shell/screens/accordion.html shell/screens/accordion.css shell/screens/overlays.html shell/screens/overlays.css shell/screens/primitives.html shell/screens/primitives.css shell/screens/combobox.html shell/screens/combobox.css shell/screens/checkbox.html shell/screens/checkbox.css shell/screens/radio-group.html shell/screens/radio-group.css shell/screens/pagination.html shell/screens/pagination.css shell/screens/toast.html shell/screens/toast.css shell/screens/slider.html shell/screens/slider.css shell/screens/resizable.html shell/screens/resizable.css shell/screens/command.html shell/screens/command.css shell/screens/select.html shell/screens/select.css shell/screens/breadcrumb.html shell/screens/breadcrumb.css shell/screens/menu.html shell/screens/menu.css shell/screens/sheet.html shell/screens/sheet.css shell/screens/form.html shell/screens/form.css shell/screens/table.html shell/screens/table.css shell/screens/data-table.html shell/screens/data-table.css shell/screens/navigation.html shell/screens/navigation.css shell/screens/popover.html shell/screens/popover.css shell/screens/input-otp.html shell/screens/input-otp.css shell/screens/hover-card.html shell/screens/hover-card.css shell/screens/chart.html shell/screens/chart.css shell/screens/atoms.html shell/screens/atoms.css shell/screens/composition.html shell/screens/composition.css shell/screens/chat.html shell/screens/chat.css shell/screens/questionnaire.html shell/screens/questionnaire.css shell/screens/calendar.html shell/screens/calendar.css shell/handlers/flip-of.js shell/handlers/has-nondigit.js shell/handlers/has-prefix.js shell/handlers/is-code.js shell/handlers/is-digits.js shell/handlers/is-key.js shell/handlers/is-printable.js shell/handlers/month-step.js shell/handlers/roll-up.js shell/handlers/starts-with.js shell/handlers/type-into.js shell/handlers/unless-answered.js shell/handlers/unless-typed.js shell/shared/chrome.css brief.html ir.html acceptance.md DESIGN.md robots.txt sitemap.xml ./
+COPY .bayt/Taskfile.yml .bayt/Taskfile.bayt.yml .bayt/bayt.caddy.json ./.bayt/
+HEALTHCHECK --interval=5s --timeout=5s --retries=30 --start-period=10s CMD ["httpcheck","http://127.0.0.1:8080/health"]
+
+FROM busybox:musl@sha256:03db190ed4c1ceb1c55d179a0940e2d71d42130636a780272629735893292223 AS caddy_ctxs
+WORKDIR /monorepo/apps/shadcnui
+COPY --parents docker/Caddyfile shell/index.html shell/shell.css shell/boot.js offline-first-sw.js shell/shell.yaml shell/shell.json shell/design.css shell/screens/catalog.html shell/screens/catalog.css shell/screens/switch.html shell/screens/switch.css shell/screens/tabs.html shell/screens/tabs.css shell/screens/picker.html shell/screens/picker.css shell/screens/toggle-group.html shell/screens/toggle-group.css shell/screens/accordion.html shell/screens/accordion.css shell/screens/overlays.html shell/screens/overlays.css shell/screens/primitives.html shell/screens/primitives.css shell/screens/combobox.html shell/screens/combobox.css shell/screens/checkbox.html shell/screens/checkbox.css shell/screens/radio-group.html shell/screens/radio-group.css shell/screens/pagination.html shell/screens/pagination.css shell/screens/toast.html shell/screens/toast.css shell/screens/slider.html shell/screens/slider.css shell/screens/resizable.html shell/screens/resizable.css shell/screens/command.html shell/screens/command.css shell/screens/select.html shell/screens/select.css shell/screens/breadcrumb.html shell/screens/breadcrumb.css shell/screens/menu.html shell/screens/menu.css shell/screens/sheet.html shell/screens/sheet.css shell/screens/form.html shell/screens/form.css shell/screens/table.html shell/screens/table.css shell/screens/data-table.html shell/screens/data-table.css shell/screens/navigation.html shell/screens/navigation.css shell/screens/popover.html shell/screens/popover.css shell/screens/input-otp.html shell/screens/input-otp.css shell/screens/hover-card.html shell/screens/hover-card.css shell/screens/chart.html shell/screens/chart.css shell/screens/atoms.html shell/screens/atoms.css shell/screens/composition.html shell/screens/composition.css shell/screens/chat.html shell/screens/chat.css shell/screens/questionnaire.html shell/screens/questionnaire.css shell/screens/calendar.html shell/screens/calendar.css shell/handlers/flip-of.js shell/handlers/has-nondigit.js shell/handlers/has-prefix.js shell/handlers/is-code.js shell/handlers/is-digits.js shell/handlers/is-key.js shell/handlers/is-printable.js shell/handlers/month-step.js shell/handlers/roll-up.js shell/handlers/starts-with.js shell/handlers/type-into.js shell/handlers/unless-answered.js shell/handlers/unless-typed.js shell/shared/chrome.css brief.html ir.html acceptance.md DESIGN.md robots.txt sitemap.xml ./
+ARG SOURCE_DATE_EPOCH
+ARG BAYT_CLAMP=1
+RUN if [ "${BAYT_CLAMP:-1}" != 0 ]; then find /monorepo/apps/shadcnui -exec touch -hd @${SOURCE_DATE_EPOCH:-0} {} + && touch -hd @${SOURCE_DATE_EPOCH:-0} /monorepo /monorepo/apps; fi
+FROM scratch AS caddy_srcs
+COPY --from=caddy_ctxs /monorepo /monorepo
+
+FROM busybox:musl@sha256:03db190ed4c1ceb1c55d179a0940e2d71d42130636a780272629735893292223 AS caddy_bayt_ctxs
+WORKDIR /monorepo/apps/shadcnui
+COPY --parents .bayt/compose.caddy.yaml .bayt/Dockerfile.caddy .bayt/bayt.caddy.json .bayt/Taskfile.yml .bayt/Taskfile.bayt.yml ./
+ARG SOURCE_DATE_EPOCH
+ARG BAYT_CLAMP=1
+RUN if [ "${BAYT_CLAMP:-1}" != 0 ]; then find /monorepo/apps/shadcnui -exec touch -hd @${SOURCE_DATE_EPOCH:-0} {} + && touch -hd @${SOURCE_DATE_EPOCH:-0} /monorepo /monorepo/apps; fi
+FROM scratch AS caddy_bayt
+COPY --from=caddy_bayt_ctxs /monorepo /monorepo

@@ -1,0 +1,2084 @@
+{
+  "_generated_from": "bayt.cue (do not edit)",
+  "compose": {
+    "up": false,
+    "manual": false,
+    "build": {
+      "additional_contexts": {
+        "root": "../../.."
+      },
+      "secrets": [],
+      "args": {}
+    },
+    "environment": {
+      "ELECTRIC_SECRET": "${ELECTRIC_SECRET:-dev-electric-secret}"
+    },
+    "ports": [
+      "${CADDY_TLS_HOST_PORT:-8443}:8443"
+    ],
+    "volumes": [
+      "../.certs:/certs:ro"
+    ],
+    "depends_on": {},
+    "networks": {
+      "default": {
+        "aliases": [
+          "caddy"
+        ]
+      }
+    },
+    "healthcheck": {
+      "test": [
+        "CMD",
+        "httpcheck",
+        "http://127.0.0.1:8080/health"
+      ],
+      "interval": "5s",
+      "timeout": "5s",
+      "retries": 30,
+      "start_period": "10s",
+      "start_interval": "500ms"
+    },
+    "develop": {
+      "watch": [
+        {
+          "action": "sync+restart",
+          "path": "../docker/Caddyfile",
+          "target": "/etc/caddy/Caddyfile"
+        },
+        {
+          "action": "sync+restart",
+          "path": "../shell/index.html",
+          "target": "/srv/shell/index.html"
+        },
+        {
+          "action": "sync+restart",
+          "path": "../shell/shell.css",
+          "target": "/srv/shell/shell.css"
+        },
+        {
+          "action": "sync+restart",
+          "path": "../shell/boot.js",
+          "target": "/srv/shell/boot.js"
+        },
+        {
+          "action": "sync+restart",
+          "path": "../offline-first-sw.js",
+          "target": "/srv/offline-first-sw.js"
+        },
+        {
+          "action": "sync+restart",
+          "path": "../shell/shell.yaml",
+          "target": "/srv/shell/shell.yaml"
+        },
+        {
+          "action": "sync+restart",
+          "path": "../shell/shell.json",
+          "target": "/srv/shell/shell.json"
+        },
+        {
+          "action": "sync+restart",
+          "path": "../shell/design.css",
+          "target": "/srv/shell/design.css"
+        },
+        {
+          "action": "sync+restart",
+          "path": "../shell/screens/catalog.html",
+          "target": "/srv/shell/screens/catalog.html"
+        },
+        {
+          "action": "sync+restart",
+          "path": "../shell/screens/catalog.css",
+          "target": "/srv/shell/screens/catalog.css"
+        },
+        {
+          "action": "sync+restart",
+          "path": "../shell/screens/switch.html",
+          "target": "/srv/shell/screens/switch.html"
+        },
+        {
+          "action": "sync+restart",
+          "path": "../shell/screens/switch.css",
+          "target": "/srv/shell/screens/switch.css"
+        },
+        {
+          "action": "sync+restart",
+          "path": "../shell/screens/tabs.html",
+          "target": "/srv/shell/screens/tabs.html"
+        },
+        {
+          "action": "sync+restart",
+          "path": "../shell/screens/tabs.css",
+          "target": "/srv/shell/screens/tabs.css"
+        },
+        {
+          "action": "sync+restart",
+          "path": "../shell/screens/picker.html",
+          "target": "/srv/shell/screens/picker.html"
+        },
+        {
+          "action": "sync+restart",
+          "path": "../shell/screens/picker.css",
+          "target": "/srv/shell/screens/picker.css"
+        },
+        {
+          "action": "sync+restart",
+          "path": "../shell/screens/toggle-group.html",
+          "target": "/srv/shell/screens/toggle-group.html"
+        },
+        {
+          "action": "sync+restart",
+          "path": "../shell/screens/toggle-group.css",
+          "target": "/srv/shell/screens/toggle-group.css"
+        },
+        {
+          "action": "sync+restart",
+          "path": "../shell/screens/accordion.html",
+          "target": "/srv/shell/screens/accordion.html"
+        },
+        {
+          "action": "sync+restart",
+          "path": "../shell/screens/accordion.css",
+          "target": "/srv/shell/screens/accordion.css"
+        },
+        {
+          "action": "sync+restart",
+          "path": "../shell/screens/overlays.html",
+          "target": "/srv/shell/screens/overlays.html"
+        },
+        {
+          "action": "sync+restart",
+          "path": "../shell/screens/overlays.css",
+          "target": "/srv/shell/screens/overlays.css"
+        },
+        {
+          "action": "sync+restart",
+          "path": "../shell/screens/primitives.html",
+          "target": "/srv/shell/screens/primitives.html"
+        },
+        {
+          "action": "sync+restart",
+          "path": "../shell/screens/primitives.css",
+          "target": "/srv/shell/screens/primitives.css"
+        },
+        {
+          "action": "sync+restart",
+          "path": "../shell/screens/combobox.html",
+          "target": "/srv/shell/screens/combobox.html"
+        },
+        {
+          "action": "sync+restart",
+          "path": "../shell/screens/combobox.css",
+          "target": "/srv/shell/screens/combobox.css"
+        },
+        {
+          "action": "sync+restart",
+          "path": "../shell/screens/checkbox.html",
+          "target": "/srv/shell/screens/checkbox.html"
+        },
+        {
+          "action": "sync+restart",
+          "path": "../shell/screens/checkbox.css",
+          "target": "/srv/shell/screens/checkbox.css"
+        },
+        {
+          "action": "sync+restart",
+          "path": "../shell/screens/radio-group.html",
+          "target": "/srv/shell/screens/radio-group.html"
+        },
+        {
+          "action": "sync+restart",
+          "path": "../shell/screens/radio-group.css",
+          "target": "/srv/shell/screens/radio-group.css"
+        },
+        {
+          "action": "sync+restart",
+          "path": "../shell/screens/pagination.html",
+          "target": "/srv/shell/screens/pagination.html"
+        },
+        {
+          "action": "sync+restart",
+          "path": "../shell/screens/pagination.css",
+          "target": "/srv/shell/screens/pagination.css"
+        },
+        {
+          "action": "sync+restart",
+          "path": "../shell/screens/toast.html",
+          "target": "/srv/shell/screens/toast.html"
+        },
+        {
+          "action": "sync+restart",
+          "path": "../shell/screens/toast.css",
+          "target": "/srv/shell/screens/toast.css"
+        },
+        {
+          "action": "sync+restart",
+          "path": "../shell/screens/slider.html",
+          "target": "/srv/shell/screens/slider.html"
+        },
+        {
+          "action": "sync+restart",
+          "path": "../shell/screens/slider.css",
+          "target": "/srv/shell/screens/slider.css"
+        },
+        {
+          "action": "sync+restart",
+          "path": "../shell/screens/resizable.html",
+          "target": "/srv/shell/screens/resizable.html"
+        },
+        {
+          "action": "sync+restart",
+          "path": "../shell/screens/resizable.css",
+          "target": "/srv/shell/screens/resizable.css"
+        },
+        {
+          "action": "sync+restart",
+          "path": "../shell/screens/command.html",
+          "target": "/srv/shell/screens/command.html"
+        },
+        {
+          "action": "sync+restart",
+          "path": "../shell/screens/command.css",
+          "target": "/srv/shell/screens/command.css"
+        },
+        {
+          "action": "sync+restart",
+          "path": "../shell/screens/select.html",
+          "target": "/srv/shell/screens/select.html"
+        },
+        {
+          "action": "sync+restart",
+          "path": "../shell/screens/select.css",
+          "target": "/srv/shell/screens/select.css"
+        },
+        {
+          "action": "sync+restart",
+          "path": "../shell/screens/breadcrumb.html",
+          "target": "/srv/shell/screens/breadcrumb.html"
+        },
+        {
+          "action": "sync+restart",
+          "path": "../shell/screens/breadcrumb.css",
+          "target": "/srv/shell/screens/breadcrumb.css"
+        },
+        {
+          "action": "sync+restart",
+          "path": "../shell/screens/menu.html",
+          "target": "/srv/shell/screens/menu.html"
+        },
+        {
+          "action": "sync+restart",
+          "path": "../shell/screens/menu.css",
+          "target": "/srv/shell/screens/menu.css"
+        },
+        {
+          "action": "sync+restart",
+          "path": "../shell/screens/sheet.html",
+          "target": "/srv/shell/screens/sheet.html"
+        },
+        {
+          "action": "sync+restart",
+          "path": "../shell/screens/sheet.css",
+          "target": "/srv/shell/screens/sheet.css"
+        },
+        {
+          "action": "sync+restart",
+          "path": "../shell/screens/form.html",
+          "target": "/srv/shell/screens/form.html"
+        },
+        {
+          "action": "sync+restart",
+          "path": "../shell/screens/form.css",
+          "target": "/srv/shell/screens/form.css"
+        },
+        {
+          "action": "sync+restart",
+          "path": "../shell/screens/table.html",
+          "target": "/srv/shell/screens/table.html"
+        },
+        {
+          "action": "sync+restart",
+          "path": "../shell/screens/table.css",
+          "target": "/srv/shell/screens/table.css"
+        },
+        {
+          "action": "sync+restart",
+          "path": "../shell/screens/data-table.html",
+          "target": "/srv/shell/screens/data-table.html"
+        },
+        {
+          "action": "sync+restart",
+          "path": "../shell/screens/data-table.css",
+          "target": "/srv/shell/screens/data-table.css"
+        },
+        {
+          "action": "sync+restart",
+          "path": "../shell/screens/navigation.html",
+          "target": "/srv/shell/screens/navigation.html"
+        },
+        {
+          "action": "sync+restart",
+          "path": "../shell/screens/navigation.css",
+          "target": "/srv/shell/screens/navigation.css"
+        },
+        {
+          "action": "sync+restart",
+          "path": "../shell/screens/popover.html",
+          "target": "/srv/shell/screens/popover.html"
+        },
+        {
+          "action": "sync+restart",
+          "path": "../shell/screens/popover.css",
+          "target": "/srv/shell/screens/popover.css"
+        },
+        {
+          "action": "sync+restart",
+          "path": "../shell/screens/input-otp.html",
+          "target": "/srv/shell/screens/input-otp.html"
+        },
+        {
+          "action": "sync+restart",
+          "path": "../shell/screens/input-otp.css",
+          "target": "/srv/shell/screens/input-otp.css"
+        },
+        {
+          "action": "sync+restart",
+          "path": "../shell/screens/hover-card.html",
+          "target": "/srv/shell/screens/hover-card.html"
+        },
+        {
+          "action": "sync+restart",
+          "path": "../shell/screens/hover-card.css",
+          "target": "/srv/shell/screens/hover-card.css"
+        },
+        {
+          "action": "sync+restart",
+          "path": "../shell/screens/chart.html",
+          "target": "/srv/shell/screens/chart.html"
+        },
+        {
+          "action": "sync+restart",
+          "path": "../shell/screens/chart.css",
+          "target": "/srv/shell/screens/chart.css"
+        },
+        {
+          "action": "sync+restart",
+          "path": "../shell/screens/atoms.html",
+          "target": "/srv/shell/screens/atoms.html"
+        },
+        {
+          "action": "sync+restart",
+          "path": "../shell/screens/atoms.css",
+          "target": "/srv/shell/screens/atoms.css"
+        },
+        {
+          "action": "sync+restart",
+          "path": "../shell/screens/composition.html",
+          "target": "/srv/shell/screens/composition.html"
+        },
+        {
+          "action": "sync+restart",
+          "path": "../shell/screens/composition.css",
+          "target": "/srv/shell/screens/composition.css"
+        },
+        {
+          "action": "sync+restart",
+          "path": "../shell/screens/chat.html",
+          "target": "/srv/shell/screens/chat.html"
+        },
+        {
+          "action": "sync+restart",
+          "path": "../shell/screens/chat.css",
+          "target": "/srv/shell/screens/chat.css"
+        },
+        {
+          "action": "sync+restart",
+          "path": "../shell/screens/questionnaire.html",
+          "target": "/srv/shell/screens/questionnaire.html"
+        },
+        {
+          "action": "sync+restart",
+          "path": "../shell/screens/questionnaire.css",
+          "target": "/srv/shell/screens/questionnaire.css"
+        },
+        {
+          "action": "sync+restart",
+          "path": "../shell/screens/calendar.html",
+          "target": "/srv/shell/screens/calendar.html"
+        },
+        {
+          "action": "sync+restart",
+          "path": "../shell/screens/calendar.css",
+          "target": "/srv/shell/screens/calendar.css"
+        },
+        {
+          "action": "sync+restart",
+          "path": "../shell/handlers/flip-of.js",
+          "target": "/srv/shell/handlers/flip-of.js"
+        },
+        {
+          "action": "sync+restart",
+          "path": "../shell/handlers/has-nondigit.js",
+          "target": "/srv/shell/handlers/has-nondigit.js"
+        },
+        {
+          "action": "sync+restart",
+          "path": "../shell/handlers/has-prefix.js",
+          "target": "/srv/shell/handlers/has-prefix.js"
+        },
+        {
+          "action": "sync+restart",
+          "path": "../shell/handlers/is-code.js",
+          "target": "/srv/shell/handlers/is-code.js"
+        },
+        {
+          "action": "sync+restart",
+          "path": "../shell/handlers/is-digits.js",
+          "target": "/srv/shell/handlers/is-digits.js"
+        },
+        {
+          "action": "sync+restart",
+          "path": "../shell/handlers/is-key.js",
+          "target": "/srv/shell/handlers/is-key.js"
+        },
+        {
+          "action": "sync+restart",
+          "path": "../shell/handlers/is-printable.js",
+          "target": "/srv/shell/handlers/is-printable.js"
+        },
+        {
+          "action": "sync+restart",
+          "path": "../shell/handlers/month-step.js",
+          "target": "/srv/shell/handlers/month-step.js"
+        },
+        {
+          "action": "sync+restart",
+          "path": "../shell/handlers/roll-up.js",
+          "target": "/srv/shell/handlers/roll-up.js"
+        },
+        {
+          "action": "sync+restart",
+          "path": "../shell/handlers/starts-with.js",
+          "target": "/srv/shell/handlers/starts-with.js"
+        },
+        {
+          "action": "sync+restart",
+          "path": "../shell/handlers/type-into.js",
+          "target": "/srv/shell/handlers/type-into.js"
+        },
+        {
+          "action": "sync+restart",
+          "path": "../shell/handlers/unless-answered.js",
+          "target": "/srv/shell/handlers/unless-answered.js"
+        },
+        {
+          "action": "sync+restart",
+          "path": "../shell/handlers/unless-typed.js",
+          "target": "/srv/shell/handlers/unless-typed.js"
+        },
+        {
+          "action": "sync+restart",
+          "path": "../shell/shared/chrome.css",
+          "target": "/srv/shell/shared/chrome.css"
+        },
+        {
+          "action": "sync+restart",
+          "path": "../../../plugins/omnishell/interpreter/shell.js",
+          "target": "/omnishell/interpreter/shell.js"
+        },
+        {
+          "action": "sync+restart",
+          "path": "../../../plugins/omnishell/interpreter/chrome.js",
+          "target": "/omnishell/interpreter/chrome.js"
+        },
+        {
+          "action": "sync+restart",
+          "path": "../../../plugins/omnishell/interpreter/screen.js",
+          "target": "/omnishell/interpreter/screen.js"
+        },
+        {
+          "action": "sync+restart",
+          "path": "../../../plugins/omnishell/interpreter/fragment.js",
+          "target": "/omnishell/interpreter/fragment.js"
+        },
+        {
+          "action": "sync+restart",
+          "path": "../../../plugins/omnishell/interpreter/data-sync.js",
+          "target": "/omnishell/interpreter/data-sync.js"
+        },
+        {
+          "action": "sync+restart",
+          "path": "../../../plugins/omnishell/interpreter/validate.js",
+          "target": "/omnishell/interpreter/validate.js"
+        },
+        {
+          "action": "sync+restart",
+          "path": "../../../plugins/omnishell/interpreter/render.js",
+          "target": "/omnishell/interpreter/render.js"
+        },
+        {
+          "action": "sync+restart",
+          "path": "../../../plugins/omnishell/interpreter/hatch.js",
+          "target": "/omnishell/interpreter/hatch.js"
+        },
+        {
+          "action": "sync+restart",
+          "path": "../../../plugins/omnishell/interpreter/hatch-worker.js",
+          "target": "/omnishell/interpreter/hatch-worker.js"
+        },
+        {
+          "action": "sync+restart",
+          "path": "../../../plugins/omnishell/interpreter/storybook.js",
+          "target": "/omnishell/interpreter/storybook.js"
+        },
+        {
+          "action": "sync+restart",
+          "path": "../../../plugins/omnishell/interpreter/jessie.js",
+          "target": "/omnishell/interpreter/jessie.js"
+        },
+        {
+          "action": "sync+restart",
+          "path": "../../../plugins/omnishell/interpreter/vendor/mecha-client.js",
+          "target": "/omnishell/interpreter/vendor/mecha-client.js"
+        },
+        {
+          "action": "sync+restart",
+          "path": "../../../plugins/omnishell/interpreter/vendor/js-yaml.js",
+          "target": "/omnishell/interpreter/vendor/js-yaml.js"
+        },
+        {
+          "action": "sync+restart",
+          "path": "../../../plugins/omnishell/interpreter/vendor/ses.umd.min.js",
+          "target": "/omnishell/interpreter/vendor/ses.umd.min.js"
+        },
+        {
+          "action": "sync+restart",
+          "path": "../../../plugins/omnishell/interpreter/vendor/morphlex.js",
+          "target": "/omnishell/interpreter/vendor/morphlex.js"
+        },
+        {
+          "action": "sync+restart",
+          "path": "../../../plugins/omnishell/components/wallclock.js",
+          "target": "/omnishell/components/wallclock.js"
+        },
+        {
+          "action": "sync+restart",
+          "path": "../brief.html",
+          "target": "/srv/docs/brief.html"
+        },
+        {
+          "action": "sync+restart",
+          "path": "../ir.html",
+          "target": "/srv/docs/ir.html"
+        },
+        {
+          "action": "sync+restart",
+          "path": "../acceptance.md",
+          "target": "/srv/docs/acceptance.md"
+        },
+        {
+          "action": "sync+restart",
+          "path": "../DESIGN.md",
+          "target": "/srv/docs/DESIGN.md"
+        },
+        {
+          "action": "sync+restart",
+          "path": "../robots.txt",
+          "target": "/srv/robots.txt"
+        },
+        {
+          "action": "sync+restart",
+          "path": "../sitemap.xml",
+          "target": "/srv/sitemap.xml"
+        }
+      ]
+    }
+  },
+  "dockerfile": {
+    "preamble": [],
+    "preambleCopyContexts": [],
+    "from": {
+      "name": "caddy:2.9-alpine@sha256:b4e3952384eb9524a887633ce65c752dd7c71314d2c2acf98cd5c715aaa534f0"
+    },
+    "add": [],
+    "mounts": [],
+    "secrets": {},
+    "extra_hosts": [],
+    "epilogue": [],
+    "copy": [
+      {
+        "from": {
+          "name": "tarampampam/microcheck:1@sha256:79c187c05bfa67518078bf4db117771942fa8fe107dc79a905861c75ddf28dfa"
+        },
+        "srcs": [
+          "/bin/httpcheck"
+        ],
+        "dst": "/usr/local/bin/httpcheck",
+        "chmod": "755",
+        "link": true,
+        "parents": false,
+        "exclude": []
+      },
+      {
+        "from": null,
+        "srcs": [
+          "docker/Caddyfile"
+        ],
+        "dst": "/etc/caddy/Caddyfile",
+        "link": true,
+        "parents": false,
+        "exclude": []
+      },
+      {
+        "from": null,
+        "srcs": [
+          "shell/index.html"
+        ],
+        "dst": "/srv/shell/index.html",
+        "link": true,
+        "parents": false,
+        "exclude": []
+      },
+      {
+        "from": null,
+        "srcs": [
+          "shell/shell.css"
+        ],
+        "dst": "/srv/shell/shell.css",
+        "link": true,
+        "parents": false,
+        "exclude": []
+      },
+      {
+        "from": null,
+        "srcs": [
+          "shell/boot.js"
+        ],
+        "dst": "/srv/shell/boot.js",
+        "link": true,
+        "parents": false,
+        "exclude": []
+      },
+      {
+        "from": null,
+        "srcs": [
+          "offline-first-sw.js"
+        ],
+        "dst": "/srv/offline-first-sw.js",
+        "link": true,
+        "parents": false,
+        "exclude": []
+      },
+      {
+        "from": null,
+        "srcs": [
+          "shell/shell.yaml"
+        ],
+        "dst": "/srv/shell/shell.yaml",
+        "link": true,
+        "parents": false,
+        "exclude": []
+      },
+      {
+        "from": null,
+        "srcs": [
+          "shell/shell.json"
+        ],
+        "dst": "/srv/shell/shell.json",
+        "link": true,
+        "parents": false,
+        "exclude": []
+      },
+      {
+        "from": null,
+        "srcs": [
+          "shell/design.css"
+        ],
+        "dst": "/srv/shell/design.css",
+        "link": true,
+        "parents": false,
+        "exclude": []
+      },
+      {
+        "from": null,
+        "srcs": [
+          "shell/screens/catalog.html"
+        ],
+        "dst": "/srv/shell/screens/catalog.html",
+        "link": true,
+        "parents": false,
+        "exclude": []
+      },
+      {
+        "from": null,
+        "srcs": [
+          "shell/screens/catalog.css"
+        ],
+        "dst": "/srv/shell/screens/catalog.css",
+        "link": true,
+        "parents": false,
+        "exclude": []
+      },
+      {
+        "from": null,
+        "srcs": [
+          "shell/screens/switch.html"
+        ],
+        "dst": "/srv/shell/screens/switch.html",
+        "link": true,
+        "parents": false,
+        "exclude": []
+      },
+      {
+        "from": null,
+        "srcs": [
+          "shell/screens/switch.css"
+        ],
+        "dst": "/srv/shell/screens/switch.css",
+        "link": true,
+        "parents": false,
+        "exclude": []
+      },
+      {
+        "from": null,
+        "srcs": [
+          "shell/screens/tabs.html"
+        ],
+        "dst": "/srv/shell/screens/tabs.html",
+        "link": true,
+        "parents": false,
+        "exclude": []
+      },
+      {
+        "from": null,
+        "srcs": [
+          "shell/screens/tabs.css"
+        ],
+        "dst": "/srv/shell/screens/tabs.css",
+        "link": true,
+        "parents": false,
+        "exclude": []
+      },
+      {
+        "from": null,
+        "srcs": [
+          "shell/screens/picker.html"
+        ],
+        "dst": "/srv/shell/screens/picker.html",
+        "link": true,
+        "parents": false,
+        "exclude": []
+      },
+      {
+        "from": null,
+        "srcs": [
+          "shell/screens/picker.css"
+        ],
+        "dst": "/srv/shell/screens/picker.css",
+        "link": true,
+        "parents": false,
+        "exclude": []
+      },
+      {
+        "from": null,
+        "srcs": [
+          "shell/screens/toggle-group.html"
+        ],
+        "dst": "/srv/shell/screens/toggle-group.html",
+        "link": true,
+        "parents": false,
+        "exclude": []
+      },
+      {
+        "from": null,
+        "srcs": [
+          "shell/screens/toggle-group.css"
+        ],
+        "dst": "/srv/shell/screens/toggle-group.css",
+        "link": true,
+        "parents": false,
+        "exclude": []
+      },
+      {
+        "from": null,
+        "srcs": [
+          "shell/screens/accordion.html"
+        ],
+        "dst": "/srv/shell/screens/accordion.html",
+        "link": true,
+        "parents": false,
+        "exclude": []
+      },
+      {
+        "from": null,
+        "srcs": [
+          "shell/screens/accordion.css"
+        ],
+        "dst": "/srv/shell/screens/accordion.css",
+        "link": true,
+        "parents": false,
+        "exclude": []
+      },
+      {
+        "from": null,
+        "srcs": [
+          "shell/screens/overlays.html"
+        ],
+        "dst": "/srv/shell/screens/overlays.html",
+        "link": true,
+        "parents": false,
+        "exclude": []
+      },
+      {
+        "from": null,
+        "srcs": [
+          "shell/screens/overlays.css"
+        ],
+        "dst": "/srv/shell/screens/overlays.css",
+        "link": true,
+        "parents": false,
+        "exclude": []
+      },
+      {
+        "from": null,
+        "srcs": [
+          "shell/screens/primitives.html"
+        ],
+        "dst": "/srv/shell/screens/primitives.html",
+        "link": true,
+        "parents": false,
+        "exclude": []
+      },
+      {
+        "from": null,
+        "srcs": [
+          "shell/screens/primitives.css"
+        ],
+        "dst": "/srv/shell/screens/primitives.css",
+        "link": true,
+        "parents": false,
+        "exclude": []
+      },
+      {
+        "from": null,
+        "srcs": [
+          "shell/screens/combobox.html"
+        ],
+        "dst": "/srv/shell/screens/combobox.html",
+        "link": true,
+        "parents": false,
+        "exclude": []
+      },
+      {
+        "from": null,
+        "srcs": [
+          "shell/screens/combobox.css"
+        ],
+        "dst": "/srv/shell/screens/combobox.css",
+        "link": true,
+        "parents": false,
+        "exclude": []
+      },
+      {
+        "from": null,
+        "srcs": [
+          "shell/screens/checkbox.html"
+        ],
+        "dst": "/srv/shell/screens/checkbox.html",
+        "link": true,
+        "parents": false,
+        "exclude": []
+      },
+      {
+        "from": null,
+        "srcs": [
+          "shell/screens/checkbox.css"
+        ],
+        "dst": "/srv/shell/screens/checkbox.css",
+        "link": true,
+        "parents": false,
+        "exclude": []
+      },
+      {
+        "from": null,
+        "srcs": [
+          "shell/screens/radio-group.html"
+        ],
+        "dst": "/srv/shell/screens/radio-group.html",
+        "link": true,
+        "parents": false,
+        "exclude": []
+      },
+      {
+        "from": null,
+        "srcs": [
+          "shell/screens/radio-group.css"
+        ],
+        "dst": "/srv/shell/screens/radio-group.css",
+        "link": true,
+        "parents": false,
+        "exclude": []
+      },
+      {
+        "from": null,
+        "srcs": [
+          "shell/screens/pagination.html"
+        ],
+        "dst": "/srv/shell/screens/pagination.html",
+        "link": true,
+        "parents": false,
+        "exclude": []
+      },
+      {
+        "from": null,
+        "srcs": [
+          "shell/screens/pagination.css"
+        ],
+        "dst": "/srv/shell/screens/pagination.css",
+        "link": true,
+        "parents": false,
+        "exclude": []
+      },
+      {
+        "from": null,
+        "srcs": [
+          "shell/screens/toast.html"
+        ],
+        "dst": "/srv/shell/screens/toast.html",
+        "link": true,
+        "parents": false,
+        "exclude": []
+      },
+      {
+        "from": null,
+        "srcs": [
+          "shell/screens/toast.css"
+        ],
+        "dst": "/srv/shell/screens/toast.css",
+        "link": true,
+        "parents": false,
+        "exclude": []
+      },
+      {
+        "from": null,
+        "srcs": [
+          "shell/screens/slider.html"
+        ],
+        "dst": "/srv/shell/screens/slider.html",
+        "link": true,
+        "parents": false,
+        "exclude": []
+      },
+      {
+        "from": null,
+        "srcs": [
+          "shell/screens/slider.css"
+        ],
+        "dst": "/srv/shell/screens/slider.css",
+        "link": true,
+        "parents": false,
+        "exclude": []
+      },
+      {
+        "from": null,
+        "srcs": [
+          "shell/screens/resizable.html"
+        ],
+        "dst": "/srv/shell/screens/resizable.html",
+        "link": true,
+        "parents": false,
+        "exclude": []
+      },
+      {
+        "from": null,
+        "srcs": [
+          "shell/screens/resizable.css"
+        ],
+        "dst": "/srv/shell/screens/resizable.css",
+        "link": true,
+        "parents": false,
+        "exclude": []
+      },
+      {
+        "from": null,
+        "srcs": [
+          "shell/screens/command.html"
+        ],
+        "dst": "/srv/shell/screens/command.html",
+        "link": true,
+        "parents": false,
+        "exclude": []
+      },
+      {
+        "from": null,
+        "srcs": [
+          "shell/screens/command.css"
+        ],
+        "dst": "/srv/shell/screens/command.css",
+        "link": true,
+        "parents": false,
+        "exclude": []
+      },
+      {
+        "from": null,
+        "srcs": [
+          "shell/screens/select.html"
+        ],
+        "dst": "/srv/shell/screens/select.html",
+        "link": true,
+        "parents": false,
+        "exclude": []
+      },
+      {
+        "from": null,
+        "srcs": [
+          "shell/screens/select.css"
+        ],
+        "dst": "/srv/shell/screens/select.css",
+        "link": true,
+        "parents": false,
+        "exclude": []
+      },
+      {
+        "from": null,
+        "srcs": [
+          "shell/screens/breadcrumb.html"
+        ],
+        "dst": "/srv/shell/screens/breadcrumb.html",
+        "link": true,
+        "parents": false,
+        "exclude": []
+      },
+      {
+        "from": null,
+        "srcs": [
+          "shell/screens/breadcrumb.css"
+        ],
+        "dst": "/srv/shell/screens/breadcrumb.css",
+        "link": true,
+        "parents": false,
+        "exclude": []
+      },
+      {
+        "from": null,
+        "srcs": [
+          "shell/screens/menu.html"
+        ],
+        "dst": "/srv/shell/screens/menu.html",
+        "link": true,
+        "parents": false,
+        "exclude": []
+      },
+      {
+        "from": null,
+        "srcs": [
+          "shell/screens/menu.css"
+        ],
+        "dst": "/srv/shell/screens/menu.css",
+        "link": true,
+        "parents": false,
+        "exclude": []
+      },
+      {
+        "from": null,
+        "srcs": [
+          "shell/screens/sheet.html"
+        ],
+        "dst": "/srv/shell/screens/sheet.html",
+        "link": true,
+        "parents": false,
+        "exclude": []
+      },
+      {
+        "from": null,
+        "srcs": [
+          "shell/screens/sheet.css"
+        ],
+        "dst": "/srv/shell/screens/sheet.css",
+        "link": true,
+        "parents": false,
+        "exclude": []
+      },
+      {
+        "from": null,
+        "srcs": [
+          "shell/screens/form.html"
+        ],
+        "dst": "/srv/shell/screens/form.html",
+        "link": true,
+        "parents": false,
+        "exclude": []
+      },
+      {
+        "from": null,
+        "srcs": [
+          "shell/screens/form.css"
+        ],
+        "dst": "/srv/shell/screens/form.css",
+        "link": true,
+        "parents": false,
+        "exclude": []
+      },
+      {
+        "from": null,
+        "srcs": [
+          "shell/screens/table.html"
+        ],
+        "dst": "/srv/shell/screens/table.html",
+        "link": true,
+        "parents": false,
+        "exclude": []
+      },
+      {
+        "from": null,
+        "srcs": [
+          "shell/screens/table.css"
+        ],
+        "dst": "/srv/shell/screens/table.css",
+        "link": true,
+        "parents": false,
+        "exclude": []
+      },
+      {
+        "from": null,
+        "srcs": [
+          "shell/screens/data-table.html"
+        ],
+        "dst": "/srv/shell/screens/data-table.html",
+        "link": true,
+        "parents": false,
+        "exclude": []
+      },
+      {
+        "from": null,
+        "srcs": [
+          "shell/screens/data-table.css"
+        ],
+        "dst": "/srv/shell/screens/data-table.css",
+        "link": true,
+        "parents": false,
+        "exclude": []
+      },
+      {
+        "from": null,
+        "srcs": [
+          "shell/screens/navigation.html"
+        ],
+        "dst": "/srv/shell/screens/navigation.html",
+        "link": true,
+        "parents": false,
+        "exclude": []
+      },
+      {
+        "from": null,
+        "srcs": [
+          "shell/screens/navigation.css"
+        ],
+        "dst": "/srv/shell/screens/navigation.css",
+        "link": true,
+        "parents": false,
+        "exclude": []
+      },
+      {
+        "from": null,
+        "srcs": [
+          "shell/screens/popover.html"
+        ],
+        "dst": "/srv/shell/screens/popover.html",
+        "link": true,
+        "parents": false,
+        "exclude": []
+      },
+      {
+        "from": null,
+        "srcs": [
+          "shell/screens/popover.css"
+        ],
+        "dst": "/srv/shell/screens/popover.css",
+        "link": true,
+        "parents": false,
+        "exclude": []
+      },
+      {
+        "from": null,
+        "srcs": [
+          "shell/screens/input-otp.html"
+        ],
+        "dst": "/srv/shell/screens/input-otp.html",
+        "link": true,
+        "parents": false,
+        "exclude": []
+      },
+      {
+        "from": null,
+        "srcs": [
+          "shell/screens/input-otp.css"
+        ],
+        "dst": "/srv/shell/screens/input-otp.css",
+        "link": true,
+        "parents": false,
+        "exclude": []
+      },
+      {
+        "from": null,
+        "srcs": [
+          "shell/screens/hover-card.html"
+        ],
+        "dst": "/srv/shell/screens/hover-card.html",
+        "link": true,
+        "parents": false,
+        "exclude": []
+      },
+      {
+        "from": null,
+        "srcs": [
+          "shell/screens/hover-card.css"
+        ],
+        "dst": "/srv/shell/screens/hover-card.css",
+        "link": true,
+        "parents": false,
+        "exclude": []
+      },
+      {
+        "from": null,
+        "srcs": [
+          "shell/screens/chart.html"
+        ],
+        "dst": "/srv/shell/screens/chart.html",
+        "link": true,
+        "parents": false,
+        "exclude": []
+      },
+      {
+        "from": null,
+        "srcs": [
+          "shell/screens/chart.css"
+        ],
+        "dst": "/srv/shell/screens/chart.css",
+        "link": true,
+        "parents": false,
+        "exclude": []
+      },
+      {
+        "from": null,
+        "srcs": [
+          "shell/screens/atoms.html"
+        ],
+        "dst": "/srv/shell/screens/atoms.html",
+        "link": true,
+        "parents": false,
+        "exclude": []
+      },
+      {
+        "from": null,
+        "srcs": [
+          "shell/screens/atoms.css"
+        ],
+        "dst": "/srv/shell/screens/atoms.css",
+        "link": true,
+        "parents": false,
+        "exclude": []
+      },
+      {
+        "from": null,
+        "srcs": [
+          "shell/screens/composition.html"
+        ],
+        "dst": "/srv/shell/screens/composition.html",
+        "link": true,
+        "parents": false,
+        "exclude": []
+      },
+      {
+        "from": null,
+        "srcs": [
+          "shell/screens/composition.css"
+        ],
+        "dst": "/srv/shell/screens/composition.css",
+        "link": true,
+        "parents": false,
+        "exclude": []
+      },
+      {
+        "from": null,
+        "srcs": [
+          "shell/screens/chat.html"
+        ],
+        "dst": "/srv/shell/screens/chat.html",
+        "link": true,
+        "parents": false,
+        "exclude": []
+      },
+      {
+        "from": null,
+        "srcs": [
+          "shell/screens/chat.css"
+        ],
+        "dst": "/srv/shell/screens/chat.css",
+        "link": true,
+        "parents": false,
+        "exclude": []
+      },
+      {
+        "from": null,
+        "srcs": [
+          "shell/screens/questionnaire.html"
+        ],
+        "dst": "/srv/shell/screens/questionnaire.html",
+        "link": true,
+        "parents": false,
+        "exclude": []
+      },
+      {
+        "from": null,
+        "srcs": [
+          "shell/screens/questionnaire.css"
+        ],
+        "dst": "/srv/shell/screens/questionnaire.css",
+        "link": true,
+        "parents": false,
+        "exclude": []
+      },
+      {
+        "from": null,
+        "srcs": [
+          "shell/screens/calendar.html"
+        ],
+        "dst": "/srv/shell/screens/calendar.html",
+        "link": true,
+        "parents": false,
+        "exclude": []
+      },
+      {
+        "from": null,
+        "srcs": [
+          "shell/screens/calendar.css"
+        ],
+        "dst": "/srv/shell/screens/calendar.css",
+        "link": true,
+        "parents": false,
+        "exclude": []
+      },
+      {
+        "from": null,
+        "srcs": [
+          "shell/handlers/flip-of.js"
+        ],
+        "dst": "/srv/shell/handlers/flip-of.js",
+        "link": true,
+        "parents": false,
+        "exclude": []
+      },
+      {
+        "from": null,
+        "srcs": [
+          "shell/handlers/has-nondigit.js"
+        ],
+        "dst": "/srv/shell/handlers/has-nondigit.js",
+        "link": true,
+        "parents": false,
+        "exclude": []
+      },
+      {
+        "from": null,
+        "srcs": [
+          "shell/handlers/has-prefix.js"
+        ],
+        "dst": "/srv/shell/handlers/has-prefix.js",
+        "link": true,
+        "parents": false,
+        "exclude": []
+      },
+      {
+        "from": null,
+        "srcs": [
+          "shell/handlers/is-code.js"
+        ],
+        "dst": "/srv/shell/handlers/is-code.js",
+        "link": true,
+        "parents": false,
+        "exclude": []
+      },
+      {
+        "from": null,
+        "srcs": [
+          "shell/handlers/is-digits.js"
+        ],
+        "dst": "/srv/shell/handlers/is-digits.js",
+        "link": true,
+        "parents": false,
+        "exclude": []
+      },
+      {
+        "from": null,
+        "srcs": [
+          "shell/handlers/is-key.js"
+        ],
+        "dst": "/srv/shell/handlers/is-key.js",
+        "link": true,
+        "parents": false,
+        "exclude": []
+      },
+      {
+        "from": null,
+        "srcs": [
+          "shell/handlers/is-printable.js"
+        ],
+        "dst": "/srv/shell/handlers/is-printable.js",
+        "link": true,
+        "parents": false,
+        "exclude": []
+      },
+      {
+        "from": null,
+        "srcs": [
+          "shell/handlers/month-step.js"
+        ],
+        "dst": "/srv/shell/handlers/month-step.js",
+        "link": true,
+        "parents": false,
+        "exclude": []
+      },
+      {
+        "from": null,
+        "srcs": [
+          "shell/handlers/roll-up.js"
+        ],
+        "dst": "/srv/shell/handlers/roll-up.js",
+        "link": true,
+        "parents": false,
+        "exclude": []
+      },
+      {
+        "from": null,
+        "srcs": [
+          "shell/handlers/starts-with.js"
+        ],
+        "dst": "/srv/shell/handlers/starts-with.js",
+        "link": true,
+        "parents": false,
+        "exclude": []
+      },
+      {
+        "from": null,
+        "srcs": [
+          "shell/handlers/type-into.js"
+        ],
+        "dst": "/srv/shell/handlers/type-into.js",
+        "link": true,
+        "parents": false,
+        "exclude": []
+      },
+      {
+        "from": null,
+        "srcs": [
+          "shell/handlers/unless-answered.js"
+        ],
+        "dst": "/srv/shell/handlers/unless-answered.js",
+        "link": true,
+        "parents": false,
+        "exclude": []
+      },
+      {
+        "from": null,
+        "srcs": [
+          "shell/handlers/unless-typed.js"
+        ],
+        "dst": "/srv/shell/handlers/unless-typed.js",
+        "link": true,
+        "parents": false,
+        "exclude": []
+      },
+      {
+        "from": null,
+        "srcs": [
+          "shell/shared/chrome.css"
+        ],
+        "dst": "/srv/shell/shared/chrome.css",
+        "link": true,
+        "parents": false,
+        "exclude": []
+      },
+      {
+        "from": {
+          "name": "root"
+        },
+        "srcs": [
+          "plugins/omnishell/interpreter/shell.js"
+        ],
+        "dst": "/omnishell/interpreter/shell.js",
+        "link": true,
+        "parents": false,
+        "exclude": []
+      },
+      {
+        "from": {
+          "name": "root"
+        },
+        "srcs": [
+          "plugins/omnishell/interpreter/chrome.js"
+        ],
+        "dst": "/omnishell/interpreter/chrome.js",
+        "link": true,
+        "parents": false,
+        "exclude": []
+      },
+      {
+        "from": {
+          "name": "root"
+        },
+        "srcs": [
+          "plugins/omnishell/interpreter/screen.js"
+        ],
+        "dst": "/omnishell/interpreter/screen.js",
+        "link": true,
+        "parents": false,
+        "exclude": []
+      },
+      {
+        "from": {
+          "name": "root"
+        },
+        "srcs": [
+          "plugins/omnishell/interpreter/fragment.js"
+        ],
+        "dst": "/omnishell/interpreter/fragment.js",
+        "link": true,
+        "parents": false,
+        "exclude": []
+      },
+      {
+        "from": {
+          "name": "root"
+        },
+        "srcs": [
+          "plugins/omnishell/interpreter/data-sync.js"
+        ],
+        "dst": "/omnishell/interpreter/data-sync.js",
+        "link": true,
+        "parents": false,
+        "exclude": []
+      },
+      {
+        "from": {
+          "name": "root"
+        },
+        "srcs": [
+          "plugins/omnishell/interpreter/validate.js"
+        ],
+        "dst": "/omnishell/interpreter/validate.js",
+        "link": true,
+        "parents": false,
+        "exclude": []
+      },
+      {
+        "from": {
+          "name": "root"
+        },
+        "srcs": [
+          "plugins/omnishell/interpreter/render.js"
+        ],
+        "dst": "/omnishell/interpreter/render.js",
+        "link": true,
+        "parents": false,
+        "exclude": []
+      },
+      {
+        "from": {
+          "name": "root"
+        },
+        "srcs": [
+          "plugins/omnishell/interpreter/hatch.js"
+        ],
+        "dst": "/omnishell/interpreter/hatch.js",
+        "link": true,
+        "parents": false,
+        "exclude": []
+      },
+      {
+        "from": {
+          "name": "root"
+        },
+        "srcs": [
+          "plugins/omnishell/interpreter/hatch-worker.js"
+        ],
+        "dst": "/omnishell/interpreter/hatch-worker.js",
+        "link": true,
+        "parents": false,
+        "exclude": []
+      },
+      {
+        "from": {
+          "name": "root"
+        },
+        "srcs": [
+          "plugins/omnishell/interpreter/storybook.js"
+        ],
+        "dst": "/omnishell/interpreter/storybook.js",
+        "link": true,
+        "parents": false,
+        "exclude": []
+      },
+      {
+        "from": {
+          "name": "root"
+        },
+        "srcs": [
+          "plugins/omnishell/interpreter/jessie.js"
+        ],
+        "dst": "/omnishell/interpreter/jessie.js",
+        "link": true,
+        "parents": false,
+        "exclude": []
+      },
+      {
+        "from": {
+          "name": "root"
+        },
+        "srcs": [
+          "plugins/omnishell/interpreter/vendor/mecha-client.js"
+        ],
+        "dst": "/omnishell/interpreter/vendor/mecha-client.js",
+        "link": true,
+        "parents": false,
+        "exclude": []
+      },
+      {
+        "from": {
+          "name": "root"
+        },
+        "srcs": [
+          "plugins/omnishell/interpreter/vendor/js-yaml.js"
+        ],
+        "dst": "/omnishell/interpreter/vendor/js-yaml.js",
+        "link": true,
+        "parents": false,
+        "exclude": []
+      },
+      {
+        "from": {
+          "name": "root"
+        },
+        "srcs": [
+          "plugins/omnishell/interpreter/vendor/ses.umd.min.js"
+        ],
+        "dst": "/omnishell/interpreter/vendor/ses.umd.min.js",
+        "link": true,
+        "parents": false,
+        "exclude": []
+      },
+      {
+        "from": {
+          "name": "root"
+        },
+        "srcs": [
+          "plugins/omnishell/interpreter/vendor/morphlex.js"
+        ],
+        "dst": "/omnishell/interpreter/vendor/morphlex.js",
+        "link": true,
+        "parents": false,
+        "exclude": []
+      },
+      {
+        "from": {
+          "name": "root"
+        },
+        "srcs": [
+          "plugins/omnishell/components/wallclock.js"
+        ],
+        "dst": "/omnishell/components/wallclock.js",
+        "link": true,
+        "parents": false,
+        "exclude": []
+      },
+      {
+        "from": null,
+        "srcs": [
+          "brief.html"
+        ],
+        "dst": "/srv/docs/brief.html",
+        "link": true,
+        "parents": false,
+        "exclude": []
+      },
+      {
+        "from": null,
+        "srcs": [
+          "ir.html"
+        ],
+        "dst": "/srv/docs/ir.html",
+        "link": true,
+        "parents": false,
+        "exclude": []
+      },
+      {
+        "from": null,
+        "srcs": [
+          "acceptance.md"
+        ],
+        "dst": "/srv/docs/acceptance.md",
+        "link": true,
+        "parents": false,
+        "exclude": []
+      },
+      {
+        "from": null,
+        "srcs": [
+          "DESIGN.md"
+        ],
+        "dst": "/srv/docs/DESIGN.md",
+        "link": true,
+        "parents": false,
+        "exclude": []
+      },
+      {
+        "from": null,
+        "srcs": [
+          "robots.txt"
+        ],
+        "dst": "/srv/robots.txt",
+        "link": true,
+        "parents": false,
+        "exclude": []
+      },
+      {
+        "from": null,
+        "srcs": [
+          "sitemap.xml"
+        ],
+        "dst": "/srv/sitemap.xml",
+        "link": true,
+        "parents": false,
+        "exclude": []
+      }
+    ],
+    "healthcheck": {
+      "test": [
+        "CMD",
+        "httpcheck",
+        "http://127.0.0.1:8080/health"
+      ],
+      "interval": "5s",
+      "timeout": "5s",
+      "retries": 30,
+      "start_period": "10s"
+    },
+    "expose": [],
+    "entrypoint": null,
+    "incremental": false,
+    "cmd": null
+  },
+  "name": "caddy",
+  "project": "apps_shadcnui",
+  "dir": "apps/shadcnui",
+  "activate": "",
+  "srcs": {
+    "globs": [
+      "docker/Caddyfile",
+      "shell/index.html",
+      "shell/shell.css",
+      "shell/boot.js",
+      "offline-first-sw.js",
+      "shell/shell.yaml",
+      "shell/shell.json",
+      "shell/design.css",
+      "shell/screens/catalog.html",
+      "shell/screens/catalog.css",
+      "shell/screens/switch.html",
+      "shell/screens/switch.css",
+      "shell/screens/tabs.html",
+      "shell/screens/tabs.css",
+      "shell/screens/picker.html",
+      "shell/screens/picker.css",
+      "shell/screens/toggle-group.html",
+      "shell/screens/toggle-group.css",
+      "shell/screens/accordion.html",
+      "shell/screens/accordion.css",
+      "shell/screens/overlays.html",
+      "shell/screens/overlays.css",
+      "shell/screens/primitives.html",
+      "shell/screens/primitives.css",
+      "shell/screens/combobox.html",
+      "shell/screens/combobox.css",
+      "shell/screens/checkbox.html",
+      "shell/screens/checkbox.css",
+      "shell/screens/radio-group.html",
+      "shell/screens/radio-group.css",
+      "shell/screens/pagination.html",
+      "shell/screens/pagination.css",
+      "shell/screens/toast.html",
+      "shell/screens/toast.css",
+      "shell/screens/slider.html",
+      "shell/screens/slider.css",
+      "shell/screens/resizable.html",
+      "shell/screens/resizable.css",
+      "shell/screens/command.html",
+      "shell/screens/command.css",
+      "shell/screens/select.html",
+      "shell/screens/select.css",
+      "shell/screens/breadcrumb.html",
+      "shell/screens/breadcrumb.css",
+      "shell/screens/menu.html",
+      "shell/screens/menu.css",
+      "shell/screens/sheet.html",
+      "shell/screens/sheet.css",
+      "shell/screens/form.html",
+      "shell/screens/form.css",
+      "shell/screens/table.html",
+      "shell/screens/table.css",
+      "shell/screens/data-table.html",
+      "shell/screens/data-table.css",
+      "shell/screens/navigation.html",
+      "shell/screens/navigation.css",
+      "shell/screens/popover.html",
+      "shell/screens/popover.css",
+      "shell/screens/input-otp.html",
+      "shell/screens/input-otp.css",
+      "shell/screens/hover-card.html",
+      "shell/screens/hover-card.css",
+      "shell/screens/chart.html",
+      "shell/screens/chart.css",
+      "shell/screens/atoms.html",
+      "shell/screens/atoms.css",
+      "shell/screens/composition.html",
+      "shell/screens/composition.css",
+      "shell/screens/chat.html",
+      "shell/screens/chat.css",
+      "shell/screens/questionnaire.html",
+      "shell/screens/questionnaire.css",
+      "shell/screens/calendar.html",
+      "shell/screens/calendar.css",
+      "shell/handlers/flip-of.js",
+      "shell/handlers/has-nondigit.js",
+      "shell/handlers/has-prefix.js",
+      "shell/handlers/is-code.js",
+      "shell/handlers/is-digits.js",
+      "shell/handlers/is-key.js",
+      "shell/handlers/is-printable.js",
+      "shell/handlers/month-step.js",
+      "shell/handlers/roll-up.js",
+      "shell/handlers/starts-with.js",
+      "shell/handlers/type-into.js",
+      "shell/handlers/unless-answered.js",
+      "shell/handlers/unless-typed.js",
+      "shell/shared/chrome.css",
+      "brief.html",
+      "ir.html",
+      "acceptance.md",
+      "DESIGN.md",
+      "robots.txt",
+      "sitemap.xml"
+    ],
+    "exclude": []
+  },
+  "outs": {
+    "globs": [],
+    "exclude": []
+  },
+  "state": {
+    "globs": []
+  },
+  "env": {},
+  "synthetics": {
+    "bayt": {
+      "name": "caddy_bayt",
+      "project": "apps_shadcnui",
+      "dir": "apps/shadcnui",
+      "activate": "",
+      "srcs": {
+        "globs": [],
+        "exclude": []
+      },
+      "outs": {
+        "globs": [
+          ".bayt/compose.caddy.yaml",
+          ".bayt/Dockerfile.caddy",
+          ".bayt/bayt.caddy.json",
+          ".bayt/Taskfile.yml",
+          ".bayt/Taskfile.bayt.yml"
+        ],
+        "exclude": []
+      },
+      "env": {},
+      "visibility": "internal",
+      "deps": [],
+      "transitiveDeps": [],
+      "transitiveCrossDeps": [],
+      "chainedDeps": [],
+      "cmds": [],
+      "cache": {
+        "full": false,
+        "similar": false
+      },
+      "upClosure": [
+        "apps/shadcnui/.bayt/compose.caddy.yaml"
+      ]
+    },
+    "outs": {
+      "name": "caddy_outs",
+      "project": "apps_shadcnui",
+      "dir": "apps/shadcnui",
+      "activate": "",
+      "srcs": {
+        "globs": [],
+        "exclude": []
+      },
+      "outs": {
+        "globs": [],
+        "exclude": []
+      },
+      "env": {},
+      "visibility": "internal",
+      "deps": [],
+      "transitiveDeps": [],
+      "transitiveCrossDeps": [],
+      "chainedDeps": [],
+      "cmds": [],
+      "cache": {
+        "full": false,
+        "similar": false
+      },
+      "upClosure": [
+        "apps/shadcnui/.bayt/compose.caddy.yaml"
+      ]
+    },
+    "srcs": {
+      "name": "caddy_srcs",
+      "project": "apps_shadcnui",
+      "dir": "apps/shadcnui",
+      "activate": "",
+      "srcs": {
+        "globs": [],
+        "exclude": []
+      },
+      "outs": {
+        "globs": [
+          "docker/Caddyfile",
+          "shell/index.html",
+          "shell/shell.css",
+          "shell/boot.js",
+          "offline-first-sw.js",
+          "shell/shell.yaml",
+          "shell/shell.json",
+          "shell/design.css",
+          "shell/screens/catalog.html",
+          "shell/screens/catalog.css",
+          "shell/screens/switch.html",
+          "shell/screens/switch.css",
+          "shell/screens/tabs.html",
+          "shell/screens/tabs.css",
+          "shell/screens/picker.html",
+          "shell/screens/picker.css",
+          "shell/screens/toggle-group.html",
+          "shell/screens/toggle-group.css",
+          "shell/screens/accordion.html",
+          "shell/screens/accordion.css",
+          "shell/screens/overlays.html",
+          "shell/screens/overlays.css",
+          "shell/screens/primitives.html",
+          "shell/screens/primitives.css",
+          "shell/screens/combobox.html",
+          "shell/screens/combobox.css",
+          "shell/screens/checkbox.html",
+          "shell/screens/checkbox.css",
+          "shell/screens/radio-group.html",
+          "shell/screens/radio-group.css",
+          "shell/screens/pagination.html",
+          "shell/screens/pagination.css",
+          "shell/screens/toast.html",
+          "shell/screens/toast.css",
+          "shell/screens/slider.html",
+          "shell/screens/slider.css",
+          "shell/screens/resizable.html",
+          "shell/screens/resizable.css",
+          "shell/screens/command.html",
+          "shell/screens/command.css",
+          "shell/screens/select.html",
+          "shell/screens/select.css",
+          "shell/screens/breadcrumb.html",
+          "shell/screens/breadcrumb.css",
+          "shell/screens/menu.html",
+          "shell/screens/menu.css",
+          "shell/screens/sheet.html",
+          "shell/screens/sheet.css",
+          "shell/screens/form.html",
+          "shell/screens/form.css",
+          "shell/screens/table.html",
+          "shell/screens/table.css",
+          "shell/screens/data-table.html",
+          "shell/screens/data-table.css",
+          "shell/screens/navigation.html",
+          "shell/screens/navigation.css",
+          "shell/screens/popover.html",
+          "shell/screens/popover.css",
+          "shell/screens/input-otp.html",
+          "shell/screens/input-otp.css",
+          "shell/screens/hover-card.html",
+          "shell/screens/hover-card.css",
+          "shell/screens/chart.html",
+          "shell/screens/chart.css",
+          "shell/screens/atoms.html",
+          "shell/screens/atoms.css",
+          "shell/screens/composition.html",
+          "shell/screens/composition.css",
+          "shell/screens/chat.html",
+          "shell/screens/chat.css",
+          "shell/screens/questionnaire.html",
+          "shell/screens/questionnaire.css",
+          "shell/screens/calendar.html",
+          "shell/screens/calendar.css",
+          "shell/handlers/flip-of.js",
+          "shell/handlers/has-nondigit.js",
+          "shell/handlers/has-prefix.js",
+          "shell/handlers/is-code.js",
+          "shell/handlers/is-digits.js",
+          "shell/handlers/is-key.js",
+          "shell/handlers/is-printable.js",
+          "shell/handlers/month-step.js",
+          "shell/handlers/roll-up.js",
+          "shell/handlers/starts-with.js",
+          "shell/handlers/type-into.js",
+          "shell/handlers/unless-answered.js",
+          "shell/handlers/unless-typed.js",
+          "shell/shared/chrome.css",
+          "brief.html",
+          "ir.html",
+          "acceptance.md",
+          "DESIGN.md",
+          "robots.txt",
+          "sitemap.xml"
+        ],
+        "exclude": []
+      },
+      "env": {},
+      "visibility": "internal",
+      "deps": [],
+      "transitiveDeps": [],
+      "transitiveCrossDeps": [],
+      "chainedDeps": [],
+      "cmds": [],
+      "cache": {
+        "full": false,
+        "similar": false
+      },
+      "upClosure": [
+        "apps/shadcnui/.bayt/compose.caddy.yaml"
+      ]
+    }
+  },
+  "visibility": "internal",
+  "emitsSrcs": true,
+  "deps": [],
+  "sameProjectDeps": [],
+  "transitiveDeps": [],
+  "transitiveCrossDeps": [],
+  "upClosure": [
+    "apps/shadcnui/.bayt/compose.caddy.yaml"
+  ],
+  "chainedDeps": [],
+  "cmds": [],
+  "cache": {
+    "full": false,
+    "similar": false
+  }
+}
