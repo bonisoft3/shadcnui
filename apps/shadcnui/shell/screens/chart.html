@@ -21,19 +21,8 @@
         <figcaption class="chart-title">Visitors, last six months</figcaption>
         <table class="chart-plot" id="chart-plot" data-live="chart_point"
                data-order="pos.asc" data-project='{"act":{"eq":["id","{active}"]},"nxt":"next","prv":"prev","fst":"first","lst":"last"}'
-               data-key='{"ArrowDown":"chart-nx-{active}","ArrowUp":"chart-pv-{active}","Home":"chart-fs-{active}","End":"chart-ls-{active}"}' data-template="chart-bar">
-        </table>
-        <!-- The same points as a line, and the same rows: the table above is
-             what a reader hears, so this one is decoration and says so. -->
-        <div class="chart-line" aria-hidden="true" data-live="chart_point"
-             data-order="pos.asc" data-template="chart-seg"></div>
-        <div class="chart-tip" data-live="chart_point" data-filter="id=eq.{active}"
-             data-template="chart-read"></div>
-        <p class="chart-scale">0 – 305 visitors</p>
-      </div>
-    </template>
-  </figure>
-    <template data-item data-name="chart-bar">
+               data-key='{"ArrowDown":"chart-nx-{active}","ArrowUp":"chart-pv-{active}","Home":"chart-fs-{active}","End":"chart-ls-{active}"}'>
+    <template data-item data-when="act=eq.true">
       <tr class="chart-row">
         <th scope="row" class="chart-cat" data-text="{label}"></th>
         <td class="chart-cell">
@@ -42,7 +31,7 @@
             <input type="hidden" name="id" data-value="the">
             <input type="hidden" name="active" data-value="{id}">
             <button type="submit" class="chart-bar" id="chart-bar-{id}"
-                    style="--v: {value}" data-rove="{act}" aria-current="{act}"
+                    style="--v: {value}" tabindex="0" aria-current="{act}"
                     aria-label="{label}: {value} visitors"
                     data-text="{value}"></button>
           </form>
@@ -69,6 +58,53 @@
         </td>
       </tr>
     </template>
+    <template data-item>
+      <tr class="chart-row">
+        <th scope="row" class="chart-cat" data-text="{label}"></th>
+        <td class="chart-cell">
+          <form role="none" id="chart-pick-{id}" data-form="chart-pick"
+                data-entity="chart_cursor" data-action="upsert">
+            <input type="hidden" name="id" data-value="the">
+            <input type="hidden" name="active" data-value="{id}">
+            <button type="submit" class="chart-bar" id="chart-bar-{id}"
+                    style="--v: {value}" tabindex="-1" aria-current="{act}"
+                    aria-label="{label}: {value} visitors"
+                    data-text="{value}"></button>
+          </form>
+              <form role="none" id="chart-nx-{id}" data-form="chart-step"
+                    data-entity="chart_cursor" data-action="upsert">
+                <input type="hidden" name="id" data-value="the">
+                <input type="hidden" name="active" data-value="{nxt}">
+              </form>
+              <form role="none" id="chart-pv-{id}" data-form="chart-step"
+                    data-entity="chart_cursor" data-action="upsert">
+                <input type="hidden" name="id" data-value="the">
+                <input type="hidden" name="active" data-value="{prv}">
+              </form>
+              <form role="none" id="chart-fs-{id}" data-form="chart-step"
+                    data-entity="chart_cursor" data-action="upsert">
+                <input type="hidden" name="id" data-value="the">
+                <input type="hidden" name="active" data-value="{fst}">
+              </form>
+              <form role="none" id="chart-ls-{id}" data-form="chart-step"
+                    data-entity="chart_cursor" data-action="upsert">
+                <input type="hidden" name="id" data-value="the">
+                <input type="hidden" name="active" data-value="{lst}">
+              </form>
+        </td>
+      </tr>
+    </template>
+        </table>
+        <!-- The same points as a line, and the same rows: the table above is
+             what a reader hears, so this one is decoration and says so. -->
+        <div class="chart-line" aria-hidden="true" data-live="chart_point"
+             data-order="pos.asc" data-template="chart-seg"></div>
+        <div class="chart-tip" data-live="chart_point" data-filter="id=eq.{active}"
+             data-template="chart-read"></div>
+        <p class="chart-scale">0 – 305 visitors</p>
+      </div>
+    </template>
+  </figure>
     <template data-item data-name="chart-read">
       <p class="chart-read"><b data-text="{label}"></b> <span data-text="{value} visitors"></span></p>
     </template>

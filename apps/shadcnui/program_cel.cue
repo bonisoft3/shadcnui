@@ -32,11 +32,15 @@ code: state: entities: {
 			active?: ("account" | "password")
 			sel_account?: ("true" | "false")
 			sel_password?: ("true" | "false")
+			tab_account?: ("0" | "-1")
+			tab_password?: ("0" | "-1")
 		}]
 		enums: {
 			active: ["account","password"]
 			sel_account: ["true","false"]
 			sel_password: ["true","false"]
+			tab_account: ["0","-1"]
+			tab_password: ["0","-1"]
 		}
 		bounds: {
 			id: {sizeMax: 64}
@@ -69,12 +73,18 @@ code: state: entities: {
 			chk_left?: ("true" | "false")
 			chk_center?: ("true" | "false")
 			chk_right?: ("true" | "false")
+			tab_left?: ("0" | "-1")
+			tab_center?: ("0" | "-1")
+			tab_right?: ("0" | "-1")
 		}]
 		enums: {
 			value: ["left","center","right"]
 			chk_left: ["true","false"]
 			chk_center: ["true","false"]
 			chk_right: ["true","false"]
+			tab_left: ["0","-1"]
+			tab_center: ["0","-1"]
+			tab_right: ["0","-1"]
 		}
 		bounds: {
 			id: {sizeMax: 64}
@@ -187,12 +197,18 @@ code: state: entities: {
 			chk_starter?: ("true" | "false")
 			chk_pro?: ("true" | "false")
 			chk_team?: ("true" | "false")
+			tab_starter?: ("0" | "-1")
+			tab_pro?: ("0" | "-1")
+			tab_team?: ("0" | "-1")
 		}]
 		enums: {
 			value: ["starter","pro","team"]
 			chk_starter: ["true","false"]
 			chk_pro: ["true","false"]
 			chk_team: ["true","false"]
+			tab_starter: ["0","-1"]
+			tab_pro: ["0","-1"]
+			tab_team: ["0","-1"]
 		}
 		bounds: {
 			id: {sizeMax: 64}
@@ -396,11 +412,15 @@ code: state: entities: {
 			caret?: ("view" | "go")
 			cur_view?: ("true" | "false")
 			cur_go?: ("true" | "false")
+			tab_view?: ("0" | "-1")
+			tab_go?: ("0" | "-1")
 		}]
 		enums: {
 			caret: ["view","go"]
 			cur_view: ["true","false"]
 			cur_go: ["true","false"]
+			tab_view: ["0","-1"]
+			tab_go: ["0","-1"]
 		}
 		bounds: {
 			id: {sizeMax: 64}

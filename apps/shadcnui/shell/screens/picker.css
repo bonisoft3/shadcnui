@@ -10,7 +10,8 @@
 
 .screen-picker .picker-trigger { font: inherit; cursor: pointer;
   display: inline-flex; align-items: center; gap: var(--sp-sm);
-  padding: var(--sp-sm) var(--control-pad-x); border: var(--border-size-1) solid var(--border); border-radius: var(--r-sm);
+  padding: 7px var(--control-pad-x); min-height: 40px; line-height: 24px;
+  border: var(--border-size-1) solid var(--border); border-radius: var(--r-sm);
   background: var(--surface); color: var(--primary);
   /* The list positions itself against this name — placement is CSS, not
      script, like every other half of the openness. */

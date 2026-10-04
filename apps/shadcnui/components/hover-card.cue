@@ -1,6 +1,5 @@
-// omnishell--hover-card: shadcn's HoverCard, and the third thing `data-interest`
-// can open — after ./overlays.cue's tip, which is the same gesture over a
-// surface holding one sentence.
+// omnishell--hover-card: shadcn's HoverCard, a popover surface with its own
+// links — following ./overlays.cue's tip, which is a surface holding one sentence.
 //
 // What makes it a component of its own is the CONTENT. A tooltip's surface is a
 // string, so it may be a description a trigger points at; a hover card's is a
@@ -37,7 +36,7 @@ package components
 		<omnishell--hover-card>
 		  <span class="hc">
 		    <a class="hc-trigger" id="\(H._trigger)" data-route="\(H.route)"
-		       data-interest="\(H._id)">\(H.label)</a>
+		       popovertarget="\(H._id)">\(H.label)</a>
 		    <div id="\(H._id)" class="hc-surface" data-place="\(H.place)" popover="auto">
 		\(H.body)
 		    </div>

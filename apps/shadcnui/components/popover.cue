@@ -60,7 +60,7 @@ placementRows: strings.Join([for r in placements {
 	_open: "pop-open-\(P.key)"
 	_kind: [if P.manual {"manual"}, "auto"][0]
 
-	_dismiss: [if P.dismiss != "" {"\n      <button type=\"button\" class=\"pop-dismiss\" commandfor=\"\(P._id)\" command=\"hide-popover\">\(P.dismiss)</button>"}, ""][0]
+	_dismiss: [if P.dismiss != "" {"\n      <button type=\"button\" class=\"pop-dismiss\" popovertarget=\"\(P._id)\" popovertargetaction=\"hide\" commandfor=\"\(P._id)\" command=\"hide-popover\">\(P.dismiss)</button>"}, ""][0]
 
 	// aria-expanded is written nowhere: the UA supplies it for a popover
 	// invoker. Neither is aria-haspopup — the surface claims no role, so there
@@ -70,7 +70,7 @@ placementRows: strings.Join([for r in placements {
 		<omnishell--popover>
 		  <span class="pop">
 		    <button type="button" id="\(P._open)" class="pop-trigger"
-		            commandfor="\(P._id)" command="toggle-popover">\(P.label)</button>
+		            popovertarget="\(P._id)" commandfor="\(P._id)" command="toggle-popover">\(P.label)</button>
 		    <div id="\(P._id)" class="pop-surface" data-place="\(P.place)" popover="\(P._kind)">
 		\(P.body)\(P._dismiss)
 		    </div>

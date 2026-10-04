@@ -17,24 +17,24 @@
 <omnishell--radio-group>
   <div class="radio-group" data-live="radio_group_demo" data-filter="id=eq.the"
        data-state="{value}"
-       data-machine='{"field":"value","initial":"starter","context":{"chk_starter":"true","chk_pro":"false","chk_team":"false"},"states":{"starter":{"on":{"keydown@rg-plan-item-starter":[{"guard":{"type":"is-key","params":{"key":"ArrowRight"}},"target":"pro","assign":{"chk_starter":"false","chk_pro":"true","chk_team":"false"}},{"guard":{"type":"is-key","params":{"key":"ArrowLeft"}},"target":"team","assign":{"chk_starter":"false","chk_pro":"false","chk_team":"true"}},{"guard":{"type":"is-key","params":{"key":"ArrowDown"}},"target":"pro","assign":{"chk_starter":"false","chk_pro":"true","chk_team":"false"}},{"guard":{"type":"is-key","params":{"key":"ArrowUp"}},"target":"team","assign":{"chk_starter":"false","chk_pro":"false","chk_team":"true"}},{"guard":{"type":"is-key","params":{"key":"End"}},"target":"team","assign":{"chk_starter":"false","chk_pro":"false","chk_team":"true"}}],"click@rg-plan-item-pro":{"target":"pro","assign":{"chk_starter":"false","chk_pro":"true","chk_team":"false"}},"click@rg-plan-item-team":{"target":"team","assign":{"chk_starter":"false","chk_pro":"false","chk_team":"true"}},"focusin@rg-plan-item-pro":{"target":"pro","assign":{"chk_starter":"false","chk_pro":"true","chk_team":"false"}},"focusin@rg-plan-item-team":{"target":"team","assign":{"chk_starter":"false","chk_pro":"false","chk_team":"true"}}}},"pro":{"on":{"keydown@rg-plan-item-pro":[{"guard":{"type":"is-key","params":{"key":"ArrowRight"}},"target":"team","assign":{"chk_starter":"false","chk_pro":"false","chk_team":"true"}},{"guard":{"type":"is-key","params":{"key":"ArrowLeft"}},"target":"starter","assign":{"chk_starter":"true","chk_pro":"false","chk_team":"false"}},{"guard":{"type":"is-key","params":{"key":"ArrowDown"}},"target":"team","assign":{"chk_starter":"false","chk_pro":"false","chk_team":"true"}},{"guard":{"type":"is-key","params":{"key":"ArrowUp"}},"target":"starter","assign":{"chk_starter":"true","chk_pro":"false","chk_team":"false"}},{"guard":{"type":"is-key","params":{"key":"Home"}},"target":"starter","assign":{"chk_starter":"true","chk_pro":"false","chk_team":"false"}},{"guard":{"type":"is-key","params":{"key":"End"}},"target":"team","assign":{"chk_starter":"false","chk_pro":"false","chk_team":"true"}}],"click@rg-plan-item-starter":{"target":"starter","assign":{"chk_starter":"true","chk_pro":"false","chk_team":"false"}},"click@rg-plan-item-team":{"target":"team","assign":{"chk_starter":"false","chk_pro":"false","chk_team":"true"}},"focusin@rg-plan-item-starter":{"target":"starter","assign":{"chk_starter":"true","chk_pro":"false","chk_team":"false"}},"focusin@rg-plan-item-team":{"target":"team","assign":{"chk_starter":"false","chk_pro":"false","chk_team":"true"}}}},"team":{"on":{"keydown@rg-plan-item-team":[{"guard":{"type":"is-key","params":{"key":"ArrowRight"}},"target":"starter","assign":{"chk_starter":"true","chk_pro":"false","chk_team":"false"}},{"guard":{"type":"is-key","params":{"key":"ArrowLeft"}},"target":"pro","assign":{"chk_starter":"false","chk_pro":"true","chk_team":"false"}},{"guard":{"type":"is-key","params":{"key":"ArrowDown"}},"target":"starter","assign":{"chk_starter":"true","chk_pro":"false","chk_team":"false"}},{"guard":{"type":"is-key","params":{"key":"ArrowUp"}},"target":"pro","assign":{"chk_starter":"false","chk_pro":"true","chk_team":"false"}},{"guard":{"type":"is-key","params":{"key":"Home"}},"target":"starter","assign":{"chk_starter":"true","chk_pro":"false","chk_team":"false"}}],"click@rg-plan-item-starter":{"target":"starter","assign":{"chk_starter":"true","chk_pro":"false","chk_team":"false"}},"click@rg-plan-item-pro":{"target":"pro","assign":{"chk_starter":"false","chk_pro":"true","chk_team":"false"}},"focusin@rg-plan-item-starter":{"target":"starter","assign":{"chk_starter":"true","chk_pro":"false","chk_team":"false"}},"focusin@rg-plan-item-pro":{"target":"pro","assign":{"chk_starter":"false","chk_pro":"true","chk_team":"false"}}}}}}'>
+       data-machine='{"field":"value","initial":"starter","context":{"chk_starter":"true","chk_pro":"false","chk_team":"false","tab_starter":"0","tab_pro":"-1","tab_team":"-1"},"states":{"starter":{"on":{"keydown@rg-plan-item-starter":[{"guard":{"type":"is-key","params":{"key":"ArrowRight"}},"target":"pro","assign":{"chk_starter":"false","chk_pro":"true","chk_team":"false","tab_starter":"-1","tab_pro":"0","tab_team":"-1"}},{"guard":{"type":"is-key","params":{"key":"ArrowLeft"}},"target":"team","assign":{"chk_starter":"false","chk_pro":"false","chk_team":"true","tab_starter":"-1","tab_pro":"-1","tab_team":"0"}},{"guard":{"type":"is-key","params":{"key":"ArrowDown"}},"target":"pro","assign":{"chk_starter":"false","chk_pro":"true","chk_team":"false","tab_starter":"-1","tab_pro":"0","tab_team":"-1"}},{"guard":{"type":"is-key","params":{"key":"ArrowUp"}},"target":"team","assign":{"chk_starter":"false","chk_pro":"false","chk_team":"true","tab_starter":"-1","tab_pro":"-1","tab_team":"0"}},{"guard":{"type":"is-key","params":{"key":"End"}},"target":"team","assign":{"chk_starter":"false","chk_pro":"false","chk_team":"true","tab_starter":"-1","tab_pro":"-1","tab_team":"0"}}],"click@rg-plan-item-pro":{"target":"pro","assign":{"chk_starter":"false","chk_pro":"true","chk_team":"false","tab_starter":"-1","tab_pro":"0","tab_team":"-1"}},"click@rg-plan-item-team":{"target":"team","assign":{"chk_starter":"false","chk_pro":"false","chk_team":"true","tab_starter":"-1","tab_pro":"-1","tab_team":"0"}},"focusin@rg-plan-item-pro":{"target":"pro","assign":{"chk_starter":"false","chk_pro":"true","chk_team":"false","tab_starter":"-1","tab_pro":"0","tab_team":"-1"}},"focusin@rg-plan-item-team":{"target":"team","assign":{"chk_starter":"false","chk_pro":"false","chk_team":"true","tab_starter":"-1","tab_pro":"-1","tab_team":"0"}}}},"pro":{"on":{"keydown@rg-plan-item-pro":[{"guard":{"type":"is-key","params":{"key":"ArrowRight"}},"target":"team","assign":{"chk_starter":"false","chk_pro":"false","chk_team":"true","tab_starter":"-1","tab_pro":"-1","tab_team":"0"}},{"guard":{"type":"is-key","params":{"key":"ArrowLeft"}},"target":"starter","assign":{"chk_starter":"true","chk_pro":"false","chk_team":"false","tab_starter":"0","tab_pro":"-1","tab_team":"-1"}},{"guard":{"type":"is-key","params":{"key":"ArrowDown"}},"target":"team","assign":{"chk_starter":"false","chk_pro":"false","chk_team":"true","tab_starter":"-1","tab_pro":"-1","tab_team":"0"}},{"guard":{"type":"is-key","params":{"key":"ArrowUp"}},"target":"starter","assign":{"chk_starter":"true","chk_pro":"false","chk_team":"false","tab_starter":"0","tab_pro":"-1","tab_team":"-1"}},{"guard":{"type":"is-key","params":{"key":"Home"}},"target":"starter","assign":{"chk_starter":"true","chk_pro":"false","chk_team":"false","tab_starter":"0","tab_pro":"-1","tab_team":"-1"}},{"guard":{"type":"is-key","params":{"key":"End"}},"target":"team","assign":{"chk_starter":"false","chk_pro":"false","chk_team":"true","tab_starter":"-1","tab_pro":"-1","tab_team":"0"}}],"click@rg-plan-item-starter":{"target":"starter","assign":{"chk_starter":"true","chk_pro":"false","chk_team":"false","tab_starter":"0","tab_pro":"-1","tab_team":"-1"}},"click@rg-plan-item-team":{"target":"team","assign":{"chk_starter":"false","chk_pro":"false","chk_team":"true","tab_starter":"-1","tab_pro":"-1","tab_team":"0"}},"focusin@rg-plan-item-starter":{"target":"starter","assign":{"chk_starter":"true","chk_pro":"false","chk_team":"false","tab_starter":"0","tab_pro":"-1","tab_team":"-1"}},"focusin@rg-plan-item-team":{"target":"team","assign":{"chk_starter":"false","chk_pro":"false","chk_team":"true","tab_starter":"-1","tab_pro":"-1","tab_team":"0"}}}},"team":{"on":{"keydown@rg-plan-item-team":[{"guard":{"type":"is-key","params":{"key":"ArrowRight"}},"target":"starter","assign":{"chk_starter":"true","chk_pro":"false","chk_team":"false","tab_starter":"0","tab_pro":"-1","tab_team":"-1"}},{"guard":{"type":"is-key","params":{"key":"ArrowLeft"}},"target":"pro","assign":{"chk_starter":"false","chk_pro":"true","chk_team":"false","tab_starter":"-1","tab_pro":"0","tab_team":"-1"}},{"guard":{"type":"is-key","params":{"key":"ArrowDown"}},"target":"starter","assign":{"chk_starter":"true","chk_pro":"false","chk_team":"false","tab_starter":"0","tab_pro":"-1","tab_team":"-1"}},{"guard":{"type":"is-key","params":{"key":"ArrowUp"}},"target":"pro","assign":{"chk_starter":"false","chk_pro":"true","chk_team":"false","tab_starter":"-1","tab_pro":"0","tab_team":"-1"}},{"guard":{"type":"is-key","params":{"key":"Home"}},"target":"starter","assign":{"chk_starter":"true","chk_pro":"false","chk_team":"false","tab_starter":"0","tab_pro":"-1","tab_team":"-1"}}],"click@rg-plan-item-starter":{"target":"starter","assign":{"chk_starter":"true","chk_pro":"false","chk_team":"false","tab_starter":"0","tab_pro":"-1","tab_team":"-1"}},"click@rg-plan-item-pro":{"target":"pro","assign":{"chk_starter":"false","chk_pro":"true","chk_team":"false","tab_starter":"-1","tab_pro":"0","tab_team":"-1"}},"focusin@rg-plan-item-starter":{"target":"starter","assign":{"chk_starter":"true","chk_pro":"false","chk_team":"false","tab_starter":"0","tab_pro":"-1","tab_team":"-1"}},"focusin@rg-plan-item-pro":{"target":"pro","assign":{"chk_starter":"false","chk_pro":"true","chk_team":"false","tab_starter":"-1","tab_pro":"0","tab_team":"-1"}}}}}}'>
     <p class="rg-legend" id="rg-plan-legend">Plan</p>
     <div role="radiogroup" aria-labelledby="rg-plan-legend" class="rg-set">
       <div class="rg-option">
         <button type="button" role="radio" id="rg-plan-item-starter" class="rg-item"
-                data-rove="{chk_starter}"
+                tabindex="{tab_starter}"
                 aria-checked="{chk_starter}" aria-describedby="rg-plan-desc-starter"><span class="rg-mark" aria-hidden="true"></span><span class="rg-label">Starter</span></button>
         <p class="rg-desc" id="rg-plan-desc-starter">One project, community support. What a choice writes here is a tab-tier row, like every other state in the gallery.</p>
       </div>
       <div class="rg-option">
         <button type="button" role="radio" id="rg-plan-item-pro" class="rg-item"
-                data-rove="{chk_pro}"
+                tabindex="{tab_pro}"
                 aria-checked="{chk_pro}" aria-describedby="rg-plan-desc-pro"><span class="rg-mark" aria-hidden="true"></span><span class="rg-label">Pro</span></button>
         <p class="rg-desc" id="rg-plan-desc-pro">Ten projects and email support. This line is referenced by aria-describedby rather than nested in the button, so the option's accessible name stays "Pro".</p>
       </div>
       <div class="rg-option">
         <button type="button" role="radio" id="rg-plan-item-team" class="rg-item"
-                data-rove="{chk_team}"
+                tabindex="{tab_team}"
                 aria-checked="{chk_team}" aria-describedby="rg-plan-desc-team"><span class="rg-mark" aria-hidden="true"></span><span class="rg-label">Team</span></button>
         <p class="rg-desc" id="rg-plan-desc-team">Unlimited projects and shared billing. Clicking this line writes nothing: it carries its own id, and no arrow is narrowed to it.</p>
       </div>
@@ -67,7 +67,10 @@
   "context": {
     "chk_starter": "true",
     "chk_pro": "false",
-    "chk_team": "false"
+    "chk_team": "false",
+    "tab_starter": "0",
+    "tab_pro": "-1",
+    "tab_team": "-1"
   },
   "states": {
     "starter": {
@@ -84,7 +87,10 @@
             "assign": {
               "chk_starter": "false",
               "chk_pro": "true",
-              "chk_team": "false"
+              "chk_team": "false",
+              "tab_starter": "-1",
+              "tab_pro": "0",
+              "tab_team": "-1"
             }
           },
           {
@@ -98,7 +104,10 @@
             "assign": {
               "chk_starter": "false",
               "chk_pro": "false",
-              "chk_team": "true"
+              "chk_team": "true",
+              "tab_starter": "-1",
+              "tab_pro": "-1",
+              "tab_team": "0"
             }
           },
           {
@@ -112,7 +121,10 @@
             "assign": {
               "chk_starter": "false",
               "chk_pro": "true",
-              "chk_team": "false"
+              "chk_team": "false",
+              "tab_starter": "-1",
+              "tab_pro": "0",
+              "tab_team": "-1"
             }
           },
           {
@@ -126,7 +138,10 @@
             "assign": {
               "chk_starter": "false",
               "chk_pro": "false",
-              "chk_team": "true"
+              "chk_team": "true",
+              "tab_starter": "-1",
+              "tab_pro": "-1",
+              "tab_team": "0"
             }
           },
           {
@@ -140,7 +155,10 @@
             "assign": {
               "chk_starter": "false",
               "chk_pro": "false",
-              "chk_team": "true"
+              "chk_team": "true",
+              "tab_starter": "-1",
+              "tab_pro": "-1",
+              "tab_team": "0"
             }
           }
         ],
@@ -149,7 +167,10 @@
           "assign": {
             "chk_starter": "false",
             "chk_pro": "true",
-            "chk_team": "false"
+            "chk_team": "false",
+            "tab_starter": "-1",
+            "tab_pro": "0",
+            "tab_team": "-1"
           }
         },
         "click@rg-plan-item-team": {
@@ -157,7 +178,10 @@
           "assign": {
             "chk_starter": "false",
             "chk_pro": "false",
-            "chk_team": "true"
+            "chk_team": "true",
+            "tab_starter": "-1",
+            "tab_pro": "-1",
+            "tab_team": "0"
           }
         },
         "focusin@rg-plan-item-pro": {
@@ -165,7 +189,10 @@
           "assign": {
             "chk_starter": "false",
             "chk_pro": "true",
-            "chk_team": "false"
+            "chk_team": "false",
+            "tab_starter": "-1",
+            "tab_pro": "0",
+            "tab_team": "-1"
           }
         },
         "focusin@rg-plan-item-team": {
@@ -173,7 +200,10 @@
           "assign": {
             "chk_starter": "false",
             "chk_pro": "false",
-            "chk_team": "true"
+            "chk_team": "true",
+            "tab_starter": "-1",
+            "tab_pro": "-1",
+            "tab_team": "0"
           }
         }
       }
@@ -192,7 +222,10 @@
             "assign": {
               "chk_starter": "false",
               "chk_pro": "false",
-              "chk_team": "true"
+              "chk_team": "true",
+              "tab_starter": "-1",
+              "tab_pro": "-1",
+              "tab_team": "0"
             }
           },
           {
@@ -206,7 +239,10 @@
             "assign": {
               "chk_starter": "true",
               "chk_pro": "false",
-              "chk_team": "false"
+              "chk_team": "false",
+              "tab_starter": "0",
+              "tab_pro": "-1",
+              "tab_team": "-1"
             }
           },
           {
@@ -220,7 +256,10 @@
             "assign": {
               "chk_starter": "false",
               "chk_pro": "false",
-              "chk_team": "true"
+              "chk_team": "true",
+              "tab_starter": "-1",
+              "tab_pro": "-1",
+              "tab_team": "0"
             }
           },
           {
@@ -234,7 +273,10 @@
             "assign": {
               "chk_starter": "true",
               "chk_pro": "false",
-              "chk_team": "false"
+              "chk_team": "false",
+              "tab_starter": "0",
+              "tab_pro": "-1",
+              "tab_team": "-1"
             }
           },
           {
@@ -248,7 +290,10 @@
             "assign": {
               "chk_starter": "true",
               "chk_pro": "false",
-              "chk_team": "false"
+              "chk_team": "false",
+              "tab_starter": "0",
+              "tab_pro": "-1",
+              "tab_team": "-1"
             }
           },
           {
@@ -262,7 +307,10 @@
             "assign": {
               "chk_starter": "false",
               "chk_pro": "false",
-              "chk_team": "true"
+              "chk_team": "true",
+              "tab_starter": "-1",
+              "tab_pro": "-1",
+              "tab_team": "0"
             }
           }
         ],
@@ -271,7 +319,10 @@
           "assign": {
             "chk_starter": "true",
             "chk_pro": "false",
-            "chk_team": "false"
+            "chk_team": "false",
+            "tab_starter": "0",
+            "tab_pro": "-1",
+            "tab_team": "-1"
           }
         },
         "click@rg-plan-item-team": {
@@ -279,7 +330,10 @@
           "assign": {
             "chk_starter": "false",
             "chk_pro": "false",
-            "chk_team": "true"
+            "chk_team": "true",
+            "tab_starter": "-1",
+            "tab_pro": "-1",
+            "tab_team": "0"
           }
         },
         "focusin@rg-plan-item-starter": {
@@ -287,7 +341,10 @@
           "assign": {
             "chk_starter": "true",
             "chk_pro": "false",
-            "chk_team": "false"
+            "chk_team": "false",
+            "tab_starter": "0",
+            "tab_pro": "-1",
+            "tab_team": "-1"
           }
         },
         "focusin@rg-plan-item-team": {
@@ -295,7 +352,10 @@
           "assign": {
             "chk_starter": "false",
             "chk_pro": "false",
-            "chk_team": "true"
+            "chk_team": "true",
+            "tab_starter": "-1",
+            "tab_pro": "-1",
+            "tab_team": "0"
           }
         }
       }
@@ -314,7 +374,10 @@
             "assign": {
               "chk_starter": "true",
               "chk_pro": "false",
-              "chk_team": "false"
+              "chk_team": "false",
+              "tab_starter": "0",
+              "tab_pro": "-1",
+              "tab_team": "-1"
             }
           },
           {
@@ -328,7 +391,10 @@
             "assign": {
               "chk_starter": "false",
               "chk_pro": "true",
-              "chk_team": "false"
+              "chk_team": "false",
+              "tab_starter": "-1",
+              "tab_pro": "0",
+              "tab_team": "-1"
             }
           },
           {
@@ -342,7 +408,10 @@
             "assign": {
               "chk_starter": "true",
               "chk_pro": "false",
-              "chk_team": "false"
+              "chk_team": "false",
+              "tab_starter": "0",
+              "tab_pro": "-1",
+              "tab_team": "-1"
             }
           },
           {
@@ -356,7 +425,10 @@
             "assign": {
               "chk_starter": "false",
               "chk_pro": "true",
-              "chk_team": "false"
+              "chk_team": "false",
+              "tab_starter": "-1",
+              "tab_pro": "0",
+              "tab_team": "-1"
             }
           },
           {
@@ -370,7 +442,10 @@
             "assign": {
               "chk_starter": "true",
               "chk_pro": "false",
-              "chk_team": "false"
+              "chk_team": "false",
+              "tab_starter": "0",
+              "tab_pro": "-1",
+              "tab_team": "-1"
             }
           }
         ],
@@ -379,7 +454,10 @@
           "assign": {
             "chk_starter": "true",
             "chk_pro": "false",
-            "chk_team": "false"
+            "chk_team": "false",
+            "tab_starter": "0",
+            "tab_pro": "-1",
+            "tab_team": "-1"
           }
         },
         "click@rg-plan-item-pro": {
@@ -387,7 +465,10 @@
           "assign": {
             "chk_starter": "false",
             "chk_pro": "true",
-            "chk_team": "false"
+            "chk_team": "false",
+            "tab_starter": "-1",
+            "tab_pro": "0",
+            "tab_team": "-1"
           }
         },
         "focusin@rg-plan-item-starter": {
@@ -395,7 +476,10 @@
           "assign": {
             "chk_starter": "true",
             "chk_pro": "false",
-            "chk_team": "false"
+            "chk_team": "false",
+            "tab_starter": "0",
+            "tab_pro": "-1",
+            "tab_team": "-1"
           }
         },
         "focusin@rg-plan-item-pro": {
@@ -403,7 +487,10 @@
           "assign": {
             "chk_starter": "false",
             "chk_pro": "true",
-            "chk_team": "false"
+            "chk_team": "false",
+            "tab_starter": "-1",
+            "tab_pro": "0",
+            "tab_team": "-1"
           }
         }
       }

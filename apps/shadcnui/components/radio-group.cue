@@ -37,6 +37,7 @@ import (
 
 	_choice: #OneOf & {
 		walk:   true
+		roving: true
 		field:  R.field
 		prefix: "chk_"
 		names: [for i in R.items {i.name}]
@@ -48,7 +49,7 @@ import (
 		"""
 			      <div class="rg-option">
 			        <button type="button" role="radio" id="\(R._id[i.name])" class="rg-item"
-			                data-rove="{\(R._choice.col[i.name])}"
+			                tabindex="{\(R._choice.tab[i.name])}"
 			                aria-checked="{\(R._choice.col[i.name])}" aria-describedby="\(R._desc[i.name])"><span class="rg-mark" aria-hidden="true"></span><span class="rg-label">\(i.label)</span></button>
 			        <p class="rg-desc" id="\(R._desc[i.name])">\(i.description)</p>
 			      </div>

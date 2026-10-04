@@ -12,7 +12,7 @@ say:
         stop: false
       visual:
         cmds:
-          - do: mise exec -- docker compose up -d --wait --build launch
+          - do: mise exec -- docker compose -p (^mise exec -- printenv COMPOSE_PROJECT_NAME | complete | get stdout | str trim | str replace -r '^$' 'shadcnui') up -d --wait --build launch
           - do: mise exec -- docker compose -p (^mise exec -- printenv COMPOSE_PROJECT_NAME | complete | get stdout | str trim | str replace -r '^$' 'shadcnui') --profile '*' -f .bayt/compose.integrate.closure.yaml up bayt --abort-on-container-failure --exit-code-from bayt --build --remove-orphans --attach-dependencies
   launch:
     rulemap:

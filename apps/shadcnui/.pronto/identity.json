@@ -4,12 +4,12 @@
     "fields": {
       "1": {
         "name": "id",
-        "type": "text",
+        "type": "string",
         "retired": false
       },
       "2": {
         "name": "checked",
-        "type": "text",
+        "type": "string",
         "retired": false
       }
     }
@@ -19,22 +19,32 @@
     "fields": {
       "1": {
         "name": "id",
-        "type": "text",
+        "type": "string",
         "retired": false
       },
       "2": {
         "name": "active",
-        "type": "text",
+        "type": "string",
         "retired": false
       },
       "3": {
         "name": "sel_account",
-        "type": "text",
+        "type": "string",
         "retired": false
       },
       "4": {
         "name": "sel_password",
-        "type": "text",
+        "type": "string",
+        "retired": false
+      },
+      "5": {
+        "name": "tab_account",
+        "type": "string",
+        "retired": false
+      },
+      "6": {
+        "name": "tab_password",
+        "type": "string",
         "retired": false
       }
     }
@@ -44,32 +54,32 @@
     "fields": {
       "1": {
         "name": "id",
-        "type": "text",
+        "type": "string",
         "retired": false
       },
       "2": {
         "name": "choice",
-        "type": "text",
+        "type": "string",
         "retired": false
       },
       "3": {
         "name": "label",
-        "type": "text",
+        "type": "string",
         "retired": false
       },
       "4": {
         "name": "sel_apple",
-        "type": "text",
+        "type": "string",
         "retired": false
       },
       "5": {
         "name": "sel_banana",
-        "type": "text",
+        "type": "string",
         "retired": false
       },
       "6": {
         "name": "sel_cherry",
-        "type": "text",
+        "type": "string",
         "retired": false
       }
     }
@@ -79,27 +89,42 @@
     "fields": {
       "1": {
         "name": "id",
-        "type": "text",
+        "type": "string",
         "retired": false
       },
       "2": {
         "name": "value",
-        "type": "text",
+        "type": "string",
         "retired": false
       },
       "3": {
         "name": "chk_left",
-        "type": "text",
+        "type": "string",
         "retired": false
       },
       "4": {
         "name": "chk_center",
-        "type": "text",
+        "type": "string",
         "retired": false
       },
       "5": {
         "name": "chk_right",
-        "type": "text",
+        "type": "string",
+        "retired": false
+      },
+      "6": {
+        "name": "tab_left",
+        "type": "string",
+        "retired": false
+      },
+      "7": {
+        "name": "tab_center",
+        "type": "string",
+        "retired": false
+      },
+      "8": {
+        "name": "tab_right",
+        "type": "string",
         "retired": false
       }
     }
@@ -109,47 +134,47 @@
     "fields": {
       "1": {
         "name": "id",
-        "type": "text",
+        "type": "string",
         "retired": false
       },
       "2": {
         "name": "open",
-        "type": "text",
+        "type": "string",
         "retired": false
       },
       "3": {
         "name": "exp_shipping",
-        "type": "text",
+        "type": "string",
         "retired": false
       },
       "4": {
         "name": "exp_returns",
-        "type": "text",
+        "type": "string",
         "retired": false
       },
       "5": {
         "name": "exp_support",
-        "type": "text",
+        "type": "string",
         "retired": false
       },
       "6": {
         "name": "caret",
-        "type": "text",
+        "type": "string",
         "retired": false
       },
       "7": {
         "name": "cur_shipping",
-        "type": "text",
+        "type": "string",
         "retired": false
       },
       "8": {
         "name": "cur_returns",
-        "type": "text",
+        "type": "string",
         "retired": false
       },
       "9": {
         "name": "cur_support",
-        "type": "text",
+        "type": "string",
         "retired": false
       }
     }
@@ -159,12 +184,12 @@
     "fields": {
       "1": {
         "name": "id",
-        "type": "text",
+        "type": "string",
         "retired": false
       },
       "2": {
         "name": "open",
-        "type": "text",
+        "type": "string",
         "retired": false
       }
     }
@@ -174,12 +199,12 @@
     "fields": {
       "1": {
         "name": "id",
-        "type": "text",
+        "type": "string",
         "retired": false
       },
       "2": {
         "name": "choice",
-        "type": "text",
+        "type": "string",
         "retired": false
       }
     }
@@ -189,12 +214,12 @@
     "fields": {
       "1": {
         "name": "id",
-        "type": "text",
+        "type": "string",
         "retired": false
       },
       "2": {
         "name": "checked",
-        "type": "text",
+        "type": "string",
         "retired": false
       }
     }
@@ -204,32 +229,32 @@
     "fields": {
       "1": {
         "name": "id",
-        "type": "text",
+        "type": "string",
         "retired": false
       },
       "2": {
         "name": "phase",
-        "type": "text",
+        "type": "string",
         "retired": false
       },
       "3": {
         "name": "checked",
-        "type": "text",
+        "type": "string",
         "retired": false
       },
       "4": {
         "name": "inc_docs",
-        "type": "text",
+        "type": "string",
         "retired": false
       },
       "5": {
         "name": "inc_images",
-        "type": "text",
+        "type": "string",
         "retired": false
       },
       "6": {
         "name": "inc_archive",
-        "type": "text",
+        "type": "string",
         "retired": false
       }
     }
@@ -239,12 +264,12 @@
     "fields": {
       "1": {
         "name": "id",
-        "type": "text",
+        "type": "string",
         "retired": false
       },
       "2": {
         "name": "pressed",
-        "type": "text",
+        "type": "string",
         "retired": false
       }
     }
@@ -254,12 +279,12 @@
     "fields": {
       "1": {
         "name": "id",
-        "type": "text",
+        "type": "string",
         "retired": false
       },
       "2": {
         "name": "open",
-        "type": "text",
+        "type": "string",
         "retired": false
       }
     }
@@ -269,27 +294,42 @@
     "fields": {
       "1": {
         "name": "id",
-        "type": "text",
+        "type": "string",
         "retired": false
       },
       "2": {
         "name": "value",
-        "type": "text",
+        "type": "string",
         "retired": false
       },
       "3": {
         "name": "chk_starter",
-        "type": "text",
+        "type": "string",
         "retired": false
       },
       "4": {
         "name": "chk_pro",
-        "type": "text",
+        "type": "string",
         "retired": false
       },
       "5": {
         "name": "chk_team",
-        "type": "text",
+        "type": "string",
+        "retired": false
+      },
+      "6": {
+        "name": "tab_starter",
+        "type": "string",
+        "retired": false
+      },
+      "7": {
+        "name": "tab_pro",
+        "type": "string",
+        "retired": false
+      },
+      "8": {
+        "name": "tab_team",
+        "type": "string",
         "retired": false
       }
     }
@@ -299,47 +339,47 @@
     "fields": {
       "1": {
         "name": "id",
-        "type": "text",
+        "type": "string",
         "retired": false
       },
       "2": {
         "name": "page",
-        "type": "text",
+        "type": "string",
         "retired": false
       },
       "3": {
         "name": "cur_p1",
-        "type": "text",
+        "type": "string",
         "retired": false
       },
       "4": {
         "name": "cur_p2",
-        "type": "text",
+        "type": "string",
         "retired": false
       },
       "5": {
         "name": "cur_p3",
-        "type": "text",
+        "type": "string",
         "retired": false
       },
       "6": {
         "name": "cur_p4",
-        "type": "text",
+        "type": "string",
         "retired": false
       },
       "7": {
         "name": "cur_p5",
-        "type": "text",
+        "type": "string",
         "retired": false
       },
       "8": {
         "name": "dis_prev",
-        "type": "text",
+        "type": "string",
         "retired": false
       },
       "9": {
         "name": "dis_next",
-        "type": "text",
+        "type": "string",
         "retired": false
       }
     }
@@ -349,42 +389,42 @@
     "fields": {
       "1": {
         "name": "id",
-        "type": "text",
+        "type": "string",
         "retired": false
       },
       "2": {
         "name": "slide",
-        "type": "text",
+        "type": "string",
         "retired": false
       },
       "3": {
         "name": "cur_s1",
-        "type": "text",
+        "type": "string",
         "retired": false
       },
       "4": {
         "name": "cur_s2",
-        "type": "text",
+        "type": "string",
         "retired": false
       },
       "5": {
         "name": "cur_s3",
-        "type": "text",
+        "type": "string",
         "retired": false
       },
       "6": {
         "name": "cur_s4",
-        "type": "text",
+        "type": "string",
         "retired": false
       },
       "7": {
         "name": "dis_prev",
-        "type": "text",
+        "type": "string",
         "retired": false
       },
       "8": {
         "name": "dis_next",
-        "type": "text",
+        "type": "string",
         "retired": false
       }
     }
@@ -394,12 +434,12 @@
     "fields": {
       "1": {
         "name": "id",
-        "type": "text",
+        "type": "string",
         "retired": false
       },
       "2": {
         "name": "state",
-        "type": "text",
+        "type": "string",
         "retired": false
       }
     }
@@ -409,17 +449,17 @@
     "fields": {
       "1": {
         "name": "id",
-        "type": "text",
+        "type": "string",
         "retired": false
       },
       "2": {
         "name": "phase",
-        "type": "text",
+        "type": "string",
         "retired": false
       },
       "3": {
         "name": "volume",
-        "type": "int",
+        "type": "int32",
         "retired": false
       }
     }
@@ -429,12 +469,12 @@
     "fields": {
       "1": {
         "name": "id",
-        "type": "text",
+        "type": "string",
         "retired": false
       },
       "2": {
         "name": "done",
-        "type": "int",
+        "type": "int32",
         "retired": false
       }
     }
@@ -444,17 +484,17 @@
     "fields": {
       "1": {
         "name": "id",
-        "type": "text",
+        "type": "string",
         "retired": false
       },
       "2": {
         "name": "state",
-        "type": "text",
+        "type": "string",
         "retired": false
       },
       "3": {
         "name": "split",
-        "type": "int",
+        "type": "int32",
         "retired": false
       }
     }
@@ -464,27 +504,27 @@
     "fields": {
       "1": {
         "name": "id",
-        "type": "text",
+        "type": "string",
         "retired": false
       },
       "2": {
         "name": "state",
-        "type": "text",
+        "type": "string",
         "retired": false
       },
       "3": {
         "name": "query",
-        "type": "text",
+        "type": "string",
         "retired": false
       },
       "4": {
         "name": "active",
-        "type": "text",
+        "type": "string",
         "retired": false
       },
       "5": {
         "name": "chosen",
-        "type": "text",
+        "type": "string",
         "retired": false
       }
     }
@@ -494,22 +534,22 @@
     "fields": {
       "1": {
         "name": "id",
-        "type": "text",
+        "type": "string",
         "retired": false
       },
       "2": {
         "name": "label",
-        "type": "text",
+        "type": "string",
         "retired": false
       },
       "3": {
         "name": "group",
-        "type": "text",
+        "type": "string",
         "retired": false
       },
       "4": {
         "name": "pos",
-        "type": "int",
+        "type": "int32",
         "retired": false
       }
     }
@@ -519,12 +559,12 @@
     "fields": {
       "1": {
         "name": "id",
-        "type": "text",
+        "type": "string",
         "retired": false
       },
       "2": {
         "name": "choice",
-        "type": "text",
+        "type": "string",
         "retired": false
       }
     }
@@ -534,7 +574,7 @@
     "fields": {
       "1": {
         "name": "id",
-        "type": "text",
+        "type": "string",
         "retired": false
       }
     }
@@ -544,37 +584,37 @@
     "fields": {
       "1": {
         "name": "id",
-        "type": "text",
+        "type": "string",
         "retired": false
       },
       "2": {
         "name": "chk_bookmarks",
-        "type": "text",
+        "type": "string",
         "retired": false
       },
       "3": {
         "name": "chk_urls",
-        "type": "text",
+        "type": "string",
         "retired": false
       },
       "4": {
         "name": "caret",
-        "type": "text",
+        "type": "string",
         "retired": false
       },
       "5": {
         "name": "cur_bookmarks",
-        "type": "text",
+        "type": "string",
         "retired": false
       },
       "6": {
         "name": "cur_urls",
-        "type": "text",
+        "type": "string",
         "retired": false
       },
       "7": {
         "name": "prefix",
-        "type": "text",
+        "type": "string",
         "retired": false
       }
     }
@@ -584,32 +624,32 @@
     "fields": {
       "1": {
         "name": "id",
-        "type": "text",
+        "type": "string",
         "retired": false
       },
       "2": {
         "name": "caret",
-        "type": "text",
+        "type": "string",
         "retired": false
       },
       "3": {
         "name": "cur_tabs",
-        "type": "text",
+        "type": "string",
         "retired": false
       },
       "4": {
         "name": "cur_accordion",
-        "type": "text",
+        "type": "string",
         "retired": false
       },
       "5": {
         "name": "cur_toast",
-        "type": "text",
+        "type": "string",
         "retired": false
       },
       "6": {
         "name": "prefix",
-        "type": "text",
+        "type": "string",
         "retired": false
       }
     }
@@ -619,22 +659,32 @@
     "fields": {
       "1": {
         "name": "id",
-        "type": "text",
+        "type": "string",
         "retired": false
       },
       "2": {
         "name": "caret",
-        "type": "text",
+        "type": "string",
         "retired": false
       },
       "3": {
         "name": "cur_view",
-        "type": "text",
+        "type": "string",
         "retired": false
       },
       "4": {
         "name": "cur_go",
-        "type": "text",
+        "type": "string",
+        "retired": false
+      },
+      "5": {
+        "name": "tab_view",
+        "type": "string",
+        "retired": false
+      },
+      "6": {
+        "name": "tab_go",
+        "type": "string",
         "retired": false
       }
     }
@@ -644,47 +694,47 @@
     "fields": {
       "1": {
         "name": "id",
-        "type": "text",
+        "type": "string",
         "retired": false
       },
       "2": {
         "name": "open",
-        "type": "text",
+        "type": "string",
         "retired": false
       },
       "3": {
         "name": "x",
-        "type": "int",
+        "type": "int32",
         "retired": false
       },
       "4": {
         "name": "y",
-        "type": "int",
+        "type": "int32",
         "retired": false
       },
       "5": {
         "name": "caret",
-        "type": "text",
+        "type": "string",
         "retired": false
       },
       "6": {
         "name": "cur_popover",
-        "type": "text",
+        "type": "string",
         "retired": false
       },
       "7": {
         "name": "cur_sheet",
-        "type": "text",
+        "type": "string",
         "retired": false
       },
       "8": {
         "name": "cur_overlays",
-        "type": "text",
+        "type": "string",
         "retired": false
       },
       "9": {
         "name": "prefix",
-        "type": "text",
+        "type": "string",
         "retired": false
       }
     }
@@ -694,67 +744,67 @@
     "fields": {
       "1": {
         "name": "id",
-        "type": "text",
+        "type": "string",
         "retired": false
       },
       "2": {
         "name": "profile",
-        "type": "text",
+        "type": "string",
         "retired": false
       },
       "3": {
         "name": "chk_andy",
-        "type": "text",
+        "type": "string",
         "retired": false
       },
       "4": {
         "name": "chk_benoit",
-        "type": "text",
+        "type": "string",
         "retired": false
       },
       "5": {
         "name": "chk_luis",
-        "type": "text",
+        "type": "string",
         "retired": false
       },
       "6": {
         "name": "caret",
-        "type": "text",
+        "type": "string",
         "retired": false
       },
       "7": {
         "name": "cur_switch",
-        "type": "text",
+        "type": "string",
         "retired": false
       },
       "8": {
         "name": "cur_checkbox",
-        "type": "text",
+        "type": "string",
         "retired": false
       },
       "9": {
         "name": "cur_radio_group",
-        "type": "text",
+        "type": "string",
         "retired": false
       },
       "10": {
         "name": "cur_andy",
-        "type": "text",
+        "type": "string",
         "retired": false
       },
       "11": {
         "name": "cur_benoit",
-        "type": "text",
+        "type": "string",
         "retired": false
       },
       "12": {
         "name": "cur_luis",
-        "type": "text",
+        "type": "string",
         "retired": false
       },
       "13": {
         "name": "prefix",
-        "type": "text",
+        "type": "string",
         "retired": false
       }
     }
@@ -764,17 +814,17 @@
     "fields": {
       "1": {
         "name": "id",
-        "type": "text",
+        "type": "string",
         "retired": false
       },
       "2": {
         "name": "handle",
-        "type": "text",
+        "type": "string",
         "retired": false
       },
       "3": {
         "name": "bio",
-        "type": "text",
+        "type": "string",
         "retired": false
       }
     }
@@ -784,22 +834,22 @@
     "fields": {
       "1": {
         "name": "id",
-        "type": "text",
+        "type": "string",
         "retired": false
       },
       "2": {
         "name": "payer",
-        "type": "text",
+        "type": "string",
         "retired": false
       },
       "3": {
         "name": "status",
-        "type": "text",
+        "type": "string",
         "retired": false
       },
       "4": {
         "name": "amount",
-        "type": "text",
+        "type": "string",
         "retired": false
       }
     }
@@ -809,17 +859,17 @@
     "fields": {
       "1": {
         "name": "id",
-        "type": "text",
+        "type": "string",
         "retired": false
       },
       "2": {
         "name": "state",
-        "type": "text",
+        "type": "string",
         "retired": false
       },
       "3": {
         "name": "query",
-        "type": "text",
+        "type": "string",
         "retired": false
       }
     }
@@ -829,22 +879,22 @@
     "fields": {
       "1": {
         "name": "id",
-        "type": "text",
+        "type": "string",
         "retired": false
       },
       "2": {
         "name": "payer",
-        "type": "text",
+        "type": "string",
         "retired": false
       },
       "3": {
         "name": "status",
-        "type": "text",
+        "type": "string",
         "retired": false
       },
       "4": {
         "name": "amount",
-        "type": "text",
+        "type": "string",
         "retired": false
       }
     }
@@ -854,37 +904,37 @@
     "fields": {
       "1": {
         "name": "id",
-        "type": "text",
+        "type": "string",
         "retired": false
       },
       "2": {
         "name": "state",
-        "type": "text",
+        "type": "string",
         "retired": false
       },
       "3": {
         "name": "query",
-        "type": "text",
+        "type": "string",
         "retired": false
       },
       "4": {
         "name": "cursor",
-        "type": "text",
+        "type": "string",
         "retired": false
       },
       "5": {
         "name": "sort",
-        "type": "text",
+        "type": "string",
         "retired": false
       },
       "6": {
         "name": "srt_id",
-        "type": "text",
+        "type": "string",
         "retired": false
       },
       "7": {
         "name": "srt_amount",
-        "type": "text",
+        "type": "string",
         "retired": false
       }
     }
@@ -894,22 +944,22 @@
     "fields": {
       "1": {
         "name": "id",
-        "type": "text",
+        "type": "string",
         "retired": false
       },
       "2": {
         "name": "label",
-        "type": "text",
+        "type": "string",
         "retired": false
       },
       "3": {
         "name": "route",
-        "type": "text",
+        "type": "string",
         "retired": false
       },
       "4": {
         "name": "pos",
-        "type": "int",
+        "type": "int32",
         "retired": false
       }
     }
@@ -919,12 +969,12 @@
     "fields": {
       "1": {
         "name": "id",
-        "type": "text",
+        "type": "string",
         "retired": false
       },
       "2": {
         "name": "current",
-        "type": "text",
+        "type": "string",
         "retired": false
       }
     }
@@ -934,12 +984,12 @@
     "fields": {
       "1": {
         "name": "id",
-        "type": "text",
+        "type": "string",
         "retired": false
       },
       "2": {
         "name": "open",
-        "type": "text",
+        "type": "string",
         "retired": false
       }
     }
@@ -949,27 +999,27 @@
     "fields": {
       "1": {
         "name": "id",
-        "type": "text",
+        "type": "string",
         "retired": false
       },
       "2": {
         "name": "state",
-        "type": "text",
+        "type": "string",
         "retired": false
       },
       "3": {
         "name": "code",
-        "type": "text",
+        "type": "string",
         "retired": false
       },
       "4": {
         "name": "invalid",
-        "type": "text",
+        "type": "string",
         "retired": false
       },
       "5": {
         "name": "blocked",
-        "type": "text",
+        "type": "string",
         "retired": false
       }
     }
@@ -979,27 +1029,27 @@
     "fields": {
       "1": {
         "name": "id",
-        "type": "text",
+        "type": "string",
         "retired": false
       },
       "2": {
         "name": "label",
-        "type": "text",
+        "type": "string",
         "retired": false
       },
       "3": {
         "name": "value",
-        "type": "int",
+        "type": "int32",
         "retired": false
       },
       "4": {
         "name": "pos",
-        "type": "int",
+        "type": "int32",
         "retired": false
       },
       "5": {
         "name": "nxt_value",
-        "type": "int",
+        "type": "int32",
         "retired": false
       }
     }
@@ -1009,12 +1059,12 @@
     "fields": {
       "1": {
         "name": "id",
-        "type": "text",
+        "type": "string",
         "retired": false
       },
       "2": {
         "name": "active",
-        "type": "text",
+        "type": "string",
         "retired": false
       }
     }
@@ -1024,22 +1074,22 @@
     "fields": {
       "1": {
         "name": "id",
-        "type": "text",
+        "type": "string",
         "retired": false
       },
       "2": {
         "name": "phase",
-        "type": "text",
+        "type": "string",
         "retired": false
       },
       "3": {
         "name": "query",
-        "type": "text",
+        "type": "string",
         "retired": false
       },
       "4": {
         "name": "last",
-        "type": "text",
+        "type": "string",
         "retired": false
       }
     }
@@ -1049,52 +1099,52 @@
     "fields": {
       "1": {
         "name": "id",
-        "type": "text",
+        "type": "string",
         "retired": false
       },
       "2": {
         "name": "kind",
-        "type": "text",
+        "type": "string",
         "retired": false
       },
       "3": {
         "name": "seat",
-        "type": "text",
+        "type": "string",
         "retired": false
       },
       "4": {
         "name": "who",
-        "type": "text",
+        "type": "string",
         "retired": false
       },
       "5": {
         "name": "initials",
-        "type": "text",
+        "type": "string",
         "retired": false
       },
       "6": {
         "name": "body",
-        "type": "text",
+        "type": "string",
         "retired": false
       },
       "7": {
         "name": "note",
-        "type": "text",
+        "type": "string",
         "retired": false
       },
       "8": {
         "name": "when",
-        "type": "text",
+        "type": "string",
         "retired": false
       },
       "9": {
         "name": "at",
-        "type": "text",
+        "type": "string",
         "retired": false
       },
       "10": {
         "name": "state",
-        "type": "text",
+        "type": "string",
         "retired": false
       }
     }
@@ -1104,7 +1154,7 @@
     "fields": {
       "1": {
         "name": "id",
-        "type": "text",
+        "type": "string",
         "retired": false
       }
     }
@@ -1114,62 +1164,62 @@
     "fields": {
       "1": {
         "name": "id",
-        "type": "text",
+        "type": "string",
         "retired": false
       },
       "2": {
         "name": "step",
-        "type": "text",
+        "type": "string",
         "retired": false
       },
       "3": {
         "name": "a_shape",
-        "type": "text",
+        "type": "string",
         "retired": false
       },
       "4": {
         "name": "a_state",
-        "type": "text",
+        "type": "string",
         "retired": false
       },
       "5": {
         "name": "a_note",
-        "type": "text",
+        "type": "string",
         "retired": false
       },
       "6": {
         "name": "blocked",
-        "type": "text",
+        "type": "string",
         "retired": false
       },
       "7": {
         "name": "sel_one_markup",
-        "type": "text",
+        "type": "string",
         "retired": false
       },
       "8": {
         "name": "sel_one_chart",
-        "type": "text",
+        "type": "string",
         "retired": false
       },
       "9": {
         "name": "sel_one_library",
-        "type": "text",
+        "type": "string",
         "retired": false
       },
       "10": {
         "name": "sel_two_row",
-        "type": "text",
+        "type": "string",
         "retired": false
       },
       "11": {
         "name": "sel_two_dom",
-        "type": "text",
+        "type": "string",
         "retired": false
       },
       "12": {
         "name": "sel_two_memory",
-        "type": "text",
+        "type": "string",
         "retired": false
       }
     }
@@ -1179,32 +1229,32 @@
     "fields": {
       "1": {
         "name": "id",
-        "type": "text",
+        "type": "string",
         "retired": false
       },
       "2": {
         "name": "state",
-        "type": "text",
+        "type": "string",
         "retired": false
       },
       "3": {
         "name": "month",
-        "type": "text",
+        "type": "string",
         "retired": false
       },
       "4": {
         "name": "label",
-        "type": "text",
+        "type": "string",
         "retired": false
       },
       "5": {
         "name": "value",
-        "type": "text",
+        "type": "string",
         "retired": false
       },
       "6": {
         "name": "active",
-        "type": "text",
+        "type": "string",
         "retired": false
       }
     }
@@ -1214,47 +1264,47 @@
     "fields": {
       "1": {
         "name": "id",
-        "type": "text",
+        "type": "string",
         "retired": false
       },
       "2": {
         "name": "grid",
-        "type": "text",
+        "type": "string",
         "retired": false
       },
       "3": {
         "name": "month",
-        "type": "text",
+        "type": "string",
         "retired": false
       },
       "4": {
         "name": "week",
-        "type": "text",
+        "type": "string",
         "retired": false
       },
       "5": {
         "name": "dow",
-        "type": "text",
+        "type": "string",
         "retired": false
       },
       "6": {
         "name": "pos",
-        "type": "int",
+        "type": "int32",
         "retired": false
       },
       "7": {
         "name": "colpos",
-        "type": "int",
+        "type": "int32",
         "retired": false
       },
       "8": {
         "name": "day",
-        "type": "text",
+        "type": "string",
         "retired": false
       },
       "9": {
         "name": "date",
-        "type": "text",
+        "type": "string",
         "retired": false
       }
     }

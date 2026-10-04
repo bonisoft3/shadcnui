@@ -32,7 +32,8 @@ import (
 	_id: {for t in T.tabs {(t.name): "\(T.key)-trigger-\(t.name)"}}
 
 	_choice: #OneOf & {
-		walk: true
+		walk:   true
+		roving: true
 		field:  T.field
 		prefix: "sel_"
 		names: [for t in T.tabs {t.name}]
@@ -43,7 +44,7 @@ import (
 	_triggers: strings.Join([for t in T.tabs {
 		"""
 			      <button type="button" role="tab" id="\(T._id[t.name])" class="tab-trigger"
-			              data-rove="{\(T._choice.col[t.name])}"
+			              tabindex="{\(T._choice.tab[t.name])}"
 			              aria-selected="{\(T._choice.col[t.name])}" aria-controls="\(T.key)-panel-\(t.name)">\(t.label)</button>
 			"""
 	}], "\n")

@@ -94,7 +94,7 @@ pairs:
     of: AccordionSingleDemo
     accepts:
       - accept-accordion-walk
-    says: 'the caret chart walks the headers without opening one, and no header is stamped with a tabindex — APG keeps every one of them in the Tab sequence, which is why the caret is data-focus and not data-rove'
+    says: 'the caret chart walks the headers without opening one, and no header is stamped with a tabindex — APG keeps every one of them in the Tab sequence, which is why the caret is data-cur and not a roving tabstop'
     given:
       caret: shipping
     when: 'Down is pressed on the first header, then End, then Right, then the header the caret reached is clicked'

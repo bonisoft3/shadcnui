@@ -61,7 +61,7 @@ import (
 	focus: *"" | string
 
 	_idAttr:    [if L.id != "" {" id=\"\(L.id)\""}, ""][0]
-	_focusAttr: [if L.focus != "" {" data-focus=\"{\(L.focus)}\""}, ""][0]
+	_focusAttr: [if L.focus != "" {" data-cur=\"{\(L.focus)}\""}, ""][0]
 
 	markup: "        <a class=\"menu-item\" role=\"menuitem\"\(L._idAttr) data-route=\"\(L.route)\"\(L._focusAttr)>\(L.label)</a>"
 }
@@ -85,7 +85,7 @@ import (
 	// owns the row every item writes, so the item is markup; without one the
 	// item is a region of its own, as it was before any surface had a caret.
 	focus: *"" | string
-	_focusAttr: [if I.focus != "" {" data-focus=\"{\(I.focus)}\""}, ""][0]
+	_focusAttr: [if I.focus != "" {" data-cur=\"{\(I.focus)}\""}, ""][0]
 	_own: [if I.focus == "" {"""
 		
 		                data-live="\(I.collection)" data-filter="id=eq.\(I.row)"
@@ -143,7 +143,7 @@ import (
 		           data-machine='\((omni.#attrJSON & {in: R.machine}).out)'
 		"""}, ""][0]
 	_focusAttr: {for i in R.items {
-		(i.name): [if R.walked {" data-focus=\"{\(R.focus[i.name])}\""}, ""][0]
+		(i.name): [if R.walked {" data-cur=\"{\(R.focus[i.name])}\""}, ""][0]
 	}}
 
 	_choice: #OneOf & {
@@ -332,6 +332,7 @@ _#Surface: S={
 			field:  "caret"
 			prefix: "cur_"
 			walk:   true
+			roving: true
 			clicks: false
 			axis:   "horizontal"
 			names: [for m in M.menus {m.key}]
@@ -342,7 +343,7 @@ _#Surface: S={
 			         data-live="\(M.collection)" data-filter="id=eq.\(M.row)"
 			         data-machine='\((omni.#attrJSON & {in: [M._bar.machine]}).out)'
 			"""
-		_barStop: {for m in M.menus {(m.key): " data-rove=\"{cur_\(m.key)}\""}}
+		_barStop: {for m in M.menus {(m.key): " tabindex=\"{\(M._bar.tab[m.key])}\""}}
 	}
 	if M.collection == "" {
 		_barRegion: ""
@@ -375,9 +376,7 @@ _#Surface: S={
 // Two things it needs that no other menu does, and both are the terminal's.
 // `contextmenu` is a DISPLACING type — the UA opens its own menu on it — so an
 // arrow answering it has its default cancelled, and the reader sees one menu
-// rather than two. And a right-click has no invoker: `commandfor` answers a
-// click, so openness here is a column the terminal performs through `data-open`
-// rather than something the button hands the browser.
+// rather than two.
 //
 // The point is the affordance's own, not the viewport's: `pointerX`/`pointerY`
 // are fractions of the target's box, and CSS multiplies them back out against
@@ -452,7 +451,7 @@ _#Surface: S={
 		       data-machine='\((omni.#attrJSON & {in: C._charts}).out)'>
 		    <div class="ctx-target" id="\(C._target)" tabindex="0">\(C.label)</div>
 		    <div class="menu-surface ctx-surface" id="\(C._surface._id)" popover role="menu"
-		         data-open="{\(C.field)}" aria-label="\(C.name)"
+		         aria-label="\(C.name)"
 		         style="--ctx-x: {x}; --ctx-y: {y}">
 		\(strings.Join(C.groups, "\n      <div role=\"separator\"></div>\n"))
 		    </div>

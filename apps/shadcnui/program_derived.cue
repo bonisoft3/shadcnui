@@ -3,135 +3,373 @@ package shadcnui
 
 code: surface: screens: {
 	accordion: {
-		reads: [{entity: "AccordionMultiDemo"}, {entity: "AccordionSingleDemo"}]
+		reads: [
+			{table: "accordion_single_demo", kind: "live", nested: false, lists: [], route: "view", clauses: [{"col":"id","op":"eq"}], embeds: [], orders: []},
+			{table: "accordion_single_demo", kind: "live", nested: false, lists: [], route: "view", clauses: [{"col":"id","op":"eq"}], embeds: [], orders: []},
+			{table: "accordion_multi_demo", kind: "live", nested: false, lists: [], route: "view", clauses: [{"col":"id","op":"eq"}], embeds: [], orders: []},
+			{table: "accordion_multi_demo", kind: "live", nested: false, lists: [], route: "view", clauses: [{"col":"id","op":"eq"}], embeds: [], orders: []},
+			{table: "accordion_multi_demo", kind: "live", nested: false, lists: [], route: "view", clauses: [{"col":"id","op":"eq"}], embeds: [], orders: []},
+			{table: "accordion_multi_demo", kind: "live", nested: false, lists: [], route: "view", clauses: [{"col":"id","op":"eq"}], embeds: [], orders: []},
+			{table: "accordion_multi_demo", kind: "live", nested: false, lists: [], route: "view", clauses: [{"col":"id","op":"eq"}], embeds: [], orders: []},
+			{table: "accordion_multi_demo", kind: "live", nested: false, lists: [], route: "view", clauses: [{"col":"id","op":"eq"}], embeds: [], orders: []},
+		]
+		writes: []
 		files: {handlers: ["shell/handlers/is-key.js"], adapters: []}
 	}
 	atoms: {
 		reads: []
+		writes: []
 		files: {handlers: [], adapters: []}
 	}
 	breadcrumb: {
 		reads: []
+		writes: []
 		files: {handlers: [], adapters: []}
 	}
 	calendar: {
-		reads: [{entity: "CalendarCell"}, {entity: "CalendarDemo"}]
+		reads: [
+			{table: "calendar_demo", kind: "live", nested: false, lists: [], route: "view", clauses: [{"col":"id","op":"eq"}], embeds: [], orders: []},
+			{table: "calendar_demo", kind: "live", nested: false, lists: [], route: "view", clauses: [{"col":"id","op":"eq"}], embeds: [], orders: []},
+			{table: "calendar_cell", kind: "live", nested: true, lists: [1], route: "view", clauses: [{"col":"grid","op":"eq"},{"col":"week","op":"eq"}], embeds: [], orders: ["pos"]},
+			{table: "calendar_cell", kind: "live", nested: true, lists: [1], route: "view", clauses: [{"col":"grid","op":"eq"},{"col":"week","op":"eq"}], embeds: [], orders: ["pos"]},
+			{table: "calendar_cell", kind: "live", nested: true, lists: [1], route: "view", clauses: [{"col":"grid","op":"eq"},{"col":"week","op":"eq"}], embeds: [], orders: ["pos"]},
+			{table: "calendar_cell", kind: "live", nested: true, lists: [1], route: "view", clauses: [{"col":"grid","op":"eq"},{"col":"week","op":"eq"}], embeds: [], orders: ["pos"]},
+			{table: "calendar_cell", kind: "live", nested: true, lists: [1], route: "view", clauses: [{"col":"grid","op":"eq"},{"col":"week","op":"eq"}], embeds: [], orders: ["pos"]},
+			{table: "calendar_cell", kind: "live", nested: true, lists: [1], route: "view", clauses: [{"col":"grid","op":"eq"},{"col":"week","op":"eq"}], embeds: [], orders: ["pos"]},
+			{table: "calendar_cell", kind: "live", nested: true, lists: [1], route: "view", clauses: [{"col":"grid","op":"eq"}], embeds: [], orders: ["pos"]},
+			{table: "calendar_cell", kind: "live", nested: true, lists: [1], route: "view", clauses: [{"col":"grid","op":"eq"}], embeds: [], orders: ["colpos"]},
+			{table: "calendar_cell", kind: "live", nested: true, lists: [1], route: "view", clauses: [{"col":"id","op":"eq"}], embeds: [], orders: []},
+			{table: "calendar_demo", kind: "live", nested: false, lists: [], route: "view", clauses: [{"col":"id","op":"eq"}], embeds: [], orders: []},
+			{table: "calendar_cell", kind: "live", nested: true, lists: [13], route: "view", clauses: [{"col":"id","op":"eq"}], embeds: [], orders: []},
+			{table: "calendar_demo", kind: "live", nested: false, lists: [], route: "view", clauses: [{"col":"id","op":"eq"}], embeds: [], orders: []},
+			{table: "calendar_demo", kind: "live", nested: false, lists: [], route: "view", clauses: [{"col":"id","op":"eq"}], embeds: [], orders: []},
+			{table: "calendar_demo", kind: "live", nested: false, lists: [], route: "view", clauses: [{"col":"id","op":"eq"}], embeds: [], orders: []},
+			{table: "calendar_cell", kind: "live", nested: true, lists: [15], route: "view", clauses: [{"col":"grid","op":"eq"},{"col":"week","op":"eq"}], embeds: [], orders: ["pos"]},
+			{table: "calendar_cell", kind: "live", nested: true, lists: [15], route: "view", clauses: [{"col":"grid","op":"eq"},{"col":"week","op":"eq"}], embeds: [], orders: ["pos"]},
+			{table: "calendar_cell", kind: "live", nested: true, lists: [15], route: "view", clauses: [{"col":"grid","op":"eq"},{"col":"week","op":"eq"}], embeds: [], orders: ["pos"]},
+			{table: "calendar_cell", kind: "live", nested: true, lists: [15], route: "view", clauses: [{"col":"grid","op":"eq"},{"col":"week","op":"eq"}], embeds: [], orders: ["pos"]},
+			{table: "calendar_cell", kind: "live", nested: true, lists: [15], route: "view", clauses: [{"col":"grid","op":"eq"},{"col":"week","op":"eq"}], embeds: [], orders: ["pos"]},
+			{table: "calendar_cell", kind: "live", nested: true, lists: [15], route: "view", clauses: [{"col":"grid","op":"eq"},{"col":"week","op":"eq"}], embeds: [], orders: ["pos"]},
+			{table: "calendar_cell", kind: "live", nested: true, lists: [15], route: "view", clauses: [{"col":"grid","op":"eq"}], embeds: [], orders: ["pos"]},
+			{table: "calendar_cell", kind: "live", nested: true, lists: [15], route: "view", clauses: [{"col":"grid","op":"eq"}], embeds: [], orders: ["colpos"]},
+			{table: "calendar_cell", kind: "live", nested: true, lists: [15], route: "view", clauses: [{"col":"id","op":"eq"}], embeds: [], orders: []},
+		]
+		writes: [
+			{table: "calendar_demo", op: "upsert"},
+			{table: "calendar_demo", op: "upsert"},
+			{table: "calendar_demo", op: "upsert"},
+			{table: "calendar_demo", op: "upsert"},
+			{table: "calendar_demo", op: "upsert"},
+			{table: "calendar_demo", op: "upsert"},
+			{table: "calendar_demo", op: "upsert"},
+			{table: "calendar_demo", op: "upsert"},
+			{table: "calendar_demo", op: "upsert"},
+			{table: "calendar_demo", op: "upsert"},
+			{table: "calendar_demo", op: "upsert"},
+			{table: "calendar_demo", op: "upsert"},
+			{table: "calendar_demo", op: "upsert"},
+			{table: "calendar_demo", op: "upsert"},
+		]
 		files: {handlers: ["shell/handlers/month-step.js"], adapters: []}
 	}
 	catalog: {
 		reads: []
+		writes: []
 		files: {handlers: [], adapters: []}
 	}
 	chart: {
-		reads: [{entity: "ChartCursor"}, {entity: "ChartPoint"}]
+		reads: [
+			{table: "chart_cursor", kind: "live", nested: false, lists: [], route: "view", clauses: [{"col":"id","op":"eq"}], embeds: [], orders: []},
+			{table: "chart_point", kind: "live", nested: true, lists: [0], route: "whole", clauses: [], embeds: [], orders: ["pos"]},
+			{table: "chart_point", kind: "live", nested: true, lists: [0], route: "whole", clauses: [], embeds: [], orders: ["pos"]},
+			{table: "chart_point", kind: "live", nested: true, lists: [0], route: "view", clauses: [{"col":"id","op":"eq"}], embeds: [], orders: []},
+			{table: "chart_cursor", kind: "live", nested: false, lists: [], route: "view", clauses: [{"col":"id","op":"eq"}], embeds: [], orders: []},
+		]
+		writes: [
+			{table: "chart_cursor", op: "upsert"},
+			{table: "chart_cursor", op: "upsert"},
+			{table: "chart_cursor", op: "upsert"},
+			{table: "chart_cursor", op: "upsert"},
+			{table: "chart_cursor", op: "upsert"},
+			{table: "chart_cursor", op: "upsert"},
+			{table: "chart_cursor", op: "upsert"},
+			{table: "chart_cursor", op: "upsert"},
+			{table: "chart_cursor", op: "upsert"},
+			{table: "chart_cursor", op: "upsert"},
+		]
 		files: {handlers: [], adapters: []}
 	}
 	chat: {
-		reads: [{entity: "ChatDemo"}, {entity: "ChatRow"}]
+		reads: [
+			{table: "chat_demo", kind: "live", nested: false, lists: [], route: "view", clauses: [{"col":"id","op":"eq"}], embeds: [], orders: []},
+			{table: "chat_row", kind: "live", nested: true, lists: [0], route: "whole", clauses: [], embeds: [], orders: ["at"]},
+			{table: "chat_row", kind: "live", nested: false, lists: [], route: "whole", clauses: [], embeds: [], orders: ["at"]},
+		]
+		writes: [
+			{table: "chat_row", op: "create"},
+		]
 		files: {handlers: [], adapters: []}
 	}
 	checkbox: {
-		reads: [{entity: "CheckboxDemo"}, {entity: "CollapsibleDemo"}, {entity: "SelectAllDemo"}, {entity: "ToggleDemo"}]
+		reads: [
+			{table: "checkbox_demo", kind: "live", nested: false, lists: [], route: "view", clauses: [{"col":"id","op":"eq"}], embeds: [], orders: []},
+			{table: "select_all_demo", kind: "live", nested: false, lists: [], route: "view", clauses: [{"col":"id","op":"eq"}], embeds: [], orders: []},
+			{table: "checkbox_demo", kind: "live", nested: false, lists: [], route: "view", clauses: [{"col":"id","op":"eq"}], embeds: [], orders: []},
+			{table: "select_all_demo", kind: "live", nested: false, lists: [], route: "view", clauses: [{"col":"id","op":"eq"}], embeds: [], orders: []},
+			{table: "toggle_demo", kind: "live", nested: false, lists: [], route: "view", clauses: [{"col":"id","op":"eq"}], embeds: [], orders: []},
+			{table: "toggle_demo", kind: "live", nested: false, lists: [], route: "view", clauses: [{"col":"id","op":"eq"}], embeds: [], orders: []},
+			{table: "collapsible_demo", kind: "live", nested: false, lists: [], route: "view", clauses: [{"col":"id","op":"eq"}], embeds: [], orders: []},
+			{table: "collapsible_demo", kind: "live", nested: false, lists: [], route: "view", clauses: [{"col":"id","op":"eq"}], embeds: [], orders: []},
+		]
+		writes: []
 		files: {handlers: ["shell/handlers/flip-of.js", "shell/handlers/roll-up.js"], adapters: []}
 	}
 	combobox: {
-		reads: [{entity: "ComboboxDemo"}]
+		reads: [
+			{table: "combobox_demo", kind: "live", nested: false, lists: [], route: "view", clauses: [{"col":"id","op":"eq"}], embeds: [], orders: []},
+			{table: "combobox_demo", kind: "live", nested: false, lists: [], route: "view", clauses: [{"col":"id","op":"eq"}], embeds: [], orders: []},
+		]
+		writes: [
+			{table: "combobox_demo", op: "upsert"},
+		]
 		files: {handlers: [], adapters: []}
 	}
 	command: {
-		reads: [{entity: "CommandDemo"}, {entity: "CommandItem"}]
+		reads: [
+			{table: "command_demo", kind: "live", nested: false, lists: [], route: "view", clauses: [{"col":"id","op":"eq"}], embeds: [], orders: []},
+			{table: "command_item", kind: "live", nested: true, lists: [0], route: "snapshot", clauses: [{"col":"label","op":"ilike"}], embeds: [], orders: ["pos"]},
+			{table: "command_item", kind: "live", nested: true, lists: [0], route: "snapshot", clauses: [{"col":"label","op":"ilike"}], embeds: [], limit: 1, orders: ["pos"]},
+			{table: "command_item", kind: "live", nested: true, lists: [0], route: "snapshot", clauses: [{"col":"label","op":"ilike"}], embeds: [], limit: 1, orders: ["pos"]},
+		]
+		writes: [
+			{table: "command_demo", op: "upsert"},
+			{table: "command_demo", op: "upsert"},
+			{table: "command_demo", op: "upsert"},
+			{table: "command_demo", op: "upsert"},
+			{table: "command_demo", op: "upsert"},
+			{table: "command_demo", op: "upsert"},
+			{table: "command_demo", op: "upsert"},
+			{table: "command_demo", op: "upsert"},
+			{table: "command_demo", op: "upsert"},
+			{table: "command_demo", op: "upsert"},
+		]
 		files: {handlers: [], adapters: []}
 	}
 	composition: {
-		reads: [{entity: "CompositionDemo"}]
+		reads: [
+			{table: "composition_demo", kind: "live", nested: false, lists: [], route: "view", clauses: [{"col":"id","op":"eq"}], embeds: [], orders: []},
+			{table: "composition_demo", kind: "live", nested: false, lists: [], route: "view", clauses: [{"col":"id","op":"eq"}], embeds: [], orders: []},
+		]
+		writes: []
 		files: {handlers: [], adapters: []}
 	}
 	"data-table": {
-		reads: [{entity: "DataCursor"}, {entity: "DataRow"}]
+		reads: [
+			{table: "data_cursor", kind: "live", nested: false, lists: [], route: "view", clauses: [{"col":"id","op":"eq"}], embeds: [], orders: []},
+			{table: "data_cursor", kind: "live", nested: false, lists: [], route: "view", clauses: [{"col":"id","op":"eq"}], embeds: [], orders: []},
+			{table: "data_row", kind: "live", nested: true, lists: [1], route: "snapshot", clauses: [{"col":"payer","op":"ilike"}], embeds: [], orders: ["id","amount"]},
+			{table: "data_row", kind: "live", nested: true, lists: [1], route: "snapshot", clauses: [{"col":"payer","op":"ilike"}], embeds: [], limit: 1, orders: ["id","amount"]},
+			{table: "data_cursor", kind: "live", nested: false, lists: [], route: "view", clauses: [{"col":"id","op":"eq"}], embeds: [], orders: []},
+		]
+		writes: [
+			{table: "data_cursor", op: "upsert"},
+			{table: "data_cursor", op: "upsert"},
+			{table: "data_cursor", op: "upsert"},
+			{table: "data_cursor", op: "upsert"},
+			{table: "data_cursor", op: "upsert"},
+			{table: "data_cursor", op: "upsert"},
+			{table: "data_cursor", op: "upsert"},
+			{table: "data_cursor", op: "upsert"},
+			{table: "data_cursor", op: "upsert"},
+			{table: "data_cursor", op: "upsert"},
+			{table: "data_cursor", op: "upsert"},
+			{table: "data_cursor", op: "upsert"},
+		]
 		files: {handlers: [], adapters: []}
 	}
 	form: {
-		reads: [{entity: "FormDemo"}]
+		reads: [
+			{table: "form_demo", kind: "live", nested: false, lists: [], route: "view", clauses: [{"col":"id","op":"eq"}], embeds: [], orders: []},
+			{table: "form_demo", kind: "live", nested: false, lists: [], route: "view", clauses: [{"col":"id","op":"eq"}], embeds: [], orders: ["id"]},
+			{table: "form_demo", kind: "live", nested: false, lists: [], route: "view", clauses: [{"col":"id","op":"eq"}], embeds: [], orders: []},
+		]
+		writes: [
+			{table: "form_demo", op: "upsert"},
+			{table: "form_demo", op: "delete"},
+		]
 		files: {handlers: [], adapters: []}
 	}
 	"hover-card": {
 		reads: []
+		writes: []
 		files: {handlers: [], adapters: []}
 	}
 	"input-otp": {
-		reads: [{entity: "OtpDemo"}]
+		reads: [
+			{table: "otp_demo", kind: "live", nested: false, lists: [], route: "view", clauses: [{"col":"id","op":"eq"}], embeds: [], orders: []},
+			{table: "otp_demo", kind: "live", nested: false, lists: [], route: "view", clauses: [{"col":"id","op":"eq"}], embeds: [], orders: []},
+		]
+		writes: []
 		files: {handlers: ["shell/handlers/has-nondigit.js", "shell/handlers/is-code.js", "shell/handlers/is-digits.js"], adapters: []}
 	}
 	menu: {
-		reads: [{entity: "ContextMenuDemo"}, {entity: "MenuGoDemo"}, {entity: "MenuOptionDemo"}, {entity: "MenuProfileDemo"}, {entity: "MenubarDemo"}]
+		reads: [
+			{table: "menu_profile_demo", kind: "live", nested: false, lists: [], route: "view", clauses: [{"col":"id","op":"eq"}], embeds: [], orders: []},
+			{table: "menubar_demo", kind: "live", nested: false, lists: [], route: "view", clauses: [{"col":"id","op":"eq"}], embeds: [], orders: []},
+			{table: "menu_option_demo", kind: "live", nested: false, lists: [], route: "view", clauses: [{"col":"id","op":"eq"}], embeds: [], orders: []},
+			{table: "menu_go_demo", kind: "live", nested: false, lists: [], route: "view", clauses: [{"col":"id","op":"eq"}], embeds: [], orders: []},
+			{table: "menu_profile_demo", kind: "live", nested: false, lists: [], route: "view", clauses: [{"col":"id","op":"eq"}], embeds: [], orders: []},
+			{table: "menu_option_demo", kind: "live", nested: false, lists: [], route: "view", clauses: [{"col":"id","op":"eq"}], embeds: [], orders: []},
+			{table: "menu_option_demo", kind: "live", nested: false, lists: [], route: "view", clauses: [{"col":"id","op":"eq"}], embeds: [], orders: []},
+			{table: "context_menu_demo", kind: "live", nested: false, lists: [], route: "view", clauses: [{"col":"id","op":"eq"}], embeds: [], orders: []},
+			{table: "context_menu_demo", kind: "live", nested: false, lists: [], route: "view", clauses: [{"col":"id","op":"eq"}], embeds: [], orders: []},
+		]
+		writes: []
 		files: {handlers: ["shell/handlers/has-prefix.js", "shell/handlers/is-key.js", "shell/handlers/is-printable.js", "shell/handlers/starts-with.js", "shell/handlers/type-into.js"], adapters: []}
 	}
 	navigation: {
-		reads: [{entity: "NavRailItem"}, {entity: "NavSidebarDemo"}, {entity: "NavState"}]
+		reads: [
+			{table: "nav_sidebar_demo", kind: "live", nested: false, lists: [], route: "view", clauses: [{"col":"id","op":"eq"}], embeds: [], orders: []},
+			{table: "nav_state", kind: "live", nested: false, lists: [], route: "view", clauses: [{"col":"id","op":"eq"}], embeds: [], orders: []},
+			{table: "nav_rail_item", kind: "live", nested: true, lists: [1], route: "whole", clauses: [], embeds: [], orders: ["pos"]},
+			{table: "nav_state", kind: "live", nested: false, lists: [], route: "view", clauses: [{"col":"id","op":"eq"}], embeds: [], orders: []},
+			{table: "nav_rail_item", kind: "live", nested: true, lists: [3], route: "whole", clauses: [], embeds: [], orders: ["pos"]},
+			{table: "nav_sidebar_demo", kind: "live", nested: false, lists: [], route: "view", clauses: [{"col":"id","op":"eq"}], embeds: [], orders: []},
+			{table: "nav_state", kind: "live", nested: false, lists: [], route: "view", clauses: [{"col":"id","op":"eq"}], embeds: [], orders: []},
+			{table: "nav_rail_item", kind: "live", nested: true, lists: [6], route: "whole", clauses: [], embeds: [], orders: ["pos"]},
+		]
+		writes: []
 		files: {handlers: [], adapters: []}
 	}
 	overlays: {
 		reads: []
+		writes: []
 		files: {handlers: [], adapters: []}
 	}
 	pagination: {
-		reads: [{entity: "CarouselDemo"}, {entity: "PaginationDemo"}]
+		reads: [
+			{table: "pagination_demo", kind: "live", nested: false, lists: [], route: "view", clauses: [{"col":"id","op":"eq"}], embeds: [], orders: []},
+			{table: "pagination_demo", kind: "live", nested: false, lists: [], route: "view", clauses: [{"col":"id","op":"eq"}], embeds: [], orders: []},
+			{table: "carousel_demo", kind: "live", nested: false, lists: [], route: "view", clauses: [{"col":"id","op":"eq"}], embeds: [], orders: []},
+			{table: "carousel_demo", kind: "live", nested: false, lists: [], route: "view", clauses: [{"col":"id","op":"eq"}], embeds: [], orders: []},
+		]
+		writes: []
 		files: {handlers: [], adapters: []}
 	}
 	picker: {
-		reads: [{entity: "PickerDemo"}]
+		reads: [
+			{table: "picker_demo", kind: "live", nested: false, lists: [], route: "view", clauses: [{"col":"id","op":"eq"}], embeds: [], orders: []},
+			{table: "picker_demo", kind: "live", nested: false, lists: [], route: "view", clauses: [{"col":"id","op":"eq"}], embeds: [], orders: []},
+		]
+		writes: []
 		files: {handlers: [], adapters: []}
 	}
 	popover: {
 		reads: []
+		writes: []
 		files: {handlers: [], adapters: []}
 	}
 	primitives: {
 		reads: []
+		writes: []
 		files: {handlers: [], adapters: []}
 	}
 	questionnaire: {
-		reads: [{entity: "QuizDemo"}]
+		reads: [
+			{table: "quiz_demo", kind: "live", nested: false, lists: [], route: "view", clauses: [{"col":"id","op":"eq"}], embeds: [], orders: []},
+			{table: "quiz_demo", kind: "live", nested: false, lists: [], route: "view", clauses: [{"col":"id","op":"eq"}], embeds: [], orders: []},
+		]
+		writes: []
 		files: {handlers: ["shell/handlers/unless-answered.js", "shell/handlers/unless-typed.js"], adapters: []}
 	}
 	"radio-group": {
-		reads: [{entity: "RadioGroupDemo"}]
+		reads: [
+			{table: "radio_group_demo", kind: "live", nested: false, lists: [], route: "view", clauses: [{"col":"id","op":"eq"}], embeds: [], orders: []},
+			{table: "radio_group_demo", kind: "live", nested: false, lists: [], route: "view", clauses: [{"col":"id","op":"eq"}], embeds: [], orders: []},
+		]
+		writes: []
 		files: {handlers: ["shell/handlers/is-key.js"], adapters: []}
 	}
 	resizable: {
-		reads: [{entity: "ResizableDemo"}]
+		reads: [
+			{table: "resizable_demo", kind: "live", nested: false, lists: [], route: "view", clauses: [{"col":"id","op":"eq"}], embeds: [], orders: []},
+		]
+		writes: []
 		files: {handlers: [], adapters: []}
 	}
 	select: {
-		reads: [{entity: "SelectDemo"}, {entity: "SelectOption"}]
+		reads: [
+			{table: "select_option", kind: "live", nested: false, lists: [], route: "whole", clauses: [], embeds: [], orders: ["id"]},
+			{table: "select_demo", kind: "live", nested: false, lists: [], route: "view", clauses: [{"col":"id","op":"eq"}], embeds: [], orders: []},
+			{table: "select_option", kind: "live", nested: false, lists: [], route: "whole", clauses: [], embeds: [], orders: ["id"]},
+		]
+		writes: [
+			{table: "select_demo", op: "upsert"},
+			{table: "select_option", op: "upsert"},
+		]
 		files: {handlers: [], adapters: []}
 	}
 	sheet: {
 		reads: []
+		writes: []
 		files: {handlers: [], adapters: []}
 	}
 	slider: {
-		reads: [{entity: "ProgressDemo"}, {entity: "SliderDemo"}]
+		reads: [
+			{table: "slider_demo", kind: "live", nested: false, lists: [], route: "view", clauses: [{"col":"id","op":"eq"}], embeds: [], orders: []},
+			{table: "slider_demo", kind: "live", nested: false, lists: [], route: "view", clauses: [{"col":"id","op":"eq"}], embeds: [], orders: []},
+			{table: "progress_demo", kind: "live", nested: false, lists: [], route: "view", clauses: [{"col":"id","op":"eq"}], embeds: [], orders: []},
+			{table: "slider_demo", kind: "live", nested: false, lists: [], route: "view", clauses: [{"col":"id","op":"eq"}], embeds: [], orders: []},
+			{table: "progress_demo", kind: "live", nested: false, lists: [], route: "view", clauses: [{"col":"id","op":"eq"}], embeds: [], orders: []},
+		]
+		writes: []
 		files: {handlers: [], adapters: []}
 	}
 	switch: {
-		reads: [{entity: "SwitchDemo"}]
+		reads: [
+			{table: "switch_demo", kind: "live", nested: false, lists: [], route: "view", clauses: [{"col":"id","op":"eq"}], embeds: [], orders: []},
+			{table: "switch_demo", kind: "live", nested: false, lists: [], route: "view", clauses: [{"col":"id","op":"eq"}], embeds: [], orders: []},
+			{table: "switch_demo", kind: "live", nested: false, lists: [], route: "view", clauses: [{"col":"id","op":"eq"}], embeds: [], orders: []},
+			{table: "switch_demo", kind: "live", nested: false, lists: [], route: "view", clauses: [{"col":"id","op":"eq"}], embeds: [], orders: []},
+		]
+		writes: []
 		files: {handlers: [], adapters: []}
 	}
 	table: {
-		reads: [{entity: "TableQuery"}, {entity: "TableRow"}]
+		reads: [
+			{table: "table_query", kind: "live", nested: false, lists: [], route: "view", clauses: [{"col":"id","op":"eq"}], embeds: [], orders: []},
+			{table: "table_query", kind: "live", nested: false, lists: [], route: "view", clauses: [{"col":"id","op":"eq"}], embeds: [], orders: []},
+			{table: "table_row", kind: "live", nested: true, lists: [1], route: "snapshot", clauses: [{"col":"payer","op":"ilike"}], embeds: [], orders: ["id"]},
+			{table: "table_query", kind: "live", nested: false, lists: [], route: "view", clauses: [{"col":"id","op":"eq"}], embeds: [], orders: []},
+		]
+		writes: [
+			{table: "table_row", op: "upsert"},
+		]
 		files: {handlers: [], adapters: []}
 	}
 	tabs: {
-		reads: [{entity: "TabsDemo"}]
+		reads: [
+			{table: "tabs_demo", kind: "live", nested: false, lists: [], route: "view", clauses: [{"col":"id","op":"eq"}], embeds: [], orders: []},
+			{table: "tabs_demo", kind: "live", nested: false, lists: [], route: "view", clauses: [{"col":"id","op":"eq"}], embeds: [], orders: []},
+		]
+		writes: []
 		files: {handlers: ["shell/handlers/is-key.js"], adapters: []}
 	}
 	toast: {
-		reads: [{entity: "ToastDemo"}]
+		reads: [
+			{table: "toast_demo", kind: "live", nested: false, lists: [], route: "view", clauses: [{"col":"id","op":"eq"}], embeds: [], orders: []},
+			{table: "toast_demo", kind: "live", nested: false, lists: [], route: "view", clauses: [{"col":"id","op":"eq"}], embeds: [], orders: []},
+		]
+		writes: []
 		files: {handlers: [], adapters: []}
 	}
 	"toggle-group": {
-		reads: [{entity: "ToggleGroupDemo"}]
+		reads: [
+			{table: "toggle_group_demo", kind: "live", nested: false, lists: [], route: "view", clauses: [{"col":"id","op":"eq"}], embeds: [], orders: []},
+			{table: "toggle_group_demo", kind: "live", nested: false, lists: [], route: "view", clauses: [{"col":"id","op":"eq"}], embeds: [], orders: []},
+			{table: "toggle_group_demo", kind: "live", nested: false, lists: [], route: "view", clauses: [{"col":"id","op":"eq"}], embeds: [], orders: []},
+		]
+		writes: []
 		files: {handlers: ["shell/handlers/is-key.js"], adapters: []}
 	}
 }

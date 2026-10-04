@@ -7,37 +7,37 @@ local:
   tabs_demo: tab
   picker_demo: tab
   toggle_group_demo: tab
-  accordion_multi_demo: tab
   accordion_single_demo: tab
+  accordion_multi_demo: tab
   combobox_demo: tab
   checkbox_demo: tab
-  collapsible_demo: tab
   select_all_demo: tab
   toggle_demo: tab
+  collapsible_demo: tab
   radio_group_demo: tab
-  carousel_demo: tab
   pagination_demo: tab
+  carousel_demo: tab
   toast_demo: tab
-  progress_demo: tab
   slider_demo: tab
+  progress_demo: tab
   resizable_demo: tab
   command_demo: tab
   command_item: tab
-  select_demo: tab
   select_option: tab
-  context_menu_demo: tab
-  menu_go_demo: tab
-  menu_option_demo: tab
+  select_demo: tab
   menu_profile_demo: tab
   menubar_demo: tab
+  menu_option_demo: tab
+  menu_go_demo: tab
+  context_menu_demo: tab
   form_demo: tab
   table_query: tab
   table_row: tab
   data_cursor: tab
   data_row: tab
-  nav_rail_item: tab
   nav_sidebar_demo: tab
   nav_state: tab
+  nav_rail_item: tab
   otp_demo: tab
   chart_cursor: tab
   chart_point: tab
@@ -45,8 +45,8 @@ local:
   chat_demo: tab
   chat_row: tab
   quiz_demo: tab
-  calendar_cell: tab
   calendar_demo: tab
+  calendar_cell: tab
 seed:
   command_demo:
     - id: the
@@ -2749,6 +2749,18 @@ schema:
         name: sel_password
         type: string
         required: true
+      - enum:
+          - '0'
+          - '-1'
+        name: tab_account
+        type: string
+        required: true
+      - enum:
+          - '0'
+          - '-1'
+        name: tab_password
+        type: string
+        required: true
   picker_demo:
     durability: tab
     fields:
@@ -2820,6 +2832,24 @@ schema:
           - 'true'
           - 'false'
         name: chk_right
+        type: string
+        required: true
+      - enum:
+          - '0'
+          - '-1'
+        name: tab_left
+        type: string
+        required: true
+      - enum:
+          - '0'
+          - '-1'
+        name: tab_center
+        type: string
+        required: true
+      - enum:
+          - '0'
+          - '-1'
+        name: tab_right
         type: string
         required: true
   accordion_single_demo:
@@ -3033,6 +3063,24 @@ schema:
           - 'true'
           - 'false'
         name: chk_team
+        type: string
+        required: true
+      - enum:
+          - '0'
+          - '-1'
+        name: tab_starter
+        type: string
+        required: true
+      - enum:
+          - '0'
+          - '-1'
+        name: tab_pro
+        type: string
+        required: true
+      - enum:
+          - '0'
+          - '-1'
+        name: tab_team
         type: string
         required: true
   pagination_demo:
@@ -3403,6 +3451,18 @@ schema:
           - 'true'
           - 'false'
         name: cur_go
+        type: string
+        required: true
+      - enum:
+          - '0'
+          - '-1'
+        name: tab_view
+        type: string
+        required: true
+      - enum:
+          - '0'
+          - '-1'
+        name: tab_go
         type: string
         required: true
   context_menu_demo:
@@ -4087,7 +4147,9 @@ schema:
 types:
   types:
     string:
-      sql: portable_string
+      pg: text
+      column: plain
+      subset: true
       base:
         - text
         - varchar
@@ -4099,7 +4161,9 @@ types:
       beyond:
         - scalar-values
     bool:
-      sql: portable_bool
+      pg: boolean
+      column: plain
+      subset: true
       base:
         - bool
         - boolean
@@ -4107,7 +4171,9 @@ types:
       order: boolean
       beyond: []
     int32:
-      sql: portable_int32
+      pg: integer
+      column: plain
+      subset: true
       base:
         - int2
         - int4
@@ -4119,6 +4185,9 @@ types:
       order: number
       beyond: []
     int64:
+      pg: bigint
+      column: domain
+      subset: false
       sql: portable_int64
       base:
         - int8
@@ -4129,7 +4198,9 @@ types:
       beyond:
         - int64-range
     double:
-      sql: portable_double
+      pg: double precision
+      column: checked
+      subset: true
       base:
         - float4
         - float8
@@ -4139,6 +4210,9 @@ types:
       order: number
       beyond: []
     bytes:
+      pg: bytea
+      column: domain
+      subset: false
       sql: portable_bytes
       base:
         - bytea
@@ -4147,7 +4221,9 @@ types:
       order: none
       beyond: []
     uuid:
-      sql: portable_uuid
+      pg: uuid
+      column: plain
+      subset: true
       base:
         - uuid
       json: string
@@ -4155,6 +4231,9 @@ types:
       order: text
       beyond: []
     timestamp:
+      pg: timestamptz
+      column: domain
+      subset: false
       sql: portable_timestamp
       base:
         - timestamptz
@@ -4165,6 +4244,9 @@ types:
       beyond:
         - calendar
     duration:
+      pg: interval
+      column: domain
+      subset: false
       sql: portable_duration
       base:
         - interval
@@ -4174,6 +4256,9 @@ types:
       beyond:
         - duration-range
     decimal:
+      pg: numeric
+      column: domain
+      subset: false
       base:
         - numeric
         - decimal
@@ -4183,7 +4268,9 @@ types:
       beyond:
         - decimal-profile
     date:
-      sql: portable_date
+      pg: date
+      column: checked
+      subset: true
       base:
         - date
       json: string
@@ -4192,6 +4279,9 @@ types:
       beyond:
         - calendar
     time:
+      pg: time(6)
+      column: domain
+      subset: false
       sql: portable_time
       base:
         - time
@@ -4201,15 +4291,20 @@ types:
       order: text
       beyond: []
     timezone:
-      sql: portable_timezone
-      base: []
+      pg: text
+      column: checked
+      subset: true
+      base:
+        - text
       json: string
       pattern: '^[A-Za-z0-9+_/-]+$'
       order: none
       beyond:
         - tzdb
     json:
-      sql: portable_json
+      pg: json
+      column: checked
+      subset: false
       base:
         - json
         - jsonb
@@ -4219,8 +4314,12 @@ types:
         - scalar-values
         - finite-numbers
     geojson:
-      sql: portable_geojson
+      pg: json
+      column: checked
+      subset: false
       base:
+        - json
+        - jsonb
         - geometry
         - geography
       json: value
@@ -4238,7 +4337,9 @@ types:
 carriers:
   types:
     string:
-      sql: portable_string
+      pg: text
+      column: plain
+      subset: true
       base:
         - text
         - varchar
@@ -4250,7 +4351,9 @@ carriers:
       beyond:
         - scalar-values
     bool:
-      sql: portable_bool
+      pg: boolean
+      column: plain
+      subset: true
       base:
         - bool
         - boolean
@@ -4258,7 +4361,9 @@ carriers:
       order: boolean
       beyond: []
     int32:
-      sql: portable_int32
+      pg: integer
+      column: plain
+      subset: true
       base:
         - int2
         - int4
@@ -4270,6 +4375,9 @@ carriers:
       order: number
       beyond: []
     int64:
+      pg: bigint
+      column: domain
+      subset: false
       sql: portable_int64
       base:
         - int8
@@ -4280,7 +4388,9 @@ carriers:
       beyond:
         - int64-range
     double:
-      sql: portable_double
+      pg: double precision
+      column: checked
+      subset: true
       base:
         - float4
         - float8
@@ -4290,6 +4400,9 @@ carriers:
       order: number
       beyond: []
     bytes:
+      pg: bytea
+      column: domain
+      subset: false
       sql: portable_bytes
       base:
         - bytea
@@ -4298,7 +4411,9 @@ carriers:
       order: none
       beyond: []
     uuid:
-      sql: portable_uuid
+      pg: uuid
+      column: plain
+      subset: true
       base:
         - uuid
       json: string
@@ -4306,6 +4421,9 @@ carriers:
       order: text
       beyond: []
     timestamp:
+      pg: timestamptz
+      column: domain
+      subset: false
       sql: portable_timestamp
       base:
         - timestamptz
@@ -4316,6 +4434,9 @@ carriers:
       beyond:
         - calendar
     duration:
+      pg: interval
+      column: domain
+      subset: false
       sql: portable_duration
       base:
         - interval
@@ -4325,6 +4446,9 @@ carriers:
       beyond:
         - duration-range
     decimal:
+      pg: numeric
+      column: domain
+      subset: false
       base:
         - numeric
         - decimal
@@ -4334,7 +4458,9 @@ carriers:
       beyond:
         - decimal-profile
     date:
-      sql: portable_date
+      pg: date
+      column: checked
+      subset: true
       base:
         - date
       json: string
@@ -4343,6 +4469,9 @@ carriers:
       beyond:
         - calendar
     time:
+      pg: time(6)
+      column: domain
+      subset: false
       sql: portable_time
       base:
         - time
@@ -4352,15 +4481,20 @@ carriers:
       order: text
       beyond: []
     timezone:
-      sql: portable_timezone
-      base: []
+      pg: text
+      column: checked
+      subset: true
+      base:
+        - text
       json: string
       pattern: '^[A-Za-z0-9+_/-]+$'
       order: none
       beyond:
         - tzdb
     json:
-      sql: portable_json
+      pg: json
+      column: checked
+      subset: false
       base:
         - json
         - jsonb
@@ -4370,8 +4504,12 @@ carriers:
         - scalar-values
         - finite-numbers
     geojson:
-      sql: portable_geojson
+      pg: json
+      column: checked
+      subset: false
       base:
+        - json
+        - jsonb
         - geometry
         - geography
       json: value

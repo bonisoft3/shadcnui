@@ -472,13 +472,9 @@ overlaysScreen: markup: """
 	    disclosure exists to defer. That is what ships, and it ships under the
 	    name tip.</p>
 	    <p class="pane-note">The second surface is the real tooltip, and it is
-	    the one this wave paid for. <code>data-interest</code> names the surface
-	    a trigger opens on hover or focus; the terminal performs the open, the
-	    grace that lets a reader move onto the surface, and nothing else. The
-	    attribute is not spelled <code>interestfor</code> on purpose — naming it
-	    after a spec no engine ships would dress our own behaviour as a standard,
-	    and a spec landing differently would strand the name. When it ships, this
-	    deletes and the rename is the whole migration.</p>
+	    the one this wave paid for. <code>popovertarget</code> names the surface
+	    a trigger opens; native popovers handle light dismiss and Escape with
+	    no JavaScript.</p>
 	    <p class="pane-note">Three things keep it from being a script with a
 	    declaration in front of it. The waits are the terminal's clock, so
 	    <code>?tempo=</code> and <code>?clock=manual</code> govern them like every
@@ -2484,7 +2480,7 @@ menuScreen: markup: """
 	          <tr><th scope="row">an arrow that opens on right-click</th><td>the machine</td><td><code>contextmenu@&lt;id&gt;</code>, a narrowed event key like any other</td></tr>
 	          <tr><th scope="row">the UA's own menu suppressed</th><td>the interpreter</td><td><code>contextmenu</code> is a DISPLACING type: its default is cancelled wherever an arrow answers it, and nowhere else</td></tr>
 	          <tr><th scope="row">placement at the pointer</th><td>CSS</td><td>the row holds two shares of the target's box, in parts per thousand; <code>anchor()</code> and <code>anchor-size()</code> multiply them back out</td></tr>
-	          <tr><th scope="row">opening a surface no button invoked</th><td>the interpreter</td><td><code>data-open</code> — <code>commandfor</code> answers a click, and a right-click is not one</td></tr>
+	          <tr><th scope="row">opening a surface no button invoked</th><td>the machine</td><td>the state transition records openness; light dismiss and Escape close it</td></tr>
 	        </tbody>
 	      </table>
 	    </div>
@@ -4148,7 +4144,7 @@ otpScreen: markup: """
 	  </section>
 	  <section class="demo-pane">
 	    <h2>Why one input</h2>
-	    <p class="pane-note">Six boxes is <code>data-focus</code> wearing a
+	    <p class="pane-note">Six boxes is moving focus in script wearing a
 	    costume — this catalog has that mechanism and
 	    <a class="pane-link" data-route="accordion">uses it where it belongs</a>. Here
 	    it would buy a caret and sell three things:</p>
@@ -4289,7 +4285,7 @@ hoverCardScreen: markup: """
 	    <p class="pane-note">None, and the absence is the licence rather than a
 	    gap. Openness nobody stores cannot disagree with anything: nothing is
 	    written, nothing is journalled, and a replay has nothing to reproduce. A
-	    surface has one owner — <code>data-interest</code> naming one whose
+	    surface has one owner — <code>popovertarget</code> naming one whose
 	    openness is already a column is refused rather than arbitrated, because
 	    the two would disagree the moment either moved.</p>
 	  </section>

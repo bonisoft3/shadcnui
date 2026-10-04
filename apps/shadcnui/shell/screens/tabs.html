@@ -15,13 +15,13 @@
 <omnishell--tabs>
   <div class="tabs" data-live="tabs_demo" data-filter="id=eq.the"
        data-state="{active}"
-       data-machine='{"field":"active","initial":"account","context":{"sel_account":"true","sel_password":"false"},"states":{"account":{"on":{"keydown@tabs_demo-trigger-account":[{"guard":{"type":"is-key","params":{"key":"ArrowRight"}},"target":"password","assign":{"sel_account":"false","sel_password":"true"}},{"guard":{"type":"is-key","params":{"key":"ArrowLeft"}},"target":"password","assign":{"sel_account":"false","sel_password":"true"}},{"guard":{"type":"is-key","params":{"key":"ArrowDown"}},"target":"password","assign":{"sel_account":"false","sel_password":"true"}},{"guard":{"type":"is-key","params":{"key":"ArrowUp"}},"target":"password","assign":{"sel_account":"false","sel_password":"true"}},{"guard":{"type":"is-key","params":{"key":"End"}},"target":"password","assign":{"sel_account":"false","sel_password":"true"}}],"click@tabs_demo-trigger-password":{"target":"password","assign":{"sel_account":"false","sel_password":"true"}},"focusin@tabs_demo-trigger-password":{"target":"password","assign":{"sel_account":"false","sel_password":"true"}}}},"password":{"on":{"keydown@tabs_demo-trigger-password":[{"guard":{"type":"is-key","params":{"key":"ArrowRight"}},"target":"account","assign":{"sel_account":"true","sel_password":"false"}},{"guard":{"type":"is-key","params":{"key":"ArrowLeft"}},"target":"account","assign":{"sel_account":"true","sel_password":"false"}},{"guard":{"type":"is-key","params":{"key":"ArrowDown"}},"target":"account","assign":{"sel_account":"true","sel_password":"false"}},{"guard":{"type":"is-key","params":{"key":"ArrowUp"}},"target":"account","assign":{"sel_account":"true","sel_password":"false"}},{"guard":{"type":"is-key","params":{"key":"Home"}},"target":"account","assign":{"sel_account":"true","sel_password":"false"}}],"click@tabs_demo-trigger-account":{"target":"account","assign":{"sel_account":"true","sel_password":"false"}},"focusin@tabs_demo-trigger-account":{"target":"account","assign":{"sel_account":"true","sel_password":"false"}}}}}}'>
+       data-machine='{"field":"active","initial":"account","context":{"sel_account":"true","sel_password":"false","tab_account":"0","tab_password":"-1"},"states":{"account":{"on":{"keydown@tabs_demo-trigger-account":[{"guard":{"type":"is-key","params":{"key":"ArrowRight"}},"target":"password","assign":{"sel_account":"false","sel_password":"true","tab_account":"-1","tab_password":"0"}},{"guard":{"type":"is-key","params":{"key":"ArrowLeft"}},"target":"password","assign":{"sel_account":"false","sel_password":"true","tab_account":"-1","tab_password":"0"}},{"guard":{"type":"is-key","params":{"key":"ArrowDown"}},"target":"password","assign":{"sel_account":"false","sel_password":"true","tab_account":"-1","tab_password":"0"}},{"guard":{"type":"is-key","params":{"key":"ArrowUp"}},"target":"password","assign":{"sel_account":"false","sel_password":"true","tab_account":"-1","tab_password":"0"}},{"guard":{"type":"is-key","params":{"key":"End"}},"target":"password","assign":{"sel_account":"false","sel_password":"true","tab_account":"-1","tab_password":"0"}}],"click@tabs_demo-trigger-password":{"target":"password","assign":{"sel_account":"false","sel_password":"true","tab_account":"-1","tab_password":"0"}},"focusin@tabs_demo-trigger-password":{"target":"password","assign":{"sel_account":"false","sel_password":"true","tab_account":"-1","tab_password":"0"}}}},"password":{"on":{"keydown@tabs_demo-trigger-password":[{"guard":{"type":"is-key","params":{"key":"ArrowRight"}},"target":"account","assign":{"sel_account":"true","sel_password":"false","tab_account":"0","tab_password":"-1"}},{"guard":{"type":"is-key","params":{"key":"ArrowLeft"}},"target":"account","assign":{"sel_account":"true","sel_password":"false","tab_account":"0","tab_password":"-1"}},{"guard":{"type":"is-key","params":{"key":"ArrowDown"}},"target":"account","assign":{"sel_account":"true","sel_password":"false","tab_account":"0","tab_password":"-1"}},{"guard":{"type":"is-key","params":{"key":"ArrowUp"}},"target":"account","assign":{"sel_account":"true","sel_password":"false","tab_account":"0","tab_password":"-1"}},{"guard":{"type":"is-key","params":{"key":"Home"}},"target":"account","assign":{"sel_account":"true","sel_password":"false","tab_account":"0","tab_password":"-1"}}],"click@tabs_demo-trigger-account":{"target":"account","assign":{"sel_account":"true","sel_password":"false","tab_account":"0","tab_password":"-1"}},"focusin@tabs_demo-trigger-account":{"target":"account","assign":{"sel_account":"true","sel_password":"false","tab_account":"0","tab_password":"-1"}}}}}}'>
     <div role="tablist" aria-label="Account settings">
       <button type="button" role="tab" id="tabs_demo-trigger-account" class="tab-trigger"
-              data-rove="{sel_account}"
+              tabindex="{tab_account}"
               aria-selected="{sel_account}" aria-controls="tabs_demo-panel-account">Account</button>
       <button type="button" role="tab" id="tabs_demo-trigger-password" class="tab-trigger"
-              data-rove="{sel_password}"
+              tabindex="{tab_password}"
               aria-selected="{sel_password}" aria-controls="tabs_demo-panel-password">Password</button>
     </div>
     <div role="tabpanel" id="tabs_demo-panel-account" data-panel="account"
@@ -49,7 +49,9 @@
   "initial": "account",
   "context": {
     "sel_account": "true",
-    "sel_password": "false"
+    "sel_password": "false",
+    "tab_account": "0",
+    "tab_password": "-1"
   },
   "states": {
     "account": {
@@ -65,7 +67,9 @@
             "target": "password",
             "assign": {
               "sel_account": "false",
-              "sel_password": "true"
+              "sel_password": "true",
+              "tab_account": "-1",
+              "tab_password": "0"
             }
           },
           {
@@ -78,7 +82,9 @@
             "target": "password",
             "assign": {
               "sel_account": "false",
-              "sel_password": "true"
+              "sel_password": "true",
+              "tab_account": "-1",
+              "tab_password": "0"
             }
           },
           {
@@ -91,7 +97,9 @@
             "target": "password",
             "assign": {
               "sel_account": "false",
-              "sel_password": "true"
+              "sel_password": "true",
+              "tab_account": "-1",
+              "tab_password": "0"
             }
           },
           {
@@ -104,7 +112,9 @@
             "target": "password",
             "assign": {
               "sel_account": "false",
-              "sel_password": "true"
+              "sel_password": "true",
+              "tab_account": "-1",
+              "tab_password": "0"
             }
           },
           {
@@ -117,7 +127,9 @@
             "target": "password",
             "assign": {
               "sel_account": "false",
-              "sel_password": "true"
+              "sel_password": "true",
+              "tab_account": "-1",
+              "tab_password": "0"
             }
           }
         ],
@@ -125,14 +137,18 @@
           "target": "password",
           "assign": {
             "sel_account": "false",
-            "sel_password": "true"
+            "sel_password": "true",
+            "tab_account": "-1",
+            "tab_password": "0"
           }
         },
         "focusin@tabs_demo-trigger-password": {
           "target": "password",
           "assign": {
             "sel_account": "false",
-            "sel_password": "true"
+            "sel_password": "true",
+            "tab_account": "-1",
+            "tab_password": "0"
           }
         }
       }
@@ -150,7 +166,9 @@
             "target": "account",
             "assign": {
               "sel_account": "true",
-              "sel_password": "false"
+              "sel_password": "false",
+              "tab_account": "0",
+              "tab_password": "-1"
             }
           },
           {
@@ -163,7 +181,9 @@
             "target": "account",
             "assign": {
               "sel_account": "true",
-              "sel_password": "false"
+              "sel_password": "false",
+              "tab_account": "0",
+              "tab_password": "-1"
             }
           },
           {
@@ -176,7 +196,9 @@
             "target": "account",
             "assign": {
               "sel_account": "true",
-              "sel_password": "false"
+              "sel_password": "false",
+              "tab_account": "0",
+              "tab_password": "-1"
             }
           },
           {
@@ -189,7 +211,9 @@
             "target": "account",
             "assign": {
               "sel_account": "true",
-              "sel_password": "false"
+              "sel_password": "false",
+              "tab_account": "0",
+              "tab_password": "-1"
             }
           },
           {
@@ -202,7 +226,9 @@
             "target": "account",
             "assign": {
               "sel_account": "true",
-              "sel_password": "false"
+              "sel_password": "false",
+              "tab_account": "0",
+              "tab_password": "-1"
             }
           }
         ],
@@ -210,14 +236,18 @@
           "target": "account",
           "assign": {
             "sel_account": "true",
-            "sel_password": "false"
+            "sel_password": "false",
+            "tab_account": "0",
+            "tab_password": "-1"
           }
         },
         "focusin@tabs_demo-trigger-account": {
           "target": "account",
           "assign": {
             "sel_account": "true",
-            "sel_password": "false"
+            "sel_password": "false",
+            "tab_account": "0",
+            "tab_password": "-1"
           }
         }
       }

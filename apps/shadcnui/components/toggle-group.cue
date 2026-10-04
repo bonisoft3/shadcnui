@@ -32,6 +32,7 @@ import (
 
 	_choice: #OneOf & {
 		walk:   true
+		roving: true
 		field:  G.field
 		prefix: "chk_"
 		names: [for i in G.items {i.name}]
@@ -45,7 +46,7 @@ import (
 	_items: strings.Join([for i in G.items {
 		"""
 			      <button type="button" role="radio" id="\(G._id[i.name])" class="tg-item"
-			              data-rove="{\(G._choice.col[i.name])}"
+			              tabindex="{\(G._choice.tab[i.name])}"
 			              aria-checked="{\(G._choice.col[i.name])}">\(i.label)</button>
 			"""
 	}], "\n")

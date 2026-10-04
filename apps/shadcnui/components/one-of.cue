@@ -36,20 +36,27 @@ import (
 	id: [string]: string
 
 	col: {for n in O.names {(n): "\(O.prefix)\(n)"}}
+	tab: {for n in O.names {(n): "tab_\(n)"}}
 
 	// The whole derived set as it stands with `n` chosen.
-	_cols: {for n in O.names {(n): {for u in O.names {
-		(O.col[u]): [if u == n {"true"}, "false"][0]
-	}}}}
+	_cols: {for n in O.names {(n): {
+		for u in O.names {
+			(O.col[u]): [if u == n {"true"}, "false"][0]
+			if O.roving {
+				(O.tab[u]): [if u == n {"0"}, "-1"][0]
+			}
+		}
+	}}}
 
 	// Whether this chart moves a caret: the arrows that walk the options, and
 	// the focusin that records where a reader put themselves. Off by default,
 	// because the arrows and the caret are one contract — arrows that changed
 	// the choice while focus stood still would be a group whose reader is told
-	// nothing. WHICH caret is the skin's: data-rove where APG gives the pattern
-	// one tab stop, data-focus where it keeps every affordance in the Tab
-	// sequence and the arrows are an addition.
+	// nothing.
 	walk: *false | bool
+	// Whether the tabstop moves with the choice (roving tabstop, APG pattern
+	// with one tab stop across the group).
+	roving: *false | bool
 	// Whether the letters a reader types also walk it. The buffer they land in
 	// is this chart's column and the arrows they draw are this chart's arrows,
 	// because what typeahead does is MOVE THE CARET — a chart of its own would

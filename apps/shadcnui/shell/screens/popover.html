@@ -21,7 +21,7 @@
 <omnishell--popover>
   <span class="pop">
     <button type="button" id="pop-open-bare" class="pop-trigger"
-            commandfor="pop-bare" command="toggle-popover">What arrived free</button>
+            popovertarget="pop-bare" commandfor="pop-bare" command="toggle-popover">What arrived free</button>
     <div id="pop-bare" class="pop-surface" data-place="block-end" popover="auto">
       <ul class="pop-list">
         <li>The top layer, so no z-index is written anywhere on this screen.</li>
@@ -42,7 +42,7 @@
 <omnishell--popover>
   <span class="pop">
     <button type="button" id="pop-open-block-start" class="pop-trigger"
-            commandfor="pop-block-start" command="toggle-popover">block-start</button>
+            popovertarget="pop-block-start" commandfor="pop-block-start" command="toggle-popover">block-start</button>
     <div id="pop-block-start" class="pop-surface" data-place="block-start" popover="auto">
       <p class="pop-text">above the trigger; below it where above will not hold the surface</p>
     </div>
@@ -51,7 +51,7 @@
 <omnishell--popover>
   <span class="pop">
     <button type="button" id="pop-open-block-end" class="pop-trigger"
-            commandfor="pop-block-end" command="toggle-popover">block-end</button>
+            popovertarget="pop-block-end" commandfor="pop-block-end" command="toggle-popover">block-end</button>
     <div id="pop-block-end" class="pop-surface" data-place="block-end" popover="auto">
       <p class="pop-text">below the trigger, and the default, because a dropped surface is what a reader expects of a button</p>
     </div>
@@ -60,7 +60,7 @@
 <omnishell--popover>
   <span class="pop">
     <button type="button" id="pop-open-inline-start" class="pop-trigger"
-            commandfor="pop-inline-start" command="toggle-popover">inline-start</button>
+            popovertarget="pop-inline-start" commandfor="pop-inline-start" command="toggle-popover">inline-start</button>
     <div id="pop-inline-start" class="pop-surface" data-place="inline-start" popover="auto">
       <p class="pop-text">before the trigger in the reading direction, so it mirrors under a right-to-left document without a second rule</p>
     </div>
@@ -69,7 +69,7 @@
 <omnishell--popover>
   <span class="pop">
     <button type="button" id="pop-open-inline-end" class="pop-trigger"
-            commandfor="pop-inline-end" command="toggle-popover">inline-end</button>
+            popovertarget="pop-inline-end" commandfor="pop-inline-end" command="toggle-popover">inline-end</button>
     <div id="pop-inline-end" class="pop-surface" data-place="inline-end" popover="auto">
       <p class="pop-text">after the trigger in the reading direction; the placement the fallback stage above is anchored at the column's edge to break</p>
     </div>
@@ -89,7 +89,7 @@
 <omnishell--popover>
   <span class="pop">
     <button type="button" id="pop-open-flip" class="pop-trigger"
-            commandfor="pop-flip" command="toggle-popover">Ask for the right</button>
+            popovertarget="pop-flip" commandfor="pop-flip" command="toggle-popover">Ask for the right</button>
     <div id="pop-flip" class="pop-surface" data-place="inline-end" popover="auto">
       <p class="pop-text">This surface asks for the gutter after the trigger
       and falls back to the one before it. Which side you are reading it on
@@ -107,12 +107,12 @@
 <omnishell--popover>
   <span class="pop">
     <button type="button" id="pop-open-manual" class="pop-trigger"
-            commandfor="pop-manual" command="toggle-popover">Open the manual one</button>
+            popovertarget="pop-manual" commandfor="pop-manual" command="toggle-popover">Open the manual one</button>
     <div id="pop-manual" class="pop-surface" data-place="block-end" popover="manual">
       <p class="pop-text">One attribute different, and the press outside and
       the Escape are both gone. This button is the only way out, which is
       why the definition refuses a manual surface that has none.</p>
-      <button type="button" class="pop-dismiss" commandfor="pop-manual" command="hide-popover">Close</button>
+      <button type="button" class="pop-dismiss" popovertarget="pop-manual" popovertargetaction="hide" commandfor="pop-manual" command="hide-popover">Close</button>
     </div>
   </span>
 </omnishell--popover>

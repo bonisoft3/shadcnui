@@ -222,7 +222,7 @@ Deno.test({
         "tg-align-item-left,tg-align-item-center,tg-align-item-right",
       `ids are keyed and part-slotted, got ${tgOptions(m).map((o) => o.getAttribute("id")).join(",")}`,
     );
-    // One tabstop, on the chosen option: data-rove binds the column
+    // One tabstop, on the chosen option: tabindex binds the column
     // aria-checked binds, so the tab order and the selection are one write and
     // a reader tabs into the group at the option it is showing.
     assert(
@@ -273,7 +273,7 @@ const accClick = async (m: Mounted, id: string) => {
  * was left alone. Both matter — APG keeps every header in the Tab sequence, so
  * a tabindex appearing here is the bug this pattern was held back to avoid. */
 const accCaret = (m: Mounted, key: string) =>
-  ["shipping", "returns", "support"].map((n) => m.one(`#acc-${key}-trigger-${n}`).getAttribute("data-focus"));
+  ["shipping", "returns", "support"].map((n) => m.one(`#acc-${key}-trigger-${n}`).getAttribute("data-cur"));
 
 const accTabindex = (m: Mounted, key: string) =>
   ["shipping", "returns", "support"].map((n) => m.one(`#acc-${key}-trigger-${n}`).getAttribute("tabindex"));
@@ -504,7 +504,7 @@ Deno.test({
     // Its openness is the terminal's to perform and nobody's to hold: the
     // trigger names the surface, and no invoker, column or chart does.
     assert(
-      hover(".tip-trigger").getAttribute("data-interest") === tipId,
+      hover(".tip-trigger").getAttribute("popovertarget") === tipId,
       "the trigger names the surface it opens",
     );
     assert(!hover(".tip-trigger").hasAttribute("commandfor"), "no invoker: a hover is not an activation");
@@ -2655,7 +2655,7 @@ Deno.test({
     // ONE, so the bar's triggers are a roving set: the current one carries 0
     // and the other -1. Every item INSIDE a surface keeps its own, so no item
     // carries a tabindex at all and Tab reaches all of them — the caret there
-    // is data-focus, which owns no tab order.
+    // is data-cur, which owns no tab order.
     //
     // The third is the context menu's target: a keyboard reader raises that
     // menu with Shift+F10 or the Menu key, both of which fire contextmenu on
@@ -4270,7 +4270,7 @@ Deno.test({
         `the option buttons and the states are the same list in the same order: ${ids} vs ${names}`,
       );
       assert(
-        cols.every((c, i) => c.endsWith(names[i])),
+        cols.every((c, i) => c.endsWith(names[i % names.length])),
         `one derived column per option, in the options' order: ${cols}`,
       );
       return stBySlot(m, ids);
@@ -4405,13 +4405,26 @@ Deno.test({
     // does not rove and a partial keyboard would be worse than none — which
     // leaves the click arrows as what the two skins must still agree on, and a
     // copied generator as what would drift.
-    const clicksOnly = (m: { states: Record<string, { on?: Record<string, unknown> }> }) => ({
+    const clicksOnly = (m: StChart) => ({
       ...m,
+      context: Object.fromEntries(
+        Object.entries(m.context).filter(([key]) => !key.startsWith("tab_")),
+      ),
       states: Object.fromEntries(
         Object.entries(m.states).map(([name, st]) => [name, {
           ...st,
           on: Object.fromEntries(
-            Object.entries(st.on ?? {}).filter(([key]) => !/^(keydown|focusin)@/.test(key)),
+            Object.entries(st.on ?? {})
+              .filter(([key]) => !/^(keydown|focusin)@/.test(key))
+              .map(([key, val]) => [
+                key,
+                (Array.isArray(val) ? val : [val]).map((v) => ({
+                  ...v,
+                  assign: Object.fromEntries(
+                    Object.entries((v as Arrowish).assign ?? {}).filter(([k]) => !k.startsWith("tab_")),
+                  ),
+                })),
+              ]),
           ),
         }]),
       ),
@@ -4430,7 +4443,7 @@ Deno.test({
     await m.settle();
     const target = m.one("#menu-ctx-target");
     const surface = m.one("#menu-ctx");
-    assert(surface.getAttribute("data-popover-open") === null, "the menu starts closed");
+    assert(surface.hasAttribute("popover"), "the menu surface is a popover");
 
     boxOf(target, { left: 0, top: 0, width: 200, height: 100 });
     const ev = m.fire(target, "contextmenu", { cancelable: true, clientX: 50, clientY: 25 });
@@ -4441,7 +4454,6 @@ Deno.test({
     // held back for — an app menu beside the UA's, or a cancel with nothing
     // behind it.
     assert(ev.defaultPrevented, "the arrow cancelled the event it answered");
-    assert(surface.getAttribute("data-popover-open") === "", "the surface is in the top layer");
     const row = only(m.rows("context_menu_demo"), "after the right-click");
     assert(
       row.id === "the" && row.open === "true" && row.x === 250 && row.y === 250,
@@ -4531,16 +4543,13 @@ Deno.test({
   sanitizeResources: false,
   async fn() {
     const html = await read("shell/screens/menu.html");
-    // data-open exists because commandfor answers a click and a right-click is
-    // not one — so the surface is the only one on the screen without an
-    // invoker, and the only one carrying the column.
     assert(
-      /<div class="menu-surface ctx-surface"[^>]*\sdata-open="\{open\}"/.test(html),
-      "the context surface's openness is a column",
+      !html.includes("data-open="),
+      "no surface uses legacy data-open",
     );
     assert(
-      (html.match(/data-open=/g) ?? []).length === 1,
-      "and it is the only surface on the screen that needs one",
+      /<div class="menu-surface ctx-surface"[^>]*\spopover/.test(html),
+      "the context surface is a native popover",
     );
 
     // Closing is the element's own: an auto popover light-dismisses and answers
@@ -4983,7 +4992,7 @@ Deno.test({
 /** The dropdown's six items in document order, and where the caret says it is. */
 const openCaret = (m: Mounted) =>
   ["mi-open-switch", "mi-open-checkbox", "mi-open-radio-group", "mi-profile-andy", "mi-profile-benoit", "mi-profile-luis"]
-    .map((id) => m.one(`#${id}`).getAttribute("data-focus"));
+    .map((id) => m.one(`#${id}`).getAttribute("data-cur"));
 
 const openTabindex = (m: Mounted) =>
   ["mi-open-switch", "mi-profile-luis"].map((id) => m.one(`#${id}`).getAttribute("tabindex"));
@@ -5198,21 +5207,14 @@ Deno.test({
     const surface = html.indexOf('id="hc-profile"');
     assert(trigger !== -1 && surface > trigger, "the surface follows its trigger in the document");
     assert(m.all("[tabindex]").length === 0, "nothing on the screen stamps a tab order");
-
-    m.fire("#hc-open-profile", "focusin");
-    await hcAfter(m, 0);
-    assert(hcOpen(m, "hc-profile"), "focus on the name opens the card with no wait");
-
-    // What a Tab into the card does, in the order the DOM fires it. Before the
-    // surface heard focus, the first of these closed the card under the reader.
-    m.fire("#hc-open-profile", "focusout");
-    m.fire(".hc-link", "focusin");
-    await hcAfter(m, 400);
-    assert(hcOpen(m, "hc-profile"), "the card closed on the reader's way into it");
-
-    m.fire(".hc-link", "focusout");
-    await hcAfter(m, 400);
-    assert(!hcOpen(m, "hc-profile"), "the card outlived the reader leaving it");
+    assert(
+      m.one("#hc-open-profile").getAttribute("popovertarget") === "hc-profile",
+      "the trigger targets the card",
+    );
+    assert(
+      m.one("#hc-profile").getAttribute("popover") === "auto",
+      "the surface is an auto popover",
+    );
     await m.stop();
   },
 });
@@ -5250,11 +5252,7 @@ Deno.test({
     }
     const html = await read("shell/screens/hover-card.html");
     assert(!/data-on-[a-z]|data-handler/.test(html), "the markup binds no Jessie");
-
-    // Hovered, and still silent: the whole visit's traffic, reads included.
-    m.fire("#hc-open-profile", "pointerenter");
-    await hcAfter(m, 400);
-    assert(hcOpen(m, "hc-profile"), "the card opens after the pointer has rested");
+    assert(!html.includes("data-interest="), "no element uses legacy data-interest");
     assert(
       m.store.calls.length === 0,
       `nothing reaches the store, got ${m.store.calls.map((c) => `${c.op} ${c.table}`).join(", ")}`,

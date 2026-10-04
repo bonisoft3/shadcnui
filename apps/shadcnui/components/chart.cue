@@ -129,7 +129,7 @@ import (
 	// content is a number is a name a reader cannot place — and the number is
 	// inside the name, so what is seen is part of what is said.
 	barTemplate: """
-		    <template data-item data-name="\(C._barTemplate)">
+		    <template data-item data-when="act=eq.true">
 		      <tr class="chart-row">
 		        <th scope="row" class="chart-cat" data-text="{label}"></th>
 		        <td class="chart-cell">
@@ -138,7 +138,27 @@ import (
 		            <input type="hidden" name="id" data-value="\(C.row)">
 		            <input type="hidden" name="active" data-value="{id}">
 		            <button type="submit" class="chart-bar" id="\(C.key)-bar-{id}"
-		                    style="--v: {value}" data-rove="{act}" aria-current="{act}"
+		                    style="--v: {value}" tabindex="0" aria-current="{act}"
+		                    aria-label="{label}: {value} \(C.unit)"
+		                    data-text="{value}"></button>
+		          </form>
+		\(C._next)
+		\(C._prev)
+		\(C._first)
+		\(C._last)
+		        </td>
+		      </tr>
+		    </template>
+		    <template data-item>
+		      <tr class="chart-row">
+		        <th scope="row" class="chart-cat" data-text="{label}"></th>
+		        <td class="chart-cell">
+		          <form role="none" id="\(C.key)-pick-{id}" data-form="\(C.key)-pick"
+		                data-entity="\(C.cursors)" data-action="upsert">
+		            <input type="hidden" name="id" data-value="\(C.row)">
+		            <input type="hidden" name="active" data-value="{id}">
+		            <button type="submit" class="chart-bar" id="\(C.key)-bar-{id}"
+		                    style="--v: {value}" tabindex="-1" aria-current="{act}"
 		                    aria-label="{label}: {value} \(C.unit)"
 		                    data-text="{value}"></button>
 		          </form>
@@ -185,7 +205,8 @@ import (
 		        <figcaption class="chart-title">\(C.caption)</figcaption>
 		        <table class="chart-plot" id="\(C._plot)" data-live="\(C.points)"
 		               data-order="pos.asc" data-project='\(C._project)'
-		               data-key='\(C._keys)' data-template="\(C._barTemplate)">
+		               data-key='\(C._keys)'>
+		\(C.barTemplate)
 		        </table>
 		        <!-- The same points as a line, and the same rows: the table above is
 		             what a reader hears, so this one is decoration and says so. -->
@@ -197,7 +218,6 @@ import (
 		      </div>
 		    </template>
 		  </figure>
-		\(C.barTemplate)
 		\(C.readTemplate)
 		\(C._lineTemplate)
 		</omnishell--bar-chart>

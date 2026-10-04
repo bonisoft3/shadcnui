@@ -58,7 +58,7 @@ import (
 	// The multiple arm is one region per item, so there is no set for a caret to
 	// walk and every header is already its own tab stop with nothing to add.
 	_caretAttr: {for i in A.items {
-		(i.name): [if A.type == "single" {" data-focus=\"{cur_\(i.name)}\""}, ""][0]
+		(i.name): [if A.type == "single" {" data-cur=\"{cur_\(i.name)}\""}, ""][0]
 	}}
 
 	// The header level is the component's: h3 sits under the screen's h1 and

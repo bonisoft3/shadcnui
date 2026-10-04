@@ -39,6 +39,8 @@ code: pronto.#App & {
 					{ordinal: 2, name: "active", type: "string", cel: "this in ['account', 'password']"},
 					{ordinal: 3, name: "sel_account", type: "string", cel: "this in ['true', 'false']"},
 					{ordinal: 4, name: "sel_password", type: "string", cel: "this in ['true', 'false']"},
+					{ordinal: 5, name: "tab_account", type: "string", cel: "this in ['0', '-1']"},
+					{ordinal: 6, name: "tab_password", type: "string", cel: "this in ['0', '-1']"},
 				]
 			}
 			PickerDemo: {
@@ -64,6 +66,9 @@ code: pronto.#App & {
 					{ordinal: 3, name: "chk_left", type: "string", cel: "this in ['true', 'false']"},
 					{ordinal: 4, name: "chk_center", type: "string", cel: "this in ['true', 'false']"},
 					{ordinal: 5, name: "chk_right", type: "string", cel: "this in ['true', 'false']"},
+					{ordinal: 6, name: "tab_left", type: "string", cel: "this in ['0', '-1']"},
+					{ordinal: 7, name: "tab_center", type: "string", cel: "this in ['0', '-1']"},
+					{ordinal: 8, name: "tab_right", type: "string", cel: "this in ['0', '-1']"},
 				]
 			}
 			AccordionSingleDemo: {
@@ -168,6 +173,9 @@ code: pronto.#App & {
 					{ordinal: 3, name: "chk_starter", type: "string", cel: "this in ['true', 'false']"},
 					{ordinal: 4, name: "chk_pro", type: "string", cel: "this in ['true', 'false']"},
 					{ordinal: 5, name: "chk_team", type: "string", cel: "this in ['true', 'false']"},
+					{ordinal: 6, name: "tab_starter", type: "string", cel: "this in ['0', '-1']"},
+					{ordinal: 7, name: "tab_pro", type: "string", cel: "this in ['0', '-1']"},
+					{ordinal: 8, name: "tab_team", type: "string", cel: "this in ['0', '-1']"},
 				]
 			}
 			// One aria-current column per page, because N positions share one
@@ -366,6 +374,8 @@ code: pronto.#App & {
 					{ordinal: 2, name: "caret", type: "string", cel: "this in ['view', 'go']"},
 					{ordinal: 3, name: "cur_view", type: "string", cel: "this in ['true', 'false']"},
 					{ordinal: 4, name: "cur_go", type: "string", cel: "this in ['true', 'false']"},
+					{ordinal: 5, name: "tab_view", type: "string", cel: "this in ['0', '-1']"},
+					{ordinal: 6, name: "tab_go", type: "string", cel: "this in ['0', '-1']"},
 				]
 			}
 			// The right-click menu's one row: whether it stands, and where the
@@ -1430,7 +1440,7 @@ code: pronto.#App & {
 			}
 			"test-accordion-walk": {
 				of: "AccordionSingleDemo"
-				says:  "the caret chart walks the headers without opening one, and no header is stamped with a tabindex — APG keeps every one of them in the Tab sequence, which is why the caret is data-focus and not data-rove"
+				says:  "the caret chart walks the headers without opening one, and no header is stamped with a tabindex — APG keeps every one of them in the Tab sequence, which is why the caret is data-cur and not a roving tabstop"
 				given: {caret: "shipping"}
 				when:  "Down is pressed on the first header, then End, then Right, then the header the caret reached is clicked"
 				then:  "output.caret == [\"false\", \"false\", \"true\"] && output.expanded == [\"false\", \"false\", \"true\"] && output.tabindex == 0 && output.rows == 1"

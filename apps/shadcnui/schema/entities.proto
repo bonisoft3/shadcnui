@@ -161,6 +161,8 @@ message MenubarDemo {
   optional string caret = 2 [json_name = "caret"];
   optional string cur_view = 3 [json_name = "cur_view"];
   optional string cur_go = 4 [json_name = "cur_go"];
+  optional string tab_view = 5 [json_name = "tab_view"];
+  optional string tab_go = 6 [json_name = "tab_go"];
 }
 
 message MenuGoDemo {
@@ -270,6 +272,9 @@ message RadioGroupDemo {
   optional string chk_starter = 3 [json_name = "chk_starter"];
   optional string chk_pro = 4 [json_name = "chk_pro"];
   optional string chk_team = 5 [json_name = "chk_team"];
+  optional string tab_starter = 6 [json_name = "tab_starter"];
+  optional string tab_pro = 7 [json_name = "tab_pro"];
+  optional string tab_team = 8 [json_name = "tab_team"];
 }
 
 message ResizableDemo {
@@ -325,6 +330,8 @@ message TabsDemo {
   optional string active = 2 [json_name = "active"];
   optional string sel_account = 3 [json_name = "sel_account"];
   optional string sel_password = 4 [json_name = "sel_password"];
+  optional string tab_account = 5 [json_name = "tab_account"];
+  optional string tab_password = 6 [json_name = "tab_password"];
 }
 
 message ToastDemo {
@@ -343,4 +350,7 @@ message ToggleGroupDemo {
   optional string chk_left = 3 [json_name = "chk_left"];
   optional string chk_center = 4 [json_name = "chk_center"];
   optional string chk_right = 5 [json_name = "chk_right"];
+  optional string tab_left = 6 [json_name = "tab_left"];
+  optional string tab_center = 7 [json_name = "tab_center"];
+  optional string tab_right = 8 [json_name = "tab_right"];
 }

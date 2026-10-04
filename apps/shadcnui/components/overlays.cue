@@ -63,7 +63,7 @@ package components
 	// attribute would be a second spelling of a fact the browser already
 	// states, and the modal one would be a lie that never moves.
 	_trigger: """
-		    <button type="button" id="\(D._open)" class="dialog-trigger"
+		    <button type="button" id="\(D._open)" class="dialog-trigger"\([if !D.modal {" popovertarget=\"\(D._id)\""}, ""][0])
 		            commandfor="\(D._id)" command="\([if D.modal {"show-modal"}, "toggle-popover"][0])"
 		            aria-haspopup="dialog">\(D.trigger)</button>
 		"""
@@ -131,7 +131,7 @@ package components
 		<omnishell--tooltip>
 		  <span class="tip">
 		    <button type="button" id="\(T._open)" class="tip-trigger"
-		            commandfor="\(T._id)" command="toggle-popover">\(T.label)</button>
+		            popovertarget="\(T._id)" commandfor="\(T._id)" command="toggle-popover">\(T.label)</button>
 		    <span id="\(T._id)" class="tip-surface" data-place="\(T.place)" popover>\(T.text)</span>
 		  </span>
 		</omnishell--tooltip>
@@ -166,7 +166,7 @@ package components
 		<omnishell--hover-tip>
 		  <span class="tip">
 		    <button type="button" id="\(H._trigger)" class="tip-trigger"
-		            data-interest="\(H._id)" aria-describedby="\(H._id)">\(H.label)</button>
+		            popovertarget="\(H._id)" aria-describedby="\(H._id)">\(H.label)</button>
 		    <span id="\(H._id)" class="tip-surface" role="tooltip" data-place="\(H.place)"
 		          popover="auto">\(H.text)</span>
 		  </span>
