@@ -38,7 +38,7 @@
 </omnishell--checkbox>
 <omnishell--select-all>
   <div class="select-all" data-live="select_all_demo" data-filter="id=eq.all"
-       data-machine='{"field":"phase","initial":"live","context":{"checked":"mixed","inc_docs":"true","inc_images":"true","inc_archive":"false"},"states":{"live":{"on":{"click@sa-all-trigger":{"assign":{"checked":{"type":"flip-of","params":{"col":"checked"}},"inc_docs":{"type":"flip-of","params":{"col":"checked"}},"inc_images":{"type":"flip-of","params":{"col":"checked"}},"inc_archive":{"type":"flip-of","params":{"col":"checked"}}}},"click@sa-all-item-docs":{"assign":{"inc_docs":{"type":"flip-of","params":{"col":"inc_docs"}},"checked":{"type":"roll-up","params":{"prefix":"inc_","col":"inc_docs"}}}},"click@sa-all-item-images":{"assign":{"inc_images":{"type":"flip-of","params":{"col":"inc_images"}},"checked":{"type":"roll-up","params":{"prefix":"inc_","col":"inc_images"}}}},"click@sa-all-item-archive":{"assign":{"inc_archive":{"type":"flip-of","params":{"col":"inc_archive"}},"checked":{"type":"roll-up","params":{"prefix":"inc_","col":"inc_archive"}}}}}}}}'>
+       data-machine='{"field":"phase","initial":"live","states":{"live":{"on":{"click@sa-all-trigger":{"assign":{"checked":{"type":"flip-of","params":{"col":"checked"}},"inc_docs":{"type":"flip-of","params":{"col":"checked"}},"inc_images":{"type":"flip-of","params":{"col":"checked"}},"inc_archive":{"type":"flip-of","params":{"col":"checked"}}}},"click@sa-all-item-docs":{"assign":{"inc_docs":{"type":"flip-of","params":{"col":"inc_docs"}},"checked":{"type":"roll-up","params":{"prefix":"inc_","col":"inc_docs"}}}},"click@sa-all-item-images":{"assign":{"inc_images":{"type":"flip-of","params":{"col":"inc_images"}},"checked":{"type":"roll-up","params":{"prefix":"inc_","col":"inc_images"}}}},"click@sa-all-item-archive":{"assign":{"inc_archive":{"type":"flip-of","params":{"col":"inc_archive"}},"checked":{"type":"roll-up","params":{"prefix":"inc_","col":"inc_archive"}}}}}}}}'>
     <button type="button" role="checkbox" id="sa-all-trigger" class="cb-control"
             aria-checked="{checked}"><span class="cb-box" aria-hidden="true"></span><span class="cb-label">Select all</span></button>
     <ul class="cb-items">
@@ -94,12 +94,6 @@
       <pre class="machine-json">{
   "field": "phase",
   "initial": "live",
-  "context": {
-    "checked": "mixed",
-    "inc_docs": "true",
-    "inc_images": "true",
-    "inc_archive": "false"
-  },
   "states": {
     "live": {
       "on": {

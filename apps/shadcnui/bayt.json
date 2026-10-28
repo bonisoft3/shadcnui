@@ -1,16 +1,340 @@
 {
-  "dir": "apps/shadcnui",
-  "name": "apps_shadcnui",
   "activate": "mise x --",
-  "depot": false,
   "compose": {
-    "includes": []
+    "includes": [
+      "monorepo/${MONOREPO_COMPOSE_MODE:-docker-image}.yaml"
+    ]
   },
+  "depot": false,
+  "dir": ".",
+  "files": {
+    "checks.yaml": {
+      "say": {
+        "integrate": {
+          "rulemap": {
+            "builtin": {
+              "stop": false
+            },
+            "visual": {
+              "cmds": [
+                {
+                  "do": "use integrate.nu; integrate --bake --no-up --with-buildx --target ci-visual"
+                }
+              ]
+            }
+          }
+        },
+        "launch": {
+          "rulemap": {
+            "builtin": {
+              "cmds": [
+                {
+                  "do": "if not ('.certs/localhost.pem' | path exists) { mkdir .certs; mise exec -- mkcert -cert-file .certs/localhost.pem -key-file .certs/localhost-key.pem localhost 127.0.0.1 ::1 }"
+                },
+                {
+                  "do": "launch",
+                  "use": "./launch.nu"
+                }
+              ]
+            }
+          }
+        },
+        "lint": {
+          "rulemap": {
+            "cue": {
+              "cmds": [
+                {
+                  "do": "mise exec -- cue vet -c ./..."
+                }
+              ]
+            },
+            "facts": {
+              "priority": 1,
+              "cmds": [
+                {
+                  "do": "use tools.nu [run-mise]; let pronto = (run-mise where github:bonisoft3/pronto | str trim); run-mise exec -- deno run --config ($pronto | path join deno.json) --allow-read --allow-run --allow-env ($pronto | path join check-facts.ts) ."
+                }
+              ]
+            },
+            "identity": {
+              "cmds": [
+                {
+                  "do": "use tools.nu [run-mise]; let pronto = (run-mise where github:bonisoft3/pronto | str trim); run-mise exec -- deno run --config ($pronto | path join deno.json) --allow-read --allow-run --allow-env ($pronto | path join identity.ts) check ."
+                }
+              ]
+            },
+            "caddy": {
+              "cmds": [
+                {
+                  "do": "with-env {ELECTRIC_SECRET: lint, ORIGIN: lint} { mise exec -- caddy adapt --config docker/Caddyfile --adapter caddyfile out> (if $nu.os-info.name == \"windows\" { \"NUL\" } else { \"/dev/null\" }) }"
+                }
+              ]
+            },
+            "handlers": {
+              "cmds": [
+                {
+                  "do": "use tools.nu [run-mise]; run-mise exec -- omnishell check handlers ."
+                }
+              ]
+            },
+            "markup": {
+              "cmds": [
+                {
+                  "do": "use tools.nu [run-mise]; run-mise exec -- omnishell check markup ."
+                }
+              ]
+            },
+            "derive": {
+              "cmds": [
+                {
+                  "do": "use tools.nu [run-mise]; let pronto = (run-mise where github:bonisoft3/pronto | str trim); run-mise exec -- deno run --config ($pronto | path join deno.json) --allow-read=. ($pronto | path join derive.ts) --self-test"
+                }
+              ]
+            },
+            "types": {
+              "cmds": [
+                {
+                  "do": "use tools.nu [run-mise]; let pronto = (run-mise where github:bonisoft3/pronto | str trim); let files = do { cd $pronto; [ ...(glob --no-dir --exclude [*_test.ts *.test.ts hybrid-local.ts hybrid-battery.ts refresh-portable-types.ts] '*.ts') ...(glob --no-dir 'scales/*.ts') ] }; run-mise exec -- deno check --config ($pronto | path join deno.json) ...$files"
+                }
+              ]
+            },
+            "proto": {
+              "cmds": [
+                {
+                  "do": "use tools.nu [run-mise]; let pronto = (run-mise where github:bonisoft3/pronto | str trim); run-mise exec -- deno run --config ($pronto | path join deno.json) --allow-read --allow-run --allow-env ($pronto | path join check-proto.ts) ."
+                }
+              ]
+            }
+          }
+        },
+        "release": {
+          "rulemap": {
+            "pages": {
+              "cmds": [
+                {
+                  "do": "use tools.nu [run-mise]; let pronto = (run-mise where github:bonisoft3/pronto | str trim); run-mise exec -- deno run -A --config ($pronto | path join bundle deno.json) ($pronto | path join bundle bundle.ts) . --omnishell (run-mise where github:bonisoft3/omnishell | str trim) --mecha (run-mise where github:bonisoft3/mecha | str trim) --out dist/browser --base ($env.SAY_RELEASE_ARGS_BASE? | default \"\")"
+                },
+                {
+                  "do": "if ($env.SAY_RELEASE_ARGS_SNAPSHOT? | is-empty) { release --skip=validate --clean } else { release --snapshot --skip=validate --clean }",
+                  "use": "./release.nu"
+                },
+                {
+                  "do": "if ($env.SAY_RELEASE_ARGS_SNAPSHOT? | is-empty) { use semver.nu [tag-on-head]; let tag = (tag-on-head); if ($tag | is-empty) { error make {msg: \"no release tag on HEAD to push\"} }; git push origin $tag }"
+                }
+              ],
+              "platform": "pages"
+            }
+          }
+        },
+        "self": {
+          "version": "v0.45.1"
+        },
+        "doctor": {
+          "do": "use tools.nu [run-mise]; run-mise exec -- cue version; run-mise exec -- deno --version; run-mise where github:bonisoft3/pronto"
+        },
+        "build": {
+          "do": "null"
+        },
+        "generate": {
+          "rulemap": {
+            "omnishell": {
+              "priority": 0,
+              "cmds": [
+                {
+                  "do": "if ('program.cue' | path exists) { use tools.nu [run-mise]; run-mise exec -- omnishell mode . | save --force program_terminal.cue }"
+                }
+              ]
+            },
+            "auto-cue": {
+              "cmds": [
+                {
+                  "use": "./tools.nu",
+                  "do": "if ('pronto/generate_tool.cue' | path exists) { tools run-cue cmd generate ./pronto }"
+                }
+              ]
+            },
+            "pronto": {
+              "priority": 1,
+              "cmds": [
+                {
+                  "do": "if ('program.cue' | path exists) { use tools.nu [run-mise]; let pronto = (run-mise where github:bonisoft3/pronto | str trim); run-mise exec -- deno run --config ($pronto | path join deno.json) --allow-read --allow-write=. --allow-run --allow-env ($pronto | path join write.ts) . }"
+                }
+              ]
+            },
+            "auto-bayt": {
+              "priority": 2,
+              "cmds": [
+                {
+                  "use": "./auto-bayt.nu",
+                  "do": "auto-bayt"
+                }
+              ]
+            }
+          }
+        },
+        "setup": {
+          "rulemap": {
+            "builtin": {
+              "cmds": [
+                {
+                  "do": "setup",
+                  "use": "./setup.nu"
+                },
+                {
+                  "do": "mkdir .certs"
+                },
+                {
+                  "do": "mise exec -- mkcert -cert-file .certs/localhost.pem -key-file .certs/localhost-key.pem localhost 127.0.0.1 ::1"
+                },
+                {
+                  "do": "print 'the browser trusts this certificate only once you run: mise exec -- mkcert -install'"
+                }
+              ]
+            }
+          }
+        },
+        "test": {
+          "rulemap": {
+            "builtin": {
+              "stop": false,
+              "cmds": [
+                {
+                  "do": "test",
+                  "use": "./test.nu"
+                }
+              ]
+            },
+            "gallery": {
+              "cmds": [
+                {
+                  "do": "deno test --config tests/deno.json --no-lock --no-check --allow-env --allow-read tests/gallery.test.ts tests/screens.test.ts"
+                }
+              ]
+            },
+            "machines": {
+              "cmds": [
+                {
+                  "do": "use tools.nu [run-mise]; run-mise exec -- omnishell check machines ."
+                }
+              ]
+            },
+            "battery": {
+              "cmds": [
+                {
+                  "do": "use tools.nu [run-mise]; run-mise exec -- omnishell check battery ."
+                }
+              ]
+            }
+          }
+        },
+        "verify": {
+          "rulemap": {
+            "pages": {
+              "platform": "pages",
+              "cmds": [
+                {
+                  "do": "use tools.nu [run-mise]; let pronto = (run-mise where github:bonisoft3/pronto | str trim); run-mise exec -- deno run -A --config ($pronto | path join deno.json) ($pronto | path join verify verify.ts) . --platform pages ...(if ($env.SAY_VERIFY_ARGS_TARGET? | is-empty) { [] } else { ['--target', $env.SAY_VERIFY_ARGS_TARGET] }) ...(if ($env.SAY_VERIFY_ARGS_TIER? | is-empty) { [] } else { ['--tier', $env.SAY_VERIFY_ARGS_TIER] }) ...(if ($env.SAY_VERIFY_ARGS_HEADLESS? | is-empty) { [] } else { ['--headless', $env.SAY_VERIFY_ARGS_HEADLESS] }) ...(if ($env.SAY_VERIFY_ARGS_SESSION? | is-empty) { [] } else { ['--session', $env.SAY_VERIFY_ARGS_SESSION] })"
+                }
+              ]
+            }
+          }
+        }
+      }
+    },
+    "say.yaml": {
+      "say": {
+        "launch": {
+          "rulemap": {
+            "builtin": {
+              "stop": true,
+              "cmds": [
+                {
+                  "use": "./bayt-task.nu",
+                  "do": "bayt-task launch-action --generate"
+                }
+              ]
+            }
+          }
+        },
+        "integrate": {
+          "rulemap": {
+            "builtin": {
+              "stop": true,
+              "cmds": [
+                {
+                  "use": "./bayt-task.nu",
+                  "do": "bayt-task integrate-action --generate"
+                }
+              ]
+            }
+          }
+        },
+        "lint": {
+          "rulemap": {
+            "auto-cue": null,
+            "builtin": {
+              "stop": true,
+              "cmds": [
+                {
+                  "use": "./bayt-task.nu",
+                  "do": "bayt-task lint --generate"
+                }
+              ]
+            }
+          }
+        },
+        "generate": {
+          "rulemap": {
+            "auto-bayt": null,
+            "auto-cue": null,
+            "auto-gomplate": null,
+            "builtin": {
+              "stop": true,
+              "cmds": [
+                {
+                  "use": "./bayt-task.nu",
+                  "do": "bayt-task generate"
+                }
+              ]
+            }
+          }
+        },
+        "build": {
+          "rulemap": {
+            "builtin": {
+              "stop": true,
+              "cmds": [
+                {
+                  "use": "./bayt-task.nu",
+                  "do": "bayt-task build --generate"
+                }
+              ]
+            }
+          }
+        },
+        "test": {
+          "rulemap": {
+            "builtin": {
+              "stop": true,
+              "cmds": [
+                {
+                  "use": "./bayt-task.nu",
+                  "do": "bayt-task test --generate"
+                }
+              ]
+            }
+          }
+        }
+      }
+    }
+  },
+  "imageDir": "${MONOREPO_COMPOSE_MODE:+apps/shadcnui}",
+  "name": "shadcnui",
   "targets": {
     "setup": {
       "name": "setup",
-      "project": "apps_shadcnui",
-      "dir": "apps/shadcnui",
+      "project": "shadcnui",
+      "dir": ".",
       "srcs": {
         "globs": [],
         "defaultGlobs": null,
@@ -25,21 +349,120 @@
         "globs": []
       },
       "visibility": "internal",
-      "cmd": {},
-      "env": {},
+      "activate": "",
+      "cmd": {
+        "builtin": {
+          "name": "builtin",
+          "priority": -1,
+          "shell": "exec",
+          "do": "mise install",
+          "stop": false,
+          "dockerfile": {
+            "do": "d=/root/.local/share/mise/downloads; s=/mise-tarball-store; mkdir -p \"$d\" \"$s\"; cp -r \"$s\"/. \"$d\"/ 2>/dev/null || true; mise install || exit; cd \"$d\" && for f in */*/*; do [ -f \"$f\" ] || continue; o=\"$s/$f\"; [ -e \"$o\" ] && continue; mkdir -p \"$(dirname \"$o\")\"; t=\"$(mktemp \"$(dirname \"$o\")/.pXXXXXX\")\" && cp \"$f\" \"$t\" && mv -f \"$t\" \"$o\"; done; :",
+            "mounts": [
+              {
+                "type": "cache",
+                "target": "/root/.local/share/mise/downloads",
+                "scope": "project",
+                "required": false
+              },
+              {
+                "type": "cache",
+                "target": "/mise-tarball-store",
+                "scope": "global",
+                "required": false
+              }
+            ],
+            "shell": "sh"
+          },
+          "srcs": {
+            "globs": [
+              "[m]ise.toml",
+              "[.]mise.toml",
+              "[m]ise.lock",
+              "[.]tool-versions"
+            ],
+            "defaultGlobs": null,
+            "exclude": [],
+            "defaultExclude": null
+          }
+        }
+      },
+      "env": {
+        "MISE_ALWAYS_KEEP_DOWNLOAD": "1"
+      },
       "deps": [],
+      "compose": {
+        "up": false,
+        "manual": false,
+        "build": {
+          "additional_contexts": {
+            "workspaceroot-pronto-sources_srcs": "${MONOREPO_COMPOSE_MODE:-docker-image://busybox:musl@sha256:03db190ed4c1ceb1c55d179a0940e2d71d42130636a780272629735893292223}${MONOREPO_COMPOSE_MODE:+:workspaceroot-pronto-sources_srcs}"
+          },
+          "secrets": [],
+          "args": {}
+        },
+        "environment": {},
+        "ports": [],
+        "volumes": [],
+        "depends_on": {}
+      },
       "dockerfile": {
         "from": {
-          "ref": "workspaceroot:setup",
-          "name": "workspaceroot-setup"
+          "name": "opensuse/leap:16.0@sha256:7f3aeccb6a613c0fc1690d3d3e5eb493fd477ee4587de20640017fc36d72f9b0"
         },
         "preamble": [],
-        "defaultPreamble": null,
+        "defaultPreamble": {
+          "lazybox-copy": {
+            "name": "lazybox-copy",
+            "priority": -10,
+            "line": "COPY --from=bonitao/lazybox:0.8.5@sha256:091a3b63ba222777000acc3bf8327faebfea4870e23ee07c6eb42431dadb2ac6 /lazybox/ /root/.local/share/lazybox/"
+          },
+          "path-env": {
+            "name": "path-env",
+            "priority": -9,
+            "line": "ENV PATH=/root/.local/bin:/root/.local/share/lazybox/bin:$PATH"
+          },
+          "static-curl-config": {
+            "name": "static-curl-config",
+            "priority": -8,
+            "line": "RUN mv /root/.local/share/lazybox/libexec/static-curl /root/.local/share/lazybox/libexec/static-curl.bin\nCOPY --chmod=0755 <<'STATIC_CURL' /root/.local/share/lazybox/libexec/static-curl\n#!/bin/sh\nOPENSSL_CONF=\"${OPENSSL_CONF:-/dev/null}\" exec \"$(dirname \"$0\")/static-curl.bin\" \"$@\"\nSTATIC_CURL"
+          },
+          "mise-trusted": {
+            "name": "mise-trusted",
+            "priority": -8,
+            "line": "ENV MISE_TRUSTED_CONFIG_PATHS=/monorepo"
+          },
+          "gnu-shell-utils": {
+            "name": "gnu-shell-utils",
+            "priority": -7,
+            "do": "s=/zypper-store; d=/var/cache/zypp/packages; mkdir -p \"$s\" \"$d\"; cp -r \"$s\"/. \"$d\"/ 2>/dev/null || true; zypper -n modifyservice --no-refresh --all && sed -i 's|http://|https://|g' /etc/zypp/repos.d/*.repo || exit; zypper -n modifyrepo --keep-packages --all && zypper -n install findutils=4.10.0-160000.2.2 which=2.23-160000.2.2 git-core=2.51.0-160000.1.2 libatomic1=15.3.0+git11272-160000.1.1 || exit; cd \"$d\" && for f in */*.rpm */*/*.rpm; do [ -f \"$f\" ] || continue; o=\"$s/$f\"; [ -e \"$o\" ] && continue; mkdir -p \"$(dirname \"$o\")\"; t=\"$(mktemp \"$(dirname \"$o\")/.pXXXXXX\")\" && cp \"$f\" \"$t\" && mv -f \"$t\" \"$o\"; done; zypper -n modifyrepo --no-keep-packages --all || true",
+            "shell": "sh",
+            "mounts": [
+              {
+                "type": "cache",
+                "target": "/zypper-store",
+                "scope": "global",
+                "required": false
+              },
+              {
+                "type": "cache",
+                "target": "/var/cache/zypp",
+                "scope": "target",
+                "required": false
+              }
+            ]
+          }
+        },
         "add": [],
         "mounts": [],
         "secrets": {},
         "extra_hosts": [],
-        "epilogue": [],
+        "epilogue": [
+          "COPY --from=workspaceroot-pronto-sources_srcs /monorep[o] /monorepo/",
+          "COPY [m]ise.local.toml ./",
+          "RUN mise install"
+        ],
         "copy": [],
         "defaultCopy": null,
         "healthcheck": null,
@@ -53,54 +476,55 @@
         "incremental": true,
         "preconditions": []
       },
-      "cmds": [],
+      "cmds": [
+        {
+          "do": "mise install",
+          "dockerfile": {
+            "do": "d=/root/.local/share/mise/downloads; s=/mise-tarball-store; mkdir -p \"$d\" \"$s\"; cp -r \"$s\"/. \"$d\"/ 2>/dev/null || true; mise install || exit; cd \"$d\" && for f in */*/*; do [ -f \"$f\" ] || continue; o=\"$s/$f\"; [ -e \"$o\" ] && continue; mkdir -p \"$(dirname \"$o\")\"; t=\"$(mktemp \"$(dirname \"$o\")/.pXXXXXX\")\" && cp \"$f\" \"$t\" && mv -f \"$t\" \"$o\"; done; :",
+            "mounts": [
+              {
+                "type": "cache",
+                "target": "/root/.local/share/mise/downloads",
+                "scope": "project",
+                "required": false
+              },
+              {
+                "type": "cache",
+                "target": "/mise-tarball-store",
+                "scope": "global",
+                "required": false
+              }
+            ],
+            "shell": "sh"
+          },
+          "srcs": {
+            "globs": [
+              "[m]ise.toml",
+              "[.]mise.toml",
+              "[m]ise.lock",
+              "[.]tool-versions"
+            ],
+            "defaultGlobs": null,
+            "exclude": [],
+            "defaultExclude": null
+          },
+          "name": "builtin",
+          "shell": "exec",
+          "stop": false
+        }
+      ],
       "cache": {
         "full": false,
         "similar": false
       }
     },
-    "lint": {
-      "name": "lint",
-      "project": "apps_shadcnui",
-      "dir": "apps/shadcnui",
+    "lint-inputs": {
+      "name": "lint-inputs",
+      "project": "shadcnui",
+      "dir": ".",
       "srcs": {
-        "globs": [
-          "brief.html",
-          "ir.html",
-          "acceptance.md"
-        ],
-        "defaultGlobs": {
-          "pronto-cue": {
-            "glob": "*.cue",
-            "name": "pronto-cue",
-            "priority": 1
-          },
-          "pronto-bayt": {
-            "glob": "bayt.json",
-            "name": "pronto-bayt",
-            "priority": 2
-          },
-          "pronto-design": {
-            "glob": "DESIGN.md",
-            "name": "pronto-design",
-            "priority": 3
-          },
-          "pronto-pipelines": {
-            "glob": "[p]ipelines/*.blobl",
-            "name": "pronto-pipelines",
-            "priority": 7
-          },
-          "pronto-messages": {
-            "glob": "[m]essages/*.json",
-            "name": "pronto-messages",
-            "priority": 8
-          },
-          "pronto-boot": {
-            "glob": "[s]hell/boot.js",
-            "name": "pronto-boot",
-            "priority": 9
-          }
-        },
+        "globs": [],
+        "defaultGlobs": null,
         "exclude": [],
         "defaultExclude": null
       },
@@ -117,8 +541,8 @@
         "builtin": {
           "name": "builtin",
           "priority": 0,
-          "shell": "exec",
-          "do": "cue vet ./...",
+          "shell": "nu",
+          "do": "^nu -I (^mise where github:bonisoft3/sayt | str trim) -c 'use tools.nu [run-mise]; let pronto = (run-mise where github:bonisoft3/pronto | str trim); run-mise exec -- deno run --config ($pronto | path join deno.json) --allow-read --allow-write=.pronto --allow-run --allow-env ($pronto | path join check-proto.ts) --baseline .'",
           "stop": false,
           "srcs": {
             "globs": [],
@@ -128,18 +552,255 @@
           }
         }
       },
+      "deps": [
+        ":generate"
+      ],
       "env": {},
-      "deps": [],
+      "taskfile": {
+        "run": "once",
+        "incremental": false,
+        "preconditions": []
+      },
+      "cmds": [
+        {
+          "shell": "nu",
+          "do": "^nu -I (^mise where github:bonisoft3/sayt | str trim) -c 'use tools.nu [run-mise]; let pronto = (run-mise where github:bonisoft3/pronto | str trim); run-mise exec -- deno run --config ($pronto | path join deno.json) --allow-read --allow-write=.pronto --allow-run --allow-env ($pronto | path join check-proto.ts) --baseline .'",
+          "name": "builtin",
+          "stop": false,
+          "srcs": {
+            "globs": [],
+            "defaultGlobs": null,
+            "exclude": [],
+            "defaultExclude": null
+          }
+        }
+      ],
+      "cache": {
+        "full": false,
+        "similar": false
+      }
+    },
+    "lint": {
+      "name": "lint",
+      "project": "shadcnui",
+      "dir": ".",
+      "activate": "mise x --",
+      "cache": {
+        "full": false,
+        "similar": false
+      },
+      "cmd": {
+        "builtin": {
+          "name": "builtin",
+          "priority": 0,
+          "do": "^nu -I (^mise where github:bonisoft3/sayt | str trim) -c 'use task-leaf.nu; with-env {PRONTO_PROTO_BASELINE: (open --raw .pronto/proto-baseline.json)} { task-leaf lint }'",
+          "shell": "nu",
+          "stop": false,
+          "srcs": {
+            "globs": [],
+            "defaultGlobs": null,
+            "exclude": [],
+            "defaultExclude": null
+          },
+          "dockerfile": {
+            "do": "cue vet -c ./..."
+          }
+        }
+      },
+      "cmds": [
+        {
+          "do": "^nu -I (^mise where github:bonisoft3/sayt | str trim) -c 'use task-leaf.nu; with-env {PRONTO_PROTO_BASELINE: (open --raw .pronto/proto-baseline.json)} { task-leaf lint }'",
+          "shell": "nu",
+          "dockerfile": {
+            "do": "cue vet -c ./..."
+          },
+          "name": "builtin",
+          "stop": false,
+          "srcs": {
+            "globs": [],
+            "defaultGlobs": null,
+            "exclude": [],
+            "defaultExclude": null
+          }
+        }
+      ],
+      "deps": [
+        ":generate",
+        ":lint-inputs"
+      ],
+      "dockerfile": {
+        "from": {
+          "ref": ":generate",
+          "name": "shadcnui-generate"
+        },
+        "preamble": [],
+        "defaultPreamble": null,
+        "add": [],
+        "mounts": [],
+        "secrets": {},
+        "extra_hosts": [],
+        "epilogue": [],
+        "copy": [],
+        "defaultCopy": null,
+        "healthcheck": null,
+        "expose": [],
+        "entrypoint": null,
+        "incremental": false,
+        "cmd": null
+      },
+      "env": {},
+      "outs": {
+        "globs": [],
+        "exclude": []
+      },
+      "srcs": {
+        "globs": [
+          ".bayt/checks.yaml",
+          ".pronto/facts.json"
+        ],
+        "defaultGlobs": {
+          "pronto-tree": {
+            "glob": "**",
+            "name": "pronto-tree"
+          }
+        },
+        "exclude": [],
+        "defaultExclude": {
+          "pronto-bayt": null,
+          "pronto-tests": null,
+          "pronto-task": {
+            "glob": ".task/**",
+            "name": "pronto-task"
+          },
+          "pronto-history": null,
+          "pronto-node": {
+            "glob": "**/node_modules/**",
+            "name": "pronto-node"
+          },
+          "pronto-local-lock": {
+            "glob": "mise.local.lock",
+            "name": "pronto-local-lock"
+          }
+        }
+      },
+      "state": {
+        "globs": []
+      },
       "taskfile": {
         "run": "always",
         "incremental": true,
         "preconditions": []
       },
+      "visibility": "internal"
+    },
+    "generate": {
+      "name": "generate",
+      "project": "shadcnui",
+      "dir": ".",
+      "activate": "mise x --",
+      "cmd": {
+        "builtin": {
+          "name": "builtin",
+          "priority": 0,
+          "do": "^nu -I (^mise where github:bonisoft3/sayt | str trim) -c 'use task-leaf.nu; task-leaf generate'",
+          "shell": "nu",
+          "stop": false,
+          "srcs": {
+            "globs": [],
+            "defaultGlobs": null,
+            "exclude": [],
+            "defaultExclude": null
+          },
+          "dockerfile": {
+            "do": "^deno run --config ((^mise where github:bonisoft3/pronto | str trim) | path join deno.json) --allow-read --allow-write=. --allow-run --allow-env ((^mise where github:bonisoft3/pronto | str trim) | path join write.ts) ."
+          }
+        }
+      },
+      "deps": [],
+      "dockerfile": {
+        "from": {
+          "ref": ":setup",
+          "name": "shadcnui-setup"
+        },
+        "preamble": [],
+        "defaultPreamble": null,
+        "add": [],
+        "mounts": [],
+        "secrets": {},
+        "extra_hosts": [],
+        "epilogue": [],
+        "copy": [],
+        "defaultCopy": null,
+        "healthcheck": null,
+        "expose": [],
+        "entrypoint": null,
+        "incremental": false,
+        "cmd": null
+      },
+      "env": {},
+      "outs": {
+        "globs": [],
+        "exclude": []
+      },
+      "srcs": {
+        "globs": [],
+        "defaultGlobs": {
+          "pronto-tree": {
+            "glob": "**",
+            "name": "pronto-tree"
+          }
+        },
+        "exclude": [],
+        "defaultExclude": {
+          "pronto-bayt": {
+            "glob": ".bayt/**",
+            "name": "pronto-bayt"
+          },
+          "pronto-tests": {
+            "glob": "tests/**",
+            "name": "pronto-tests"
+          },
+          "pronto-task": {
+            "glob": ".task/**",
+            "name": "pronto-task"
+          },
+          "pronto-history": {
+            "glob": ".pronto/proto-baseline.json",
+            "name": "pronto-history"
+          },
+          "pronto-node": {
+            "glob": "**/node_modules/**",
+            "name": "pronto-node"
+          },
+          "pronto-local-lock": {
+            "glob": "mise.local.lock",
+            "name": "pronto-local-lock"
+          }
+        }
+      },
+      "state": {
+        "globs": [
+          ".bayt/checks.yaml",
+          ".bayt/say.yaml",
+          ".bayt/Taskfile.yml",
+          ".bayt/Taskfile.bayt.yml",
+          ".pronto/check-inputs.json"
+        ]
+      },
+      "visibility": "internal",
+      "taskfile": {
+        "run": "once",
+        "incremental": true,
+        "preconditions": []
+      },
       "cmds": [
         {
-          "do": "cue vet ./...",
+          "do": "^nu -I (^mise where github:bonisoft3/sayt | str trim) -c 'use task-leaf.nu; task-leaf generate'",
+          "shell": "nu",
+          "dockerfile": {
+            "do": "^deno run --config ((^mise where github:bonisoft3/pronto | str trim) | path join deno.json) --allow-read --allow-write=. --allow-run --allow-env ((^mise where github:bonisoft3/pronto | str trim) | path join write.ts) ."
+          },
           "name": "builtin",
-          "shell": "exec",
           "stop": false,
           "srcs": {
             "globs": [],
@@ -156,66 +817,15 @@
     },
     "build": {
       "name": "build",
-      "project": "apps_shadcnui",
-      "dir": "apps/shadcnui",
-      "srcs": {
-        "globs": [
-          "ir.html",
-          "acceptance.md",
-          "shell/**",
-          "pipelines/**",
-          "services/**"
-        ],
-        "defaultGlobs": {
-          "pronto-cue": {
-            "glob": "*.cue",
-            "name": "pronto-cue",
-            "priority": 1
-          },
-          "pronto-bayt": {
-            "glob": "bayt.json",
-            "name": "pronto-bayt",
-            "priority": 2
-          },
-          "pronto-design": {
-            "glob": "DESIGN.md",
-            "name": "pronto-design",
-            "priority": 3
-          },
-          "pronto-pipelines": {
-            "glob": "[p]ipelines/*.blobl",
-            "name": "pronto-pipelines",
-            "priority": 7
-          },
-          "pronto-messages": {
-            "glob": "[m]essages/*.json",
-            "name": "pronto-messages",
-            "priority": 8
-          },
-          "pronto-boot": {
-            "glob": "[s]hell/boot.js",
-            "name": "pronto-boot",
-            "priority": 9
-          }
-        },
-        "exclude": [],
-        "defaultExclude": null
-      },
-      "outs": {
-        "globs": [],
-        "exclude": []
-      },
-      "state": {
-        "globs": []
-      },
-      "visibility": "internal",
+      "project": "shadcnui",
+      "dir": ".",
       "activate": "mise x --",
       "cmd": {
         "builtin": {
           "name": "builtin",
           "priority": 0,
-          "shell": "exec",
-          "do": "deno run --allow-read --allow-write=. --allow-run --allow-env ../../plugins/pronto/write.ts .",
+          "do": "^nu -I (^mise where github:bonisoft3/sayt | str trim) -c 'use task-leaf.nu; task-leaf build'",
+          "shell": "nu",
           "stop": false,
           "srcs": {
             "globs": [],
@@ -226,12 +836,12 @@
         }
       },
       "deps": [
-        ":setup"
+        ":generate"
       ],
       "dockerfile": {
         "from": {
-          "ref": ":setup",
-          "name": "apps_shadcnui-setup"
+          "ref": ":generate",
+          "name": "shadcnui-generate"
         },
         "preamble": [],
         "defaultPreamble": null,
@@ -249,11 +859,54 @@
         "cmd": null
       },
       "env": {},
+      "outs": {
+        "globs": [],
+        "exclude": []
+      },
+      "srcs": {
+        "globs": [
+          ".bayt/checks.yaml"
+        ],
+        "defaultGlobs": {
+          "pronto-tree": {
+            "glob": "**",
+            "name": "pronto-tree"
+          }
+        },
+        "exclude": [],
+        "defaultExclude": {
+          "pronto-bayt": null,
+          "pronto-tests": {
+            "glob": "tests/**",
+            "name": "pronto-tests"
+          },
+          "pronto-task": {
+            "glob": ".task/**",
+            "name": "pronto-task"
+          },
+          "pronto-history": {
+            "glob": ".pronto/proto-baseline.json",
+            "name": "pronto-history"
+          },
+          "pronto-node": {
+            "glob": "**/node_modules/**",
+            "name": "pronto-node"
+          },
+          "pronto-local-lock": {
+            "glob": "mise.local.lock",
+            "name": "pronto-local-lock"
+          }
+        }
+      },
+      "state": {
+        "globs": []
+      },
       "taskfile": {
         "run": "once",
         "incremental": true,
         "preconditions": []
       },
+      "visibility": "internal",
       "vscode": {
         "group": {
           "kind": "build",
@@ -262,9 +915,9 @@
       },
       "cmds": [
         {
-          "do": "deno run --allow-read --allow-write=. --allow-run --allow-env ../../plugins/pronto/write.ts .",
+          "do": "^nu -I (^mise where github:bonisoft3/sayt | str trim) -c 'use task-leaf.nu; task-leaf build'",
+          "shell": "nu",
           "name": "builtin",
-          "shell": "exec",
           "stop": false,
           "srcs": {
             "globs": [],
@@ -281,78 +934,97 @@
     },
     "test": {
       "name": "test",
-      "project": "apps_shadcnui",
-      "dir": "apps/shadcnui",
-      "srcs": {
-        "globs": [],
-        "defaultGlobs": {
-          "pronto-cue": {
-            "glob": "*.cue",
-            "name": "pronto-cue",
-            "priority": 1
-          },
-          "pronto-bayt": {
-            "glob": "bayt.json",
-            "name": "pronto-bayt",
-            "priority": 2
-          },
-          "pronto-design": {
-            "glob": "DESIGN.md",
-            "name": "pronto-design",
-            "priority": 3
-          },
-          "pronto-pipelines": {
-            "glob": "[p]ipelines/*.blobl",
-            "name": "pronto-pipelines",
-            "priority": 7
-          },
-          "pronto-messages": {
-            "glob": "[m]essages/*.json",
-            "name": "pronto-messages",
-            "priority": 8
-          },
-          "pronto-boot": {
-            "glob": "[s]hell/boot.js",
-            "name": "pronto-boot",
-            "priority": 9
-          }
-        },
-        "exclude": [],
-        "defaultExclude": null
-      },
-      "outs": {
-        "globs": [],
-        "exclude": []
-      },
-      "state": {
-        "globs": []
-      },
-      "visibility": "internal",
+      "project": "shadcnui",
+      "dir": ".",
       "activate": "mise x --",
       "cmd": {
         "builtin": {
           "name": "builtin",
           "priority": 0,
-          "shell": "exec",
-          "do": "cue vet -c ./...",
+          "do": "^nu -I (^mise where github:bonisoft3/sayt | str trim) -c 'use task-leaf.nu; task-leaf test'",
+          "shell": "nu",
           "stop": false,
           "srcs": {
             "globs": [],
             "defaultGlobs": null,
             "exclude": [],
             "defaultExclude": null
+          },
+          "dockerfile": {
+            "do": "deno eval 0"
           }
         }
       },
       "deps": [
         ":build"
       ],
+      "dockerfile": {
+        "from": {
+          "ref": ":build",
+          "name": "shadcnui-build"
+        },
+        "preamble": [],
+        "defaultPreamble": null,
+        "add": [],
+        "mounts": [],
+        "secrets": {},
+        "extra_hosts": [],
+        "epilogue": [],
+        "copy": [],
+        "defaultCopy": null,
+        "healthcheck": null,
+        "expose": [],
+        "entrypoint": null,
+        "incremental": false,
+        "cmd": null
+      },
       "env": {},
+      "outs": {
+        "globs": [],
+        "exclude": []
+      },
+      "srcs": {
+        "globs": [
+          ".bayt/checks.yaml",
+          ".pronto/facts.json"
+        ],
+        "defaultGlobs": {
+          "pronto-tree": {
+            "glob": "**",
+            "name": "pronto-tree"
+          }
+        },
+        "exclude": [],
+        "defaultExclude": {
+          "pronto-bayt": null,
+          "pronto-tests": null,
+          "pronto-task": {
+            "glob": ".task/**",
+            "name": "pronto-task"
+          },
+          "pronto-history": {
+            "glob": ".pronto/proto-baseline.json",
+            "name": "pronto-history"
+          },
+          "pronto-node": {
+            "glob": "**/node_modules/**",
+            "name": "pronto-node"
+          },
+          "pronto-local-lock": {
+            "glob": "mise.local.lock",
+            "name": "pronto-local-lock"
+          }
+        }
+      },
+      "state": {
+        "globs": []
+      },
       "taskfile": {
         "run": "once",
-        "incremental": true,
+        "incremental": false,
         "preconditions": []
       },
+      "visibility": "internal",
       "vscode": {
         "group": {
           "kind": "test",
@@ -361,9 +1033,12 @@
       },
       "cmds": [
         {
-          "do": "cue vet -c ./...",
+          "do": "^nu -I (^mise where github:bonisoft3/sayt | str trim) -c 'use task-leaf.nu; task-leaf test'",
+          "shell": "nu",
+          "dockerfile": {
+            "do": "deno eval 0"
+          },
           "name": "builtin",
-          "shell": "exec",
           "stop": false,
           "srcs": {
             "globs": [],
@@ -380,8 +1055,8 @@
     },
     "launch": {
       "name": "launch",
-      "project": "apps_shadcnui",
-      "dir": "apps/shadcnui",
+      "project": "shadcnui",
+      "dir": ".",
       "srcs": {
         "globs": [],
         "defaultGlobs": null,
@@ -411,7 +1086,7 @@
         "ports": [],
         "volumes": [],
         "depends_on": {
-          "apps_shadcnui-caddy": {
+          "shadcnui-caddy": {
             "condition": "service_healthy"
           }
         },
@@ -503,8 +1178,8 @@
     },
     "integrate": {
       "name": "integrate",
-      "project": "apps_shadcnui",
-      "dir": "apps/shadcnui",
+      "project": "shadcnui",
+      "dir": ".",
       "cmd": {
         "builtin": null
       },
@@ -516,11 +1191,11 @@
           "name": "mcr.microsoft.com/playwright:v1.61.1-noble@sha256:5b8f294aff9041b7191c34a4bab3ac270157a28774d4b0660e9743297b697e48"
         },
         "preamble": [
-          "COPY --from=denoland/deno:bin-2.5.5@sha256:a8dd9a073b2b4d1beb77a8174830c5af54e32517808dcc28249ed6c04fdac979 /deno /usr/local/bin/deno",
+          "COPY --from=denoland/deno:bin-2.9.7@sha256:bc5aa4466e21b6d3021226a85ba2e1911f7c386254d97b9d797903ab74edace2 /deno /usr/local/bin/deno",
           "ENV PLAYWRIGHT_BROWSERS_PATH=/ms-playwright",
           "ENV PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1",
           "ENV DENO_DIR=/deno-cache",
-          "COPY --from=root plugins/omnishell /omnishell",
+          "COPY --from=plugins_omnishell-runtime-image / /omnishell",
           "RUN deno install --node-modules-dir=auto --entrypoint /omnishell/check-visual.ts"
         ],
         "defaultPreamble": null,
@@ -560,7 +1235,7 @@
         "manual": true,
         "build": {
           "additional_contexts": {
-            "root": "../../.."
+            "plugins_omnishell-runtime-image": "${MONOREPO_COMPOSE_MODE:-docker-image://bonitao/omnishell:0.20.2@sha256:0f7d84358244c875a76bf97f13974bf6336e15f639a2f01fa31ad3eb0ce0d8a7}${MONOREPO_COMPOSE_MODE:+:plugins_omnishell-runtime-image}"
           },
           "secrets": [],
           "args": {}
@@ -580,12 +1255,13 @@
           "."
         ],
         "depends_on": {
-          "apps_shadcnui-launch": {
+          "shadcnui-launch": {
             "condition": "service_healthy"
           }
         },
         "environment": {
-          "APP_URL": "https://caddy:8443"
+          "APP_URL": "https://caddy:8443",
+          "SETTLE_TIMEOUT_MS": "50000"
         },
         "ports": [],
         "volumes": []
@@ -601,13 +1277,1627 @@
         "similar": false
       }
     },
-    "caddy": {
-      "name": "caddy",
-      "project": "apps_shadcnui",
-      "dir": "apps/shadcnui",
+    "ci-visual": {
+      "name": "ci-visual",
+      "project": "shadcnui",
+      "dir": ".",
+      "srcs": {
+        "globs": [],
+        "defaultGlobs": null,
+        "exclude": [],
+        "defaultExclude": null
+      },
+      "outs": {
+        "globs": [],
+        "exclude": []
+      },
+      "state": {
+        "globs": []
+      },
+      "visibility": "internal",
+      "activate": "",
+      "cmd": {
+        "builtin": {
+          "name": "builtin",
+          "priority": 0,
+          "shell": "sh",
+          "do": "if [ -n \"$BUILDKIT_SYNTAX\" ]; then\n  # depot frontend-pin workaround (full rationale in stacks/sayt/sayt.cue)\n  find /monorepo -path '*/.bayt/Dockerfile.*' -type f -exec sed -i \"1i # syntax=$BUILDKIT_SYNTAX\" {} \\;\nfi\n[ -n \"$BKID_PROJECT\" ] || { echo \"bkid: BKID_PROJECT is unset; sayt integrate names the inner stack\" >&2; exit 1; }\np=\"${BKID_PROJECT}_visual\"\nf=.bayt/compose.integrate.closure.yaml\n[ -n \"$DEPOT_TOKEN\" ] && bake=\"depot bake --project $DEPOT_PROJECT_ID\" || bake=\"docker buildx bake\"\ndocker compose -p \"$p\" --profile '*' -f \"$f\" config | docker buildx bake --allow=fs.read=/monorepo -f - --print bayt | $bake -f - ${SAYT_NO_CACHE:+--no-cache --set \"*.cache-from=\" --set \"*.cache-to=\"} ${SAYT_NO_CACHE_FROM:+--set \"*.cache-from=\"} ${SAYT_NO_CACHE_TO:+--set \"*.cache-to=\"} bayt\ndocker compose -p \"$p\" --profile '*' -f \"$f\" down -v --timeout 0 --remove-orphans\ns=0\ndocker compose -p \"$p\" --profile '*' -f \"$f\" up bayt --build --abort-on-container-failure --exit-code-from bayt --remove-orphans --attach-dependencies || s=$?\ndocker compose -p \"$p\" --profile '*' -f \"$f\" down -v --timeout 0 --remove-orphans\nexit \"$s\"",
+          "stop": false,
+          "srcs": {
+            "globs": [],
+            "defaultGlobs": null,
+            "exclude": [],
+            "defaultExclude": null
+          },
+          "dockerfile": {
+            "inject": {
+              "secrets": [
+                {
+                  "id": "docker_host",
+                  "var": {
+                    "contents": "DOCKER_HOST"
+                  }
+                },
+                {
+                  "id": "buildx_builder",
+                  "var": {
+                    "contents": "BUILDX_BUILDER"
+                  }
+                },
+                {
+                  "id": "testcontainers_host",
+                  "var": {
+                    "contents": "TESTCONTAINERS_HOST_OVERRIDE"
+                  }
+                },
+                {
+                  "id": "cache_scope",
+                  "var": {
+                    "contents": "CACHE_SCOPE"
+                  }
+                },
+                {
+                  "id": "cache_scope_fallback",
+                  "var": {
+                    "contents": "CACHE_SCOPE_FALLBACK"
+                  }
+                },
+                {
+                  "id": "sayt_buildkit_syntax",
+                  "var": {
+                    "contents": "BUILDKIT_SYNTAX"
+                  }
+                },
+                {
+                  "id": "sayt_no_cache",
+                  "var": {
+                    "contents": "SAYT_NO_CACHE"
+                  }
+                },
+                {
+                  "id": "bayt_image_tag",
+                  "var": {
+                    "contents": "BAYT_IMAGE_TAG"
+                  }
+                },
+                {
+                  "id": "bayt_pull_policy",
+                  "var": {
+                    "contents": "BAYT_PULL_POLICY"
+                  }
+                },
+                {
+                  "id": "sayt_no_cache_from",
+                  "var": {
+                    "contents": "SAYT_NO_CACHE_FROM"
+                  }
+                },
+                {
+                  "id": "sayt_no_cache_to",
+                  "var": {
+                    "contents": "SAYT_NO_CACHE_TO"
+                  }
+                },
+                {
+                  "id": "depot_token",
+                  "var": {
+                    "contents": "DEPOT_TOKEN"
+                  }
+                },
+                {
+                  "id": "depot_project_id",
+                  "var": {
+                    "contents": "DEPOT_PROJECT_ID"
+                  }
+                },
+                {
+                  "id": "depot_org_id",
+                  "var": {
+                    "contents": "DEPOT_ORG_ID"
+                  }
+                },
+                {
+                  "id": "depot_disable_otel",
+                  "var": {
+                    "contents": "DEPOT_DISABLE_OTEL"
+                  }
+                },
+                {
+                  "id": "actions_results_url",
+                  "var": {
+                    "contents": "ACTIONS_RESULTS_URL"
+                  }
+                },
+                {
+                  "id": "actions_runtime_token",
+                  "var": {
+                    "contents": "ACTIONS_RUNTIME_TOKEN"
+                  }
+                },
+                {
+                  "id": "bkid_project",
+                  "var": {
+                    "contents": "BKID_PROJECT"
+                  }
+                },
+                {
+                  "id": "buildx_instance",
+                  "var": {
+                    "contents": "BUILDX_INSTANCE"
+                  }
+                },
+                {
+                  "id": "docker_config",
+                  "var": {
+                    "contents": "DOCKER_AUTH_CONFIG",
+                    "path": "/root/.docker/config.json"
+                  },
+                  "mode": "0600"
+                }
+              ],
+              "defaultSteps": {
+                "buildx-instance": {
+                  "name": "buildx-instance",
+                  "priority": 11,
+                  "pre": "if [ -n \"$BUILDX_BUILDER\" ] && [ -n \"$BUILDX_INSTANCE\" ]; then\n  install -d -m 0700 /root/.docker/buildx/instances\n  printf '%s' \"$BUILDX_INSTANCE\" > \"/root/.docker/buildx/instances/$BUILDX_BUILDER\"\n  chmod 0600 \"/root/.docker/buildx/instances/$BUILDX_BUILDER\"\nfi"
+                },
+                "unix-socket-forward": {
+                  "name": "unix-socket-forward",
+                  "priority": 10,
+                  "pre": "if [ -n \"$DOCKER_HOST\" ] && [ ! -e /var/run/docker.sock ]; then\n  ulimit -n 1048576 2>/dev/null || true\n  addr=${DOCKER_HOST#tcp://}\n  [ -n \"$addr\" ] || { echo \"bkid: DOCKER_HOST=$DOCKER_HOST has no tcp:// address\" >&2; exit 1; }\n  socat -d0 -t 86400 UNIX-LISTEN:/var/run/docker.sock,fork,backlog=1024,reuseaddr \"TCP:$addr,keepalive,keepidle=30,keepintvl=15,keepcnt=4\" &\n  SOCAT_PID=$!\n  trap 'kill $SOCAT_PID 2>/dev/null || true' EXIT INT TERM\n  socat -u OPEN:/dev/null UNIX-CONNECT:/var/run/docker.sock,retry=20,interval=0.2 >/dev/null 2>&1 \\\n    || { echo \"bkid: socat bridge to /var/run/docker.sock not ready\" >&2; exit 1; }\nfi"
+                }
+              },
+              "steps": []
+            }
+          }
+        }
+      },
+      "compose": {
+        "up": false,
+        "manual": false,
+        "build": {
+          "additional_contexts": {
+            "workspaceroot-pronto-sources_srcs": "${MONOREPO_COMPOSE_MODE:-docker-image://busybox:musl@sha256:03db190ed4c1ceb1c55d179a0940e2d71d42130636a780272629735893292223}${MONOREPO_COMPOSE_MODE:+:workspaceroot-pronto-sources_srcs}",
+            "libraries_mecha-airlock-image_bayt": "${MONOREPO_COMPOSE_MODE:-docker-image://busybox:musl@sha256:03db190ed4c1ceb1c55d179a0940e2d71d42130636a780272629735893292223}${MONOREPO_COMPOSE_MODE:+:libraries_mecha-airlock-image_bayt}",
+            "libraries_mecha-auth-image_bayt": "${MONOREPO_COMPOSE_MODE:-docker-image://busybox:musl@sha256:03db190ed4c1ceb1c55d179a0940e2d71d42130636a780272629735893292223}${MONOREPO_COMPOSE_MODE:+:libraries_mecha-auth-image_bayt}",
+            "libraries_mecha-clock-image_bayt": "${MONOREPO_COMPOSE_MODE:-docker-image://busybox:musl@sha256:03db190ed4c1ceb1c55d179a0940e2d71d42130636a780272629735893292223}${MONOREPO_COMPOSE_MODE:+:libraries_mecha-clock-image_bayt}",
+            "libraries_mecha-compute-image_bayt": "${MONOREPO_COMPOSE_MODE:-docker-image://busybox:musl@sha256:03db190ed4c1ceb1c55d179a0940e2d71d42130636a780272629735893292223}${MONOREPO_COMPOSE_MODE:+:libraries_mecha-compute-image_bayt}",
+            "libraries_mecha-conduit-image_bayt": "${MONOREPO_COMPOSE_MODE:-docker-image://busybox:musl@sha256:03db190ed4c1ceb1c55d179a0940e2d71d42130636a780272629735893292223}${MONOREPO_COMPOSE_MODE:+:libraries_mecha-conduit-image_bayt}",
+            "libraries_mecha-database-image_bayt": "${MONOREPO_COMPOSE_MODE:-docker-image://busybox:musl@sha256:03db190ed4c1ceb1c55d179a0940e2d71d42130636a780272629735893292223}${MONOREPO_COMPOSE_MODE:+:libraries_mecha-database-image_bayt}",
+            "libraries_mecha-mesh-image_bayt": "${MONOREPO_COMPOSE_MODE:-docker-image://busybox:musl@sha256:03db190ed4c1ceb1c55d179a0940e2d71d42130636a780272629735893292223}${MONOREPO_COMPOSE_MODE:+:libraries_mecha-mesh-image_bayt}",
+            "libraries_mecha-ticker-image_bayt": "${MONOREPO_COMPOSE_MODE:-docker-image://busybox:musl@sha256:03db190ed4c1ceb1c55d179a0940e2d71d42130636a780272629735893292223}${MONOREPO_COMPOSE_MODE:+:libraries_mecha-ticker-image_bayt}",
+            "libraries_mecha-database-image_srcs": "${MONOREPO_COMPOSE_MODE:-docker-image://busybox:musl@sha256:03db190ed4c1ceb1c55d179a0940e2d71d42130636a780272629735893292223}${MONOREPO_COMPOSE_MODE:+:libraries_mecha-database-image_srcs}",
+            "libraries_mecha-mesh-image_srcs": "${MONOREPO_COMPOSE_MODE:-docker-image://busybox:musl@sha256:03db190ed4c1ceb1c55d179a0940e2d71d42130636a780272629735893292223}${MONOREPO_COMPOSE_MODE:+:libraries_mecha-mesh-image_srcs}",
+            "libraries_mecha-auth-image_srcs": "${MONOREPO_COMPOSE_MODE:-docker-image://busybox:musl@sha256:03db190ed4c1ceb1c55d179a0940e2d71d42130636a780272629735893292223}${MONOREPO_COMPOSE_MODE:+:libraries_mecha-auth-image_srcs}",
+            "libraries_mecha-ticker-image_srcs": "${MONOREPO_COMPOSE_MODE:-docker-image://busybox:musl@sha256:03db190ed4c1ceb1c55d179a0940e2d71d42130636a780272629735893292223}${MONOREPO_COMPOSE_MODE:+:libraries_mecha-ticker-image_srcs}",
+            "libraries_mecha-clock-image_srcs": "${MONOREPO_COMPOSE_MODE:-docker-image://busybox:musl@sha256:03db190ed4c1ceb1c55d179a0940e2d71d42130636a780272629735893292223}${MONOREPO_COMPOSE_MODE:+:libraries_mecha-clock-image_srcs}",
+            "libraries_mecha-compute-image_srcs": "${MONOREPO_COMPOSE_MODE:-docker-image://busybox:musl@sha256:03db190ed4c1ceb1c55d179a0940e2d71d42130636a780272629735893292223}${MONOREPO_COMPOSE_MODE:+:libraries_mecha-compute-image_srcs}",
+            "libraries_mecha-airlock-image_srcs": "${MONOREPO_COMPOSE_MODE:-docker-image://busybox:musl@sha256:03db190ed4c1ceb1c55d179a0940e2d71d42130636a780272629735893292223}${MONOREPO_COMPOSE_MODE:+:libraries_mecha-airlock-image_srcs}",
+            "plugins_omnishell-runtime-image_srcs": "${MONOREPO_COMPOSE_MODE:-docker-image://busybox:musl@sha256:03db190ed4c1ceb1c55d179a0940e2d71d42130636a780272629735893292223}${MONOREPO_COMPOSE_MODE:+:plugins_omnishell-runtime-image_srcs}",
+            "plugins_omnishell-runtime-image_bayt": "${MONOREPO_COMPOSE_MODE:-docker-image://busybox:musl@sha256:03db190ed4c1ceb1c55d179a0940e2d71d42130636a780272629735893292223}${MONOREPO_COMPOSE_MODE:+:plugins_omnishell-runtime-image_bayt}",
+            "workspaceroot-pronto-sources_bayt": "${MONOREPO_COMPOSE_MODE:-docker-image://busybox:musl@sha256:03db190ed4c1ceb1c55d179a0940e2d71d42130636a780272629735893292223}${MONOREPO_COMPOSE_MODE:+:workspaceroot-pronto-sources_bayt}"
+          },
+          "secrets": [],
+          "args": {
+            "MONOREPO_COMPOSE_MODE": "${MONOREPO_COMPOSE_MODE:-}",
+            "BAYT_RUNTIME": "${BAYT_RUNTIME:-}"
+          }
+        },
+        "environment": {},
+        "ports": [],
+        "volumes": [],
+        "depends_on": {}
+      },
+      "deps": [
+        ":integrate:srcs",
+        ":integrate:bayt",
+        ":caddy:srcs",
+        ":served:srcs"
+      ],
+      "dockerfile": {
+        "from": {
+          "name": "docker:29.9.1-cli@sha256:6fae2214c3121a28d5aa639d09032f61310b7c9c75ffbad1025f261a1b621800"
+        },
+        "preamble": [
+          "ARG MONOREPO_COMPOSE_MODE",
+          "ENV MONOREPO_COMPOSE_MODE=$MONOREPO_COMPOSE_MODE",
+          "ARG BAYT_RUNTIME",
+          "ENV BAYT_RUNTIME=$BAYT_RUNTIME"
+        ],
+        "defaultPreamble": {
+          "bayt-runtime": {
+            "name": "bayt-runtime",
+            "priority": -6,
+            "copy": {
+              "from": {
+                "name": "bayt",
+                "image": "bonitao/bayt-runtime:1.2.2@sha256:a2e08b0fd123349e30e28843665ab2a2fde9fe25fddf82919fe499f3f01f1b8f"
+              },
+              "srcs": [
+                "."
+              ],
+              "dst": "/monorepo/plugins/bayt/runtime",
+              "link": true,
+              "parents": false,
+              "exclude": []
+            }
+          },
+          "bayt-path": {
+            "name": "bayt-path",
+            "priority": -5,
+            "line": "ENV PATH=/monorepo/plugins/bayt/runtime:${PATH}"
+          },
+          "socat": {
+            "name": "socat",
+            "priority": -10,
+            "copy": {
+              "from": {
+                "name": "alpine/socat:1.8.0.0@sha256:a6be4c0262b339c53ddad723cdd178a1a13271e1137c65e27f90a08c16de02b8"
+              },
+              "srcs": [
+                "/usr/bin/socat1"
+              ],
+              "dst": "/usr/local/bin/socat",
+              "link": true,
+              "parents": false,
+              "exclude": []
+            }
+          },
+          "socat-libs": {
+            "name": "socat-libs",
+            "priority": -9,
+            "copy": {
+              "from": {
+                "name": "alpine/socat:1.8.0.0@sha256:a6be4c0262b339c53ddad723cdd178a1a13271e1137c65e27f90a08c16de02b8"
+              },
+              "srcs": [
+                "/usr/lib/libreadline.so.8",
+                "/usr/lib/libncursesw.so.6"
+              ],
+              "dst": "/usr/lib/",
+              "link": true,
+              "parents": false,
+              "exclude": []
+            }
+          },
+          "lazybox-copy": {
+            "name": "lazybox-copy",
+            "priority": -11,
+            "line": "COPY --from=bonitao/lazybox:0.8.5@sha256:091a3b63ba222777000acc3bf8327faebfea4870e23ee07c6eb42431dadb2ac6 /lazybox/ /root/.local/share/lazybox/"
+          },
+          "path-env": {
+            "name": "path-env",
+            "priority": -8,
+            "line": "ENV PATH=$PATH:/root/.local/bin:/root/.local/share/lazybox/bin"
+          },
+          "toolchain-config": {
+            "name": "toolchain-config",
+            "priority": -7,
+            "line": "COPY <<'BKID_MISE' /opt/bkid/mise.toml\n[settings]\nexperimental = true\ngithub_attestations = false\nlocked = true\nlockfile = true\nslsa = false\n\n[settings.github]\ngithub_attestations = false\nslsa = false\n\n[tools]\n'github:depot/cli' = '2.102.25'\n'github:go-task/task' = 'v3.54.0'\nBKID_MISE\nCOPY <<'BKID_LOCK' /opt/bkid/mise.lock\n[tools]\n[[tools.'github:depot/cli']]\nbackend = 'github:depot/cli'\nversion = '2.102.25'\n\n[tools.'github:depot/cli'.platforms]\n[tools.'github:depot/cli'.platforms.linux-arm64]\nchecksum = 'sha256:52abe04ef24cd06f2ed37e15dbaa1d52d282db26ead04ff2493faf181347d6eb'\nurl = 'https://github.com/depot/cli/releases/download/v2.102.25/depot_2.102.25_linux_arm64.tar.gz'\nurl_api = 'https://api.github.com/repos/depot/cli/releases/assets/660782767'\n\n[tools.'github:depot/cli'.platforms.linux-arm64-musl]\nchecksum = 'sha256:52abe04ef24cd06f2ed37e15dbaa1d52d282db26ead04ff2493faf181347d6eb'\nurl = 'https://github.com/depot/cli/releases/download/v2.102.25/depot_2.102.25_linux_arm64.tar.gz'\nurl_api = 'https://api.github.com/repos/depot/cli/releases/assets/660782767'\n\n[tools.'github:depot/cli'.platforms.linux-x64]\nchecksum = 'sha256:b62952f5951a0bcd4f48597b59fe29a4b7d84cac4e82710ee19d79262bf271af'\nurl = 'https://github.com/depot/cli/releases/download/v2.102.25/depot_2.102.25_linux_amd64.tar.gz'\nurl_api = 'https://api.github.com/repos/depot/cli/releases/assets/660782770'\n\n[tools.'github:depot/cli'.platforms.linux-x64-musl]\nchecksum = 'sha256:b62952f5951a0bcd4f48597b59fe29a4b7d84cac4e82710ee19d79262bf271af'\nurl = 'https://github.com/depot/cli/releases/download/v2.102.25/depot_2.102.25_linux_amd64.tar.gz'\nurl_api = 'https://api.github.com/repos/depot/cli/releases/assets/660782770'\n\n[[tools.'github:go-task/task']]\nbackend = 'github:go-task/task'\nversion = 'v3.54.0'\n\n[tools.'github:go-task/task'.platforms]\n[tools.'github:go-task/task'.platforms.linux-arm64]\nchecksum = 'sha256:d7189d439d4a6058e39e1b2acd7c8b27acd4856691b408f23b242e4294e1df5b'\nurl = 'https://github.com/go-task/task/releases/download/v3.54.0/task_linux_arm64.tar.gz'\nurl_api = 'https://api.github.com/repos/go-task/task/releases/assets/604090041'\n\n[tools.'github:go-task/task'.platforms.linux-arm64-musl]\nchecksum = 'sha256:d7189d439d4a6058e39e1b2acd7c8b27acd4856691b408f23b242e4294e1df5b'\nurl = 'https://github.com/go-task/task/releases/download/v3.54.0/task_linux_arm64.tar.gz'\nurl_api = 'https://api.github.com/repos/go-task/task/releases/assets/604090041'\n\n[tools.'github:go-task/task'.platforms.linux-x64]\nchecksum = 'sha256:680859dbb4d881a9c72d4d9a8f510825450849af8567deacd7302c01124416fb'\nurl = 'https://github.com/go-task/task/releases/download/v3.54.0/task_linux_amd64.tar.gz'\nurl_api = 'https://api.github.com/repos/go-task/task/releases/assets/604090073'\n\n[tools.'github:go-task/task'.platforms.linux-x64-musl]\nchecksum = 'sha256:680859dbb4d881a9c72d4d9a8f510825450849af8567deacd7302c01124416fb'\nurl = 'https://github.com/go-task/task/releases/download/v3.54.0/task_linux_amd64.tar.gz'\nurl_api = 'https://api.github.com/repos/go-task/task/releases/assets/604090073'\nBKID_LOCK"
+          },
+          "toolchain-install": {
+            "name": "toolchain-install",
+            "priority": -6,
+            "line": "RUN cd /opt/bkid && mise trust -y && mise install && mise exec -- sh -c 'cp \"$(mise which task)\" /usr/local/bin/task && cp \"$(mise which depot)\" /usr/local/bin/depot'"
+          }
+        },
+        "add": [],
+        "mounts": [],
+        "secrets": {
+          "docker_host": {
+            "environment": "DOCKER_HOST_TCP"
+          },
+          "buildx_builder": {
+            "environment": "BUILDX_BUILDER"
+          },
+          "buildx_instance": {
+            "environment": "BUILDX_INSTANCE"
+          },
+          "docker_config": {
+            "environment": "DOCKER_AUTH_CONFIG"
+          },
+          "testcontainers_host": {
+            "environment": "TESTCONTAINERS_HOST_OVERRIDE"
+          },
+          "cache_scope": {
+            "environment": "CACHE_SCOPE"
+          },
+          "cache_scope_fallback": {
+            "environment": "CACHE_SCOPE_FALLBACK"
+          },
+          "sayt_buildkit_syntax": {
+            "environment": "BUILDKIT_SYNTAX"
+          },
+          "sayt_no_cache": {
+            "environment": "SAYT_NO_CACHE"
+          },
+          "bayt_image_tag": {
+            "environment": "BAYT_IMAGE_TAG"
+          },
+          "bayt_pull_policy": {
+            "environment": "BAYT_PULL_POLICY"
+          },
+          "sayt_no_cache_from": {
+            "environment": "SAYT_NO_CACHE_FROM"
+          },
+          "sayt_no_cache_to": {
+            "environment": "SAYT_NO_CACHE_TO"
+          },
+          "depot_token": {
+            "environment": "DEPOT_TOKEN"
+          },
+          "depot_project_id": {
+            "environment": "DEPOT_PROJECT_ID"
+          },
+          "depot_org_id": {
+            "environment": "DEPOT_ORG_ID"
+          },
+          "depot_disable_otel": {
+            "environment": "DEPOT_DISABLE_OTEL"
+          },
+          "actions_results_url": {
+            "environment": "ACTIONS_RESULTS_URL"
+          },
+          "actions_runtime_token": {
+            "environment": "ACTIONS_RUNTIME_TOKEN"
+          },
+          "bkid_project": {
+            "environment": "BKID_PROJECT"
+          }
+        },
+        "extra_hosts": [],
+        "epilogue": [],
+        "copy": [
+          {
+            "from": null,
+            "srcs": [
+              "monorepo/*.yaml"
+            ],
+            "dst": "./",
+            "link": true,
+            "parents": true,
+            "exclude": []
+          }
+        ],
+        "defaultCopy": {
+          "workspaceroot-pronto-sources_srcs": {
+            "from": {
+              "name": "workspaceroot-pronto-sources_srcs"
+            },
+            "name": "workspaceroot-pronto-sources_srcs",
+            "srcs": [
+              "/monorep[o]"
+            ],
+            "dst": "/monorepo/",
+            "link": true,
+            "parents": false,
+            "exclude": []
+          },
+          "libraries_mecha-airlock-image_bayt": {
+            "from": {
+              "name": "libraries_mecha-airlock-image_bayt"
+            },
+            "name": "libraries_mecha-airlock-image_bayt",
+            "srcs": [
+              "/monorep[o]"
+            ],
+            "dst": "/monorepo/",
+            "link": true,
+            "parents": false,
+            "exclude": []
+          },
+          "libraries_mecha-auth-image_bayt": {
+            "from": {
+              "name": "libraries_mecha-auth-image_bayt"
+            },
+            "name": "libraries_mecha-auth-image_bayt",
+            "srcs": [
+              "/monorep[o]"
+            ],
+            "dst": "/monorepo/",
+            "link": true,
+            "parents": false,
+            "exclude": []
+          },
+          "libraries_mecha-clock-image_bayt": {
+            "from": {
+              "name": "libraries_mecha-clock-image_bayt"
+            },
+            "name": "libraries_mecha-clock-image_bayt",
+            "srcs": [
+              "/monorep[o]"
+            ],
+            "dst": "/monorepo/",
+            "link": true,
+            "parents": false,
+            "exclude": []
+          },
+          "libraries_mecha-compute-image_bayt": {
+            "from": {
+              "name": "libraries_mecha-compute-image_bayt"
+            },
+            "name": "libraries_mecha-compute-image_bayt",
+            "srcs": [
+              "/monorep[o]"
+            ],
+            "dst": "/monorepo/",
+            "link": true,
+            "parents": false,
+            "exclude": []
+          },
+          "libraries_mecha-conduit-image_bayt": {
+            "from": {
+              "name": "libraries_mecha-conduit-image_bayt"
+            },
+            "name": "libraries_mecha-conduit-image_bayt",
+            "srcs": [
+              "/monorep[o]"
+            ],
+            "dst": "/monorepo/",
+            "link": true,
+            "parents": false,
+            "exclude": []
+          },
+          "libraries_mecha-database-image_bayt": {
+            "from": {
+              "name": "libraries_mecha-database-image_bayt"
+            },
+            "name": "libraries_mecha-database-image_bayt",
+            "srcs": [
+              "/monorep[o]"
+            ],
+            "dst": "/monorepo/",
+            "link": true,
+            "parents": false,
+            "exclude": []
+          },
+          "libraries_mecha-mesh-image_bayt": {
+            "from": {
+              "name": "libraries_mecha-mesh-image_bayt"
+            },
+            "name": "libraries_mecha-mesh-image_bayt",
+            "srcs": [
+              "/monorep[o]"
+            ],
+            "dst": "/monorepo/",
+            "link": true,
+            "parents": false,
+            "exclude": []
+          },
+          "libraries_mecha-ticker-image_bayt": {
+            "from": {
+              "name": "libraries_mecha-ticker-image_bayt"
+            },
+            "name": "libraries_mecha-ticker-image_bayt",
+            "srcs": [
+              "/monorep[o]"
+            ],
+            "dst": "/monorepo/",
+            "link": true,
+            "parents": false,
+            "exclude": []
+          },
+          "libraries_mecha-database-image_srcs": {
+            "from": {
+              "name": "libraries_mecha-database-image_srcs"
+            },
+            "name": "libraries_mecha-database-image_srcs",
+            "srcs": [
+              "/monorep[o]"
+            ],
+            "dst": "/monorepo/",
+            "link": true,
+            "parents": false,
+            "exclude": []
+          },
+          "libraries_mecha-mesh-image_srcs": {
+            "from": {
+              "name": "libraries_mecha-mesh-image_srcs"
+            },
+            "name": "libraries_mecha-mesh-image_srcs",
+            "srcs": [
+              "/monorep[o]"
+            ],
+            "dst": "/monorepo/",
+            "link": true,
+            "parents": false,
+            "exclude": []
+          },
+          "libraries_mecha-auth-image_srcs": {
+            "from": {
+              "name": "libraries_mecha-auth-image_srcs"
+            },
+            "name": "libraries_mecha-auth-image_srcs",
+            "srcs": [
+              "/monorep[o]"
+            ],
+            "dst": "/monorepo/",
+            "link": true,
+            "parents": false,
+            "exclude": []
+          },
+          "libraries_mecha-ticker-image_srcs": {
+            "from": {
+              "name": "libraries_mecha-ticker-image_srcs"
+            },
+            "name": "libraries_mecha-ticker-image_srcs",
+            "srcs": [
+              "/monorep[o]"
+            ],
+            "dst": "/monorepo/",
+            "link": true,
+            "parents": false,
+            "exclude": []
+          },
+          "libraries_mecha-clock-image_srcs": {
+            "from": {
+              "name": "libraries_mecha-clock-image_srcs"
+            },
+            "name": "libraries_mecha-clock-image_srcs",
+            "srcs": [
+              "/monorep[o]"
+            ],
+            "dst": "/monorepo/",
+            "link": true,
+            "parents": false,
+            "exclude": []
+          },
+          "libraries_mecha-compute-image_srcs": {
+            "from": {
+              "name": "libraries_mecha-compute-image_srcs"
+            },
+            "name": "libraries_mecha-compute-image_srcs",
+            "srcs": [
+              "/monorep[o]"
+            ],
+            "dst": "/monorepo/",
+            "link": true,
+            "parents": false,
+            "exclude": []
+          },
+          "libraries_mecha-airlock-image_srcs": {
+            "from": {
+              "name": "libraries_mecha-airlock-image_srcs"
+            },
+            "name": "libraries_mecha-airlock-image_srcs",
+            "srcs": [
+              "/monorep[o]"
+            ],
+            "dst": "/monorepo/",
+            "link": true,
+            "parents": false,
+            "exclude": []
+          },
+          "plugins_omnishell-runtime-image_srcs": {
+            "from": {
+              "name": "plugins_omnishell-runtime-image_srcs"
+            },
+            "name": "plugins_omnishell-runtime-image_srcs",
+            "srcs": [
+              "/monorep[o]"
+            ],
+            "dst": "/monorepo/",
+            "link": true,
+            "parents": false,
+            "exclude": []
+          },
+          "plugins_omnishell-runtime-image_bayt": {
+            "from": {
+              "name": "plugins_omnishell-runtime-image_bayt"
+            },
+            "name": "plugins_omnishell-runtime-image_bayt",
+            "srcs": [
+              "/monorep[o]"
+            ],
+            "dst": "/monorepo/",
+            "link": true,
+            "parents": false,
+            "exclude": []
+          },
+          "workspaceroot-pronto-sources_bayt": {
+            "from": {
+              "name": "workspaceroot-pronto-sources_bayt"
+            },
+            "name": "workspaceroot-pronto-sources_bayt",
+            "srcs": [
+              "/monorep[o]"
+            ],
+            "dst": "/monorepo/",
+            "link": true,
+            "parents": false,
+            "exclude": []
+          }
+        },
+        "healthcheck": null,
+        "expose": [],
+        "entrypoint": null,
+        "incremental": true,
+        "cmd": null
+      },
+      "env": {
+        "BUILDX_BAKE_ENTITLEMENTS_FS": "0",
+        "COMPOSE_BAKE": "true"
+      },
+      "taskfile": {
+        "run": "once",
+        "incremental": false,
+        "preconditions": []
+      },
+      "cmds": [
+        {
+          "shell": "sh",
+          "do": "if [ -n \"$BUILDKIT_SYNTAX\" ]; then\n  # depot frontend-pin workaround (full rationale in stacks/sayt/sayt.cue)\n  find /monorepo -path '*/.bayt/Dockerfile.*' -type f -exec sed -i \"1i # syntax=$BUILDKIT_SYNTAX\" {} \\;\nfi\n[ -n \"$BKID_PROJECT\" ] || { echo \"bkid: BKID_PROJECT is unset; sayt integrate names the inner stack\" >&2; exit 1; }\np=\"${BKID_PROJECT}_visual\"\nf=.bayt/compose.integrate.closure.yaml\n[ -n \"$DEPOT_TOKEN\" ] && bake=\"depot bake --project $DEPOT_PROJECT_ID\" || bake=\"docker buildx bake\"\ndocker compose -p \"$p\" --profile '*' -f \"$f\" config | docker buildx bake --allow=fs.read=/monorepo -f - --print bayt | $bake -f - ${SAYT_NO_CACHE:+--no-cache --set \"*.cache-from=\" --set \"*.cache-to=\"} ${SAYT_NO_CACHE_FROM:+--set \"*.cache-from=\"} ${SAYT_NO_CACHE_TO:+--set \"*.cache-to=\"} bayt\ndocker compose -p \"$p\" --profile '*' -f \"$f\" down -v --timeout 0 --remove-orphans\ns=0\ndocker compose -p \"$p\" --profile '*' -f \"$f\" up bayt --build --abort-on-container-failure --exit-code-from bayt --remove-orphans --attach-dependencies || s=$?\ndocker compose -p \"$p\" --profile '*' -f \"$f\" down -v --timeout 0 --remove-orphans\nexit \"$s\"",
+          "dockerfile": {
+            "inject": {
+              "secrets": [
+                {
+                  "id": "docker_host",
+                  "var": {
+                    "contents": "DOCKER_HOST"
+                  }
+                },
+                {
+                  "id": "buildx_builder",
+                  "var": {
+                    "contents": "BUILDX_BUILDER"
+                  }
+                },
+                {
+                  "id": "testcontainers_host",
+                  "var": {
+                    "contents": "TESTCONTAINERS_HOST_OVERRIDE"
+                  }
+                },
+                {
+                  "id": "cache_scope",
+                  "var": {
+                    "contents": "CACHE_SCOPE"
+                  }
+                },
+                {
+                  "id": "cache_scope_fallback",
+                  "var": {
+                    "contents": "CACHE_SCOPE_FALLBACK"
+                  }
+                },
+                {
+                  "id": "sayt_buildkit_syntax",
+                  "var": {
+                    "contents": "BUILDKIT_SYNTAX"
+                  }
+                },
+                {
+                  "id": "sayt_no_cache",
+                  "var": {
+                    "contents": "SAYT_NO_CACHE"
+                  }
+                },
+                {
+                  "id": "bayt_image_tag",
+                  "var": {
+                    "contents": "BAYT_IMAGE_TAG"
+                  }
+                },
+                {
+                  "id": "bayt_pull_policy",
+                  "var": {
+                    "contents": "BAYT_PULL_POLICY"
+                  }
+                },
+                {
+                  "id": "sayt_no_cache_from",
+                  "var": {
+                    "contents": "SAYT_NO_CACHE_FROM"
+                  }
+                },
+                {
+                  "id": "sayt_no_cache_to",
+                  "var": {
+                    "contents": "SAYT_NO_CACHE_TO"
+                  }
+                },
+                {
+                  "id": "depot_token",
+                  "var": {
+                    "contents": "DEPOT_TOKEN"
+                  }
+                },
+                {
+                  "id": "depot_project_id",
+                  "var": {
+                    "contents": "DEPOT_PROJECT_ID"
+                  }
+                },
+                {
+                  "id": "depot_org_id",
+                  "var": {
+                    "contents": "DEPOT_ORG_ID"
+                  }
+                },
+                {
+                  "id": "depot_disable_otel",
+                  "var": {
+                    "contents": "DEPOT_DISABLE_OTEL"
+                  }
+                },
+                {
+                  "id": "actions_results_url",
+                  "var": {
+                    "contents": "ACTIONS_RESULTS_URL"
+                  }
+                },
+                {
+                  "id": "actions_runtime_token",
+                  "var": {
+                    "contents": "ACTIONS_RUNTIME_TOKEN"
+                  }
+                },
+                {
+                  "id": "bkid_project",
+                  "var": {
+                    "contents": "BKID_PROJECT"
+                  }
+                },
+                {
+                  "id": "buildx_instance",
+                  "var": {
+                    "contents": "BUILDX_INSTANCE"
+                  }
+                },
+                {
+                  "id": "docker_config",
+                  "var": {
+                    "contents": "DOCKER_AUTH_CONFIG",
+                    "path": "/root/.docker/config.json"
+                  },
+                  "mode": "0600"
+                }
+              ],
+              "defaultSteps": {
+                "buildx-instance": {
+                  "name": "buildx-instance",
+                  "priority": 11,
+                  "pre": "if [ -n \"$BUILDX_BUILDER\" ] && [ -n \"$BUILDX_INSTANCE\" ]; then\n  install -d -m 0700 /root/.docker/buildx/instances\n  printf '%s' \"$BUILDX_INSTANCE\" > \"/root/.docker/buildx/instances/$BUILDX_BUILDER\"\n  chmod 0600 \"/root/.docker/buildx/instances/$BUILDX_BUILDER\"\nfi"
+                },
+                "unix-socket-forward": {
+                  "name": "unix-socket-forward",
+                  "priority": 10,
+                  "pre": "if [ -n \"$DOCKER_HOST\" ] && [ ! -e /var/run/docker.sock ]; then\n  ulimit -n 1048576 2>/dev/null || true\n  addr=${DOCKER_HOST#tcp://}\n  [ -n \"$addr\" ] || { echo \"bkid: DOCKER_HOST=$DOCKER_HOST has no tcp:// address\" >&2; exit 1; }\n  socat -d0 -t 86400 UNIX-LISTEN:/var/run/docker.sock,fork,backlog=1024,reuseaddr \"TCP:$addr,keepalive,keepidle=30,keepintvl=15,keepcnt=4\" &\n  SOCAT_PID=$!\n  trap 'kill $SOCAT_PID 2>/dev/null || true' EXIT INT TERM\n  socat -u OPEN:/dev/null UNIX-CONNECT:/var/run/docker.sock,retry=20,interval=0.2 >/dev/null 2>&1 \\\n    || { echo \"bkid: socat bridge to /var/run/docker.sock not ready\" >&2; exit 1; }\nfi"
+                }
+              },
+              "steps": []
+            }
+          },
+          "name": "builtin",
+          "stop": false,
+          "srcs": {
+            "globs": [],
+            "defaultGlobs": null,
+            "exclude": [],
+            "defaultExclude": null
+          }
+        }
+      ],
+      "cache": {
+        "full": false,
+        "similar": false
+      }
+    },
+    "ci": {
+      "name": "ci",
+      "project": "shadcnui",
+      "dir": ".",
+      "activate": "",
+      "cmd": {
+        "builtin": {
+          "name": "builtin",
+          "priority": 0,
+          "shell": "sh",
+          "do": "set -eu\nexport DOCKER_HOST_TCP=\"$DOCKER_HOST\"\nexport DEPOT_DISABLE_OTEL=1\ndocker compose --profile '*' config -o /tmp/ci-compose.yaml\ndocker buildx bake --allow=fs.read=/ -f /tmp/ci-compose.yaml --print ci-visual > /tmp/ci-bake.json\nfor target in ci-visual; do\n docker buildx bake -f /tmp/ci-bake.json --progress plain --set '*.output=type=cacheonly' ${SAYT_NO_CACHE:+--no-cache --set \"*.cache-from=\" --set \"*.cache-to=\"} ${SAYT_NO_CACHE_FROM:+--set \"*.cache-from=\"} ${SAYT_NO_CACHE_TO:+--set \"*.cache-to=\"} \"$target\"\ndone",
+          "stop": false,
+          "srcs": {
+            "globs": [],
+            "defaultGlobs": null,
+            "exclude": [],
+            "defaultExclude": null
+          },
+          "dockerfile": {
+            "inject": {
+              "secrets": [
+                {
+                  "id": "docker_host",
+                  "var": {
+                    "contents": "DOCKER_HOST"
+                  }
+                },
+                {
+                  "id": "buildx_builder",
+                  "var": {
+                    "contents": "BUILDX_BUILDER"
+                  }
+                },
+                {
+                  "id": "testcontainers_host",
+                  "var": {
+                    "contents": "TESTCONTAINERS_HOST_OVERRIDE"
+                  }
+                },
+                {
+                  "id": "cache_scope",
+                  "var": {
+                    "contents": "CACHE_SCOPE"
+                  }
+                },
+                {
+                  "id": "cache_scope_fallback",
+                  "var": {
+                    "contents": "CACHE_SCOPE_FALLBACK"
+                  }
+                },
+                {
+                  "id": "sayt_buildkit_syntax",
+                  "var": {
+                    "contents": "BUILDKIT_SYNTAX"
+                  }
+                },
+                {
+                  "id": "sayt_no_cache",
+                  "var": {
+                    "contents": "SAYT_NO_CACHE"
+                  }
+                },
+                {
+                  "id": "bayt_image_tag",
+                  "var": {
+                    "contents": "BAYT_IMAGE_TAG"
+                  }
+                },
+                {
+                  "id": "bayt_pull_policy",
+                  "var": {
+                    "contents": "BAYT_PULL_POLICY"
+                  }
+                },
+                {
+                  "id": "sayt_no_cache_from",
+                  "var": {
+                    "contents": "SAYT_NO_CACHE_FROM"
+                  }
+                },
+                {
+                  "id": "sayt_no_cache_to",
+                  "var": {
+                    "contents": "SAYT_NO_CACHE_TO"
+                  }
+                },
+                {
+                  "id": "depot_token",
+                  "var": {
+                    "contents": "DEPOT_TOKEN"
+                  }
+                },
+                {
+                  "id": "depot_project_id",
+                  "var": {
+                    "contents": "DEPOT_PROJECT_ID"
+                  }
+                },
+                {
+                  "id": "depot_org_id",
+                  "var": {
+                    "contents": "DEPOT_ORG_ID"
+                  }
+                },
+                {
+                  "id": "depot_disable_otel",
+                  "var": {
+                    "contents": "DEPOT_DISABLE_OTEL"
+                  }
+                },
+                {
+                  "id": "actions_results_url",
+                  "var": {
+                    "contents": "ACTIONS_RESULTS_URL"
+                  }
+                },
+                {
+                  "id": "actions_runtime_token",
+                  "var": {
+                    "contents": "ACTIONS_RUNTIME_TOKEN"
+                  }
+                },
+                {
+                  "id": "bkid_project",
+                  "var": {
+                    "contents": "BKID_PROJECT"
+                  }
+                },
+                {
+                  "id": "buildx_instance",
+                  "var": {
+                    "contents": "BUILDX_INSTANCE"
+                  }
+                },
+                {
+                  "id": "docker_config",
+                  "var": {
+                    "contents": "DOCKER_AUTH_CONFIG",
+                    "path": "/root/.docker/config.json"
+                  },
+                  "mode": "0600"
+                }
+              ],
+              "defaultSteps": {
+                "buildx-instance": {
+                  "name": "buildx-instance",
+                  "priority": 11,
+                  "pre": "if [ -n \"$BUILDX_BUILDER\" ] && [ -n \"$BUILDX_INSTANCE\" ]; then\n  install -d -m 0700 /root/.docker/buildx/instances\n  printf '%s' \"$BUILDX_INSTANCE\" > \"/root/.docker/buildx/instances/$BUILDX_BUILDER\"\n  chmod 0600 \"/root/.docker/buildx/instances/$BUILDX_BUILDER\"\nfi"
+                },
+                "unix-socket-forward": {
+                  "name": "unix-socket-forward",
+                  "priority": 10,
+                  "pre": "if [ -n \"$DOCKER_HOST\" ] && [ ! -e /var/run/docker.sock ]; then\n  ulimit -n 1048576 2>/dev/null || true\n  addr=${DOCKER_HOST#tcp://}\n  [ -n \"$addr\" ] || { echo \"bkid: DOCKER_HOST=$DOCKER_HOST has no tcp:// address\" >&2; exit 1; }\n  socat -d0 -t 86400 UNIX-LISTEN:/var/run/docker.sock,fork,backlog=1024,reuseaddr \"TCP:$addr,keepalive,keepidle=30,keepintvl=15,keepcnt=4\" &\n  SOCAT_PID=$!\n  trap 'kill $SOCAT_PID 2>/dev/null || true' EXIT INT TERM\n  socat -u OPEN:/dev/null UNIX-CONNECT:/var/run/docker.sock,retry=20,interval=0.2 >/dev/null 2>&1 \\\n    || { echo \"bkid: socat bridge to /var/run/docker.sock not ready\" >&2; exit 1; }\nfi"
+                }
+              },
+              "steps": []
+            }
+          }
+        }
+      },
+      "compose": {
+        "up": false,
+        "manual": false,
+        "build": {
+          "additional_contexts": {
+            "workspaceroot-pronto-sources_srcs": "${MONOREPO_COMPOSE_MODE:-docker-image://busybox:musl@sha256:03db190ed4c1ceb1c55d179a0940e2d71d42130636a780272629735893292223}${MONOREPO_COMPOSE_MODE:+:workspaceroot-pronto-sources_srcs}",
+            "libraries_mecha-airlock-image_bayt": "${MONOREPO_COMPOSE_MODE:-docker-image://busybox:musl@sha256:03db190ed4c1ceb1c55d179a0940e2d71d42130636a780272629735893292223}${MONOREPO_COMPOSE_MODE:+:libraries_mecha-airlock-image_bayt}",
+            "libraries_mecha-auth-image_bayt": "${MONOREPO_COMPOSE_MODE:-docker-image://busybox:musl@sha256:03db190ed4c1ceb1c55d179a0940e2d71d42130636a780272629735893292223}${MONOREPO_COMPOSE_MODE:+:libraries_mecha-auth-image_bayt}",
+            "libraries_mecha-clock-image_bayt": "${MONOREPO_COMPOSE_MODE:-docker-image://busybox:musl@sha256:03db190ed4c1ceb1c55d179a0940e2d71d42130636a780272629735893292223}${MONOREPO_COMPOSE_MODE:+:libraries_mecha-clock-image_bayt}",
+            "libraries_mecha-compute-image_bayt": "${MONOREPO_COMPOSE_MODE:-docker-image://busybox:musl@sha256:03db190ed4c1ceb1c55d179a0940e2d71d42130636a780272629735893292223}${MONOREPO_COMPOSE_MODE:+:libraries_mecha-compute-image_bayt}",
+            "libraries_mecha-conduit-image_bayt": "${MONOREPO_COMPOSE_MODE:-docker-image://busybox:musl@sha256:03db190ed4c1ceb1c55d179a0940e2d71d42130636a780272629735893292223}${MONOREPO_COMPOSE_MODE:+:libraries_mecha-conduit-image_bayt}",
+            "libraries_mecha-database-image_bayt": "${MONOREPO_COMPOSE_MODE:-docker-image://busybox:musl@sha256:03db190ed4c1ceb1c55d179a0940e2d71d42130636a780272629735893292223}${MONOREPO_COMPOSE_MODE:+:libraries_mecha-database-image_bayt}",
+            "libraries_mecha-mesh-image_bayt": "${MONOREPO_COMPOSE_MODE:-docker-image://busybox:musl@sha256:03db190ed4c1ceb1c55d179a0940e2d71d42130636a780272629735893292223}${MONOREPO_COMPOSE_MODE:+:libraries_mecha-mesh-image_bayt}",
+            "libraries_mecha-ticker-image_bayt": "${MONOREPO_COMPOSE_MODE:-docker-image://busybox:musl@sha256:03db190ed4c1ceb1c55d179a0940e2d71d42130636a780272629735893292223}${MONOREPO_COMPOSE_MODE:+:libraries_mecha-ticker-image_bayt}",
+            "libraries_mecha-database-image_srcs": "${MONOREPO_COMPOSE_MODE:-docker-image://busybox:musl@sha256:03db190ed4c1ceb1c55d179a0940e2d71d42130636a780272629735893292223}${MONOREPO_COMPOSE_MODE:+:libraries_mecha-database-image_srcs}",
+            "libraries_mecha-mesh-image_srcs": "${MONOREPO_COMPOSE_MODE:-docker-image://busybox:musl@sha256:03db190ed4c1ceb1c55d179a0940e2d71d42130636a780272629735893292223}${MONOREPO_COMPOSE_MODE:+:libraries_mecha-mesh-image_srcs}",
+            "libraries_mecha-auth-image_srcs": "${MONOREPO_COMPOSE_MODE:-docker-image://busybox:musl@sha256:03db190ed4c1ceb1c55d179a0940e2d71d42130636a780272629735893292223}${MONOREPO_COMPOSE_MODE:+:libraries_mecha-auth-image_srcs}",
+            "libraries_mecha-ticker-image_srcs": "${MONOREPO_COMPOSE_MODE:-docker-image://busybox:musl@sha256:03db190ed4c1ceb1c55d179a0940e2d71d42130636a780272629735893292223}${MONOREPO_COMPOSE_MODE:+:libraries_mecha-ticker-image_srcs}",
+            "libraries_mecha-clock-image_srcs": "${MONOREPO_COMPOSE_MODE:-docker-image://busybox:musl@sha256:03db190ed4c1ceb1c55d179a0940e2d71d42130636a780272629735893292223}${MONOREPO_COMPOSE_MODE:+:libraries_mecha-clock-image_srcs}",
+            "libraries_mecha-compute-image_srcs": "${MONOREPO_COMPOSE_MODE:-docker-image://busybox:musl@sha256:03db190ed4c1ceb1c55d179a0940e2d71d42130636a780272629735893292223}${MONOREPO_COMPOSE_MODE:+:libraries_mecha-compute-image_srcs}",
+            "libraries_mecha-airlock-image_srcs": "${MONOREPO_COMPOSE_MODE:-docker-image://busybox:musl@sha256:03db190ed4c1ceb1c55d179a0940e2d71d42130636a780272629735893292223}${MONOREPO_COMPOSE_MODE:+:libraries_mecha-airlock-image_srcs}",
+            "plugins_omnishell-runtime-image_srcs": "${MONOREPO_COMPOSE_MODE:-docker-image://busybox:musl@sha256:03db190ed4c1ceb1c55d179a0940e2d71d42130636a780272629735893292223}${MONOREPO_COMPOSE_MODE:+:plugins_omnishell-runtime-image_srcs}",
+            "plugins_omnishell-runtime-image_bayt": "${MONOREPO_COMPOSE_MODE:-docker-image://busybox:musl@sha256:03db190ed4c1ceb1c55d179a0940e2d71d42130636a780272629735893292223}${MONOREPO_COMPOSE_MODE:+:plugins_omnishell-runtime-image_bayt}",
+            "workspaceroot-pronto-sources_bayt": "${MONOREPO_COMPOSE_MODE:-docker-image://busybox:musl@sha256:03db190ed4c1ceb1c55d179a0940e2d71d42130636a780272629735893292223}${MONOREPO_COMPOSE_MODE:+:workspaceroot-pronto-sources_bayt}"
+          },
+          "secrets": [],
+          "args": {
+            "MONOREPO_COMPOSE_MODE": "${MONOREPO_COMPOSE_MODE:-}",
+            "BAYT_RUNTIME": "${BAYT_RUNTIME:-}"
+          }
+        },
+        "environment": {},
+        "ports": [],
+        "volumes": [],
+        "depends_on": {}
+      },
+      "deps": [
+        ":ci-visual:srcs",
+        ":ci-visual:bayt"
+      ],
+      "dockerfile": {
+        "from": {
+          "name": "docker:29.9.1-cli@sha256:6fae2214c3121a28d5aa639d09032f61310b7c9c75ffbad1025f261a1b621800"
+        },
+        "preamble": [
+          "ARG MONOREPO_COMPOSE_MODE",
+          "ENV MONOREPO_COMPOSE_MODE=$MONOREPO_COMPOSE_MODE",
+          "ARG BAYT_RUNTIME",
+          "ENV BAYT_RUNTIME=$BAYT_RUNTIME"
+        ],
+        "defaultPreamble": {
+          "bayt-runtime": {
+            "name": "bayt-runtime",
+            "priority": -6,
+            "copy": {
+              "from": {
+                "name": "bayt",
+                "image": "bonitao/bayt-runtime:1.2.2@sha256:a2e08b0fd123349e30e28843665ab2a2fde9fe25fddf82919fe499f3f01f1b8f"
+              },
+              "srcs": [
+                "."
+              ],
+              "dst": "/monorepo/plugins/bayt/runtime",
+              "link": true,
+              "parents": false,
+              "exclude": []
+            }
+          },
+          "bayt-path": {
+            "name": "bayt-path",
+            "priority": -5,
+            "line": "ENV PATH=/monorepo/plugins/bayt/runtime:${PATH}"
+          },
+          "socat": {
+            "name": "socat",
+            "priority": -10,
+            "copy": {
+              "from": {
+                "name": "alpine/socat:1.8.0.0@sha256:a6be4c0262b339c53ddad723cdd178a1a13271e1137c65e27f90a08c16de02b8"
+              },
+              "srcs": [
+                "/usr/bin/socat1"
+              ],
+              "dst": "/usr/local/bin/socat",
+              "link": true,
+              "parents": false,
+              "exclude": []
+            }
+          },
+          "socat-libs": {
+            "name": "socat-libs",
+            "priority": -9,
+            "copy": {
+              "from": {
+                "name": "alpine/socat:1.8.0.0@sha256:a6be4c0262b339c53ddad723cdd178a1a13271e1137c65e27f90a08c16de02b8"
+              },
+              "srcs": [
+                "/usr/lib/libreadline.so.8",
+                "/usr/lib/libncursesw.so.6"
+              ],
+              "dst": "/usr/lib/",
+              "link": true,
+              "parents": false,
+              "exclude": []
+            }
+          },
+          "lazybox-copy": {
+            "name": "lazybox-copy",
+            "priority": -11,
+            "line": "COPY --from=bonitao/lazybox:0.8.5@sha256:091a3b63ba222777000acc3bf8327faebfea4870e23ee07c6eb42431dadb2ac6 /lazybox/ /root/.local/share/lazybox/"
+          },
+          "path-env": {
+            "name": "path-env",
+            "priority": -8,
+            "line": "ENV PATH=$PATH:/root/.local/bin:/root/.local/share/lazybox/bin"
+          },
+          "toolchain-config": {
+            "name": "toolchain-config",
+            "priority": -7,
+            "line": "COPY <<'BKID_MISE' /opt/bkid/mise.toml\n[settings]\nexperimental = true\ngithub_attestations = false\nlocked = true\nlockfile = true\nslsa = false\n\n[settings.github]\ngithub_attestations = false\nslsa = false\n\n[tools]\n'github:depot/cli' = '2.102.25'\n'github:go-task/task' = 'v3.54.0'\nBKID_MISE\nCOPY <<'BKID_LOCK' /opt/bkid/mise.lock\n[tools]\n[[tools.'github:depot/cli']]\nbackend = 'github:depot/cli'\nversion = '2.102.25'\n\n[tools.'github:depot/cli'.platforms]\n[tools.'github:depot/cli'.platforms.linux-arm64]\nchecksum = 'sha256:52abe04ef24cd06f2ed37e15dbaa1d52d282db26ead04ff2493faf181347d6eb'\nurl = 'https://github.com/depot/cli/releases/download/v2.102.25/depot_2.102.25_linux_arm64.tar.gz'\nurl_api = 'https://api.github.com/repos/depot/cli/releases/assets/660782767'\n\n[tools.'github:depot/cli'.platforms.linux-arm64-musl]\nchecksum = 'sha256:52abe04ef24cd06f2ed37e15dbaa1d52d282db26ead04ff2493faf181347d6eb'\nurl = 'https://github.com/depot/cli/releases/download/v2.102.25/depot_2.102.25_linux_arm64.tar.gz'\nurl_api = 'https://api.github.com/repos/depot/cli/releases/assets/660782767'\n\n[tools.'github:depot/cli'.platforms.linux-x64]\nchecksum = 'sha256:b62952f5951a0bcd4f48597b59fe29a4b7d84cac4e82710ee19d79262bf271af'\nurl = 'https://github.com/depot/cli/releases/download/v2.102.25/depot_2.102.25_linux_amd64.tar.gz'\nurl_api = 'https://api.github.com/repos/depot/cli/releases/assets/660782770'\n\n[tools.'github:depot/cli'.platforms.linux-x64-musl]\nchecksum = 'sha256:b62952f5951a0bcd4f48597b59fe29a4b7d84cac4e82710ee19d79262bf271af'\nurl = 'https://github.com/depot/cli/releases/download/v2.102.25/depot_2.102.25_linux_amd64.tar.gz'\nurl_api = 'https://api.github.com/repos/depot/cli/releases/assets/660782770'\n\n[[tools.'github:go-task/task']]\nbackend = 'github:go-task/task'\nversion = 'v3.54.0'\n\n[tools.'github:go-task/task'.platforms]\n[tools.'github:go-task/task'.platforms.linux-arm64]\nchecksum = 'sha256:d7189d439d4a6058e39e1b2acd7c8b27acd4856691b408f23b242e4294e1df5b'\nurl = 'https://github.com/go-task/task/releases/download/v3.54.0/task_linux_arm64.tar.gz'\nurl_api = 'https://api.github.com/repos/go-task/task/releases/assets/604090041'\n\n[tools.'github:go-task/task'.platforms.linux-arm64-musl]\nchecksum = 'sha256:d7189d439d4a6058e39e1b2acd7c8b27acd4856691b408f23b242e4294e1df5b'\nurl = 'https://github.com/go-task/task/releases/download/v3.54.0/task_linux_arm64.tar.gz'\nurl_api = 'https://api.github.com/repos/go-task/task/releases/assets/604090041'\n\n[tools.'github:go-task/task'.platforms.linux-x64]\nchecksum = 'sha256:680859dbb4d881a9c72d4d9a8f510825450849af8567deacd7302c01124416fb'\nurl = 'https://github.com/go-task/task/releases/download/v3.54.0/task_linux_amd64.tar.gz'\nurl_api = 'https://api.github.com/repos/go-task/task/releases/assets/604090073'\n\n[tools.'github:go-task/task'.platforms.linux-x64-musl]\nchecksum = 'sha256:680859dbb4d881a9c72d4d9a8f510825450849af8567deacd7302c01124416fb'\nurl = 'https://github.com/go-task/task/releases/download/v3.54.0/task_linux_amd64.tar.gz'\nurl_api = 'https://api.github.com/repos/go-task/task/releases/assets/604090073'\nBKID_LOCK"
+          },
+          "toolchain-install": {
+            "name": "toolchain-install",
+            "priority": -6,
+            "line": "RUN cd /opt/bkid && mise trust -y && mise install && mise exec -- sh -c 'cp \"$(mise which task)\" /usr/local/bin/task && cp \"$(mise which depot)\" /usr/local/bin/depot'"
+          }
+        },
+        "add": [],
+        "mounts": [],
+        "secrets": {
+          "docker_host": {
+            "environment": "DOCKER_HOST_TCP"
+          },
+          "buildx_builder": {
+            "environment": "BUILDX_BUILDER"
+          },
+          "buildx_instance": {
+            "environment": "BUILDX_INSTANCE"
+          },
+          "docker_config": {
+            "environment": "DOCKER_AUTH_CONFIG"
+          },
+          "testcontainers_host": {
+            "environment": "TESTCONTAINERS_HOST_OVERRIDE"
+          },
+          "cache_scope": {
+            "environment": "CACHE_SCOPE"
+          },
+          "cache_scope_fallback": {
+            "environment": "CACHE_SCOPE_FALLBACK"
+          },
+          "sayt_buildkit_syntax": {
+            "environment": "BUILDKIT_SYNTAX"
+          },
+          "sayt_no_cache": {
+            "environment": "SAYT_NO_CACHE"
+          },
+          "bayt_image_tag": {
+            "environment": "BAYT_IMAGE_TAG"
+          },
+          "bayt_pull_policy": {
+            "environment": "BAYT_PULL_POLICY"
+          },
+          "sayt_no_cache_from": {
+            "environment": "SAYT_NO_CACHE_FROM"
+          },
+          "sayt_no_cache_to": {
+            "environment": "SAYT_NO_CACHE_TO"
+          },
+          "depot_token": {
+            "environment": "DEPOT_TOKEN"
+          },
+          "depot_project_id": {
+            "environment": "DEPOT_PROJECT_ID"
+          },
+          "depot_org_id": {
+            "environment": "DEPOT_ORG_ID"
+          },
+          "depot_disable_otel": {
+            "environment": "DEPOT_DISABLE_OTEL"
+          },
+          "actions_results_url": {
+            "environment": "ACTIONS_RESULTS_URL"
+          },
+          "actions_runtime_token": {
+            "environment": "ACTIONS_RUNTIME_TOKEN"
+          },
+          "bkid_project": {
+            "environment": "BKID_PROJECT"
+          }
+        },
+        "extra_hosts": [],
+        "epilogue": [],
+        "copy": [
+          {
+            "from": null,
+            "srcs": [
+              "monorepo/*.yaml"
+            ],
+            "dst": "./",
+            "link": true,
+            "parents": true,
+            "exclude": []
+          }
+        ],
+        "defaultCopy": {
+          "workspaceroot-pronto-sources_srcs": {
+            "from": {
+              "name": "workspaceroot-pronto-sources_srcs"
+            },
+            "name": "workspaceroot-pronto-sources_srcs",
+            "srcs": [
+              "/monorep[o]"
+            ],
+            "dst": "/monorepo/",
+            "link": true,
+            "parents": false,
+            "exclude": []
+          },
+          "libraries_mecha-airlock-image_bayt": {
+            "from": {
+              "name": "libraries_mecha-airlock-image_bayt"
+            },
+            "name": "libraries_mecha-airlock-image_bayt",
+            "srcs": [
+              "/monorep[o]"
+            ],
+            "dst": "/monorepo/",
+            "link": true,
+            "parents": false,
+            "exclude": []
+          },
+          "libraries_mecha-auth-image_bayt": {
+            "from": {
+              "name": "libraries_mecha-auth-image_bayt"
+            },
+            "name": "libraries_mecha-auth-image_bayt",
+            "srcs": [
+              "/monorep[o]"
+            ],
+            "dst": "/monorepo/",
+            "link": true,
+            "parents": false,
+            "exclude": []
+          },
+          "libraries_mecha-clock-image_bayt": {
+            "from": {
+              "name": "libraries_mecha-clock-image_bayt"
+            },
+            "name": "libraries_mecha-clock-image_bayt",
+            "srcs": [
+              "/monorep[o]"
+            ],
+            "dst": "/monorepo/",
+            "link": true,
+            "parents": false,
+            "exclude": []
+          },
+          "libraries_mecha-compute-image_bayt": {
+            "from": {
+              "name": "libraries_mecha-compute-image_bayt"
+            },
+            "name": "libraries_mecha-compute-image_bayt",
+            "srcs": [
+              "/monorep[o]"
+            ],
+            "dst": "/monorepo/",
+            "link": true,
+            "parents": false,
+            "exclude": []
+          },
+          "libraries_mecha-conduit-image_bayt": {
+            "from": {
+              "name": "libraries_mecha-conduit-image_bayt"
+            },
+            "name": "libraries_mecha-conduit-image_bayt",
+            "srcs": [
+              "/monorep[o]"
+            ],
+            "dst": "/monorepo/",
+            "link": true,
+            "parents": false,
+            "exclude": []
+          },
+          "libraries_mecha-database-image_bayt": {
+            "from": {
+              "name": "libraries_mecha-database-image_bayt"
+            },
+            "name": "libraries_mecha-database-image_bayt",
+            "srcs": [
+              "/monorep[o]"
+            ],
+            "dst": "/monorepo/",
+            "link": true,
+            "parents": false,
+            "exclude": []
+          },
+          "libraries_mecha-mesh-image_bayt": {
+            "from": {
+              "name": "libraries_mecha-mesh-image_bayt"
+            },
+            "name": "libraries_mecha-mesh-image_bayt",
+            "srcs": [
+              "/monorep[o]"
+            ],
+            "dst": "/monorepo/",
+            "link": true,
+            "parents": false,
+            "exclude": []
+          },
+          "libraries_mecha-ticker-image_bayt": {
+            "from": {
+              "name": "libraries_mecha-ticker-image_bayt"
+            },
+            "name": "libraries_mecha-ticker-image_bayt",
+            "srcs": [
+              "/monorep[o]"
+            ],
+            "dst": "/monorepo/",
+            "link": true,
+            "parents": false,
+            "exclude": []
+          },
+          "libraries_mecha-database-image_srcs": {
+            "from": {
+              "name": "libraries_mecha-database-image_srcs"
+            },
+            "name": "libraries_mecha-database-image_srcs",
+            "srcs": [
+              "/monorep[o]"
+            ],
+            "dst": "/monorepo/",
+            "link": true,
+            "parents": false,
+            "exclude": []
+          },
+          "libraries_mecha-mesh-image_srcs": {
+            "from": {
+              "name": "libraries_mecha-mesh-image_srcs"
+            },
+            "name": "libraries_mecha-mesh-image_srcs",
+            "srcs": [
+              "/monorep[o]"
+            ],
+            "dst": "/monorepo/",
+            "link": true,
+            "parents": false,
+            "exclude": []
+          },
+          "libraries_mecha-auth-image_srcs": {
+            "from": {
+              "name": "libraries_mecha-auth-image_srcs"
+            },
+            "name": "libraries_mecha-auth-image_srcs",
+            "srcs": [
+              "/monorep[o]"
+            ],
+            "dst": "/monorepo/",
+            "link": true,
+            "parents": false,
+            "exclude": []
+          },
+          "libraries_mecha-ticker-image_srcs": {
+            "from": {
+              "name": "libraries_mecha-ticker-image_srcs"
+            },
+            "name": "libraries_mecha-ticker-image_srcs",
+            "srcs": [
+              "/monorep[o]"
+            ],
+            "dst": "/monorepo/",
+            "link": true,
+            "parents": false,
+            "exclude": []
+          },
+          "libraries_mecha-clock-image_srcs": {
+            "from": {
+              "name": "libraries_mecha-clock-image_srcs"
+            },
+            "name": "libraries_mecha-clock-image_srcs",
+            "srcs": [
+              "/monorep[o]"
+            ],
+            "dst": "/monorepo/",
+            "link": true,
+            "parents": false,
+            "exclude": []
+          },
+          "libraries_mecha-compute-image_srcs": {
+            "from": {
+              "name": "libraries_mecha-compute-image_srcs"
+            },
+            "name": "libraries_mecha-compute-image_srcs",
+            "srcs": [
+              "/monorep[o]"
+            ],
+            "dst": "/monorepo/",
+            "link": true,
+            "parents": false,
+            "exclude": []
+          },
+          "libraries_mecha-airlock-image_srcs": {
+            "from": {
+              "name": "libraries_mecha-airlock-image_srcs"
+            },
+            "name": "libraries_mecha-airlock-image_srcs",
+            "srcs": [
+              "/monorep[o]"
+            ],
+            "dst": "/monorepo/",
+            "link": true,
+            "parents": false,
+            "exclude": []
+          },
+          "plugins_omnishell-runtime-image_srcs": {
+            "from": {
+              "name": "plugins_omnishell-runtime-image_srcs"
+            },
+            "name": "plugins_omnishell-runtime-image_srcs",
+            "srcs": [
+              "/monorep[o]"
+            ],
+            "dst": "/monorepo/",
+            "link": true,
+            "parents": false,
+            "exclude": []
+          },
+          "plugins_omnishell-runtime-image_bayt": {
+            "from": {
+              "name": "plugins_omnishell-runtime-image_bayt"
+            },
+            "name": "plugins_omnishell-runtime-image_bayt",
+            "srcs": [
+              "/monorep[o]"
+            ],
+            "dst": "/monorepo/",
+            "link": true,
+            "parents": false,
+            "exclude": []
+          },
+          "workspaceroot-pronto-sources_bayt": {
+            "from": {
+              "name": "workspaceroot-pronto-sources_bayt"
+            },
+            "name": "workspaceroot-pronto-sources_bayt",
+            "srcs": [
+              "/monorep[o]"
+            ],
+            "dst": "/monorepo/",
+            "link": true,
+            "parents": false,
+            "exclude": []
+          }
+        },
+        "healthcheck": null,
+        "expose": [],
+        "entrypoint": null,
+        "incremental": true,
+        "cmd": null
+      },
+      "env": {
+        "BUILDX_BAKE_ENTITLEMENTS_FS": "0",
+        "COMPOSE_BAKE": "true"
+      },
+      "outs": {
+        "globs": [],
+        "exclude": []
+      },
+      "srcs": {
+        "globs": [],
+        "defaultGlobs": {
+          "graph": {
+            "glob": ".bayt/**",
+            "name": "graph"
+          }
+        },
+        "exclude": [],
+        "defaultExclude": null
+      },
+      "state": {
+        "globs": []
+      },
+      "taskfile": {
+        "run": "once",
+        "incremental": false,
+        "preconditions": []
+      },
+      "visibility": "internal",
+      "cmds": [
+        {
+          "do": "set -eu\nexport DOCKER_HOST_TCP=\"$DOCKER_HOST\"\nexport DEPOT_DISABLE_OTEL=1\ndocker compose --profile '*' config -o /tmp/ci-compose.yaml\ndocker buildx bake --allow=fs.read=/ -f /tmp/ci-compose.yaml --print ci-visual > /tmp/ci-bake.json\nfor target in ci-visual; do\n docker buildx bake -f /tmp/ci-bake.json --progress plain --set '*.output=type=cacheonly' ${SAYT_NO_CACHE:+--no-cache --set \"*.cache-from=\" --set \"*.cache-to=\"} ${SAYT_NO_CACHE_FROM:+--set \"*.cache-from=\"} ${SAYT_NO_CACHE_TO:+--set \"*.cache-to=\"} \"$target\"\ndone",
+          "shell": "sh",
+          "dockerfile": {
+            "inject": {
+              "secrets": [
+                {
+                  "id": "docker_host",
+                  "var": {
+                    "contents": "DOCKER_HOST"
+                  }
+                },
+                {
+                  "id": "buildx_builder",
+                  "var": {
+                    "contents": "BUILDX_BUILDER"
+                  }
+                },
+                {
+                  "id": "testcontainers_host",
+                  "var": {
+                    "contents": "TESTCONTAINERS_HOST_OVERRIDE"
+                  }
+                },
+                {
+                  "id": "cache_scope",
+                  "var": {
+                    "contents": "CACHE_SCOPE"
+                  }
+                },
+                {
+                  "id": "cache_scope_fallback",
+                  "var": {
+                    "contents": "CACHE_SCOPE_FALLBACK"
+                  }
+                },
+                {
+                  "id": "sayt_buildkit_syntax",
+                  "var": {
+                    "contents": "BUILDKIT_SYNTAX"
+                  }
+                },
+                {
+                  "id": "sayt_no_cache",
+                  "var": {
+                    "contents": "SAYT_NO_CACHE"
+                  }
+                },
+                {
+                  "id": "bayt_image_tag",
+                  "var": {
+                    "contents": "BAYT_IMAGE_TAG"
+                  }
+                },
+                {
+                  "id": "bayt_pull_policy",
+                  "var": {
+                    "contents": "BAYT_PULL_POLICY"
+                  }
+                },
+                {
+                  "id": "sayt_no_cache_from",
+                  "var": {
+                    "contents": "SAYT_NO_CACHE_FROM"
+                  }
+                },
+                {
+                  "id": "sayt_no_cache_to",
+                  "var": {
+                    "contents": "SAYT_NO_CACHE_TO"
+                  }
+                },
+                {
+                  "id": "depot_token",
+                  "var": {
+                    "contents": "DEPOT_TOKEN"
+                  }
+                },
+                {
+                  "id": "depot_project_id",
+                  "var": {
+                    "contents": "DEPOT_PROJECT_ID"
+                  }
+                },
+                {
+                  "id": "depot_org_id",
+                  "var": {
+                    "contents": "DEPOT_ORG_ID"
+                  }
+                },
+                {
+                  "id": "depot_disable_otel",
+                  "var": {
+                    "contents": "DEPOT_DISABLE_OTEL"
+                  }
+                },
+                {
+                  "id": "actions_results_url",
+                  "var": {
+                    "contents": "ACTIONS_RESULTS_URL"
+                  }
+                },
+                {
+                  "id": "actions_runtime_token",
+                  "var": {
+                    "contents": "ACTIONS_RUNTIME_TOKEN"
+                  }
+                },
+                {
+                  "id": "bkid_project",
+                  "var": {
+                    "contents": "BKID_PROJECT"
+                  }
+                },
+                {
+                  "id": "buildx_instance",
+                  "var": {
+                    "contents": "BUILDX_INSTANCE"
+                  }
+                },
+                {
+                  "id": "docker_config",
+                  "var": {
+                    "contents": "DOCKER_AUTH_CONFIG",
+                    "path": "/root/.docker/config.json"
+                  },
+                  "mode": "0600"
+                }
+              ],
+              "defaultSteps": {
+                "buildx-instance": {
+                  "name": "buildx-instance",
+                  "priority": 11,
+                  "pre": "if [ -n \"$BUILDX_BUILDER\" ] && [ -n \"$BUILDX_INSTANCE\" ]; then\n  install -d -m 0700 /root/.docker/buildx/instances\n  printf '%s' \"$BUILDX_INSTANCE\" > \"/root/.docker/buildx/instances/$BUILDX_BUILDER\"\n  chmod 0600 \"/root/.docker/buildx/instances/$BUILDX_BUILDER\"\nfi"
+                },
+                "unix-socket-forward": {
+                  "name": "unix-socket-forward",
+                  "priority": 10,
+                  "pre": "if [ -n \"$DOCKER_HOST\" ] && [ ! -e /var/run/docker.sock ]; then\n  ulimit -n 1048576 2>/dev/null || true\n  addr=${DOCKER_HOST#tcp://}\n  [ -n \"$addr\" ] || { echo \"bkid: DOCKER_HOST=$DOCKER_HOST has no tcp:// address\" >&2; exit 1; }\n  socat -d0 -t 86400 UNIX-LISTEN:/var/run/docker.sock,fork,backlog=1024,reuseaddr \"TCP:$addr,keepalive,keepidle=30,keepintvl=15,keepcnt=4\" &\n  SOCAT_PID=$!\n  trap 'kill $SOCAT_PID 2>/dev/null || true' EXIT INT TERM\n  socat -u OPEN:/dev/null UNIX-CONNECT:/var/run/docker.sock,retry=20,interval=0.2 >/dev/null 2>&1 \\\n    || { echo \"bkid: socat bridge to /var/run/docker.sock not ready\" >&2; exit 1; }\nfi"
+                }
+              },
+              "steps": []
+            }
+          },
+          "name": "builtin",
+          "stop": false,
+          "srcs": {
+            "globs": [],
+            "defaultGlobs": null,
+            "exclude": [],
+            "defaultExclude": null
+          }
+        }
+      ],
+      "cache": {
+        "full": false,
+        "similar": false
+      }
+    },
+    "served": {
+      "name": "served",
+      "project": "shadcnui",
+      "dir": ".",
       "srcs": {
         "globs": [
-          "docker/Caddyfile",
           "shell/index.html",
           "shell/shell.css",
           "shell/boot.js",
@@ -697,6 +2987,7 @@
           "shell/shared/chrome.css",
           "brief.html",
           "ir.html",
+          "ir/card.css",
           "acceptance.md",
           "DESIGN.md",
           "robots.txt",
@@ -722,7 +3013,220 @@
       "deps": [],
       "dockerfile": {
         "from": {
-          "name": "caddy:2.9-alpine@sha256:b4e3952384eb9524a887633ce65c752dd7c71314d2c2acf98cd5c715aaa534f0"
+          "name": "denoland/deno:debian-2.9.7@sha256:fa335acdf6b72106eda2cb6a8cb5f4187e7630e357467489db4b2e7352d5e432"
+        },
+        "workdir": "/app",
+        "preamble": [],
+        "defaultPreamble": null,
+        "add": [],
+        "mounts": [],
+        "secrets": {},
+        "extra_hosts": [],
+        "copy": [
+          {
+            "from": {
+              "name": "plugins_omnishell-runtime-image"
+            },
+            "srcs": [
+              "/"
+            ],
+            "dst": "/omnishell",
+            "link": true,
+            "parents": false,
+            "exclude": []
+          }
+        ],
+        "epilogue": [
+          "RUN set -e; install -D -m 644 '/omnishell/interpreter/shell.js' '/served/omnishell/interpreter/shell.js'; install -D -m 644 '/omnishell/interpreter/chrome.js' '/served/omnishell/interpreter/chrome.js'; install -D -m 644 '/omnishell/interpreter/screen.js' '/served/omnishell/interpreter/screen.js'; install -D -m 644 '/omnishell/interpreter/fragment.js' '/served/omnishell/interpreter/fragment.js'; install -D -m 644 '/omnishell/interpreter/data-sync.js' '/served/omnishell/interpreter/data-sync.js'; install -D -m 644 '/omnishell/interpreter/validate.js' '/served/omnishell/interpreter/validate.js'; install -D -m 644 '/omnishell/interpreter/render.js' '/served/omnishell/interpreter/render.js'; install -D -m 644 '/omnishell/interpreter/release-plan.js' '/served/omnishell/interpreter/release-plan.js'; install -D -m 644 '/omnishell/interpreter/preloads.js' '/served/omnishell/interpreter/preloads.js'; install -D -m 644 '/omnishell/interpreter/link-prefetch.js' '/served/omnishell/interpreter/link-prefetch.js'; install -D -m 644 '/omnishell/interpreter/markup.js' '/served/omnishell/interpreter/markup.js'; install -D -m 644 '/omnishell/interpreter/script-url.js' '/served/omnishell/interpreter/script-url.js'; install -D -m 644 '/omnishell/interpreter/deferred-boot.js' '/served/omnishell/interpreter/deferred-boot.js'; install -D -m 644 '/omnishell/interpreter/host-dom.js' '/served/omnishell/interpreter/host-dom.js'; install -D -m 644 '/omnishell/interpreter/hatch.js' '/served/omnishell/interpreter/hatch.js'; install -D -m 644 '/omnishell/interpreter/hatch-worker.js' '/served/omnishell/interpreter/hatch-worker.js'; install -D -m 644 '/omnishell/interpreter/hatch-presenter.js' '/served/omnishell/interpreter/hatch-presenter.js'; install -D -m 644 '/omnishell/interpreter/presenter-realm.js' '/served/omnishell/interpreter/presenter-realm.js'; install -D -m 644 '/omnishell/interpreter/presenter.js' '/served/omnishell/interpreter/presenter.js'; install -D -m 644 '/omnishell/interpreter/storybook.js' '/served/omnishell/interpreter/storybook.js'; install -D -m 644 '/omnishell/interpreter/jessie.js' '/served/omnishell/interpreter/jessie.js'; install -D -m 644 '/omnishell/interpreter/kinetic.js' '/served/omnishell/interpreter/kinetic.js'; install -D -m 644 '/omnishell/interpreter/kinetic-milestones.js' '/served/omnishell/interpreter/kinetic-milestones.js'; install -D -m 644 '/omnishell/interpreter/kinetic-session.js' '/served/omnishell/interpreter/kinetic-session.js'; install -D -m 644 '/omnishell/interpreter/kinetic-sound.js' '/served/omnishell/interpreter/kinetic-sound.js'; install -D -m 644 '/omnishell/interpreter/kinetic-mount.js' '/served/omnishell/interpreter/kinetic-mount.js'; install -D -m 644 '/omnishell/interpreter/rtc-channel.js' '/served/omnishell/interpreter/rtc-channel.js'; install -D -m 644 '/omnishell/interpreter/prng.js' '/served/omnishell/interpreter/prng.js'; install -D -m 644 '/omnishell/interpreter/vendor/mecha-client.js' '/served/omnishell/interpreter/vendor/mecha-client.js'; install -D -m 644 '/omnishell/interpreter/vendor/js-yaml.js' '/served/omnishell/interpreter/vendor/js-yaml.js'; install -D -m 644 '/omnishell/interpreter/vendor/ses.umd.min.js' '/served/omnishell/interpreter/vendor/ses.umd.min.js'; install -D -m 644 '/omnishell/interpreter/vendor/morphlex.js' '/served/omnishell/interpreter/vendor/morphlex.js'; install -D -m 644 '/omnishell/interpreter/vendor/messages.js' '/served/omnishell/interpreter/vendor/messages.js'; install -D -m 644 '/omnishell/interpreter/vendor/game-inputs.js' '/served/omnishell/interpreter/vendor/game-inputs.js'; install -D -m 644 '/omnishell/interpreter/vendor/ggrs/ggrs_wasm.js' '/served/omnishell/interpreter/vendor/ggrs/ggrs_wasm.js'; install -D -m 644 '/omnishell/interpreter/vendor/ggrs/ggrs_wasm_bg.wasm' '/served/omnishell/interpreter/vendor/ggrs/ggrs_wasm_bg.wasm'; install -D -m 644 '/omnishell/components/wallclock.js' '/served/omnishell/components/wallclock.js'; install -D -m 644 '/app/shell/index.html' '/served/shell/index.html'; install -D -m 644 '/app/shell/shell.css' '/served/shell/shell.css'; install -D -m 644 '/app/shell/boot.js' '/served/shell/boot.js'; install -D -m 644 '/app/offline-first-sw.js' '/served/offline-first-sw.js'; install -D -m 644 '/app/shell/shell.yaml' '/served/shell/shell.yaml'; install -D -m 644 '/app/shell/shell.json' '/served/shell/shell.json'; install -D -m 644 '/app/shell/design.css' '/served/shell/design.css'; install -D -m 644 '/app/shell/screens/catalog.html' '/served/shell/screens/catalog.html'; install -D -m 644 '/app/shell/screens/catalog.css' '/served/shell/screens/catalog.css'; install -D -m 644 '/app/shell/screens/switch.html' '/served/shell/screens/switch.html'; install -D -m 644 '/app/shell/screens/switch.css' '/served/shell/screens/switch.css'; install -D -m 644 '/app/shell/screens/tabs.html' '/served/shell/screens/tabs.html'; install -D -m 644 '/app/shell/screens/tabs.css' '/served/shell/screens/tabs.css'; install -D -m 644 '/app/shell/screens/picker.html' '/served/shell/screens/picker.html'; install -D -m 644 '/app/shell/screens/picker.css' '/served/shell/screens/picker.css'; install -D -m 644 '/app/shell/screens/toggle-group.html' '/served/shell/screens/toggle-group.html'; install -D -m 644 '/app/shell/screens/toggle-group.css' '/served/shell/screens/toggle-group.css'; install -D -m 644 '/app/shell/screens/accordion.html' '/served/shell/screens/accordion.html'; install -D -m 644 '/app/shell/screens/accordion.css' '/served/shell/screens/accordion.css'; install -D -m 644 '/app/shell/screens/overlays.html' '/served/shell/screens/overlays.html'; install -D -m 644 '/app/shell/screens/overlays.css' '/served/shell/screens/overlays.css'; install -D -m 644 '/app/shell/screens/primitives.html' '/served/shell/screens/primitives.html'; install -D -m 644 '/app/shell/screens/primitives.css' '/served/shell/screens/primitives.css'; install -D -m 644 '/app/shell/screens/combobox.html' '/served/shell/screens/combobox.html'; install -D -m 644 '/app/shell/screens/combobox.css' '/served/shell/screens/combobox.css'; install -D -m 644 '/app/shell/screens/checkbox.html' '/served/shell/screens/checkbox.html'; install -D -m 644 '/app/shell/screens/checkbox.css' '/served/shell/screens/checkbox.css'; install -D -m 644 '/app/shell/screens/radio-group.html' '/served/shell/screens/radio-group.html'; install -D -m 644 '/app/shell/screens/radio-group.css' '/served/shell/screens/radio-group.css'; install -D -m 644 '/app/shell/screens/pagination.html' '/served/shell/screens/pagination.html'; install -D -m 644 '/app/shell/screens/pagination.css' '/served/shell/screens/pagination.css'; install -D -m 644 '/app/shell/screens/toast.html' '/served/shell/screens/toast.html'; install -D -m 644 '/app/shell/screens/toast.css' '/served/shell/screens/toast.css'; install -D -m 644 '/app/shell/screens/slider.html' '/served/shell/screens/slider.html'; install -D -m 644 '/app/shell/screens/slider.css' '/served/shell/screens/slider.css'; install -D -m 644 '/app/shell/screens/resizable.html' '/served/shell/screens/resizable.html'; install -D -m 644 '/app/shell/screens/resizable.css' '/served/shell/screens/resizable.css'; install -D -m 644 '/app/shell/screens/command.html' '/served/shell/screens/command.html'; install -D -m 644 '/app/shell/screens/command.css' '/served/shell/screens/command.css'; install -D -m 644 '/app/shell/screens/select.html' '/served/shell/screens/select.html'; install -D -m 644 '/app/shell/screens/select.css' '/served/shell/screens/select.css'; install -D -m 644 '/app/shell/screens/breadcrumb.html' '/served/shell/screens/breadcrumb.html'; install -D -m 644 '/app/shell/screens/breadcrumb.css' '/served/shell/screens/breadcrumb.css'; install -D -m 644 '/app/shell/screens/menu.html' '/served/shell/screens/menu.html'; install -D -m 644 '/app/shell/screens/menu.css' '/served/shell/screens/menu.css'; install -D -m 644 '/app/shell/screens/sheet.html' '/served/shell/screens/sheet.html'; install -D -m 644 '/app/shell/screens/sheet.css' '/served/shell/screens/sheet.css'; install -D -m 644 '/app/shell/screens/form.html' '/served/shell/screens/form.html'; install -D -m 644 '/app/shell/screens/form.css' '/served/shell/screens/form.css'; install -D -m 644 '/app/shell/screens/table.html' '/served/shell/screens/table.html'; install -D -m 644 '/app/shell/screens/table.css' '/served/shell/screens/table.css'; install -D -m 644 '/app/shell/screens/data-table.html' '/served/shell/screens/data-table.html'; install -D -m 644 '/app/shell/screens/data-table.css' '/served/shell/screens/data-table.css'; install -D -m 644 '/app/shell/screens/navigation.html' '/served/shell/screens/navigation.html'; install -D -m 644 '/app/shell/screens/navigation.css' '/served/shell/screens/navigation.css'; install -D -m 644 '/app/shell/screens/popover.html' '/served/shell/screens/popover.html'; install -D -m 644 '/app/shell/screens/popover.css' '/served/shell/screens/popover.css'; install -D -m 644 '/app/shell/screens/input-otp.html' '/served/shell/screens/input-otp.html'; install -D -m 644 '/app/shell/screens/input-otp.css' '/served/shell/screens/input-otp.css'; install -D -m 644 '/app/shell/screens/hover-card.html' '/served/shell/screens/hover-card.html'; install -D -m 644 '/app/shell/screens/hover-card.css' '/served/shell/screens/hover-card.css'; install -D -m 644 '/app/shell/screens/chart.html' '/served/shell/screens/chart.html'; install -D -m 644 '/app/shell/screens/chart.css' '/served/shell/screens/chart.css'; install -D -m 644 '/app/shell/screens/atoms.html' '/served/shell/screens/atoms.html'; install -D -m 644 '/app/shell/screens/atoms.css' '/served/shell/screens/atoms.css'; install -D -m 644 '/app/shell/screens/composition.html' '/served/shell/screens/composition.html'; install -D -m 644 '/app/shell/screens/composition.css' '/served/shell/screens/composition.css'; install -D -m 644 '/app/shell/screens/chat.html' '/served/shell/screens/chat.html'; install -D -m 644 '/app/shell/screens/chat.css' '/served/shell/screens/chat.css'; install -D -m 644 '/app/shell/screens/questionnaire.html' '/served/shell/screens/questionnaire.html'; install -D -m 644 '/app/shell/screens/questionnaire.css' '/served/shell/screens/questionnaire.css'; install -D -m 644 '/app/shell/screens/calendar.html' '/served/shell/screens/calendar.html'; install -D -m 644 '/app/shell/screens/calendar.css' '/served/shell/screens/calendar.css'; install -D -m 644 '/app/shell/handlers/flip-of.js' '/served/shell/handlers/flip-of.js'; install -D -m 644 '/app/shell/handlers/has-nondigit.js' '/served/shell/handlers/has-nondigit.js'; install -D -m 644 '/app/shell/handlers/has-prefix.js' '/served/shell/handlers/has-prefix.js'; install -D -m 644 '/app/shell/handlers/is-code.js' '/served/shell/handlers/is-code.js'; install -D -m 644 '/app/shell/handlers/is-digits.js' '/served/shell/handlers/is-digits.js'; install -D -m 644 '/app/shell/handlers/is-key.js' '/served/shell/handlers/is-key.js'; install -D -m 644 '/app/shell/handlers/is-printable.js' '/served/shell/handlers/is-printable.js'; install -D -m 644 '/app/shell/handlers/month-step.js' '/served/shell/handlers/month-step.js'; install -D -m 644 '/app/shell/handlers/roll-up.js' '/served/shell/handlers/roll-up.js'; install -D -m 644 '/app/shell/handlers/starts-with.js' '/served/shell/handlers/starts-with.js'; install -D -m 644 '/app/shell/handlers/type-into.js' '/served/shell/handlers/type-into.js'; install -D -m 644 '/app/shell/handlers/unless-answered.js' '/served/shell/handlers/unless-answered.js'; install -D -m 644 '/app/shell/handlers/unless-typed.js' '/served/shell/handlers/unless-typed.js'; install -D -m 644 '/app/shell/shared/chrome.css' '/served/shell/shared/chrome.css'; install -D -m 644 '/app/brief.html' '/served/docs/brief.html'; install -D -m 644 '/app/ir.html' '/served/docs/ir.html'; install -D -m 644 '/app/ir/card.css' '/served/docs/ir/card.css'; install -D -m 644 '/app/acceptance.md' '/served/docs/acceptance.md'; install -D -m 644 '/app/DESIGN.md' '/served/docs/DESIGN.md'; install -D -m 644 '/app/robots.txt' '/served/robots.txt'; install -D -m 644 '/app/sitemap.xml' '/served/sitemap.xml'; deno cache --frozen --config /omnishell/server/deno.json /omnishell/server/address.ts && deno run --frozen --cached-only --config /omnishell/server/deno.json --allow-read=/served --allow-write=/served,/served.scripts /omnishell/server/address.ts /served /served.scripts"
+        ],
+        "defaultCopy": null,
+        "healthcheck": null,
+        "expose": [],
+        "entrypoint": null,
+        "incremental": false,
+        "cmd": null
+      },
+      "compose": {
+        "up": false,
+        "manual": false,
+        "build": {
+          "additional_contexts": {
+            "plugins_omnishell-runtime-image": "${MONOREPO_COMPOSE_MODE:-docker-image://bonitao/omnishell:0.20.2@sha256:0f7d84358244c875a76bf97f13974bf6336e15f639a2f01fa31ad3eb0ce0d8a7}${MONOREPO_COMPOSE_MODE:+:plugins_omnishell-runtime-image}"
+          },
+          "secrets": [],
+          "args": {}
+        },
+        "environment": {},
+        "ports": [],
+        "volumes": [],
+        "depends_on": {},
+        "networks": {
+          "default": {
+            "aliases": [
+              "served"
+            ]
+          }
+        }
+      },
+      "cmds": [],
+      "cache": {
+        "full": false,
+        "similar": false
+      }
+    },
+    "launch-action": {
+      "name": "launch-action",
+      "project": "shadcnui",
+      "dir": ".",
+      "srcs": {
+        "globs": [],
+        "defaultGlobs": null,
+        "exclude": [],
+        "defaultExclude": null
+      },
+      "outs": {
+        "globs": [],
+        "exclude": []
+      },
+      "state": {
+        "globs": []
+      },
+      "visibility": "internal",
+      "cmd": {
+        "builtin": {
+          "name": "builtin",
+          "priority": 0,
+          "do": "^nu -I (^mise where github:bonisoft3/sayt | str trim) -c 'use task-leaf.nu; task-leaf launch'",
+          "shell": "nu",
+          "stop": false,
+          "srcs": {
+            "globs": [],
+            "defaultGlobs": null,
+            "exclude": [],
+            "defaultExclude": null
+          }
+        }
+      },
+      "deps": [
+        ":build"
+      ],
+      "env": {},
+      "taskfile": {
+        "incremental": false,
+        "run": "always",
+        "preconditions": []
+      },
+      "cmds": [
+        {
+          "do": "^nu -I (^mise where github:bonisoft3/sayt | str trim) -c 'use task-leaf.nu; task-leaf launch'",
+          "shell": "nu",
+          "name": "builtin",
+          "stop": false,
+          "srcs": {
+            "globs": [],
+            "defaultGlobs": null,
+            "exclude": [],
+            "defaultExclude": null
+          }
+        }
+      ],
+      "cache": {
+        "full": false,
+        "similar": false
+      }
+    },
+    "integrate-action": {
+      "name": "integrate-action",
+      "project": "shadcnui",
+      "dir": ".",
+      "srcs": {
+        "globs": [],
+        "defaultGlobs": null,
+        "exclude": [],
+        "defaultExclude": null
+      },
+      "outs": {
+        "globs": [],
+        "exclude": []
+      },
+      "state": {
+        "globs": []
+      },
+      "visibility": "internal",
+      "cmd": {
+        "builtin": {
+          "name": "builtin",
+          "priority": 0,
+          "do": "^nu -I (^mise where github:bonisoft3/sayt | str trim) -c 'use task-leaf.nu; task-leaf integrate'",
+          "shell": "nu",
+          "stop": false,
+          "srcs": {
+            "globs": [],
+            "defaultGlobs": null,
+            "exclude": [],
+            "defaultExclude": null
+          }
+        }
+      },
+      "deps": [
+        ":build"
+      ],
+      "env": {},
+      "taskfile": {
+        "incremental": false,
+        "run": "always",
+        "preconditions": []
+      },
+      "cmds": [
+        {
+          "do": "^nu -I (^mise where github:bonisoft3/sayt | str trim) -c 'use task-leaf.nu; task-leaf integrate'",
+          "shell": "nu",
+          "name": "builtin",
+          "stop": false,
+          "srcs": {
+            "globs": [],
+            "defaultGlobs": null,
+            "exclude": [],
+            "defaultExclude": null
+          }
+        }
+      ],
+      "cache": {
+        "full": false,
+        "similar": false
+      }
+    },
+    "caddy": {
+      "name": "caddy",
+      "project": "shadcnui",
+      "dir": ".",
+      "srcs": {
+        "globs": [
+          "docker/Caddyfile"
+        ],
+        "defaultGlobs": null,
+        "exclude": [],
+        "defaultExclude": null
+      },
+      "outs": {
+        "globs": [],
+        "exclude": []
+      },
+      "state": {
+        "globs": []
+      },
+      "visibility": "internal",
+      "activate": "",
+      "cmd": {
+        "builtin": null
+      },
+      "env": {},
+      "deps": [
+        ":served:outs"
+      ],
+      "dockerfile": {
+        "from": {
+          "name": "caddy:2.11.7-alpine@sha256:d8542f48d34a9cf4e4c11a478865229840e87e4c96ea3f439101f31a5d35f75f"
         },
         "preamble": [],
         "defaultPreamble": null,
@@ -753,1159 +3257,40 @@
             "exclude": []
           },
           {
-            "from": null,
+            "from": {
+              "ref": ":served",
+              "name": "shadcnui-served"
+            },
             "srcs": [
-              "shell/index.html"
+              "/served/omnishell/"
             ],
-            "dst": "/srv/shell/index.html",
-            "link": true,
-            "parents": false,
-            "exclude": []
-          },
-          {
-            "from": null,
-            "srcs": [
-              "shell/shell.css"
-            ],
-            "dst": "/srv/shell/shell.css",
-            "link": true,
-            "parents": false,
-            "exclude": []
-          },
-          {
-            "from": null,
-            "srcs": [
-              "shell/boot.js"
-            ],
-            "dst": "/srv/shell/boot.js",
-            "link": true,
-            "parents": false,
-            "exclude": []
-          },
-          {
-            "from": null,
-            "srcs": [
-              "offline-first-sw.js"
-            ],
-            "dst": "/srv/offline-first-sw.js",
-            "link": true,
-            "parents": false,
-            "exclude": []
-          },
-          {
-            "from": null,
-            "srcs": [
-              "shell/shell.yaml"
-            ],
-            "dst": "/srv/shell/shell.yaml",
-            "link": true,
-            "parents": false,
-            "exclude": []
-          },
-          {
-            "from": null,
-            "srcs": [
-              "shell/shell.json"
-            ],
-            "dst": "/srv/shell/shell.json",
-            "link": true,
-            "parents": false,
-            "exclude": []
-          },
-          {
-            "from": null,
-            "srcs": [
-              "shell/design.css"
-            ],
-            "dst": "/srv/shell/design.css",
-            "link": true,
-            "parents": false,
-            "exclude": []
-          },
-          {
-            "from": null,
-            "srcs": [
-              "shell/screens/catalog.html"
-            ],
-            "dst": "/srv/shell/screens/catalog.html",
-            "link": true,
-            "parents": false,
-            "exclude": []
-          },
-          {
-            "from": null,
-            "srcs": [
-              "shell/screens/catalog.css"
-            ],
-            "dst": "/srv/shell/screens/catalog.css",
-            "link": true,
-            "parents": false,
-            "exclude": []
-          },
-          {
-            "from": null,
-            "srcs": [
-              "shell/screens/switch.html"
-            ],
-            "dst": "/srv/shell/screens/switch.html",
-            "link": true,
-            "parents": false,
-            "exclude": []
-          },
-          {
-            "from": null,
-            "srcs": [
-              "shell/screens/switch.css"
-            ],
-            "dst": "/srv/shell/screens/switch.css",
-            "link": true,
-            "parents": false,
-            "exclude": []
-          },
-          {
-            "from": null,
-            "srcs": [
-              "shell/screens/tabs.html"
-            ],
-            "dst": "/srv/shell/screens/tabs.html",
-            "link": true,
-            "parents": false,
-            "exclude": []
-          },
-          {
-            "from": null,
-            "srcs": [
-              "shell/screens/tabs.css"
-            ],
-            "dst": "/srv/shell/screens/tabs.css",
-            "link": true,
-            "parents": false,
-            "exclude": []
-          },
-          {
-            "from": null,
-            "srcs": [
-              "shell/screens/picker.html"
-            ],
-            "dst": "/srv/shell/screens/picker.html",
-            "link": true,
-            "parents": false,
-            "exclude": []
-          },
-          {
-            "from": null,
-            "srcs": [
-              "shell/screens/picker.css"
-            ],
-            "dst": "/srv/shell/screens/picker.css",
-            "link": true,
-            "parents": false,
-            "exclude": []
-          },
-          {
-            "from": null,
-            "srcs": [
-              "shell/screens/toggle-group.html"
-            ],
-            "dst": "/srv/shell/screens/toggle-group.html",
-            "link": true,
-            "parents": false,
-            "exclude": []
-          },
-          {
-            "from": null,
-            "srcs": [
-              "shell/screens/toggle-group.css"
-            ],
-            "dst": "/srv/shell/screens/toggle-group.css",
-            "link": true,
-            "parents": false,
-            "exclude": []
-          },
-          {
-            "from": null,
-            "srcs": [
-              "shell/screens/accordion.html"
-            ],
-            "dst": "/srv/shell/screens/accordion.html",
-            "link": true,
-            "parents": false,
-            "exclude": []
-          },
-          {
-            "from": null,
-            "srcs": [
-              "shell/screens/accordion.css"
-            ],
-            "dst": "/srv/shell/screens/accordion.css",
-            "link": true,
-            "parents": false,
-            "exclude": []
-          },
-          {
-            "from": null,
-            "srcs": [
-              "shell/screens/overlays.html"
-            ],
-            "dst": "/srv/shell/screens/overlays.html",
-            "link": true,
-            "parents": false,
-            "exclude": []
-          },
-          {
-            "from": null,
-            "srcs": [
-              "shell/screens/overlays.css"
-            ],
-            "dst": "/srv/shell/screens/overlays.css",
-            "link": true,
-            "parents": false,
-            "exclude": []
-          },
-          {
-            "from": null,
-            "srcs": [
-              "shell/screens/primitives.html"
-            ],
-            "dst": "/srv/shell/screens/primitives.html",
-            "link": true,
-            "parents": false,
-            "exclude": []
-          },
-          {
-            "from": null,
-            "srcs": [
-              "shell/screens/primitives.css"
-            ],
-            "dst": "/srv/shell/screens/primitives.css",
-            "link": true,
-            "parents": false,
-            "exclude": []
-          },
-          {
-            "from": null,
-            "srcs": [
-              "shell/screens/combobox.html"
-            ],
-            "dst": "/srv/shell/screens/combobox.html",
-            "link": true,
-            "parents": false,
-            "exclude": []
-          },
-          {
-            "from": null,
-            "srcs": [
-              "shell/screens/combobox.css"
-            ],
-            "dst": "/srv/shell/screens/combobox.css",
-            "link": true,
-            "parents": false,
-            "exclude": []
-          },
-          {
-            "from": null,
-            "srcs": [
-              "shell/screens/checkbox.html"
-            ],
-            "dst": "/srv/shell/screens/checkbox.html",
-            "link": true,
-            "parents": false,
-            "exclude": []
-          },
-          {
-            "from": null,
-            "srcs": [
-              "shell/screens/checkbox.css"
-            ],
-            "dst": "/srv/shell/screens/checkbox.css",
-            "link": true,
-            "parents": false,
-            "exclude": []
-          },
-          {
-            "from": null,
-            "srcs": [
-              "shell/screens/radio-group.html"
-            ],
-            "dst": "/srv/shell/screens/radio-group.html",
-            "link": true,
-            "parents": false,
-            "exclude": []
-          },
-          {
-            "from": null,
-            "srcs": [
-              "shell/screens/radio-group.css"
-            ],
-            "dst": "/srv/shell/screens/radio-group.css",
-            "link": true,
-            "parents": false,
-            "exclude": []
-          },
-          {
-            "from": null,
-            "srcs": [
-              "shell/screens/pagination.html"
-            ],
-            "dst": "/srv/shell/screens/pagination.html",
-            "link": true,
-            "parents": false,
-            "exclude": []
-          },
-          {
-            "from": null,
-            "srcs": [
-              "shell/screens/pagination.css"
-            ],
-            "dst": "/srv/shell/screens/pagination.css",
-            "link": true,
-            "parents": false,
-            "exclude": []
-          },
-          {
-            "from": null,
-            "srcs": [
-              "shell/screens/toast.html"
-            ],
-            "dst": "/srv/shell/screens/toast.html",
-            "link": true,
-            "parents": false,
-            "exclude": []
-          },
-          {
-            "from": null,
-            "srcs": [
-              "shell/screens/toast.css"
-            ],
-            "dst": "/srv/shell/screens/toast.css",
-            "link": true,
-            "parents": false,
-            "exclude": []
-          },
-          {
-            "from": null,
-            "srcs": [
-              "shell/screens/slider.html"
-            ],
-            "dst": "/srv/shell/screens/slider.html",
-            "link": true,
-            "parents": false,
-            "exclude": []
-          },
-          {
-            "from": null,
-            "srcs": [
-              "shell/screens/slider.css"
-            ],
-            "dst": "/srv/shell/screens/slider.css",
-            "link": true,
-            "parents": false,
-            "exclude": []
-          },
-          {
-            "from": null,
-            "srcs": [
-              "shell/screens/resizable.html"
-            ],
-            "dst": "/srv/shell/screens/resizable.html",
-            "link": true,
-            "parents": false,
-            "exclude": []
-          },
-          {
-            "from": null,
-            "srcs": [
-              "shell/screens/resizable.css"
-            ],
-            "dst": "/srv/shell/screens/resizable.css",
-            "link": true,
-            "parents": false,
-            "exclude": []
-          },
-          {
-            "from": null,
-            "srcs": [
-              "shell/screens/command.html"
-            ],
-            "dst": "/srv/shell/screens/command.html",
-            "link": true,
-            "parents": false,
-            "exclude": []
-          },
-          {
-            "from": null,
-            "srcs": [
-              "shell/screens/command.css"
-            ],
-            "dst": "/srv/shell/screens/command.css",
-            "link": true,
-            "parents": false,
-            "exclude": []
-          },
-          {
-            "from": null,
-            "srcs": [
-              "shell/screens/select.html"
-            ],
-            "dst": "/srv/shell/screens/select.html",
-            "link": true,
-            "parents": false,
-            "exclude": []
-          },
-          {
-            "from": null,
-            "srcs": [
-              "shell/screens/select.css"
-            ],
-            "dst": "/srv/shell/screens/select.css",
-            "link": true,
-            "parents": false,
-            "exclude": []
-          },
-          {
-            "from": null,
-            "srcs": [
-              "shell/screens/breadcrumb.html"
-            ],
-            "dst": "/srv/shell/screens/breadcrumb.html",
-            "link": true,
-            "parents": false,
-            "exclude": []
-          },
-          {
-            "from": null,
-            "srcs": [
-              "shell/screens/breadcrumb.css"
-            ],
-            "dst": "/srv/shell/screens/breadcrumb.css",
-            "link": true,
-            "parents": false,
-            "exclude": []
-          },
-          {
-            "from": null,
-            "srcs": [
-              "shell/screens/menu.html"
-            ],
-            "dst": "/srv/shell/screens/menu.html",
-            "link": true,
-            "parents": false,
-            "exclude": []
-          },
-          {
-            "from": null,
-            "srcs": [
-              "shell/screens/menu.css"
-            ],
-            "dst": "/srv/shell/screens/menu.css",
-            "link": true,
-            "parents": false,
-            "exclude": []
-          },
-          {
-            "from": null,
-            "srcs": [
-              "shell/screens/sheet.html"
-            ],
-            "dst": "/srv/shell/screens/sheet.html",
-            "link": true,
-            "parents": false,
-            "exclude": []
-          },
-          {
-            "from": null,
-            "srcs": [
-              "shell/screens/sheet.css"
-            ],
-            "dst": "/srv/shell/screens/sheet.css",
-            "link": true,
-            "parents": false,
-            "exclude": []
-          },
-          {
-            "from": null,
-            "srcs": [
-              "shell/screens/form.html"
-            ],
-            "dst": "/srv/shell/screens/form.html",
-            "link": true,
-            "parents": false,
-            "exclude": []
-          },
-          {
-            "from": null,
-            "srcs": [
-              "shell/screens/form.css"
-            ],
-            "dst": "/srv/shell/screens/form.css",
-            "link": true,
-            "parents": false,
-            "exclude": []
-          },
-          {
-            "from": null,
-            "srcs": [
-              "shell/screens/table.html"
-            ],
-            "dst": "/srv/shell/screens/table.html",
-            "link": true,
-            "parents": false,
-            "exclude": []
-          },
-          {
-            "from": null,
-            "srcs": [
-              "shell/screens/table.css"
-            ],
-            "dst": "/srv/shell/screens/table.css",
-            "link": true,
-            "parents": false,
-            "exclude": []
-          },
-          {
-            "from": null,
-            "srcs": [
-              "shell/screens/data-table.html"
-            ],
-            "dst": "/srv/shell/screens/data-table.html",
-            "link": true,
-            "parents": false,
-            "exclude": []
-          },
-          {
-            "from": null,
-            "srcs": [
-              "shell/screens/data-table.css"
-            ],
-            "dst": "/srv/shell/screens/data-table.css",
-            "link": true,
-            "parents": false,
-            "exclude": []
-          },
-          {
-            "from": null,
-            "srcs": [
-              "shell/screens/navigation.html"
-            ],
-            "dst": "/srv/shell/screens/navigation.html",
-            "link": true,
-            "parents": false,
-            "exclude": []
-          },
-          {
-            "from": null,
-            "srcs": [
-              "shell/screens/navigation.css"
-            ],
-            "dst": "/srv/shell/screens/navigation.css",
-            "link": true,
-            "parents": false,
-            "exclude": []
-          },
-          {
-            "from": null,
-            "srcs": [
-              "shell/screens/popover.html"
-            ],
-            "dst": "/srv/shell/screens/popover.html",
-            "link": true,
-            "parents": false,
-            "exclude": []
-          },
-          {
-            "from": null,
-            "srcs": [
-              "shell/screens/popover.css"
-            ],
-            "dst": "/srv/shell/screens/popover.css",
-            "link": true,
-            "parents": false,
-            "exclude": []
-          },
-          {
-            "from": null,
-            "srcs": [
-              "shell/screens/input-otp.html"
-            ],
-            "dst": "/srv/shell/screens/input-otp.html",
-            "link": true,
-            "parents": false,
-            "exclude": []
-          },
-          {
-            "from": null,
-            "srcs": [
-              "shell/screens/input-otp.css"
-            ],
-            "dst": "/srv/shell/screens/input-otp.css",
-            "link": true,
-            "parents": false,
-            "exclude": []
-          },
-          {
-            "from": null,
-            "srcs": [
-              "shell/screens/hover-card.html"
-            ],
-            "dst": "/srv/shell/screens/hover-card.html",
-            "link": true,
-            "parents": false,
-            "exclude": []
-          },
-          {
-            "from": null,
-            "srcs": [
-              "shell/screens/hover-card.css"
-            ],
-            "dst": "/srv/shell/screens/hover-card.css",
-            "link": true,
-            "parents": false,
-            "exclude": []
-          },
-          {
-            "from": null,
-            "srcs": [
-              "shell/screens/chart.html"
-            ],
-            "dst": "/srv/shell/screens/chart.html",
-            "link": true,
-            "parents": false,
-            "exclude": []
-          },
-          {
-            "from": null,
-            "srcs": [
-              "shell/screens/chart.css"
-            ],
-            "dst": "/srv/shell/screens/chart.css",
-            "link": true,
-            "parents": false,
-            "exclude": []
-          },
-          {
-            "from": null,
-            "srcs": [
-              "shell/screens/atoms.html"
-            ],
-            "dst": "/srv/shell/screens/atoms.html",
-            "link": true,
-            "parents": false,
-            "exclude": []
-          },
-          {
-            "from": null,
-            "srcs": [
-              "shell/screens/atoms.css"
-            ],
-            "dst": "/srv/shell/screens/atoms.css",
-            "link": true,
-            "parents": false,
-            "exclude": []
-          },
-          {
-            "from": null,
-            "srcs": [
-              "shell/screens/composition.html"
-            ],
-            "dst": "/srv/shell/screens/composition.html",
-            "link": true,
-            "parents": false,
-            "exclude": []
-          },
-          {
-            "from": null,
-            "srcs": [
-              "shell/screens/composition.css"
-            ],
-            "dst": "/srv/shell/screens/composition.css",
-            "link": true,
-            "parents": false,
-            "exclude": []
-          },
-          {
-            "from": null,
-            "srcs": [
-              "shell/screens/chat.html"
-            ],
-            "dst": "/srv/shell/screens/chat.html",
-            "link": true,
-            "parents": false,
-            "exclude": []
-          },
-          {
-            "from": null,
-            "srcs": [
-              "shell/screens/chat.css"
-            ],
-            "dst": "/srv/shell/screens/chat.css",
-            "link": true,
-            "parents": false,
-            "exclude": []
-          },
-          {
-            "from": null,
-            "srcs": [
-              "shell/screens/questionnaire.html"
-            ],
-            "dst": "/srv/shell/screens/questionnaire.html",
-            "link": true,
-            "parents": false,
-            "exclude": []
-          },
-          {
-            "from": null,
-            "srcs": [
-              "shell/screens/questionnaire.css"
-            ],
-            "dst": "/srv/shell/screens/questionnaire.css",
-            "link": true,
-            "parents": false,
-            "exclude": []
-          },
-          {
-            "from": null,
-            "srcs": [
-              "shell/screens/calendar.html"
-            ],
-            "dst": "/srv/shell/screens/calendar.html",
-            "link": true,
-            "parents": false,
-            "exclude": []
-          },
-          {
-            "from": null,
-            "srcs": [
-              "shell/screens/calendar.css"
-            ],
-            "dst": "/srv/shell/screens/calendar.css",
-            "link": true,
-            "parents": false,
-            "exclude": []
-          },
-          {
-            "from": null,
-            "srcs": [
-              "shell/handlers/flip-of.js"
-            ],
-            "dst": "/srv/shell/handlers/flip-of.js",
-            "link": true,
-            "parents": false,
-            "exclude": []
-          },
-          {
-            "from": null,
-            "srcs": [
-              "shell/handlers/has-nondigit.js"
-            ],
-            "dst": "/srv/shell/handlers/has-nondigit.js",
-            "link": true,
-            "parents": false,
-            "exclude": []
-          },
-          {
-            "from": null,
-            "srcs": [
-              "shell/handlers/has-prefix.js"
-            ],
-            "dst": "/srv/shell/handlers/has-prefix.js",
-            "link": true,
-            "parents": false,
-            "exclude": []
-          },
-          {
-            "from": null,
-            "srcs": [
-              "shell/handlers/is-code.js"
-            ],
-            "dst": "/srv/shell/handlers/is-code.js",
-            "link": true,
-            "parents": false,
-            "exclude": []
-          },
-          {
-            "from": null,
-            "srcs": [
-              "shell/handlers/is-digits.js"
-            ],
-            "dst": "/srv/shell/handlers/is-digits.js",
-            "link": true,
-            "parents": false,
-            "exclude": []
-          },
-          {
-            "from": null,
-            "srcs": [
-              "shell/handlers/is-key.js"
-            ],
-            "dst": "/srv/shell/handlers/is-key.js",
-            "link": true,
-            "parents": false,
-            "exclude": []
-          },
-          {
-            "from": null,
-            "srcs": [
-              "shell/handlers/is-printable.js"
-            ],
-            "dst": "/srv/shell/handlers/is-printable.js",
-            "link": true,
-            "parents": false,
-            "exclude": []
-          },
-          {
-            "from": null,
-            "srcs": [
-              "shell/handlers/month-step.js"
-            ],
-            "dst": "/srv/shell/handlers/month-step.js",
-            "link": true,
-            "parents": false,
-            "exclude": []
-          },
-          {
-            "from": null,
-            "srcs": [
-              "shell/handlers/roll-up.js"
-            ],
-            "dst": "/srv/shell/handlers/roll-up.js",
-            "link": true,
-            "parents": false,
-            "exclude": []
-          },
-          {
-            "from": null,
-            "srcs": [
-              "shell/handlers/starts-with.js"
-            ],
-            "dst": "/srv/shell/handlers/starts-with.js",
-            "link": true,
-            "parents": false,
-            "exclude": []
-          },
-          {
-            "from": null,
-            "srcs": [
-              "shell/handlers/type-into.js"
-            ],
-            "dst": "/srv/shell/handlers/type-into.js",
-            "link": true,
-            "parents": false,
-            "exclude": []
-          },
-          {
-            "from": null,
-            "srcs": [
-              "shell/handlers/unless-answered.js"
-            ],
-            "dst": "/srv/shell/handlers/unless-answered.js",
-            "link": true,
-            "parents": false,
-            "exclude": []
-          },
-          {
-            "from": null,
-            "srcs": [
-              "shell/handlers/unless-typed.js"
-            ],
-            "dst": "/srv/shell/handlers/unless-typed.js",
-            "link": true,
-            "parents": false,
-            "exclude": []
-          },
-          {
-            "from": null,
-            "srcs": [
-              "shell/shared/chrome.css"
-            ],
-            "dst": "/srv/shell/shared/chrome.css",
+            "dst": "/omnishell/",
             "link": true,
             "parents": false,
             "exclude": []
           },
           {
             "from": {
-              "name": "root"
+              "ref": ":served",
+              "name": "shadcnui-served"
             },
             "srcs": [
-              "plugins/omnishell/interpreter/shell.js"
+              "/served/"
             ],
-            "dst": "/omnishell/interpreter/shell.js",
+            "dst": "/srv/",
             "link": true,
             "parents": false,
             "exclude": []
           },
           {
             "from": {
-              "name": "root"
+              "ref": ":served",
+              "name": "shadcnui-served"
             },
             "srcs": [
-              "plugins/omnishell/interpreter/chrome.js"
+              "/served.scripts"
             ],
-            "dst": "/omnishell/interpreter/chrome.js",
-            "link": true,
-            "parents": false,
-            "exclude": []
-          },
-          {
-            "from": {
-              "name": "root"
-            },
-            "srcs": [
-              "plugins/omnishell/interpreter/screen.js"
-            ],
-            "dst": "/omnishell/interpreter/screen.js",
-            "link": true,
-            "parents": false,
-            "exclude": []
-          },
-          {
-            "from": {
-              "name": "root"
-            },
-            "srcs": [
-              "plugins/omnishell/interpreter/fragment.js"
-            ],
-            "dst": "/omnishell/interpreter/fragment.js",
-            "link": true,
-            "parents": false,
-            "exclude": []
-          },
-          {
-            "from": {
-              "name": "root"
-            },
-            "srcs": [
-              "plugins/omnishell/interpreter/data-sync.js"
-            ],
-            "dst": "/omnishell/interpreter/data-sync.js",
-            "link": true,
-            "parents": false,
-            "exclude": []
-          },
-          {
-            "from": {
-              "name": "root"
-            },
-            "srcs": [
-              "plugins/omnishell/interpreter/validate.js"
-            ],
-            "dst": "/omnishell/interpreter/validate.js",
-            "link": true,
-            "parents": false,
-            "exclude": []
-          },
-          {
-            "from": {
-              "name": "root"
-            },
-            "srcs": [
-              "plugins/omnishell/interpreter/render.js"
-            ],
-            "dst": "/omnishell/interpreter/render.js",
-            "link": true,
-            "parents": false,
-            "exclude": []
-          },
-          {
-            "from": {
-              "name": "root"
-            },
-            "srcs": [
-              "plugins/omnishell/interpreter/hatch.js"
-            ],
-            "dst": "/omnishell/interpreter/hatch.js",
-            "link": true,
-            "parents": false,
-            "exclude": []
-          },
-          {
-            "from": {
-              "name": "root"
-            },
-            "srcs": [
-              "plugins/omnishell/interpreter/hatch-worker.js"
-            ],
-            "dst": "/omnishell/interpreter/hatch-worker.js",
-            "link": true,
-            "parents": false,
-            "exclude": []
-          },
-          {
-            "from": {
-              "name": "root"
-            },
-            "srcs": [
-              "plugins/omnishell/interpreter/storybook.js"
-            ],
-            "dst": "/omnishell/interpreter/storybook.js",
-            "link": true,
-            "parents": false,
-            "exclude": []
-          },
-          {
-            "from": {
-              "name": "root"
-            },
-            "srcs": [
-              "plugins/omnishell/interpreter/jessie.js"
-            ],
-            "dst": "/omnishell/interpreter/jessie.js",
-            "link": true,
-            "parents": false,
-            "exclude": []
-          },
-          {
-            "from": {
-              "name": "root"
-            },
-            "srcs": [
-              "plugins/omnishell/interpreter/kinetic.js"
-            ],
-            "dst": "/omnishell/interpreter/kinetic.js",
-            "link": true,
-            "parents": false,
-            "exclude": []
-          },
-          {
-            "from": {
-              "name": "root"
-            },
-            "srcs": [
-              "plugins/omnishell/interpreter/prng.js"
-            ],
-            "dst": "/omnishell/interpreter/prng.js",
-            "link": true,
-            "parents": false,
-            "exclude": []
-          },
-          {
-            "from": {
-              "name": "root"
-            },
-            "srcs": [
-              "plugins/omnishell/interpreter/vendor/mecha-client.js"
-            ],
-            "dst": "/omnishell/interpreter/vendor/mecha-client.js",
-            "link": true,
-            "parents": false,
-            "exclude": []
-          },
-          {
-            "from": {
-              "name": "root"
-            },
-            "srcs": [
-              "plugins/omnishell/interpreter/vendor/js-yaml.js"
-            ],
-            "dst": "/omnishell/interpreter/vendor/js-yaml.js",
-            "link": true,
-            "parents": false,
-            "exclude": []
-          },
-          {
-            "from": {
-              "name": "root"
-            },
-            "srcs": [
-              "plugins/omnishell/interpreter/vendor/ses.umd.min.js"
-            ],
-            "dst": "/omnishell/interpreter/vendor/ses.umd.min.js",
-            "link": true,
-            "parents": false,
-            "exclude": []
-          },
-          {
-            "from": {
-              "name": "root"
-            },
-            "srcs": [
-              "plugins/omnishell/interpreter/vendor/morphlex.js"
-            ],
-            "dst": "/omnishell/interpreter/vendor/morphlex.js",
-            "link": true,
-            "parents": false,
-            "exclude": []
-          },
-          {
-            "from": {
-              "name": "root"
-            },
-            "srcs": [
-              "plugins/omnishell/interpreter/vendor/messages.js"
-            ],
-            "dst": "/omnishell/interpreter/vendor/messages.js",
-            "link": true,
-            "parents": false,
-            "exclude": []
-          },
-          {
-            "from": {
-              "name": "root"
-            },
-            "srcs": [
-              "plugins/omnishell/components/wallclock.js"
-            ],
-            "dst": "/omnishell/components/wallclock.js",
-            "link": true,
-            "parents": false,
-            "exclude": []
-          },
-          {
-            "from": null,
-            "srcs": [
-              "brief.html"
-            ],
-            "dst": "/srv/docs/brief.html",
-            "link": true,
-            "parents": false,
-            "exclude": []
-          },
-          {
-            "from": null,
-            "srcs": [
-              "ir.html"
-            ],
-            "dst": "/srv/docs/ir.html",
-            "link": true,
-            "parents": false,
-            "exclude": []
-          },
-          {
-            "from": null,
-            "srcs": [
-              "acceptance.md"
-            ],
-            "dst": "/srv/docs/acceptance.md",
-            "link": true,
-            "parents": false,
-            "exclude": []
-          },
-          {
-            "from": null,
-            "srcs": [
-              "DESIGN.md"
-            ],
-            "dst": "/srv/docs/DESIGN.md",
-            "link": true,
-            "parents": false,
-            "exclude": []
-          },
-          {
-            "from": null,
-            "srcs": [
-              "robots.txt"
-            ],
-            "dst": "/srv/robots.txt",
-            "link": true,
-            "parents": false,
-            "exclude": []
-          },
-          {
-            "from": null,
-            "srcs": [
-              "sitemap.xml"
-            ],
-            "dst": "/srv/sitemap.xml",
+            "dst": "/etc/caddy/release-scripts",
             "link": true,
             "parents": false,
             "exclude": []
@@ -1948,22 +3333,16 @@
         "manual": false,
         "build": {
           "additional_contexts": {
-            "root": "../../.."
+            "root": ".."
           },
           "secrets": [],
           "args": {}
         },
-        "command": [
-          "sh",
-          "-c",
-          "if [ -f /certs/localhost.pem ]; then export CADDY_TLS='/certs/localhost.pem /certs/localhost-key.pem'; fi; exec caddy run --config /etc/caddy/Caddyfile --adapter caddyfile"
-        ],
         "environment": {
-          "ELECTRIC_SECRET": "${ELECTRIC_SECRET:-dev-electric-secret}"
+          "ELECTRIC_SECRET": "${ELECTRIC_SECRET:-dev-electric-secret}",
+          "ORIGIN": "${ORIGIN:-https://localhost:${CADDY_TLS_HOST_PORT}}"
         },
-        "ports": [
-          "${CADDY_TLS_HOST_PORT:-0}:8443"
-        ],
+        "ports": [],
         "volumes": [],
         "depends_on": {},
         "networks": {
@@ -1998,562 +3377,472 @@
               "target": "/certs"
             },
             {
-              "action": "sync+restart",
+              "action": "rebuild",
               "path": "../shell/index.html",
               "target": "/srv/shell/index.html"
             },
             {
-              "action": "sync+restart",
+              "action": "rebuild",
               "path": "../shell/shell.css",
               "target": "/srv/shell/shell.css"
             },
             {
-              "action": "sync+restart",
+              "action": "rebuild",
               "path": "../shell/boot.js",
               "target": "/srv/shell/boot.js"
             },
             {
-              "action": "sync+restart",
+              "action": "rebuild",
               "path": "../offline-first-sw.js",
               "target": "/srv/offline-first-sw.js"
             },
             {
-              "action": "sync+restart",
+              "action": "rebuild",
               "path": "../shell/shell.yaml",
               "target": "/srv/shell/shell.yaml"
             },
             {
-              "action": "sync+restart",
+              "action": "rebuild",
               "path": "../shell/shell.json",
               "target": "/srv/shell/shell.json"
             },
             {
-              "action": "sync+restart",
+              "action": "rebuild",
               "path": "../shell/design.css",
               "target": "/srv/shell/design.css"
             },
             {
-              "action": "sync+restart",
+              "action": "rebuild",
               "path": "../shell/screens/catalog.html",
               "target": "/srv/shell/screens/catalog.html"
             },
             {
-              "action": "sync+restart",
+              "action": "rebuild",
               "path": "../shell/screens/catalog.css",
               "target": "/srv/shell/screens/catalog.css"
             },
             {
-              "action": "sync+restart",
+              "action": "rebuild",
               "path": "../shell/screens/switch.html",
               "target": "/srv/shell/screens/switch.html"
             },
             {
-              "action": "sync+restart",
+              "action": "rebuild",
               "path": "../shell/screens/switch.css",
               "target": "/srv/shell/screens/switch.css"
             },
             {
-              "action": "sync+restart",
+              "action": "rebuild",
               "path": "../shell/screens/tabs.html",
               "target": "/srv/shell/screens/tabs.html"
             },
             {
-              "action": "sync+restart",
+              "action": "rebuild",
               "path": "../shell/screens/tabs.css",
               "target": "/srv/shell/screens/tabs.css"
             },
             {
-              "action": "sync+restart",
+              "action": "rebuild",
               "path": "../shell/screens/picker.html",
               "target": "/srv/shell/screens/picker.html"
             },
             {
-              "action": "sync+restart",
+              "action": "rebuild",
               "path": "../shell/screens/picker.css",
               "target": "/srv/shell/screens/picker.css"
             },
             {
-              "action": "sync+restart",
+              "action": "rebuild",
               "path": "../shell/screens/toggle-group.html",
               "target": "/srv/shell/screens/toggle-group.html"
             },
             {
-              "action": "sync+restart",
+              "action": "rebuild",
               "path": "../shell/screens/toggle-group.css",
               "target": "/srv/shell/screens/toggle-group.css"
             },
             {
-              "action": "sync+restart",
+              "action": "rebuild",
               "path": "../shell/screens/accordion.html",
               "target": "/srv/shell/screens/accordion.html"
             },
             {
-              "action": "sync+restart",
+              "action": "rebuild",
               "path": "../shell/screens/accordion.css",
               "target": "/srv/shell/screens/accordion.css"
             },
             {
-              "action": "sync+restart",
+              "action": "rebuild",
               "path": "../shell/screens/overlays.html",
               "target": "/srv/shell/screens/overlays.html"
             },
             {
-              "action": "sync+restart",
+              "action": "rebuild",
               "path": "../shell/screens/overlays.css",
               "target": "/srv/shell/screens/overlays.css"
             },
             {
-              "action": "sync+restart",
+              "action": "rebuild",
               "path": "../shell/screens/primitives.html",
               "target": "/srv/shell/screens/primitives.html"
             },
             {
-              "action": "sync+restart",
+              "action": "rebuild",
               "path": "../shell/screens/primitives.css",
               "target": "/srv/shell/screens/primitives.css"
             },
             {
-              "action": "sync+restart",
+              "action": "rebuild",
               "path": "../shell/screens/combobox.html",
               "target": "/srv/shell/screens/combobox.html"
             },
             {
-              "action": "sync+restart",
+              "action": "rebuild",
               "path": "../shell/screens/combobox.css",
               "target": "/srv/shell/screens/combobox.css"
             },
             {
-              "action": "sync+restart",
+              "action": "rebuild",
               "path": "../shell/screens/checkbox.html",
               "target": "/srv/shell/screens/checkbox.html"
             },
             {
-              "action": "sync+restart",
+              "action": "rebuild",
               "path": "../shell/screens/checkbox.css",
               "target": "/srv/shell/screens/checkbox.css"
             },
             {
-              "action": "sync+restart",
+              "action": "rebuild",
               "path": "../shell/screens/radio-group.html",
               "target": "/srv/shell/screens/radio-group.html"
             },
             {
-              "action": "sync+restart",
+              "action": "rebuild",
               "path": "../shell/screens/radio-group.css",
               "target": "/srv/shell/screens/radio-group.css"
             },
             {
-              "action": "sync+restart",
+              "action": "rebuild",
               "path": "../shell/screens/pagination.html",
               "target": "/srv/shell/screens/pagination.html"
             },
             {
-              "action": "sync+restart",
+              "action": "rebuild",
               "path": "../shell/screens/pagination.css",
               "target": "/srv/shell/screens/pagination.css"
             },
             {
-              "action": "sync+restart",
+              "action": "rebuild",
               "path": "../shell/screens/toast.html",
               "target": "/srv/shell/screens/toast.html"
             },
             {
-              "action": "sync+restart",
+              "action": "rebuild",
               "path": "../shell/screens/toast.css",
               "target": "/srv/shell/screens/toast.css"
             },
             {
-              "action": "sync+restart",
+              "action": "rebuild",
               "path": "../shell/screens/slider.html",
               "target": "/srv/shell/screens/slider.html"
             },
             {
-              "action": "sync+restart",
+              "action": "rebuild",
               "path": "../shell/screens/slider.css",
               "target": "/srv/shell/screens/slider.css"
             },
             {
-              "action": "sync+restart",
+              "action": "rebuild",
               "path": "../shell/screens/resizable.html",
               "target": "/srv/shell/screens/resizable.html"
             },
             {
-              "action": "sync+restart",
+              "action": "rebuild",
               "path": "../shell/screens/resizable.css",
               "target": "/srv/shell/screens/resizable.css"
             },
             {
-              "action": "sync+restart",
+              "action": "rebuild",
               "path": "../shell/screens/command.html",
               "target": "/srv/shell/screens/command.html"
             },
             {
-              "action": "sync+restart",
+              "action": "rebuild",
               "path": "../shell/screens/command.css",
               "target": "/srv/shell/screens/command.css"
             },
             {
-              "action": "sync+restart",
+              "action": "rebuild",
               "path": "../shell/screens/select.html",
               "target": "/srv/shell/screens/select.html"
             },
             {
-              "action": "sync+restart",
+              "action": "rebuild",
               "path": "../shell/screens/select.css",
               "target": "/srv/shell/screens/select.css"
             },
             {
-              "action": "sync+restart",
+              "action": "rebuild",
               "path": "../shell/screens/breadcrumb.html",
               "target": "/srv/shell/screens/breadcrumb.html"
             },
             {
-              "action": "sync+restart",
+              "action": "rebuild",
               "path": "../shell/screens/breadcrumb.css",
               "target": "/srv/shell/screens/breadcrumb.css"
             },
             {
-              "action": "sync+restart",
+              "action": "rebuild",
               "path": "../shell/screens/menu.html",
               "target": "/srv/shell/screens/menu.html"
             },
             {
-              "action": "sync+restart",
+              "action": "rebuild",
               "path": "../shell/screens/menu.css",
               "target": "/srv/shell/screens/menu.css"
             },
             {
-              "action": "sync+restart",
+              "action": "rebuild",
               "path": "../shell/screens/sheet.html",
               "target": "/srv/shell/screens/sheet.html"
             },
             {
-              "action": "sync+restart",
+              "action": "rebuild",
               "path": "../shell/screens/sheet.css",
               "target": "/srv/shell/screens/sheet.css"
             },
             {
-              "action": "sync+restart",
+              "action": "rebuild",
               "path": "../shell/screens/form.html",
               "target": "/srv/shell/screens/form.html"
             },
             {
-              "action": "sync+restart",
+              "action": "rebuild",
               "path": "../shell/screens/form.css",
               "target": "/srv/shell/screens/form.css"
             },
             {
-              "action": "sync+restart",
+              "action": "rebuild",
               "path": "../shell/screens/table.html",
               "target": "/srv/shell/screens/table.html"
             },
             {
-              "action": "sync+restart",
+              "action": "rebuild",
               "path": "../shell/screens/table.css",
               "target": "/srv/shell/screens/table.css"
             },
             {
-              "action": "sync+restart",
+              "action": "rebuild",
               "path": "../shell/screens/data-table.html",
               "target": "/srv/shell/screens/data-table.html"
             },
             {
-              "action": "sync+restart",
+              "action": "rebuild",
               "path": "../shell/screens/data-table.css",
               "target": "/srv/shell/screens/data-table.css"
             },
             {
-              "action": "sync+restart",
+              "action": "rebuild",
               "path": "../shell/screens/navigation.html",
               "target": "/srv/shell/screens/navigation.html"
             },
             {
-              "action": "sync+restart",
+              "action": "rebuild",
               "path": "../shell/screens/navigation.css",
               "target": "/srv/shell/screens/navigation.css"
             },
             {
-              "action": "sync+restart",
+              "action": "rebuild",
               "path": "../shell/screens/popover.html",
               "target": "/srv/shell/screens/popover.html"
             },
             {
-              "action": "sync+restart",
+              "action": "rebuild",
               "path": "../shell/screens/popover.css",
               "target": "/srv/shell/screens/popover.css"
             },
             {
-              "action": "sync+restart",
+              "action": "rebuild",
               "path": "../shell/screens/input-otp.html",
               "target": "/srv/shell/screens/input-otp.html"
             },
             {
-              "action": "sync+restart",
+              "action": "rebuild",
               "path": "../shell/screens/input-otp.css",
               "target": "/srv/shell/screens/input-otp.css"
             },
             {
-              "action": "sync+restart",
+              "action": "rebuild",
               "path": "../shell/screens/hover-card.html",
               "target": "/srv/shell/screens/hover-card.html"
             },
             {
-              "action": "sync+restart",
+              "action": "rebuild",
               "path": "../shell/screens/hover-card.css",
               "target": "/srv/shell/screens/hover-card.css"
             },
             {
-              "action": "sync+restart",
+              "action": "rebuild",
               "path": "../shell/screens/chart.html",
               "target": "/srv/shell/screens/chart.html"
             },
             {
-              "action": "sync+restart",
+              "action": "rebuild",
               "path": "../shell/screens/chart.css",
               "target": "/srv/shell/screens/chart.css"
             },
             {
-              "action": "sync+restart",
+              "action": "rebuild",
               "path": "../shell/screens/atoms.html",
               "target": "/srv/shell/screens/atoms.html"
             },
             {
-              "action": "sync+restart",
+              "action": "rebuild",
               "path": "../shell/screens/atoms.css",
               "target": "/srv/shell/screens/atoms.css"
             },
             {
-              "action": "sync+restart",
+              "action": "rebuild",
               "path": "../shell/screens/composition.html",
               "target": "/srv/shell/screens/composition.html"
             },
             {
-              "action": "sync+restart",
+              "action": "rebuild",
               "path": "../shell/screens/composition.css",
               "target": "/srv/shell/screens/composition.css"
             },
             {
-              "action": "sync+restart",
+              "action": "rebuild",
               "path": "../shell/screens/chat.html",
               "target": "/srv/shell/screens/chat.html"
             },
             {
-              "action": "sync+restart",
+              "action": "rebuild",
               "path": "../shell/screens/chat.css",
               "target": "/srv/shell/screens/chat.css"
             },
             {
-              "action": "sync+restart",
+              "action": "rebuild",
               "path": "../shell/screens/questionnaire.html",
               "target": "/srv/shell/screens/questionnaire.html"
             },
             {
-              "action": "sync+restart",
+              "action": "rebuild",
               "path": "../shell/screens/questionnaire.css",
               "target": "/srv/shell/screens/questionnaire.css"
             },
             {
-              "action": "sync+restart",
+              "action": "rebuild",
               "path": "../shell/screens/calendar.html",
               "target": "/srv/shell/screens/calendar.html"
             },
             {
-              "action": "sync+restart",
+              "action": "rebuild",
               "path": "../shell/screens/calendar.css",
               "target": "/srv/shell/screens/calendar.css"
             },
             {
-              "action": "sync+restart",
+              "action": "rebuild",
               "path": "../shell/handlers/flip-of.js",
               "target": "/srv/shell/handlers/flip-of.js"
             },
             {
-              "action": "sync+restart",
+              "action": "rebuild",
               "path": "../shell/handlers/has-nondigit.js",
               "target": "/srv/shell/handlers/has-nondigit.js"
             },
             {
-              "action": "sync+restart",
+              "action": "rebuild",
               "path": "../shell/handlers/has-prefix.js",
               "target": "/srv/shell/handlers/has-prefix.js"
             },
             {
-              "action": "sync+restart",
+              "action": "rebuild",
               "path": "../shell/handlers/is-code.js",
               "target": "/srv/shell/handlers/is-code.js"
             },
             {
-              "action": "sync+restart",
+              "action": "rebuild",
               "path": "../shell/handlers/is-digits.js",
               "target": "/srv/shell/handlers/is-digits.js"
             },
             {
-              "action": "sync+restart",
+              "action": "rebuild",
               "path": "../shell/handlers/is-key.js",
               "target": "/srv/shell/handlers/is-key.js"
             },
             {
-              "action": "sync+restart",
+              "action": "rebuild",
               "path": "../shell/handlers/is-printable.js",
               "target": "/srv/shell/handlers/is-printable.js"
             },
             {
-              "action": "sync+restart",
+              "action": "rebuild",
               "path": "../shell/handlers/month-step.js",
               "target": "/srv/shell/handlers/month-step.js"
             },
             {
-              "action": "sync+restart",
+              "action": "rebuild",
               "path": "../shell/handlers/roll-up.js",
               "target": "/srv/shell/handlers/roll-up.js"
             },
             {
-              "action": "sync+restart",
+              "action": "rebuild",
               "path": "../shell/handlers/starts-with.js",
               "target": "/srv/shell/handlers/starts-with.js"
             },
             {
-              "action": "sync+restart",
+              "action": "rebuild",
               "path": "../shell/handlers/type-into.js",
               "target": "/srv/shell/handlers/type-into.js"
             },
             {
-              "action": "sync+restart",
+              "action": "rebuild",
               "path": "../shell/handlers/unless-answered.js",
               "target": "/srv/shell/handlers/unless-answered.js"
             },
             {
-              "action": "sync+restart",
+              "action": "rebuild",
               "path": "../shell/handlers/unless-typed.js",
               "target": "/srv/shell/handlers/unless-typed.js"
             },
             {
-              "action": "sync+restart",
+              "action": "rebuild",
               "path": "../shell/shared/chrome.css",
               "target": "/srv/shell/shared/chrome.css"
             },
             {
-              "action": "sync+restart",
-              "path": "../../../plugins/omnishell/interpreter/shell.js",
-              "target": "/omnishell/interpreter/shell.js"
-            },
-            {
-              "action": "sync+restart",
-              "path": "../../../plugins/omnishell/interpreter/chrome.js",
-              "target": "/omnishell/interpreter/chrome.js"
-            },
-            {
-              "action": "sync+restart",
-              "path": "../../../plugins/omnishell/interpreter/screen.js",
-              "target": "/omnishell/interpreter/screen.js"
-            },
-            {
-              "action": "sync+restart",
-              "path": "../../../plugins/omnishell/interpreter/fragment.js",
-              "target": "/omnishell/interpreter/fragment.js"
-            },
-            {
-              "action": "sync+restart",
-              "path": "../../../plugins/omnishell/interpreter/data-sync.js",
-              "target": "/omnishell/interpreter/data-sync.js"
-            },
-            {
-              "action": "sync+restart",
-              "path": "../../../plugins/omnishell/interpreter/validate.js",
-              "target": "/omnishell/interpreter/validate.js"
-            },
-            {
-              "action": "sync+restart",
-              "path": "../../../plugins/omnishell/interpreter/render.js",
-              "target": "/omnishell/interpreter/render.js"
-            },
-            {
-              "action": "sync+restart",
-              "path": "../../../plugins/omnishell/interpreter/hatch.js",
-              "target": "/omnishell/interpreter/hatch.js"
-            },
-            {
-              "action": "sync+restart",
-              "path": "../../../plugins/omnishell/interpreter/hatch-worker.js",
-              "target": "/omnishell/interpreter/hatch-worker.js"
-            },
-            {
-              "action": "sync+restart",
-              "path": "../../../plugins/omnishell/interpreter/storybook.js",
-              "target": "/omnishell/interpreter/storybook.js"
-            },
-            {
-              "action": "sync+restart",
-              "path": "../../../plugins/omnishell/interpreter/jessie.js",
-              "target": "/omnishell/interpreter/jessie.js"
-            },
-            {
-              "action": "sync+restart",
-              "path": "../../../plugins/omnishell/interpreter/kinetic.js",
-              "target": "/omnishell/interpreter/kinetic.js"
-            },
-            {
-              "action": "sync+restart",
-              "path": "../../../plugins/omnishell/interpreter/prng.js",
-              "target": "/omnishell/interpreter/prng.js"
-            },
-            {
-              "action": "sync+restart",
-              "path": "../../../plugins/omnishell/interpreter/vendor/mecha-client.js",
-              "target": "/omnishell/interpreter/vendor/mecha-client.js"
-            },
-            {
-              "action": "sync+restart",
-              "path": "../../../plugins/omnishell/interpreter/vendor/js-yaml.js",
-              "target": "/omnishell/interpreter/vendor/js-yaml.js"
-            },
-            {
-              "action": "sync+restart",
-              "path": "../../../plugins/omnishell/interpreter/vendor/ses.umd.min.js",
-              "target": "/omnishell/interpreter/vendor/ses.umd.min.js"
-            },
-            {
-              "action": "sync+restart",
-              "path": "../../../plugins/omnishell/interpreter/vendor/morphlex.js",
-              "target": "/omnishell/interpreter/vendor/morphlex.js"
-            },
-            {
-              "action": "sync+restart",
-              "path": "../../../plugins/omnishell/interpreter/vendor/messages.js",
-              "target": "/omnishell/interpreter/vendor/messages.js"
-            },
-            {
-              "action": "sync+restart",
-              "path": "../../../plugins/omnishell/components/wallclock.js",
-              "target": "/omnishell/components/wallclock.js"
-            },
-            {
-              "action": "sync+restart",
+              "action": "rebuild",
               "path": "../brief.html",
               "target": "/srv/docs/brief.html"
             },
             {
-              "action": "sync+restart",
+              "action": "rebuild",
               "path": "../ir.html",
               "target": "/srv/docs/ir.html"
             },
             {
-              "action": "sync+restart",
+              "action": "rebuild",
+              "path": "../ir/card.css",
+              "target": "/srv/docs/ir/card.css"
+            },
+            {
+              "action": "rebuild",
               "path": "../acceptance.md",
               "target": "/srv/docs/acceptance.md"
             },
             {
-              "action": "sync+restart",
+              "action": "rebuild",
               "path": "../DESIGN.md",
               "target": "/srv/docs/DESIGN.md"
             },
             {
-              "action": "sync+restart",
+              "action": "rebuild",
               "path": "../robots.txt",
               "target": "/srv/robots.txt"
             },
             {
-              "action": "sync+restart",
+              "action": "rebuild",
               "path": "../sitemap.xml",
               "target": "/srv/sitemap.xml"
             }
@@ -2563,11 +3852,40 @@
       "healthcheck": {
         "template": "http",
         "url": "http://127.0.0.1:8080/health",
+        "authorization": null,
+        "headers": [],
         "interval": "5s",
         "start_interval": "500ms",
         "timeout": "5s",
         "retries": 30,
         "start_period": "10s"
+      },
+      "entrypoint": {
+        "name": "entrypoint",
+        "do": "case \"${ORIGIN#http://}\" in \"$ORIGIN\") h=${ORIGIN#https://};; *) h=${ORIGIN#http://};; esac; case \"$h\" in \"$ORIGIN\"|\"\"|*[!A-Za-z0-9.:-]*) echo \"ORIGIN '$ORIGIN' is no origin: set it to the scheme and host readers reach the door at, as https://app.example\" >&2; exit 1;; esac; set -e -o pipefail; roots=$(caddy adapt --config /etc/caddy/Caddyfile --adapter caddyfile | tr , '\\n' | grep -o '\"root\":\"[^\"]*\"' | cut -d'\"' -f4 | sort -u); if [ -n \"$roots\" ]; then find $roots -type f ! -name '*.etag' -exec sh -c 'set -e; q=$1; shift; for f do h=$(sha256sum < \"$f\"); printf \"$q%s$q\" \"${h%% *}\" > \"$f.etag\"; done' sh '\"' {} +; fi; PRONTO_RELEASE_SCRIPTS=$(cat /etc/caddy/release-scripts 2>/dev/null || true); export PRONTO_RELEASE_SCRIPTS; if [ -f /certs/localhost.pem ]; then export CADDY_TLS='/certs/localhost.pem /certs/localhost-key.pem'; fi; exec caddy run --config /etc/caddy/Caddyfile --adapter caddyfile",
+        "priority": 0,
+        "shell": "sh",
+        "stop": false,
+        "srcs": {
+          "globs": [],
+          "defaultGlobs": null,
+          "exclude": [],
+          "defaultExclude": null
+        },
+        "env": {
+          "ELECTRIC_SECRET": "${ELECTRIC_SECRET:-dev-electric-secret}",
+          "ORIGIN": "${ORIGIN:-https://localhost:${CADDY_TLS_HOST_PORT}}"
+        },
+        "after": {},
+        "host": true
+      },
+      "expose": {
+        "door": {
+          "port": 8443,
+          "publish": {
+            "environment": "CADDY_TLS_HOST_PORT"
+          }
+        }
       },
       "cmds": [],
       "cache": {

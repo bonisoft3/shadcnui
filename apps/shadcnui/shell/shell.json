@@ -99,52 +99,52 @@
     ],
     "data_row": [
       {
+        "amount": "250.00",
         "id": "INV-1024",
         "payer": "Ada Lovelace",
-        "status": "Paid",
-        "amount": "250.00"
+        "status": "Paid"
       },
       {
+        "amount": "150.00",
         "id": "INV-1025",
         "payer": "Grace Hopper",
-        "status": "Pending",
-        "amount": "150.00"
+        "status": "Pending"
       },
       {
+        "amount": "80.00",
         "id": "INV-1026",
         "payer": "Ada Byron",
-        "status": "Unpaid",
-        "amount": "80.00"
+        "status": "Unpaid"
       },
       {
+        "amount": "420.00",
         "id": "INV-1027",
         "payer": "Alan Turing",
-        "status": "Paid",
-        "amount": "420.00"
+        "status": "Paid"
       },
       {
+        "amount": "95.00",
         "id": "INV-1028",
         "payer": "Barbara Liskov",
-        "status": "Pending",
-        "amount": "95.00"
+        "status": "Pending"
       },
       {
+        "amount": "310.00",
         "id": "INV-1029",
         "payer": "Adele Goldberg",
-        "status": "Paid",
-        "amount": "310.00"
+        "status": "Paid"
       },
       {
+        "amount": "60.00",
         "id": "INV-1030",
         "payer": "Frances Allen",
-        "status": "Unpaid",
-        "amount": "60.00"
+        "status": "Unpaid"
       },
       {
+        "amount": "175.00",
         "id": "INV-1031",
         "payer": "Karen Sparck",
-        "status": "Paid",
-        "amount": "175.00"
+        "status": "Paid"
       }
     ],
     "data_cursor": [
@@ -202,48 +202,48 @@
         "label": "January",
         "value": 186,
         "pos": 1,
-        "nxt_pos": 2,
-        "nxt_value": 305
+        "nxt_value": 305,
+        "nxt_pos": 2
       },
       {
         "id": "feb",
         "label": "February",
         "value": 305,
         "pos": 2,
-        "nxt_pos": 3,
-        "nxt_value": 237
+        "nxt_value": 237,
+        "nxt_pos": 3
       },
       {
         "id": "mar",
         "label": "March",
         "value": 237,
         "pos": 3,
-        "nxt_pos": 4,
-        "nxt_value": 173
+        "nxt_value": 173,
+        "nxt_pos": 4
       },
       {
         "id": "apr",
         "label": "April",
         "value": 173,
         "pos": 4,
-        "nxt_pos": 5,
-        "nxt_value": 209
+        "nxt_value": 209,
+        "nxt_pos": 5
       },
       {
         "id": "may",
         "label": "May",
         "value": 209,
         "pos": 5,
-        "nxt_pos": 6,
-        "nxt_value": 264
+        "nxt_value": 264,
+        "nxt_pos": 6
       },
       {
         "id": "jun",
         "label": "June",
         "value": 264,
         "pos": 6,
-        "nxt_pos": 6,
-        "nxt_value": 264
+        "nxt_value": 264,
+        "nxt_pos": 6
       }
     ],
     "chart_cursor": [
@@ -333,20 +333,20 @@
     ],
     "calendar_demo": [
       {
+        "active": "2026-09-p15",
         "id": "the",
-        "state": "browsing",
-        "month": "2026-09",
         "label": "September 2026",
-        "value": "2026-09-p15",
-        "active": "2026-09-p15"
+        "month": "2026-09",
+        "state": "browsing",
+        "value": "2026-09-p15"
       },
       {
+        "active": "2026-09-p15",
         "id": "picker",
-        "state": "browsing",
-        "month": "2026-09",
         "label": "September 2026",
-        "value": "2026-09-p15",
-        "active": "2026-09-p15"
+        "month": "2026-09",
+        "state": "browsing",
+        "value": "2026-09-p15"
       }
     ],
     "calendar_cell": [
@@ -3439,6 +3439,8 @@
           "required": true
         },
         {
+          "default": "false",
+          "defaulted": true,
           "enum": [
             "true",
             "false"
@@ -3462,6 +3464,8 @@
           "required": true
         },
         {
+          "default": "account",
+          "defaulted": true,
           "enum": [
             "account",
             "password"
@@ -3471,6 +3475,8 @@
           "required": true
         },
         {
+          "default": "true",
+          "defaulted": true,
           "enum": [
             "true",
             "false"
@@ -3480,6 +3486,8 @@
           "required": true
         },
         {
+          "default": "false",
+          "defaulted": true,
           "enum": [
             "true",
             "false"
@@ -3489,6 +3497,8 @@
           "required": true
         },
         {
+          "default": "0",
+          "defaulted": true,
           "enum": [
             "0",
             "-1"
@@ -3498,6 +3508,8 @@
           "required": true
         },
         {
+          "default": "-1",
+          "defaulted": true,
           "enum": [
             "0",
             "-1"
@@ -3521,6 +3533,8 @@
           "required": true
         },
         {
+          "default": "apple",
+          "defaulted": true,
           "enum": [
             "apple",
             "banana",
@@ -3534,11 +3548,15 @@
           "bounds": {
             "sizeMax": 24
           },
+          "default": "Apple",
+          "defaulted": true,
           "name": "label",
           "type": "string",
           "required": true
         },
         {
+          "default": "true",
+          "defaulted": true,
           "enum": [
             "true",
             "false"
@@ -3548,6 +3566,8 @@
           "required": true
         },
         {
+          "default": "false",
+          "defaulted": true,
           "enum": [
             "true",
             "false"
@@ -3557,6 +3577,8 @@
           "required": true
         },
         {
+          "default": "false",
+          "defaulted": true,
           "enum": [
             "true",
             "false"
@@ -3580,6 +3602,8 @@
           "required": true
         },
         {
+          "default": "left",
+          "defaulted": true,
           "enum": [
             "left",
             "center",
@@ -3590,6 +3614,8 @@
           "required": true
         },
         {
+          "default": "true",
+          "defaulted": true,
           "enum": [
             "true",
             "false"
@@ -3599,6 +3625,8 @@
           "required": true
         },
         {
+          "default": "false",
+          "defaulted": true,
           "enum": [
             "true",
             "false"
@@ -3608,6 +3636,8 @@
           "required": true
         },
         {
+          "default": "false",
+          "defaulted": true,
           "enum": [
             "true",
             "false"
@@ -3617,6 +3647,8 @@
           "required": true
         },
         {
+          "default": "0",
+          "defaulted": true,
           "enum": [
             "0",
             "-1"
@@ -3626,6 +3658,8 @@
           "required": true
         },
         {
+          "default": "-1",
+          "defaulted": true,
           "enum": [
             "0",
             "-1"
@@ -3635,6 +3669,8 @@
           "required": true
         },
         {
+          "default": "-1",
+          "defaulted": true,
           "enum": [
             "0",
             "-1"
@@ -3658,6 +3694,8 @@
           "required": true
         },
         {
+          "default": "none",
+          "defaulted": true,
           "enum": [
             "none",
             "shipping",
@@ -3669,6 +3707,8 @@
           "required": true
         },
         {
+          "default": "false",
+          "defaulted": true,
           "enum": [
             "true",
             "false"
@@ -3678,6 +3718,8 @@
           "required": true
         },
         {
+          "default": "false",
+          "defaulted": true,
           "enum": [
             "true",
             "false"
@@ -3687,6 +3729,8 @@
           "required": true
         },
         {
+          "default": "false",
+          "defaulted": true,
           "enum": [
             "true",
             "false"
@@ -3696,6 +3740,8 @@
           "required": true
         },
         {
+          "default": "shipping",
+          "defaulted": true,
           "enum": [
             "shipping",
             "returns",
@@ -3706,6 +3752,8 @@
           "required": true
         },
         {
+          "default": "true",
+          "defaulted": true,
           "enum": [
             "true",
             "false"
@@ -3715,6 +3763,8 @@
           "required": true
         },
         {
+          "default": "false",
+          "defaulted": true,
           "enum": [
             "true",
             "false"
@@ -3724,6 +3774,8 @@
           "required": true
         },
         {
+          "default": "false",
+          "defaulted": true,
           "enum": [
             "true",
             "false"
@@ -3749,6 +3801,8 @@
           "required": true
         },
         {
+          "default": "false",
+          "defaulted": true,
           "enum": [
             "true",
             "false"
@@ -3798,6 +3852,8 @@
           "required": true
         },
         {
+          "default": "false",
+          "defaulted": true,
           "enum": [
             "true",
             "false"
@@ -3821,6 +3877,8 @@
           "required": true
         },
         {
+          "default": "live",
+          "defaulted": true,
           "enum": [
             "live"
           ],
@@ -3829,6 +3887,8 @@
           "required": true
         },
         {
+          "default": "mixed",
+          "defaulted": true,
           "enum": [
             "true",
             "false",
@@ -3839,6 +3899,8 @@
           "required": true
         },
         {
+          "default": "true",
+          "defaulted": true,
           "enum": [
             "true",
             "false"
@@ -3848,6 +3910,8 @@
           "required": true
         },
         {
+          "default": "true",
+          "defaulted": true,
           "enum": [
             "true",
             "false"
@@ -3857,6 +3921,8 @@
           "required": true
         },
         {
+          "default": "false",
+          "defaulted": true,
           "enum": [
             "true",
             "false"
@@ -3880,6 +3946,8 @@
           "required": true
         },
         {
+          "default": "false",
+          "defaulted": true,
           "enum": [
             "true",
             "false"
@@ -3903,6 +3971,8 @@
           "required": true
         },
         {
+          "default": "false",
+          "defaulted": true,
           "enum": [
             "true",
             "false"
@@ -3926,6 +3996,8 @@
           "required": true
         },
         {
+          "default": "starter",
+          "defaulted": true,
           "enum": [
             "starter",
             "pro",
@@ -3936,6 +4008,8 @@
           "required": true
         },
         {
+          "default": "true",
+          "defaulted": true,
           "enum": [
             "true",
             "false"
@@ -3945,6 +4019,8 @@
           "required": true
         },
         {
+          "default": "false",
+          "defaulted": true,
           "enum": [
             "true",
             "false"
@@ -3954,6 +4030,8 @@
           "required": true
         },
         {
+          "default": "false",
+          "defaulted": true,
           "enum": [
             "true",
             "false"
@@ -3963,6 +4041,8 @@
           "required": true
         },
         {
+          "default": "0",
+          "defaulted": true,
           "enum": [
             "0",
             "-1"
@@ -3972,6 +4052,8 @@
           "required": true
         },
         {
+          "default": "-1",
+          "defaulted": true,
           "enum": [
             "0",
             "-1"
@@ -3981,6 +4063,8 @@
           "required": true
         },
         {
+          "default": "-1",
+          "defaulted": true,
           "enum": [
             "0",
             "-1"
@@ -4004,6 +4088,8 @@
           "required": true
         },
         {
+          "default": "p1",
+          "defaulted": true,
           "enum": [
             "p1",
             "p2",
@@ -4016,6 +4102,8 @@
           "required": true
         },
         {
+          "default": "page",
+          "defaulted": true,
           "enum": [
             "page",
             "false"
@@ -4025,6 +4113,8 @@
           "required": true
         },
         {
+          "default": "false",
+          "defaulted": true,
           "enum": [
             "page",
             "false"
@@ -4034,6 +4124,8 @@
           "required": true
         },
         {
+          "default": "false",
+          "defaulted": true,
           "enum": [
             "page",
             "false"
@@ -4043,6 +4135,8 @@
           "required": true
         },
         {
+          "default": "false",
+          "defaulted": true,
           "enum": [
             "page",
             "false"
@@ -4052,6 +4146,8 @@
           "required": true
         },
         {
+          "default": "false",
+          "defaulted": true,
           "enum": [
             "page",
             "false"
@@ -4061,6 +4157,8 @@
           "required": true
         },
         {
+          "default": "disabled",
+          "defaulted": true,
           "enum": [
             "",
             "disabled"
@@ -4070,6 +4168,8 @@
           "required": true
         },
         {
+          "default": "",
+          "defaulted": true,
           "enum": [
             "",
             "disabled"
@@ -4093,6 +4193,8 @@
           "required": true
         },
         {
+          "default": "s1",
+          "defaulted": true,
           "enum": [
             "s1",
             "s2",
@@ -4104,6 +4206,8 @@
           "required": true
         },
         {
+          "default": "true",
+          "defaulted": true,
           "enum": [
             "true",
             "false"
@@ -4113,6 +4217,8 @@
           "required": true
         },
         {
+          "default": "false",
+          "defaulted": true,
           "enum": [
             "true",
             "false"
@@ -4122,6 +4228,8 @@
           "required": true
         },
         {
+          "default": "false",
+          "defaulted": true,
           "enum": [
             "true",
             "false"
@@ -4131,6 +4239,8 @@
           "required": true
         },
         {
+          "default": "false",
+          "defaulted": true,
           "enum": [
             "true",
             "false"
@@ -4140,6 +4250,8 @@
           "required": true
         },
         {
+          "default": "disabled",
+          "defaulted": true,
           "enum": [
             "",
             "disabled"
@@ -4149,6 +4261,8 @@
           "required": true
         },
         {
+          "default": "",
+          "defaulted": true,
           "enum": [
             "",
             "disabled"
@@ -4172,6 +4286,8 @@
           "required": true
         },
         {
+          "default": "closed",
+          "defaulted": true,
           "enum": [
             "closed",
             "open"
@@ -4195,6 +4311,8 @@
           "required": true
         },
         {
+          "default": "live",
+          "defaulted": true,
           "enum": [
             "live"
           ],
@@ -4207,6 +4325,8 @@
             "intMin": 0,
             "intMax": 100
           },
+          "default": 50,
+          "defaulted": true,
           "name": "volume",
           "type": "int32",
           "required": true
@@ -4249,6 +4369,8 @@
           "required": true
         },
         {
+          "default": "sizing",
+          "defaulted": true,
           "enum": [
             "sizing"
           ],
@@ -4261,6 +4383,8 @@
             "intMin": 15,
             "intMax": 85
           },
+          "default": 50,
+          "defaulted": true,
           "name": "split",
           "type": "int32",
           "required": true
@@ -4280,6 +4404,8 @@
           "required": true
         },
         {
+          "default": "typing",
+          "defaulted": true,
           "enum": [
             "typing"
           ],
@@ -4291,6 +4417,8 @@
           "bounds": {
             "sizeMax": 64
           },
+          "default": "",
+          "defaulted": true,
           "name": "query",
           "type": "string",
           "required": true
@@ -4299,6 +4427,8 @@
           "bounds": {
             "sizeMax": 32
           },
+          "default": "",
+          "defaulted": true,
           "name": "active",
           "type": "string",
           "required": true
@@ -4307,6 +4437,8 @@
           "bounds": {
             "sizeMax": 32
           },
+          "default": "",
+          "defaulted": true,
           "name": "chosen",
           "type": "string",
           "required": true
@@ -4401,6 +4533,8 @@
           "required": true
         },
         {
+          "default": "false",
+          "defaulted": true,
           "enum": [
             "true",
             "false"
@@ -4410,6 +4544,8 @@
           "required": true
         },
         {
+          "default": "false",
+          "defaulted": true,
           "enum": [
             "true",
             "false"
@@ -4419,6 +4555,8 @@
           "required": true
         },
         {
+          "default": "bookmarks",
+          "defaulted": true,
           "enum": [
             "bookmarks",
             "urls"
@@ -4428,6 +4566,8 @@
           "required": true
         },
         {
+          "default": "true",
+          "defaulted": true,
           "enum": [
             "true",
             "false"
@@ -4437,6 +4577,8 @@
           "required": true
         },
         {
+          "default": "false",
+          "defaulted": true,
           "enum": [
             "true",
             "false"
@@ -4449,6 +4591,8 @@
           "bounds": {
             "sizeMax": 32
           },
+          "default": "",
+          "defaulted": true,
           "name": "prefix",
           "type": "string",
           "required": true
@@ -4468,6 +4612,8 @@
           "required": true
         },
         {
+          "default": "tabs",
+          "defaulted": true,
           "enum": [
             "tabs",
             "accordion",
@@ -4478,6 +4624,8 @@
           "required": true
         },
         {
+          "default": "true",
+          "defaulted": true,
           "enum": [
             "true",
             "false"
@@ -4487,6 +4635,8 @@
           "required": true
         },
         {
+          "default": "false",
+          "defaulted": true,
           "enum": [
             "true",
             "false"
@@ -4496,6 +4646,8 @@
           "required": true
         },
         {
+          "default": "false",
+          "defaulted": true,
           "enum": [
             "true",
             "false"
@@ -4508,6 +4660,8 @@
           "bounds": {
             "sizeMax": 32
           },
+          "default": "",
+          "defaulted": true,
           "name": "prefix",
           "type": "string",
           "required": true
@@ -4527,6 +4681,8 @@
           "required": true
         },
         {
+          "default": "view",
+          "defaulted": true,
           "enum": [
             "view",
             "go"
@@ -4536,6 +4692,8 @@
           "required": true
         },
         {
+          "default": "true",
+          "defaulted": true,
           "enum": [
             "true",
             "false"
@@ -4545,6 +4703,8 @@
           "required": true
         },
         {
+          "default": "false",
+          "defaulted": true,
           "enum": [
             "true",
             "false"
@@ -4554,6 +4714,8 @@
           "required": true
         },
         {
+          "default": "0",
+          "defaulted": true,
           "enum": [
             "0",
             "-1"
@@ -4563,6 +4725,8 @@
           "required": true
         },
         {
+          "default": "-1",
+          "defaulted": true,
           "enum": [
             "0",
             "-1"
@@ -4586,6 +4750,8 @@
           "required": true
         },
         {
+          "default": "false",
+          "defaulted": true,
           "enum": [
             "true",
             "false"
@@ -4599,6 +4765,8 @@
             "intMin": 0,
             "intMax": 1000
           },
+          "default": 0,
+          "defaulted": true,
           "name": "x",
           "type": "int32",
           "required": true
@@ -4608,11 +4776,15 @@
             "intMin": 0,
             "intMax": 1000
           },
+          "default": 0,
+          "defaulted": true,
           "name": "y",
           "type": "int32",
           "required": true
         },
         {
+          "default": "popover",
+          "defaulted": true,
           "enum": [
             "popover",
             "sheet",
@@ -4623,6 +4795,8 @@
           "required": true
         },
         {
+          "default": "true",
+          "defaulted": true,
           "enum": [
             "true",
             "false"
@@ -4632,6 +4806,8 @@
           "required": true
         },
         {
+          "default": "false",
+          "defaulted": true,
           "enum": [
             "true",
             "false"
@@ -4641,6 +4817,8 @@
           "required": true
         },
         {
+          "default": "false",
+          "defaulted": true,
           "enum": [
             "true",
             "false"
@@ -4653,6 +4831,8 @@
           "bounds": {
             "sizeMax": 32
           },
+          "default": "",
+          "defaulted": true,
           "name": "prefix",
           "type": "string",
           "required": true
@@ -4672,6 +4852,8 @@
           "required": true
         },
         {
+          "default": "andy",
+          "defaulted": true,
           "enum": [
             "andy",
             "benoit",
@@ -4682,6 +4864,8 @@
           "required": true
         },
         {
+          "default": "true",
+          "defaulted": true,
           "enum": [
             "true",
             "false"
@@ -4691,6 +4875,8 @@
           "required": true
         },
         {
+          "default": "false",
+          "defaulted": true,
           "enum": [
             "true",
             "false"
@@ -4700,6 +4886,8 @@
           "required": true
         },
         {
+          "default": "false",
+          "defaulted": true,
           "enum": [
             "true",
             "false"
@@ -4709,6 +4897,8 @@
           "required": true
         },
         {
+          "default": "switch",
+          "defaulted": true,
           "enum": [
             "switch",
             "checkbox",
@@ -4722,6 +4912,8 @@
           "required": true
         },
         {
+          "default": "true",
+          "defaulted": true,
           "enum": [
             "true",
             "false"
@@ -4731,6 +4923,8 @@
           "required": true
         },
         {
+          "default": "false",
+          "defaulted": true,
           "enum": [
             "true",
             "false"
@@ -4740,6 +4934,8 @@
           "required": true
         },
         {
+          "default": "false",
+          "defaulted": true,
           "enum": [
             "true",
             "false"
@@ -4749,6 +4945,8 @@
           "required": true
         },
         {
+          "default": "false",
+          "defaulted": true,
           "enum": [
             "true",
             "false"
@@ -4758,6 +4956,8 @@
           "required": true
         },
         {
+          "default": "false",
+          "defaulted": true,
           "enum": [
             "true",
             "false"
@@ -4767,6 +4967,8 @@
           "required": true
         },
         {
+          "default": "false",
+          "defaulted": true,
           "enum": [
             "true",
             "false"
@@ -4779,6 +4981,8 @@
           "bounds": {
             "sizeMax": 32
           },
+          "default": "",
+          "defaulted": true,
           "name": "prefix",
           "type": "string",
           "required": true
@@ -4869,6 +5073,8 @@
           "required": true
         },
         {
+          "default": "pending",
+          "defaulted": true,
           "enum": [
             "pending",
             "typing"
@@ -4881,6 +5087,8 @@
           "bounds": {
             "sizeMax": 48
           },
+          "default": "",
+          "defaulted": true,
           "name": "query",
           "type": "string",
           "required": true
@@ -4941,6 +5149,8 @@
           "required": true
         },
         {
+          "default": "typing",
+          "defaulted": true,
           "enum": [
             "typing"
           ],
@@ -4952,6 +5162,8 @@
           "bounds": {
             "sizeMax": 48
           },
+          "default": "",
+          "defaulted": true,
           "name": "query",
           "type": "string",
           "required": true
@@ -4960,11 +5172,15 @@
           "bounds": {
             "sizeMax": 24
           },
+          "default": "INV-1024",
+          "defaulted": true,
           "name": "cursor",
           "type": "string",
           "required": true
         },
         {
+          "default": "id_asc",
+          "defaulted": true,
           "enum": [
             "id_asc",
             "id_desc",
@@ -4976,6 +5192,8 @@
           "required": true
         },
         {
+          "default": "ascending",
+          "defaulted": true,
           "enum": [
             "ascending",
             "descending",
@@ -4986,6 +5204,8 @@
           "required": true
         },
         {
+          "default": "none",
+          "defaulted": true,
           "enum": [
             "ascending",
             "descending",
@@ -5071,6 +5291,8 @@
           "required": true
         },
         {
+          "default": "true",
+          "defaulted": true,
           "enum": [
             "true",
             "false"
@@ -5094,6 +5316,8 @@
           "required": true
         },
         {
+          "default": "typing",
+          "defaulted": true,
           "enum": [
             "typing",
             "complete",
@@ -5107,11 +5331,15 @@
           "bounds": {
             "sizeMax": 6
           },
+          "default": "",
+          "defaulted": true,
           "name": "code",
           "type": "string",
           "required": true
         },
         {
+          "default": "false",
+          "defaulted": true,
           "enum": [
             "true",
             "false"
@@ -5121,6 +5349,8 @@
           "required": true
         },
         {
+          "default": "disabled",
+          "defaulted": true,
           "enum": [
             "",
             "disabled"
@@ -5213,6 +5443,8 @@
           "required": true
         },
         {
+          "default": "live",
+          "defaulted": true,
           "enum": [
             "live"
           ],
@@ -5224,6 +5456,8 @@
           "bounds": {
             "sizeMax": 64
           },
+          "default": "",
+          "defaulted": true,
           "name": "query",
           "type": "string",
           "required": true
@@ -5232,6 +5466,8 @@
           "bounds": {
             "sizeMax": 32
           },
+          "default": "nothing yet",
+          "defaulted": true,
           "name": "last",
           "type": "string",
           "required": true
@@ -5357,6 +5593,8 @@
           "required": true
         },
         {
+          "default": "one",
+          "defaulted": true,
           "enum": [
             "one",
             "two",
@@ -5371,6 +5609,8 @@
           "bounds": {
             "sizeMax": 32
           },
+          "default": "",
+          "defaulted": true,
           "name": "a_shape",
           "type": "string",
           "required": true
@@ -5379,6 +5619,8 @@
           "bounds": {
             "sizeMax": 32
           },
+          "default": "",
+          "defaulted": true,
           "name": "a_state",
           "type": "string",
           "required": true
@@ -5387,11 +5629,15 @@
           "bounds": {
             "sizeMax": 80
           },
+          "default": "",
+          "defaulted": true,
           "name": "a_note",
           "type": "string",
           "required": true
         },
         {
+          "default": "disabled",
+          "defaulted": true,
           "enum": [
             "",
             "disabled"
@@ -5401,6 +5647,8 @@
           "required": true
         },
         {
+          "default": "false",
+          "defaulted": true,
           "enum": [
             "true",
             "false"
@@ -5410,6 +5658,8 @@
           "required": true
         },
         {
+          "default": "false",
+          "defaulted": true,
           "enum": [
             "true",
             "false"
@@ -5419,6 +5669,8 @@
           "required": true
         },
         {
+          "default": "false",
+          "defaulted": true,
           "enum": [
             "true",
             "false"
@@ -5428,6 +5680,8 @@
           "required": true
         },
         {
+          "default": "false",
+          "defaulted": true,
           "enum": [
             "true",
             "false"
@@ -5437,6 +5691,8 @@
           "required": true
         },
         {
+          "default": "false",
+          "defaulted": true,
           "enum": [
             "true",
             "false"
@@ -5446,6 +5702,8 @@
           "required": true
         },
         {
+          "default": "false",
+          "defaulted": true,
           "enum": [
             "true",
             "false"
@@ -5469,6 +5727,8 @@
           "required": true
         },
         {
+          "default": "browsing",
+          "defaulted": true,
           "enum": [
             "browsing"
           ],
@@ -5481,6 +5741,8 @@
             "sizeMin": 7,
             "sizeMax": 7
           },
+          "default": "2026-09",
+          "defaulted": true,
           "name": "month",
           "type": "string",
           "required": true
@@ -5489,6 +5751,8 @@
           "bounds": {
             "sizeMax": 24
           },
+          "default": "September 2026",
+          "defaulted": true,
           "name": "label",
           "type": "string",
           "required": true
@@ -5497,6 +5761,8 @@
           "bounds": {
             "sizeMax": 16
           },
+          "default": "2026-09-p15",
+          "defaulted": true,
           "name": "value",
           "type": "string",
           "required": true
@@ -5505,6 +5771,8 @@
           "bounds": {
             "sizeMax": 16
           },
+          "default": "2026-09-p15",
+          "defaulted": true,
           "name": "active",
           "type": "string",
           "required": true

@@ -243,7 +243,7 @@ _accordionMulti: #Accordion & {
 	label:      "Release notes"
 	items: [
 		{name: "shipping", label: "Shipping", body: "Its own region, its own row, its own machine. Opening this one leaves the other two rows untouched — and unminted, until they are opened themselves."},
-		{name: "returns", label: "Returns", body: "Two states, two arrows, no context: the field is aria-expanded's value, so there is no derived column to keep in step with it."},
+		{name: "returns", label: "Returns", body: "Two states, two arrows: the field is aria-expanded's value, so there is no derived column to keep in step with it."},
 		{name: "support", label: "Support", body: "Clicking inside an open panel writes nothing. Every arrow is narrowed to its trigger's id, and the panel's own id matches none of them."},
 	]
 }
@@ -292,7 +292,7 @@ accordionScreen: markup: """
 	    <p class="arm-note">Three sibling singleton regions on one collection,
 	    each pinning <code>id=eq.&lt;item&gt;</code>, each carrying the switch's
 	    two-state machine with its field renamed and its event narrowed. No
-	    context, no derived column: the field is what
+	    derived column: the field is what
 	    <code>aria-expanded</code> binds.</p>
 	    <div class="demo-stage">
 	\(_accordionMulti.markup)
@@ -712,7 +712,6 @@ combobox: #Combobox & {
 _comboboxDeclined: terminal.#Machine & {
 	field:   "phase"
 	initial: "typing"
-	context: choice: ""
 	states: typing: on: ("input@\(combobox.key)-input"): {
 		assign: choice: {type: "event", params: field: "value"}
 	}
@@ -794,7 +793,7 @@ _checkboxTerms: #Checkbox & {
 	label:      "Accept the terms"
 }
 
-// Exported: the row this control opens in is the machine's own context, and
+// Exported: the row this control opens in supplies the entity defaults, and
 // the entity states it as a seed from the same value.
 selectAllDemo: #SelectAll & {
 	collection: "select_all_demo"
@@ -1080,8 +1079,8 @@ _carousel: #Carousel & {
 	]
 }
 
-_pagInv: #Inventory & {machine: _pagination.machine}
-_carInv: #Inventory & {machine: _carousel.machine}
+_pagInv: #Inventory & {machine: _pagination.machine, defaults: _pagination._o.defaults}
+_carInv: #Inventory & {machine: _carousel.machine, defaults: _carousel._o.defaults}
 
 paginationScreen: markup: """
 	<section class="screen screen-pagination" data-screen="pagination">
@@ -3202,12 +3201,12 @@ dataTableScreen: markup: """
 	    <a class="pane-link" data-route="table">Table</a>'s is: an interpolated
 	    filter is re-resolved when its parent's row moves, so the collection a
 	    keystroke writes is not the collection the grid reads. It is seeded from
-	    the machine's own initial world — the seed, the machine's
-	    <code>context</code> and the readout's <code>data-empty-row</code> are
+	    the component's initial row — the seed, the entity defaults
+	    and the readout's <code>data-empty-row</code> are
 	    one CUE value emitted three times, so the three cannot disagree about
 	    what the screen opens on. Two of them are observable: the seed is the row
-	    the readout below prints, and the <code>context</code> is what the chart
-	    carries. The third never runs — a read prepares its collection before it
+	    the readout below prints, and the defaults supply the empty row. The third
+	    never runs — a read prepares its collection before it
 	    answers, so the readout always finds its row — and it is emitted anyway
 	    because a guard stating a different world would be worse than one that is
 	    never reached.</p>
@@ -3901,8 +3900,9 @@ calendarScreen: markup: """
 	    </div>
 	    <p class="pane-note">No <code>data-empty-row</code> anywhere on the
 	    screen, and no arrival arrow either: this row is SEEDED, and what the seed
-	    states is the machine's own initial world — <code>{…context, id, state:
-	    initial}</code>, which is exactly what a machine region with no item
+	    states is the component's initial row — entity defaults plus
+	    <code>{id, state: initial}</code>, which is exactly what a machine region
+	    with no item
 	    template would have synthesized. One statement, written as well as
 	    synthesized, because the grid is a region WITH an item template and such a
 	    region renders only rows that exist.</p>

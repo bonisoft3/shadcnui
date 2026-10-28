@@ -14,16 +14,25 @@ code: surface: screens: {
 			{table: "accordion_multi_demo", kind: "live", nested: false, lists: [], route: "view", clauses: [{"col":"id","op":"eq"}], embeds: [], orders: []},
 		]
 		writes: []
+		charts: [
+			{table: "accordion_single_demo", field: "open", writes: []},
+			{table: "accordion_single_demo", field: "caret", writes: []},
+			{table: "accordion_multi_demo", field: "open", writes: []},
+			{table: "accordion_multi_demo", field: "open", writes: []},
+			{table: "accordion_multi_demo", field: "open", writes: []},
+		]
 		files: {handlers: ["shell/handlers/is-key.js"], adapters: []}
 	}
 	atoms: {
 		reads: []
 		writes: []
+		charts: []
 		files: {handlers: [], adapters: []}
 	}
 	breadcrumb: {
 		reads: []
 		writes: []
+		charts: []
 		files: {handlers: [], adapters: []}
 	}
 	calendar: {
@@ -70,11 +79,16 @@ code: surface: screens: {
 			{table: "calendar_demo", op: "upsert"},
 			{table: "calendar_demo", op: "upsert"},
 		]
+		charts: [
+			{table: "calendar_demo", field: "state", writes: []},
+			{table: "calendar_demo", field: "state", writes: []},
+		]
 		files: {handlers: ["shell/handlers/month-step.js"], adapters: []}
 	}
 	catalog: {
 		reads: []
 		writes: []
+		charts: []
 		files: {handlers: [], adapters: []}
 	}
 	chart: {
@@ -97,6 +111,7 @@ code: surface: screens: {
 			{table: "chart_cursor", op: "upsert"},
 			{table: "chart_cursor", op: "upsert"},
 		]
+		charts: []
 		files: {handlers: [], adapters: []}
 	}
 	chat: {
@@ -108,6 +123,7 @@ code: surface: screens: {
 		writes: [
 			{table: "chat_row", op: "create"},
 		]
+		charts: []
 		files: {handlers: [], adapters: []}
 	}
 	checkbox: {
@@ -122,6 +138,12 @@ code: surface: screens: {
 			{table: "collapsible_demo", kind: "live", nested: false, lists: [], route: "view", clauses: [{"col":"id","op":"eq"}], embeds: [], orders: []},
 		]
 		writes: []
+		charts: [
+			{table: "checkbox_demo", field: "checked", writes: []},
+			{table: "select_all_demo", field: "phase", writes: []},
+			{table: "toggle_demo", field: "pressed", writes: []},
+			{table: "collapsible_demo", field: "open", writes: []},
+		]
 		files: {handlers: ["shell/handlers/flip-of.js", "shell/handlers/roll-up.js"], adapters: []}
 	}
 	combobox: {
@@ -132,6 +154,7 @@ code: surface: screens: {
 		writes: [
 			{table: "combobox_demo", op: "upsert"},
 		]
+		charts: []
 		files: {handlers: [], adapters: []}
 	}
 	command: {
@@ -153,6 +176,9 @@ code: surface: screens: {
 			{table: "command_demo", op: "upsert"},
 			{table: "command_demo", op: "upsert"},
 		]
+		charts: [
+			{table: "command_demo", field: "state", writes: []},
+		]
 		files: {handlers: [], adapters: []}
 	}
 	composition: {
@@ -161,6 +187,9 @@ code: surface: screens: {
 			{table: "composition_demo", kind: "live", nested: false, lists: [], route: "view", clauses: [{"col":"id","op":"eq"}], embeds: [], orders: []},
 		]
 		writes: []
+		charts: [
+			{table: "composition_demo", field: "phase", writes: []},
+		]
 		files: {handlers: [], adapters: []}
 	}
 	"data-table": {
@@ -185,6 +214,9 @@ code: surface: screens: {
 			{table: "data_cursor", op: "upsert"},
 			{table: "data_cursor", op: "upsert"},
 		]
+		charts: [
+			{table: "data_cursor", field: "state", writes: []},
+		]
 		files: {handlers: [], adapters: []}
 	}
 	form: {
@@ -197,11 +229,13 @@ code: surface: screens: {
 			{table: "form_demo", op: "upsert"},
 			{table: "form_demo", op: "delete"},
 		]
+		charts: []
 		files: {handlers: [], adapters: []}
 	}
 	"hover-card": {
 		reads: []
 		writes: []
+		charts: []
 		files: {handlers: [], adapters: []}
 	}
 	"input-otp": {
@@ -210,6 +244,9 @@ code: surface: screens: {
 			{table: "otp_demo", kind: "live", nested: false, lists: [], route: "view", clauses: [{"col":"id","op":"eq"}], embeds: [], orders: []},
 		]
 		writes: []
+		charts: [
+			{table: "otp_demo", field: "state", writes: []},
+		]
 		files: {handlers: ["shell/handlers/has-nondigit.js", "shell/handlers/is-code.js", "shell/handlers/is-digits.js"], adapters: []}
 	}
 	menu: {
@@ -225,6 +262,17 @@ code: surface: screens: {
 			{table: "context_menu_demo", kind: "live", nested: false, lists: [], route: "view", clauses: [{"col":"id","op":"eq"}], embeds: [], orders: []},
 		]
 		writes: []
+		charts: [
+			{table: "menu_profile_demo", field: "caret", writes: []},
+			{table: "menu_profile_demo", field: "profile", writes: []},
+			{table: "menubar_demo", field: "caret", writes: []},
+			{table: "menu_option_demo", field: "caret", writes: []},
+			{table: "menu_option_demo", field: "chk_bookmarks", writes: []},
+			{table: "menu_option_demo", field: "chk_urls", writes: []},
+			{table: "menu_go_demo", field: "caret", writes: []},
+			{table: "context_menu_demo", field: "open", writes: []},
+			{table: "context_menu_demo", field: "caret", writes: []},
+		]
 		files: {handlers: ["shell/handlers/has-prefix.js", "shell/handlers/is-key.js", "shell/handlers/is-printable.js", "shell/handlers/starts-with.js", "shell/handlers/type-into.js"], adapters: []}
 	}
 	navigation: {
@@ -239,11 +287,15 @@ code: surface: screens: {
 			{table: "nav_rail_item", kind: "live", nested: true, lists: [6], route: "whole", clauses: [], embeds: [], orders: ["pos"]},
 		]
 		writes: []
+		charts: [
+			{table: "nav_sidebar_demo", field: "open", writes: []},
+		]
 		files: {handlers: [], adapters: []}
 	}
 	overlays: {
 		reads: []
 		writes: []
+		charts: []
 		files: {handlers: [], adapters: []}
 	}
 	pagination: {
@@ -254,6 +306,10 @@ code: surface: screens: {
 			{table: "carousel_demo", kind: "live", nested: false, lists: [], route: "view", clauses: [{"col":"id","op":"eq"}], embeds: [], orders: []},
 		]
 		writes: []
+		charts: [
+			{table: "pagination_demo", field: "page", writes: []},
+			{table: "carousel_demo", field: "slide", writes: []},
+		]
 		files: {handlers: [], adapters: []}
 	}
 	picker: {
@@ -262,16 +318,21 @@ code: surface: screens: {
 			{table: "picker_demo", kind: "live", nested: false, lists: [], route: "view", clauses: [{"col":"id","op":"eq"}], embeds: [], orders: []},
 		]
 		writes: []
+		charts: [
+			{table: "picker_demo", field: "choice", writes: []},
+		]
 		files: {handlers: [], adapters: []}
 	}
 	popover: {
 		reads: []
 		writes: []
+		charts: []
 		files: {handlers: [], adapters: []}
 	}
 	primitives: {
 		reads: []
 		writes: []
+		charts: []
 		files: {handlers: [], adapters: []}
 	}
 	questionnaire: {
@@ -280,6 +341,9 @@ code: surface: screens: {
 			{table: "quiz_demo", kind: "live", nested: false, lists: [], route: "view", clauses: [{"col":"id","op":"eq"}], embeds: [], orders: []},
 		]
 		writes: []
+		charts: [
+			{table: "quiz_demo", field: "step", writes: []},
+		]
 		files: {handlers: ["shell/handlers/unless-answered.js", "shell/handlers/unless-typed.js"], adapters: []}
 	}
 	"radio-group": {
@@ -288,6 +352,9 @@ code: surface: screens: {
 			{table: "radio_group_demo", kind: "live", nested: false, lists: [], route: "view", clauses: [{"col":"id","op":"eq"}], embeds: [], orders: []},
 		]
 		writes: []
+		charts: [
+			{table: "radio_group_demo", field: "value", writes: []},
+		]
 		files: {handlers: ["shell/handlers/is-key.js"], adapters: []}
 	}
 	resizable: {
@@ -295,6 +362,9 @@ code: surface: screens: {
 			{table: "resizable_demo", kind: "live", nested: false, lists: [], route: "view", clauses: [{"col":"id","op":"eq"}], embeds: [], orders: []},
 		]
 		writes: []
+		charts: [
+			{table: "resizable_demo", field: "state", writes: []},
+		]
 		files: {handlers: [], adapters: []}
 	}
 	select: {
@@ -307,11 +377,13 @@ code: surface: screens: {
 			{table: "select_demo", op: "upsert"},
 			{table: "select_option", op: "upsert"},
 		]
+		charts: []
 		files: {handlers: [], adapters: []}
 	}
 	sheet: {
 		reads: []
 		writes: []
+		charts: []
 		files: {handlers: [], adapters: []}
 	}
 	slider: {
@@ -323,6 +395,9 @@ code: surface: screens: {
 			{table: "progress_demo", kind: "live", nested: false, lists: [], route: "view", clauses: [{"col":"id","op":"eq"}], embeds: [], orders: []},
 		]
 		writes: []
+		charts: [
+			{table: "slider_demo", field: "phase", writes: []},
+		]
 		files: {handlers: [], adapters: []}
 	}
 	switch: {
@@ -333,6 +408,10 @@ code: surface: screens: {
 			{table: "switch_demo", kind: "live", nested: false, lists: [], route: "view", clauses: [{"col":"id","op":"eq"}], embeds: [], orders: []},
 		]
 		writes: []
+		charts: [
+			{table: "switch_demo", field: "checked", writes: []},
+			{table: "switch_demo", field: "checked", writes: []},
+		]
 		files: {handlers: [], adapters: []}
 	}
 	table: {
@@ -345,6 +424,9 @@ code: surface: screens: {
 		writes: [
 			{table: "table_row", op: "upsert"},
 		]
+		charts: [
+			{table: "table_query", field: "state", writes: []},
+		]
 		files: {handlers: [], adapters: []}
 	}
 	tabs: {
@@ -353,6 +435,9 @@ code: surface: screens: {
 			{table: "tabs_demo", kind: "live", nested: false, lists: [], route: "view", clauses: [{"col":"id","op":"eq"}], embeds: [], orders: []},
 		]
 		writes: []
+		charts: [
+			{table: "tabs_demo", field: "active", writes: []},
+		]
 		files: {handlers: ["shell/handlers/is-key.js"], adapters: []}
 	}
 	toast: {
@@ -361,6 +446,9 @@ code: surface: screens: {
 			{table: "toast_demo", kind: "live", nested: false, lists: [], route: "view", clauses: [{"col":"id","op":"eq"}], embeds: [], orders: []},
 		]
 		writes: []
+		charts: [
+			{table: "toast_demo", field: "state", writes: []},
+		]
 		files: {handlers: [], adapters: []}
 	}
 	"toggle-group": {
@@ -370,6 +458,9 @@ code: surface: screens: {
 			{table: "toggle_group_demo", kind: "live", nested: false, lists: [], route: "view", clauses: [{"col":"id","op":"eq"}], embeds: [], orders: []},
 		]
 		writes: []
+		charts: [
+			{table: "toggle_group_demo", field: "value", writes: []},
+		]
 		files: {handlers: ["shell/handlers/is-key.js"], adapters: []}
 	}
 }
@@ -428,7 +519,11 @@ _irNotes: {
 	"decision-51": "The questionnaire's states are the SCREEN's steps rather than a control's, which is the first chart in this app shaped that way — and almost everything else about it is vocabulary the catalog already had. An answer is a column an arrow states as a literal (decision-11's shape, in a chart of the screen), an option's own aria-pressed is a column beside it because that attribute speaks true and false rather than the answer's words, and which question is showing is the field the panels project off — Radix's data-state contract, the same one the tabs keep. Progress is a RULE keyed on that field and not a column. A number computed from where you are is a second spelling of where you are, and two spellings drift; the bar is four rules, one per state, and there is nothing to keep in step. What a step adds is the block. Next is blocked until the question is answered, and the block is a COLUMN rather than a guard — the rule the one-time code ships under, followed here rather than deciding one fact twice. Skip is then exactly the arrow with no such column on it, which is what \"skippable\" means once the difference is written into a chart: it states the answer Skipped and goes on, so nothing downstream has to tell a skipped question from an unanswered one. Back is what makes the block interesting. Coming forward again must not ask a question already answered, so what a step arrow assigns is the DESTINATION's block, read off the row by a leaf. There are two leaves and not one, because the two SOURCES are two facts: a step arrow reads the row, and a keystroke reads the event, since the row still holds the answer before it. One leaf preferring the event would have broken every step arrow — each click carries a value, a button's own, which is the empty string — and it did, in a browser, while the shim tier passed: linkedom gives a button no value at all. The harness gives it one now. Three things it does not do, each with the reason rather than a deferral. A question that appears only after a particular answer is a guarded transition the grammar already has — what it costs is that the step set stops being the question set, and a reader of the chart can no longer see the path by reading its states. Resuming where a reader left off is the same chart over a device row, and the only thing that changes is one word in the program. And a count of the steps remaining is an aggregate over the chart's own STATES rather than over rows, so nothing can count them at runtime — the program can, where it states them"
 }
 
-code: meta: decisions: [Id=string]: note: _irNotes[Id]
+_deriving: *false | bool @tag(derive,type=bool)
+
+if !_deriving {
+	code: meta: decisions: [Id=string]: note: _irNotes[Id]
+}
 
 _irAccepts: {
 	"test-accordion-multiple": ["accept-accordion-multiple"]
@@ -556,4 +651,6 @@ _irAccepts: {
 	"test-zero-js": ["accept-zero-js"]
 }
 
-code: meta: tests: [Id=string]: accepts: _irAccepts[Id]
+if !_deriving {
+	code: meta: tests: [Id=string]: accepts: _irAccepts[Id]
+}

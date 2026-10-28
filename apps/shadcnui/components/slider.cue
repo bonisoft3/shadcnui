@@ -48,10 +48,11 @@ import (
 
 	_input: "slider-\(S.key)-input"
 
+	defaults: {(S.value): S.start}
+
 	machine: terminal.#Machine & {
 		field:   S.field
 		initial: S.state
-		context: {(S.value): S.start}
 		states: {
 			(S.state): on: {
 				(("input@" + S._input)): {
@@ -61,12 +62,12 @@ import (
 		}
 	}
 
-	// The row the terminal synthesizes for this region — {...context, id,
-	// field: initial}. Published so a pane or a bar reading the same row states
+	// The opening row, derived from the component declaration and the chart's
+	// initial state. Published so a pane or a bar reading the same row states
 	// the same opening world rather than a second copy of it.
 	fallback: {id: S.row, (S.field): S.state, (S.value): S.start}
 
-	// No data-empty-row: the machine is the writer of the initial fact
+	// The entity defaults supply the initial fact
 	// (decision-07). The readout is aria-hidden because the control already
 	// announces its own value, and a second copy in the accessibility tree is
 	// the same number said twice.

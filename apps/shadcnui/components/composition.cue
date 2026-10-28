@@ -115,14 +115,13 @@ import (
 	group:      #ButtonGroup
 
 	_empty: {(D.search.value): "", last: "nothing yet"}
-	// What the readout binds before anything is typed: the machine's context,
+	// What the readout binds before anything is typed: the entity's defaults,
 	// emitted twice from one value.
 	emptyRow: (omni.#attrJSON & {in: {id: D.row, (D.field): D.state, for k, v in D._empty {(k): v}}}).out
 
 	machine: terminal.#Machine & {
 		field:   D.field
 		initial: D.state
-		context: D._empty
 		states: (D.state): on: {
 			("input@\(D.search.key)"): assign: (D.search.value): {type: "event", params: field: "value"}
 			("click@\(D.search.key)-clear"): assign: (D.search.value): ""

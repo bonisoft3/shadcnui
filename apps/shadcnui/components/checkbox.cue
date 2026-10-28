@@ -36,14 +36,13 @@ _#Binary: B={
 	// What the trigger's click makes true next, per state.
 	next: [string]: string
 	// The other columns each state implies: merged into every arrow targeting
-	// that state, and into `context` for the initial one. Empty where the
+	// that state, and into the entity defaults for the initial one. Empty where the
 	// field is the whole fact, which is every two-state case here.
 	implies: {for s, _ in B.next {(s): [string]: string}}
 
 	machine: terminal.#Machine & {
 		field:   B.field
 		initial: B.initial
-		if len(B.implies[B.initial]) > 0 {context: B.implies[B.initial]}
 		states: {for s, t in B.next {
 			(s): on: {("click@\(B.trigger)"): [
 				if len(B.implies[t]) > 0 {{target: t, assign: B.implies[t]}},
@@ -119,19 +118,18 @@ _#Binary: B={
 	// the value they add up to, computed here so the two cannot disagree
 	// (decision-07's agreement, by construction).
 	_checked: [for i in S.items if i.initial == "true" {i}]
-	context: {
+	defaults: {
 		(S.value): [if len(S._checked) == len(S.items) {"true"}, if len(S._checked) == 0 {"false"}, "mixed"][0]
 		for i in S.items {(S._col[i.name]): i.initial}
 	}
 
 	// The row this control opens in, for the readout beside it: the machine's
-	// own context, emitted twice from one value.
-	emptyRow: (omni.#attrJSON & {in: {id: S.row, (S.field): S.state, for k, v in S.context {(k): v}}}).out
+	// defaults, emitted from one value.
+	emptyRow: (omni.#attrJSON & {in: {id: S.row, (S.field): S.state, for k, v in S.defaults {(k): v}}}).out
 
 	machine: terminal.#Machine & {
 		field:   S.field
 		initial: S.state
-		context: S.context
 		states: (S.state): on: {
 			// The header, and APG's own cycle: a partially checked select-all
 			// checks everything, and from there it is the two-cycle. One leaf

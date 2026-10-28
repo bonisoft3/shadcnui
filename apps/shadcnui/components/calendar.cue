@@ -154,27 +154,19 @@ import (
 	// and a calendar branches on nothing. The entity prints that admission the
 	// way /slider's does, as a one-member enum — what is left once the field
 	// holds no branch is the three columns each arrow writes.
+	defaults: {month: C.month, label: C.monthLabel, value: C.value, active: C.value}
+
 	machine: terminal.#Machine & {
 		field:   C.field
 		initial: "browsing"
-		context: {
-			month:  C.month
-			label:  C.monthLabel
-			value:  C.value
-			active: C.value
-		}
 		states: browsing: on: {
 			("click@\(C.key)-prev"): {assign: (#MonthStep & {module: C.module, by: -1, min: C.firstMonth, max: C.lastMonth}).out}
 			("click@\(C.key)-next"): {assign: (#MonthStep & {module: C.module, by: 1, min: C.firstMonth, max: C.lastMonth}).out}
 		}
 	}
 
-	// The seeded row, and it IS the machine's stated initial world:
-	// {...context, id, field: initial} is exactly what a machine region with no
-	// item template synthesizes for itself. The grid is a region WITH one and
-	// renders only rows that exist, so the same world is written as well as
-	// synthesized — one statement here, emitted twice.
-	seedRow: {id: C.row} & C.machine.context & {(C.field): C.machine.initial}
+	// The grid renders stored rows, so seed the same initial row the entity defaults supply.
+	seedRow: {id: C.row} & C.defaults & {(C.field): C.machine.initial}
 
 	_keys: (omni.#attrJSON & {in: {
 		ArrowRight: "\(C.key)-nx-{active}"

@@ -1,37 +1,46 @@
 # generated from bayt.cue — do not edit
 services:
-  apps_shadcnui-build:
+  shadcnui-build:
     build:
       additional_contexts:
-        apps_shadcnui-setup: service:apps_shadcnui-setup
+        shadcnui-generate: service:shadcnui-generate
       context: ..
       dockerfile: .bayt/Dockerfile.build
       target: build
+      tags:
+      - bayt-shadcnui-build:${BAYT_IMAGE_TAG:-${COMPOSE_PROJECT_NAME}}
+      - bayt-shadcnui-build:latest
       args:
+        BAYT_DIR: ${MONOREPO_COMPOSE_MODE:+apps/shadcnui}
         BUILDKIT_SYNTAX: >-
-          docker/dockerfile:1.26@sha256:ecfaec9ed6d810b56388c508f4121597bfbba70d41a6dfeee4d8cad5f295fc32
-    image: bayt-apps_shadcnui-build:${BAYT_IMAGE_TAG:-latest}
+          docker/dockerfile:1.27@sha256:4edf897a3ffa55b89f906fc8cc78afdb3f1834cc9c7083565e611a8a7d5fe99e
+    image: bayt-shadcnui-build:${BAYT_IMAGE_TAG:-${COMPOSE_PROJECT_NAME}}
     scale: 0
-  apps_shadcnui-build_bayt:
+  shadcnui-build_bayt:
     build:
       additional_contexts:
-        apps_shadcnui-setup_bayt: service:apps_shadcnui-setup_bayt
-        workspaceroot-setup_bayt: service:workspaceroot-setup_bayt
+        shadcnui-generate_bayt: service:shadcnui-generate_bayt
+        shadcnui-setup_bayt: service:shadcnui-setup_bayt
       context: ..
       dockerfile: .bayt/Dockerfile.build
       target: build_bayt
       args:
+        BAYT_DIR: ${MONOREPO_COMPOSE_MODE:+apps/shadcnui}
         BUILDKIT_SYNTAX: >-
-          docker/dockerfile:1.26@sha256:ecfaec9ed6d810b56388c508f4121597bfbba70d41a6dfeee4d8cad5f295fc32
-    image: bayt-apps_shadcnui-build_bayt:latest
+          docker/dockerfile:1.27@sha256:4edf897a3ffa55b89f906fc8cc78afdb3f1834cc9c7083565e611a8a7d5fe99e
+    image: bayt-shadcnui-build_bayt:latest
     scale: 0
-  apps_shadcnui-build_srcs:
+  shadcnui-build_srcs:
     build:
+      additional_contexts:
+        shadcnui-generate_srcs: service:shadcnui-generate_srcs
+        shadcnui-setup_srcs: service:shadcnui-setup_srcs
       context: ..
       dockerfile: .bayt/Dockerfile.build
       target: build_srcs
       args:
+        BAYT_DIR: ${MONOREPO_COMPOSE_MODE:+apps/shadcnui}
         BUILDKIT_SYNTAX: >-
-          docker/dockerfile:1.26@sha256:ecfaec9ed6d810b56388c508f4121597bfbba70d41a6dfeee4d8cad5f295fc32
-    image: bayt-apps_shadcnui-build_srcs:latest
+          docker/dockerfile:1.27@sha256:4edf897a3ffa55b89f906fc8cc78afdb3f1834cc9c7083565e611a8a7d5fe99e
+    image: bayt-shadcnui-build_srcs:latest
     scale: 0

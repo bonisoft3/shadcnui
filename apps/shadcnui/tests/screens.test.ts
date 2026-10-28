@@ -233,8 +233,10 @@ Deno.test({
     await m.settle();
 
     // The row is the clock's, not a reader's.
+    const row = only(m.rows("table_query"), "after the table's arrival beat");
     assert(
-      JSON.stringify(m.rows("table_query")) === JSON.stringify([{ query: "", id: "the", state: "typing" }]),
+      Object.keys(row).sort().join(",") === "id,query,state" &&
+        row.query === "" && row.id === "the" && row.state === "typing",
       `the beat stated ${JSON.stringify(m.rows("table_query"))}`,
     );
     // And the frame it gates is on the screen, with its head still inert.

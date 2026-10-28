@@ -45,7 +45,7 @@ import (
 	_reset:  "\(O.key)-reset"
 
 	// The empty world, stated once and emitted three times — as the machine's
-	// context, as the arrow that clears it, and as the fallback the readout
+	// defaults, as the arrow that clears it, and as the fallback the readout
 	// beside this control binds before anything is typed (decision-07).
 	_empty: {code: "", invalid: "false", blocked: "disabled"}
 	emptyRow: (omni.#attrJSON & {in: {id: O.row, (O.field): "typing", for k, v in O._empty {(k): v}}}).out
@@ -91,7 +91,6 @@ import (
 	machine: terminal.#Machine & {
 		field:   O.field
 		initial: "typing"
-		context: O._empty
 		states: {
 			typing: on: (("input@" + O._input)): O._typed
 			complete: on: {

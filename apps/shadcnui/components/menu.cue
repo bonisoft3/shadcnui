@@ -435,10 +435,11 @@ _#Surface: S={
 		}
 	}
 
+	defaults: {x: 0, y: 0}
+
 	machine: {
 		field:   C.field
 		initial: "false"
-		context: {x: 0, y: 0}
 		states: {
 			"false": on: "contextmenu@\(C._target)": [C._open]
 			"true": on: "contextmenu@\(C._target)":  [C._open]

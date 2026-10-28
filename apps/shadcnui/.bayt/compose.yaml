@@ -1,38 +1,80 @@
 # generated from bayt.cue — do not edit
 include:
-- path: ./compose.bayt.yaml
+- path:
+  - ./compose.bayt.yaml
+  - ./compose.bayt.ports.yaml
   required: false
 services:
   setup:
     extends:
       file: ./compose.setup.yaml
-      service: apps_shadcnui-setup
+      service: shadcnui-setup
     profiles:
     - setup
+    scale: 1
+  lint:
+    extends:
+      file: ./compose.lint.yaml
+      service: shadcnui-lint
+    profiles:
+    - lint
+  generate:
+    extends:
+      file: ./compose.generate.yaml
+      service: shadcnui-generate
+    profiles:
+    - generate
   build:
     extends:
       file: ./compose.build.yaml
-      service: apps_shadcnui-build
+      service: shadcnui-build
     profiles:
     - build
+  test:
+    extends:
+      file: ./compose.test.yaml
+      service: shadcnui-test
+    profiles:
+    - test
   launch:
     extends:
       file: ./compose.launch.yaml
-      service: apps_shadcnui-launch
+      service: shadcnui-launch
     profiles:
     - launch
     scale: 1
   integrate:
     extends:
       file: ./compose.integrate.yaml
-      service: apps_shadcnui-integrate
+      service: shadcnui-integrate
     profiles:
     - integrate
+    scale: 1
+  ci-visual:
+    extends:
+      file: ./compose.ci-visual.yaml
+      service: shadcnui-ci-visual
+    profiles:
+    - ci-visual
+    scale: 1
+  ci:
+    extends:
+      file: ./compose.ci.yaml
+      service: shadcnui-ci
+    profiles:
+    - ci
+    scale: 1
+  served:
+    extends:
+      file: ./compose.served.yaml
+      service: shadcnui-served
+    profiles:
+    - served
     scale: 1
   caddy:
     extends:
       file: ./compose.caddy.yaml
-      service: apps_shadcnui-caddy
+      service: shadcnui-caddy
     profiles:
     - caddy
     scale: 1

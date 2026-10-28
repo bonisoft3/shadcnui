@@ -73,10 +73,11 @@ import (
 		}
 	}}
 
+	defaults: O.at[O.items[0].name]
+
 	machine: terminal.#Machine & {
 		field:   O.field
 		initial: O.items[0].name
-		context: O.at[O.items[0].name]
 		states: {for x, s in O.items {
 			(s.name): on: {
 				for u in O.items if u.name != s.name {
@@ -102,7 +103,8 @@ import (
 	arrows:    list.Sum([for _, s in I.machine.states {len(s.on)}])
 	absolute:  I.positions * (I.positions - 1)
 	step:      I.arrows - I.absolute
-	columns:   len(I.machine.context)
+	defaults: [string]: string
+	columns:   len(I.defaults)
 }
 
 // The page list is a <nav> of buttons, not of links: a page here is a column

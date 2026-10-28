@@ -76,21 +76,20 @@ import (
 
 	// The world a first visit and a restart both land in: no answer, every
 	// option unpressed, and Next blocked. One value, emitted as the machine's
-	// context and as the arrow out of `done`.
+	// defaults and as the arrow out of `done`.
 	_empty: {
 		for s in Q.steps {(s.col): ""}
 		for s in Q.steps for k, v in Q._selOff[s.name] {(k): v}
 	}
 
-	_context: {blocked: "disabled", for k, v in Q._empty {(k): v}}
-	// What the readout binds before the first answer: the machine's context,
+	defaults: {blocked: "disabled", for k, v in Q._empty {(k): v}}
+	// What the readout binds before the first answer: the entity's defaults,
 	// emitted twice from one value.
-	emptyRow: (omni.#attrJSON & {in: {id: Q.row, (Q.field): Q.steps[0].name, for k, v in Q._context {(k): v}}}).out
+	emptyRow: (omni.#attrJSON & {in: {id: Q.row, (Q.field): Q.steps[0].name, for k, v in Q.defaults {(k): v}}}).out
 
 	machine: terminal.#Machine & {
 		field:   Q.field
 		initial: Q.steps[0].name
-		context: Q._context
 		states: {
 			for i, s in Q.steps {
 				(s.name): on: {

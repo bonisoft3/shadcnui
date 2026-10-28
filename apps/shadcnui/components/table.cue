@@ -149,10 +149,11 @@ import (
 	// types through a targetless arrow that acts and stays (decision-23,
 	// decision-24). The arrow narrows to the field's id: a control carrying no
 	// `value` declines it rather than writing something it never showed.
+	defaults: {query: ""}
+
 	machine: terminal.#Machine & {
 		field:   T.field
 		initial: "pending"
-		context: query: ""
 		states: {
 			pending: after: "0": "typing"
 			typing: on: ("input@" + T._input): {

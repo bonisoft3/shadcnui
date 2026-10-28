@@ -16,7 +16,7 @@
 <omnishell--questionnaire>
   <section class="quiz" data-live="quiz_demo" data-filter="id=eq.the"
            data-state="{step}"
-           data-machine='{"field":"step","initial":"one","context":{"blocked":"disabled","a_shape":"","a_state":"","a_note":"","sel_one_markup":"false","sel_one_chart":"false","sel_one_library":"false","sel_two_row":"false","sel_two_dom":"false","sel_two_memory":"false"},"states":{"done":{"on":{"click@quiz-again":{"target":"one","assign":{"blocked":"disabled","a_shape":"","a_state":"","a_note":"","sel_one_markup":"false","sel_one_chart":"false","sel_one_library":"false","sel_two_row":"false","sel_two_dom":"false","sel_two_memory":"false"}}}},"one":{"on":{"click@quiz-next":{"target":"two","assign":{"blocked":{"type":"unless-answered","params":{"col":"a_state"}}}},"click@quiz-one-markup":{"assign":{"a_shape":"Markup and tokens","sel_one_markup":"true","blocked":"","sel_one_chart":"false","sel_one_library":"false"}},"click@quiz-one-chart":{"assign":{"a_shape":"Markup, tokens and a chart","sel_one_chart":"true","blocked":"","sel_one_markup":"false","sel_one_library":"false"}},"click@quiz-one-library":{"assign":{"a_shape":"A runtime library","sel_one_library":"true","blocked":"","sel_one_markup":"false","sel_one_chart":"false"}}}},"two":{"on":{"click@quiz-next":{"target":"three","assign":{"blocked":{"type":"unless-answered","params":{"col":"a_note"}}}},"click@quiz-two-row":{"assign":{"a_state":"In a row","sel_two_row":"true","blocked":"","sel_two_dom":"false","sel_two_memory":"false"}},"click@quiz-two-dom":{"assign":{"a_state":"In the DOM","sel_two_dom":"true","blocked":"","sel_two_row":"false","sel_two_memory":"false"}},"click@quiz-two-memory":{"assign":{"a_state":"In a store somewhere","sel_two_memory":"true","blocked":"","sel_two_row":"false","sel_two_dom":"false"}},"click@quiz-skip":{"target":"three","assign":{"blocked":{"type":"unless-answered","params":{"col":"a_note"}},"a_state":"Skipped"}},"click@quiz-back":{"target":"one","assign":{"blocked":{"type":"unless-answered","params":{"col":"a_shape"}}}}}},"three":{"on":{"click@quiz-next":{"target":"done"},"input@quiz-note":{"assign":{"a_note":{"type":"event","params":{"field":"value"}},"blocked":{"type":"unless-typed","params":{}}}},"click@quiz-back":{"target":"two","assign":{"blocked":{"type":"unless-answered","params":{"col":"a_state"}}}}}}}}'>
+           data-machine='{"field":"step","initial":"one","states":{"done":{"on":{"click@quiz-again":{"target":"one","assign":{"blocked":"disabled","a_shape":"","a_state":"","a_note":"","sel_one_markup":"false","sel_one_chart":"false","sel_one_library":"false","sel_two_row":"false","sel_two_dom":"false","sel_two_memory":"false"}}}},"one":{"on":{"click@quiz-next":{"target":"two","assign":{"blocked":{"type":"unless-answered","params":{"col":"a_state"}}}},"click@quiz-one-markup":{"assign":{"a_shape":"Markup and tokens","sel_one_markup":"true","blocked":"","sel_one_chart":"false","sel_one_library":"false"}},"click@quiz-one-chart":{"assign":{"a_shape":"Markup, tokens and a chart","sel_one_chart":"true","blocked":"","sel_one_markup":"false","sel_one_library":"false"}},"click@quiz-one-library":{"assign":{"a_shape":"A runtime library","sel_one_library":"true","blocked":"","sel_one_markup":"false","sel_one_chart":"false"}}}},"two":{"on":{"click@quiz-next":{"target":"three","assign":{"blocked":{"type":"unless-answered","params":{"col":"a_note"}}}},"click@quiz-two-row":{"assign":{"a_state":"In a row","sel_two_row":"true","blocked":"","sel_two_dom":"false","sel_two_memory":"false"}},"click@quiz-two-dom":{"assign":{"a_state":"In the DOM","sel_two_dom":"true","blocked":"","sel_two_row":"false","sel_two_memory":"false"}},"click@quiz-two-memory":{"assign":{"a_state":"In a store somewhere","sel_two_memory":"true","blocked":"","sel_two_row":"false","sel_two_dom":"false"}},"click@quiz-skip":{"target":"three","assign":{"blocked":{"type":"unless-answered","params":{"col":"a_note"}},"a_state":"Skipped"}},"click@quiz-back":{"target":"one","assign":{"blocked":{"type":"unless-answered","params":{"col":"a_shape"}}}}}},"three":{"on":{"click@quiz-next":{"target":"done"},"input@quiz-note":{"assign":{"a_note":{"type":"event","params":{"field":"value"}},"blocked":{"type":"unless-typed","params":{}}}},"click@quiz-back":{"target":"two","assign":{"blocked":{"type":"unless-answered","params":{"col":"a_state"}}}}}}}}'>
     <h2 class="q-title">Three questions about this catalog</h2>
     <p class="q-progress" aria-hidden="true"><span class="q-progress-bar"></span></p>
       <fieldset class="q-step" data-step="one">
@@ -93,18 +93,6 @@
     <pre class="machine-json">{
   "field": "step",
   "initial": "one",
-  "context": {
-    "blocked": "disabled",
-    "a_shape": "",
-    "a_state": "",
-    "a_note": "",
-    "sel_one_markup": "false",
-    "sel_one_chart": "false",
-    "sel_one_library": "false",
-    "sel_two_row": "false",
-    "sel_two_dom": "false",
-    "sel_two_memory": "false"
-  },
   "states": {
     "done": {
       "on": {

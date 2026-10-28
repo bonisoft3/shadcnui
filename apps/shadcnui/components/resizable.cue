@@ -40,10 +40,11 @@ import (
 
 	// One state, one targetless arrow: it acts and stays, which is how a single
 	// state records a continuously changing value (decision-23).
+	defaults: {(R.value): R.start}
+
 	machine: terminal.#Machine & {
 		field:   R.field
 		initial: R.state
-		context: {(R.value): R.start}
 		states: (R.state): on: (("input@" + R._input)): {
 			assign: {(R.value): {type: "event", params: {field: "valueAsNumber"}}}
 		}
@@ -58,7 +59,7 @@ import (
 		      </div>
 		"""}]
 
-	// No data-empty-row: the machine is the writer of the initial fact
+	// The entity defaults supply the initial fact
 	// (decision-07). The group carries the binding because the panes size
 	// themselves against it and a custom property inherits.
 	markup: """

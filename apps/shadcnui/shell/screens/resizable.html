@@ -17,7 +17,7 @@
   <div class="demo-stage">
 <omnishell--resizable>
   <div class="rs" data-live="resizable_demo" data-filter="id=eq.the"
-       data-machine='{"field":"state","initial":"sizing","context":{"split":50},"states":{"sizing":{"on":{"input@rs-handle":{"assign":{"split":{"type":"event","params":{"field":"valueAsNumber"}}}}}}}}'>
+       data-machine='{"field":"state","initial":"sizing","states":{"sizing":{"on":{"input@rs-handle":{"assign":{"split":{"type":"event","params":{"field":"valueAsNumber"}}}}}}}}'>
     <div class="rs-group" style="--split: {split}">
       <div class="rs-pane">
         <h3 class="rs-pane-title">Sources</h3>
@@ -49,9 +49,6 @@
     <pre class="machine-json">{
   "field": "state",
   "initial": "sizing",
-  "context": {
-    "split": 50
-  },
   "states": {
     "sizing": {
       "on": {

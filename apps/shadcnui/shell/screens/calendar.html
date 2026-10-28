@@ -67,7 +67,7 @@
   </template>
   <div class="cal-card">
     <div class="cal-head" data-live="calendar_demo" data-filter="id=eq.the"
-         data-machine='{"field":"state","initial":"browsing","context":{"month":"2026-09","label":"September 2026","value":"2026-09-p15","active":"2026-09-p15"},"states":{"browsing":{"on":{"click@cal-prev":{"assign":{"month":{"type":"month-step","params":{"by":-1,"min":"2026-07","max":"2026-11","emit":"month"}},"label":{"type":"month-step","params":{"by":-1,"min":"2026-07","max":"2026-11","emit":"label"}},"active":{"type":"month-step","params":{"by":-1,"min":"2026-07","max":"2026-11","emit":"cell"}}}},"click@cal-next":{"assign":{"month":{"type":"month-step","params":{"by":1,"min":"2026-07","max":"2026-11","emit":"month"}},"label":{"type":"month-step","params":{"by":1,"min":"2026-07","max":"2026-11","emit":"label"}},"active":{"type":"month-step","params":{"by":1,"min":"2026-07","max":"2026-11","emit":"cell"}}}}}}}}'>
+         data-machine='{"field":"state","initial":"browsing","states":{"browsing":{"on":{"click@cal-prev":{"assign":{"month":{"type":"month-step","params":{"by":-1,"min":"2026-07","max":"2026-11","emit":"month"}},"label":{"type":"month-step","params":{"by":-1,"min":"2026-07","max":"2026-11","emit":"label"}},"active":{"type":"month-step","params":{"by":-1,"min":"2026-07","max":"2026-11","emit":"cell"}}}},"click@cal-next":{"assign":{"month":{"type":"month-step","params":{"by":1,"min":"2026-07","max":"2026-11","emit":"month"}},"label":{"type":"month-step","params":{"by":1,"min":"2026-07","max":"2026-11","emit":"label"}},"active":{"type":"month-step","params":{"by":1,"min":"2026-07","max":"2026-11","emit":"cell"}}}}}}}}'>
       <button type="button" id="cal-prev" class="cal-step" aria-label="Previous month">
         <svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 7l-5 5 5 5"
           fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"
@@ -149,8 +149,9 @@
     </div>
     <p class="pane-note">No <code>data-empty-row</code> anywhere on the
     screen, and no arrival arrow either: this row is SEEDED, and what the seed
-    states is the machine's own initial world — <code>{…context, id, state:
-    initial}</code>, which is exactly what a machine region with no item
+    states is the component's initial row — entity defaults plus
+    <code>{id, state: initial}</code>, which is exactly what a machine region
+    with no item
     template would have synthesized. One statement, written as well as
     synthesized, because the grid is a region WITH an item template and such a
     region renders only rows that exist.</p>
@@ -192,12 +193,6 @@
     <pre class="machine-json">{
   "field": "state",
   "initial": "browsing",
-  "context": {
-    "month": "2026-09",
-    "label": "September 2026",
-    "value": "2026-09-p15",
-    "active": "2026-09-p15"
-  },
   "states": {
     "browsing": {
       "on": {
@@ -446,7 +441,7 @@
   </template>
   <div class="cal-card">
     <div class="cal-head" data-live="calendar_demo" data-filter="id=eq.picker"
-         data-machine='{"field":"state","initial":"browsing","context":{"month":"2026-09","label":"September 2026","value":"2026-09-p15","active":"2026-09-p15"},"states":{"browsing":{"on":{"click@dp-prev":{"assign":{"month":{"type":"month-step","params":{"by":-1,"min":"2026-07","max":"2026-11","emit":"month"}},"label":{"type":"month-step","params":{"by":-1,"min":"2026-07","max":"2026-11","emit":"label"}},"active":{"type":"month-step","params":{"by":-1,"min":"2026-07","max":"2026-11","emit":"cell"}}}},"click@dp-next":{"assign":{"month":{"type":"month-step","params":{"by":1,"min":"2026-07","max":"2026-11","emit":"month"}},"label":{"type":"month-step","params":{"by":1,"min":"2026-07","max":"2026-11","emit":"label"}},"active":{"type":"month-step","params":{"by":1,"min":"2026-07","max":"2026-11","emit":"cell"}}}}}}}}'>
+         data-machine='{"field":"state","initial":"browsing","states":{"browsing":{"on":{"click@dp-prev":{"assign":{"month":{"type":"month-step","params":{"by":-1,"min":"2026-07","max":"2026-11","emit":"month"}},"label":{"type":"month-step","params":{"by":-1,"min":"2026-07","max":"2026-11","emit":"label"}},"active":{"type":"month-step","params":{"by":-1,"min":"2026-07","max":"2026-11","emit":"cell"}}}},"click@dp-next":{"assign":{"month":{"type":"month-step","params":{"by":1,"min":"2026-07","max":"2026-11","emit":"month"}},"label":{"type":"month-step","params":{"by":1,"min":"2026-07","max":"2026-11","emit":"label"}},"active":{"type":"month-step","params":{"by":1,"min":"2026-07","max":"2026-11","emit":"cell"}}}}}}}}'>
       <button type="button" id="dp-prev" class="cal-step" aria-label="Previous month">
         <svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 7l-5 5 5 5"
           fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"

@@ -11,6 +11,7 @@ import {
   oneByRole,
   only,
   type Row,
+  type Schema,
   textOf,
   writes,
 } from "../../../plugins/omnishell/test/screen-harness.ts";
@@ -35,6 +36,9 @@ const screen = (name: string, tables: Record<string, Row[]> = {}) =>
 // row its own region pins.
 const SW_READOUT = (row: string) => `.rowview[data-filter="id=eq.${row}"] .row-readout`;
 const SW_ops = (m: Mounted) => writes(m).map((c) => `${c.op} ${c.table} ${c.id}`);
+const rowIs = (row: Row, expected: Row) =>
+  Object.keys(row).length === Object.keys(expected).length &&
+  Object.entries(expected).every(([col, value]) => Object.hasOwn(row, col) && row[col] === value);
 
 Deno.test({
   name: "accept-initial-synthesized: the machine alone binds the initial state",
@@ -74,8 +78,7 @@ Deno.test({
       "the readout moved with the control — one row, one fact",
     );
     assert(
-      JSON.stringify(only(m.rows("switch_demo"), "after the first click")) ===
-        JSON.stringify({ id: "the", checked: "true" }),
+      rowIs(only(m.rows("switch_demo"), "after the first click"), { id: "the", checked: "true" }),
       `the first click states the whole row, got ${JSON.stringify(m.rows("switch_demo"))}`,
     );
 
@@ -87,8 +90,7 @@ Deno.test({
       `two writes, targets in machine order, got ${JSON.stringify(SW_ops(m))}`,
     );
     assert(
-      JSON.stringify(only(m.rows("switch_demo"), "after the round trip")) ===
-        JSON.stringify({ id: "the", checked: "false" }),
+      rowIs(only(m.rows("switch_demo"), "after the round trip"), { id: "the", checked: "false" }),
       `a stated row twice is one row, got ${JSON.stringify(m.rows("switch_demo"))}`,
     );
     // The neighbour is on the same collection and woke on both writes; it owns
@@ -112,7 +114,7 @@ Deno.test({
     const account = oneByRole(m.mount, "tab", "Account");
     const password = oneByRole(m.mount, "tab", "Password");
 
-    // The synthesized fallback: context seeds every sel_* column.
+    // The synthesized fallback: entity defaults seed every sel_* column.
     assert(root.getAttribute("data-state") === "account", "initial data-state from the machine's initial");
     assert(account.getAttribute("aria-selected") === "true", "first trigger selected at rest");
     assert(password.getAttribute("aria-selected") === "false", "second trigger unselected at rest");
@@ -167,7 +169,7 @@ Deno.test({
     const trigger = m.one(".picker-trigger");
     const banana = oneByRole(m.mount, "option", "Banana");
 
-    assert(textOf(m.one(".picker-value")) === "Apple", "context seeds the readout label");
+    assert(textOf(m.one(".picker-value")) === "Apple", "entity defaults seed the readout label");
     assert(oneByRole(m.mount, "option", "Apple").getAttribute("aria-selected") === "true", "first option selected at rest");
 
     // Openness is the platform's, asserted as the attributes that summon it —
@@ -229,7 +231,7 @@ Deno.test({
       tgOptions(m).map((o) => o.getAttribute("tabindex")).join(",") === "0,-1,-1",
       `one tabstop, on the chosen option, got ${tgOptions(m).map((o) => o.getAttribute("tabindex"))}`,
     );
-    assert(tgChecked(m).join(",") === "true,false,false", "the machine's context checks the first option");
+    assert(tgChecked(m).join(",") === "true,false,false", "the entity defaults check the first option");
 
     m.fire("#tg-align-item-center");
     await m.settle();
@@ -297,7 +299,7 @@ Deno.test({
     );
     assert(
       JSON.stringify(accExpanded(m, "faq")) === JSON.stringify(["false", "false", "false"]),
-      "context seeds every trigger's aria-expanded",
+      "entity defaults seed every trigger's aria-expanded",
     );
 
     await accClick(m, "acc-faq-trigger-shipping");
@@ -372,15 +374,16 @@ Deno.test({
     const rows = m.rows("accordion_multi_demo");
     assert(rows.length === 2, `only the toggled items exist as rows, got ${JSON.stringify(rows.map((r) => r.id))}`);
     assert(!rows.some((r) => r.id === "returns"), "an untouched item's row was never minted");
+    const opened = ["shipping", "support"];
+    const committed = writes(m);
     assert(
-      JSON.stringify(writes(m).map((w) => [w.op, w.table, w.id, w.row])) === JSON.stringify([
-        ["put", "accordion_multi_demo", "shipping", { id: "shipping", open: "true" }],
-        ["put", "accordion_multi_demo", "support", { id: "support", open: "true" }],
-      ]),
+      JSON.stringify(committed.map((w) => [w.op, w.table, w.id])) ===
+        JSON.stringify(opened.map((id) => ["put", "accordion_multi_demo", id])) &&
+        committed.every((w) => rowIs(w.row!, { id: w.id!, open: "true" })),
       `each write states its own row and nothing else, got ${JSON.stringify(writes(m))}`,
     );
     assert(
-      JSON.stringify(rows) === JSON.stringify([{ id: "shipping", open: "true" }, { id: "support", open: "true" }]),
+      rows.every((row, index) => rowIs(row, { id: opened[index], open: "true" })),
       `each write stated its own row's field alone, got ${JSON.stringify(rows)}`,
     );
     assert(
@@ -863,7 +866,7 @@ Deno.test({
     assert(header() === "mixed", "the row arrives partially checked");
     assert(
       JSON.stringify(items()) === JSON.stringify(["true", "true", "false"]),
-      "the context seeds the items, and they are what makes the header mixed",
+      "the entity defaults seed the items, and they are what makes the header mixed",
     );
 
     await cbxClick(m, "sa-all-trigger");
@@ -990,7 +993,7 @@ Deno.test({
         "rg-plan-item-starter,rg-plan-item-pro,rg-plan-item-team",
       `ids are keyed and part-slotted, got ${options().map((o) => o.id).join(",")}`,
     );
-    assert(checked() === "true,false,false", "the machine's context chooses the first option");
+    assert(checked() === "true,false,false", "the entity defaults choose the first option");
     assert(m.rows("radio_group_demo").length === 0, `hydration stored ${JSON.stringify(m.rows("radio_group_demo"))}`);
 
     m.fire("#rg-plan-item-pro");
@@ -1082,7 +1085,7 @@ Deno.test({
         "pag-results-p1,pag-results-p2,pag-results-p3,pag-results-p4,pag-results-p5",
       `ids are prefixed, keyed and part-slotted, got ${pages().map((p) => p.id).join(",")}`,
     );
-    assert(current() === "page,false,false,false,false", "the machine's context marks the first page");
+    assert(current() === "page,false,false,false,false", "the entity defaults mark the first page");
     assert(nav.localName === "nav", "the page list is a nav of buttons, not of links");
     assert(nav.querySelector("a") === null, "and holds no anchor, because a page here has no URL");
 
@@ -1386,7 +1389,7 @@ Deno.test({
     await m.settle();
     assert(
       m.one(SLIDER_INPUT).getAttribute("value") === "50",
-      `the control opens on the machine's context, with no row, got ${m.one(SLIDER_INPUT).getAttribute("value")}`,
+      `the control opens on the entity defaults, with no row, got ${m.one(SLIDER_INPUT).getAttribute("value")}`,
     );
     assert(m.rows("slider_demo").length === 0, `hydration stored ${JSON.stringify(m.rows("slider_demo"))}`);
     assert(writes(m).length === 0, "and hydration writes nothing at all");
@@ -2540,7 +2543,7 @@ Deno.test({
       options().map((o) => o.id).join(",") === "mi-profile-andy,mi-profile-benoit,mi-profile-luis",
       `ids are keyed and part-slotted, got ${options().map((o) => o.id).join(",")}`,
     );
-    assert(checked().join(",") === "true,false,false", "the machine's context chooses the first option");
+    assert(checked().join(",") === "true,false,false", "the entity defaults choose the first option");
 
     m.fire("#mi-profile-benoit");
     await m.settle();
@@ -4115,14 +4118,34 @@ const stBinaryChart = (machine: { field: string }, trigger?: string) => {
  * is what the shared generator drew. */
 type Arrowish = { target: string; assign: Record<string, string>; guard?: unknown };
 
-const stBySlot = (m: StChart, ids: string[]) => {
+const stDefaults = async (table: string): Promise<Row> => {
+  const shell = JSON.parse(await read("shell/shell.json")) as { schema: Schema };
+  return Object.fromEntries(
+    shell.schema[table].fields.filter((field) => Object.hasOwn(field, "default"))
+      .map((field) => [field.name, field.default]),
+  );
+};
+
+const stChartDefaults = async (table: string, chart: StChart): Promise<Record<string, string>> => {
+  const cols = new Set(Object.values(chart.states).flatMap((state) =>
+    Object.values((state as { on: Record<string, unknown> }).on).flatMap((transition) =>
+      (Array.isArray(transition) ? transition : [transition])
+        .flatMap((arrow) => Object.keys((arrow as Arrowish).assign ?? {}))
+    )
+  ));
+  const defaults = await stDefaults(table);
+  for (const col of cols) assert(Object.hasOwn(defaults, col), `${table}.${col} has an emitted initial default`);
+  return Object.fromEntries(Object.entries(defaults).filter(([col]) => cols.has(col))) as Record<string, string>;
+};
+
+const stBySlot = (m: StChart, ids: string[], defaults: Record<string, string>) => {
   const names: string[] = Object.keys(m.states);
-  const cols: string[] = Object.keys(m.context);
+  const cols: string[] = Object.keys(defaults);
   const at = (name: string) => names.indexOf(name);
   const set = (assign: Record<string, string>) => cols.map((c) => assign[c]);
   return JSON.stringify({
     initial: at(m.initial),
-    context: set(m.context),
+    defaults: set(defaults),
     // An ordered candidate list flattens in its own order: which arrow a key
     // selects is the guard's, and the guard is part of the shape two skins have
     // to agree on — a copied generator drifts in the key as easily as in the
@@ -4258,13 +4281,14 @@ Deno.test({
   sanitizeOps: false,
   sanitizeResources: false,
   async fn() {
-    const canonical = (html: string) => {
+    const canonical = async (html: string, table: string) => {
       const charts = stCharts(html);
       assert(charts.length === 1, `one chart per traversal screen, got ${charts.length}`);
       const ids = stIdsOfRole(html, "radio");
       const m = charts[0];
       const names: string[] = Object.keys(m.states);
-      const cols: string[] = Object.keys(m.context);
+      const defaults = await stChartDefaults(table, m);
+      const cols: string[] = Object.keys(defaults);
       assert(
         names.length === ids.length && names.every((n, i) => ids[i].endsWith(n)),
         `the option buttons and the states are the same list in the same order: ${ids} vs ${names}`,
@@ -4273,11 +4297,11 @@ Deno.test({
         cols.every((c, i) => c.endsWith(names[i % names.length])),
         `one derived column per option, in the options' order: ${cols}`,
       );
-      return stBySlot(m, ids);
+      return stBySlot(m, ids, defaults);
     };
 
-    const radio = canonical(await read("shell/screens/radio-group.html"));
-    const toggle = canonical(await read("shell/screens/toggle-group.html"));
+    const radio = await canonical(await read("shell/screens/radio-group.html"), "radio_group_demo");
+    const toggle = await canonical(await read("shell/screens/toggle-group.html"), "toggle_group_demo");
     assert(
       radio === toggle,
       `two skins, one chart — a copied generator would drift:\n${radio}\n${toggle}`,
@@ -4301,13 +4325,13 @@ Deno.test({
 
     const charts = stCharts(html);
     assert(charts.length === 2, `the screen carries both traversals, got ${charts.length}`);
-    const measured = charts.map((m) => {
+    const measured = await Promise.all(charts.map(async (m) => {
       const states = Object.values(m.states) as { on: Record<string, unknown> }[];
       const positions = states.length;
       const arrows = states.reduce((n, s) => n + Object.keys(s.on).length, 0);
       const absolute = positions * (positions - 1);
-      return [positions, absolute, arrows - absolute, arrows, Object.keys(m.context).length];
-    });
+      return [positions, absolute, arrows - absolute, arrows, Object.keys(await stChartDefaults(m.field === "page" ? "pagination_demo" : "carousel_demo", m)).length];
+    }));
 
     const table = /<table class="inventory">([\s\S]*?)<\/table>/.exec(html);
     assert(table !== null, "the screen prints the census it is checked against");
@@ -4394,9 +4418,11 @@ Deno.test({
       `the menu's checkbox item runs the switch's chart:\n${binaries[0]}\n${stBinaryChart(sw, stTriggerOf(sw))}`,
     );
 
+    const profile = machines.find((m) => m.field === "profile")!;
     const mine = stBySlot(
-      machines.find((m) => m.field === "profile")!,
+      profile,
       stIdsOfRole(menu, "menuitemradio"),
+      await stChartDefaults("menu_profile_demo", profile),
     );
     const rg = await read("shell/screens/radio-group.html");
     // Apart from what the radio group's skin turns on: the arrows that move a
@@ -4407,11 +4433,8 @@ Deno.test({
     // copied generator as what would drift.
     const clicksOnly = (m: StChart) => ({
       ...m,
-      context: Object.fromEntries(
-        Object.entries(m.context).filter(([key]) => !key.startsWith("tab_")),
-      ),
       states: Object.fromEntries(
-        Object.entries(m.states).map(([name, st]) => [name, {
+        Object.entries(m.states as Record<string, { on?: Record<string, Arrowish | Arrowish[]> }>).map(([name, st]) => [name, {
           ...st,
           on: Object.fromEntries(
             Object.entries(st.on ?? {})
@@ -4429,7 +4452,8 @@ Deno.test({
         }]),
       ),
     });
-    const theirs = stBySlot(clicksOnly(stCharts(rg)[0]) as never, stIdsOfRole(rg, "radio"));
+    const radioClicks = clicksOnly(stCharts(rg)[0]);
+    const theirs = stBySlot(radioClicks, stIdsOfRole(rg, "radio"), await stChartDefaults("radio_group_demo", radioClicks));
     assert(mine === theirs, `menuitemradio and radio run one chart:\n${mine}\n${theirs}`);
   },
 });
@@ -4871,18 +4895,19 @@ Deno.test({
     // Anchored on the attribute position: the pane below the grid names both
     // of these in prose, and a bare substring would match the sentence.
     assert(!/\sdata-empty-row=/.test(html), "nothing restates the initial world the seed already wrote");
+    const defaults = await stDefaults("calendar_demo");
     for (const chart of stCharts(html)) {
       assert(Object.keys(chart.states).length === 1, "one state: a calendar branches on nothing");
       // Column by column: a row is its columns and their values, and the
       // order the store happens to hold them in is not one of the facts.
       const isRow = (row: Record<string, unknown>) => {
-        const world: Record<string, unknown> = { id: row.id, ...chart.context, state: chart.initial };
+        const world: Record<string, unknown> = { id: row.id, ...defaults, [chart.field]: chart.initial };
         const cols = Object.keys(row);
         return cols.length === Object.keys(world).length && cols.every((c) => row[c] === world[c]);
       };
       assert(
         demoRows.some(isRow),
-        `each chart's initial world is a seeded row, got ${JSON.stringify(chart.context)}`,
+        `each chart's entity defaults match a seeded row, got ${JSON.stringify(defaults)}`,
       );
     }
     // Every form on the screen writes the calendar row; none writes a cell.
@@ -4943,7 +4968,7 @@ Deno.test({
     );
     assert(
       JSON.stringify(accCaret(m, "faq")) === JSON.stringify(["true", "false", "false"]),
-      "the caret's context seats it on the first header",
+      "the caret's entity defaults seat it on the first header",
     );
 
     await accPress(m, "acc-faq-trigger-shipping", "ArrowDown");
@@ -5026,7 +5051,7 @@ Deno.test({
     );
     assert(
       JSON.stringify(openCaret(m)) === JSON.stringify(["true", "false", "false", "false", "false", "false"]),
-      "the caret's context seats it on the first item",
+      "the caret's entity defaults seat it on the first item",
     );
 
     // Down crosses from a link to a link, and then from a link to a radio item:

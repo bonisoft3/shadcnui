@@ -27,7 +27,7 @@ code: pronto.#App & {
 				durability: "tab"
 				fields: [
 					{ordinal: 1, name: "id", type: "string", pk: true, cel: "this.size() <= 64"},
-					{ordinal: 2, name: "checked", type: "string", cel: "this in ['true', 'false']"},
+					{ordinal: 2, name: "checked", default: components.entityDefaults["switch_demo"]["checked"], type: "string", cel: "this in ['true', 'false']"},
 				]
 			}
 			TabsDemo: {
@@ -36,11 +36,11 @@ code: pronto.#App & {
 				durability: "tab"
 				fields: [
 					{ordinal: 1, name: "id", type: "string", pk: true, cel: "this.size() <= 64"},
-					{ordinal: 2, name: "active", type: "string", cel: "this in ['account', 'password']"},
-					{ordinal: 3, name: "sel_account", type: "string", cel: "this in ['true', 'false']"},
-					{ordinal: 4, name: "sel_password", type: "string", cel: "this in ['true', 'false']"},
-					{ordinal: 5, name: "tab_account", type: "string", cel: "this in ['0', '-1']"},
-					{ordinal: 6, name: "tab_password", type: "string", cel: "this in ['0', '-1']"},
+					{ordinal: 2, name: "active", default: components.entityDefaults["tabs_demo"]["active"], type: "string", cel: "this in ['account', 'password']"},
+					{ordinal: 3, name: "sel_account", default: components.entityDefaults["tabs_demo"]["sel_account"], type: "string", cel: "this in ['true', 'false']"},
+					{ordinal: 4, name: "sel_password", default: components.entityDefaults["tabs_demo"]["sel_password"], type: "string", cel: "this in ['true', 'false']"},
+					{ordinal: 5, name: "tab_account", default: components.entityDefaults["tabs_demo"]["tab_account"], type: "string", cel: "this in ['0', '-1']"},
+					{ordinal: 6, name: "tab_password", default: components.entityDefaults["tabs_demo"]["tab_password"], type: "string", cel: "this in ['0', '-1']"},
 				]
 			}
 			PickerDemo: {
@@ -49,11 +49,11 @@ code: pronto.#App & {
 				durability: "tab"
 				fields: [
 					{ordinal: 1, name: "id", type: "string", pk: true, cel: "this.size() <= 64"},
-					{ordinal: 2, name: "choice", type: "string", cel: "this in ['apple', 'banana', 'cherry']"},
-					{ordinal: 3, name: "label", type: "string", cel: "this.size() <= 24"},
-					{ordinal: 4, name: "sel_apple", type: "string", cel: "this in ['true', 'false']"},
-					{ordinal: 5, name: "sel_banana", type: "string", cel: "this in ['true', 'false']"},
-					{ordinal: 6, name: "sel_cherry", type: "string", cel: "this in ['true', 'false']"},
+					{ordinal: 2, name: "choice", default: components.entityDefaults["picker_demo"]["choice"], type: "string", cel: "this in ['apple', 'banana', 'cherry']"},
+					{ordinal: 3, name: "label", default: components.entityDefaults["picker_demo"]["label"], type: "string", cel: "this.size() <= 24"},
+					{ordinal: 4, name: "sel_apple", default: components.entityDefaults["picker_demo"]["sel_apple"], type: "string", cel: "this in ['true', 'false']"},
+					{ordinal: 5, name: "sel_banana", default: components.entityDefaults["picker_demo"]["sel_banana"], type: "string", cel: "this in ['true', 'false']"},
+					{ordinal: 6, name: "sel_cherry", default: components.entityDefaults["picker_demo"]["sel_cherry"], type: "string", cel: "this in ['true', 'false']"},
 				]
 			}
 			ToggleGroupDemo: {
@@ -62,13 +62,13 @@ code: pronto.#App & {
 				durability: "tab"
 				fields: [
 					{ordinal: 1, name: "id", type: "string", pk: true, cel: "this.size() <= 64"},
-					{ordinal: 2, name: "value", type: "string", cel: "this in ['left', 'center', 'right']"},
-					{ordinal: 3, name: "chk_left", type: "string", cel: "this in ['true', 'false']"},
-					{ordinal: 4, name: "chk_center", type: "string", cel: "this in ['true', 'false']"},
-					{ordinal: 5, name: "chk_right", type: "string", cel: "this in ['true', 'false']"},
-					{ordinal: 6, name: "tab_left", type: "string", cel: "this in ['0', '-1']"},
-					{ordinal: 7, name: "tab_center", type: "string", cel: "this in ['0', '-1']"},
-					{ordinal: 8, name: "tab_right", type: "string", cel: "this in ['0', '-1']"},
+					{ordinal: 2, name: "value", default: components.entityDefaults["toggle_group_demo"]["value"], type: "string", cel: "this in ['left', 'center', 'right']"},
+					{ordinal: 3, name: "chk_left", default: components.entityDefaults["toggle_group_demo"]["chk_left"], type: "string", cel: "this in ['true', 'false']"},
+					{ordinal: 4, name: "chk_center", default: components.entityDefaults["toggle_group_demo"]["chk_center"], type: "string", cel: "this in ['true', 'false']"},
+					{ordinal: 5, name: "chk_right", default: components.entityDefaults["toggle_group_demo"]["chk_right"], type: "string", cel: "this in ['true', 'false']"},
+					{ordinal: 6, name: "tab_left", default: components.entityDefaults["toggle_group_demo"]["tab_left"], type: "string", cel: "this in ['0', '-1']"},
+					{ordinal: 7, name: "tab_center", default: components.entityDefaults["toggle_group_demo"]["tab_center"], type: "string", cel: "this in ['0', '-1']"},
+					{ordinal: 8, name: "tab_right", default: components.entityDefaults["toggle_group_demo"]["tab_right"], type: "string", cel: "this in ['0', '-1']"},
 				]
 			}
 			AccordionSingleDemo: {
@@ -77,14 +77,14 @@ code: pronto.#App & {
 				durability: "tab"
 				fields: [
 					{ordinal: 1, name: "id", type: "string", pk: true, cel: "this.size() <= 64"},
-					{ordinal: 2, name: "open", type: "string", cel: "this in ['none', 'shipping', 'returns', 'support']"},
-					{ordinal: 3, name: "exp_shipping", type: "string", cel: "this in ['true', 'false']"},
-					{ordinal: 4, name: "exp_returns", type: "string", cel: "this in ['true', 'false']"},
-					{ordinal: 5, name: "exp_support", type: "string", cel: "this in ['true', 'false']"},
-					{ordinal: 6, name: "caret", type: "string", cel: "this in ['shipping', 'returns', 'support']"},
-					{ordinal: 7, name: "cur_shipping", type: "string", cel: "this in ['true', 'false']"},
-					{ordinal: 8, name: "cur_returns", type: "string", cel: "this in ['true', 'false']"},
-					{ordinal: 9, name: "cur_support", type: "string", cel: "this in ['true', 'false']"},
+					{ordinal: 2, name: "open", default: components.entityDefaults["accordion_single_demo"]["open"], type: "string", cel: "this in ['none', 'shipping', 'returns', 'support']"},
+					{ordinal: 3, name: "exp_shipping", default: components.entityDefaults["accordion_single_demo"]["exp_shipping"], type: "string", cel: "this in ['true', 'false']"},
+					{ordinal: 4, name: "exp_returns", default: components.entityDefaults["accordion_single_demo"]["exp_returns"], type: "string", cel: "this in ['true', 'false']"},
+					{ordinal: 5, name: "exp_support", default: components.entityDefaults["accordion_single_demo"]["exp_support"], type: "string", cel: "this in ['true', 'false']"},
+					{ordinal: 6, name: "caret", default: components.entityDefaults["accordion_single_demo"]["caret"], type: "string", cel: "this in ['shipping', 'returns', 'support']"},
+					{ordinal: 7, name: "cur_shipping", default: components.entityDefaults["accordion_single_demo"]["cur_shipping"], type: "string", cel: "this in ['true', 'false']"},
+					{ordinal: 8, name: "cur_returns", default: components.entityDefaults["accordion_single_demo"]["cur_returns"], type: "string", cel: "this in ['true', 'false']"},
+					{ordinal: 9, name: "cur_support", default: components.entityDefaults["accordion_single_demo"]["cur_support"], type: "string", cel: "this in ['true', 'false']"},
 				]
 			}
 			// The pk carries the item set the other entities carry on a field:
@@ -95,7 +95,7 @@ code: pronto.#App & {
 				durability: "tab"
 				fields: [
 					{ordinal: 1, name: "id", type: "string", pk: true, cel: "this in ['shipping', 'returns', 'support']"},
-					{ordinal: 2, name: "open", type: "string", cel: "this in ['true', 'false']"},
+					{ordinal: 2, name: "open", default: components.entityDefaults["accordion_multi_demo"]["open"], type: "string", cel: "this in ['true', 'false']"},
 				]
 			}
 			ComboboxDemo: {
@@ -122,7 +122,7 @@ code: pronto.#App & {
 				durability: "tab"
 				fields: [
 					{ordinal: 1, name: "id", type: "string", pk: true, cel: "this in ['terms']"},
-					{ordinal: 2, name: "checked", type: "string", cel: "this in ['true', 'false']"},
+					{ordinal: 2, name: "checked", default: components.entityDefaults["checkbox_demo"]["checked"], type: "string", cel: "this in ['true', 'false']"},
 				]
 			}
 			// The select-all's row, and the shape decision-47 turns on: `phase`
@@ -135,11 +135,11 @@ code: pronto.#App & {
 				durability: "tab"
 				fields: [
 					{ordinal: 1, name: "id", type: "string", pk: true, cel: "this in ['all']"},
-					{ordinal: 2, name: "phase", type: "string", cel: "this in ['live']"},
-					{ordinal: 3, name: "checked", type: "string", cel: "this in ['true', 'false', 'mixed']"},
-					{ordinal: 4, name: "inc_docs", type: "string", cel: "this in ['true', 'false']"},
-					{ordinal: 5, name: "inc_images", type: "string", cel: "this in ['true', 'false']"},
-					{ordinal: 6, name: "inc_archive", type: "string", cel: "this in ['true', 'false']"},
+					{ordinal: 2, name: "phase", default: components.entityDefaults["select_all_demo"]["phase"], type: "string", cel: "this in ['live']"},
+					{ordinal: 3, name: "checked", default: components.entityDefaults["select_all_demo"]["checked"], type: "string", cel: "this in ['true', 'false', 'mixed']"},
+					{ordinal: 4, name: "inc_docs", default: components.entityDefaults["select_all_demo"]["inc_docs"], type: "string", cel: "this in ['true', 'false']"},
+					{ordinal: 5, name: "inc_images", default: components.entityDefaults["select_all_demo"]["inc_images"], type: "string", cel: "this in ['true', 'false']"},
+					{ordinal: 6, name: "inc_archive", default: components.entityDefaults["select_all_demo"]["inc_archive"], type: "string", cel: "this in ['true', 'false']"},
 				]
 			}
 			ToggleDemo: {
@@ -148,7 +148,7 @@ code: pronto.#App & {
 				durability: "tab"
 				fields: [
 					{ordinal: 1, name: "id", type: "string", pk: true, cel: "this.size() <= 64"},
-					{ordinal: 2, name: "pressed", type: "string", cel: "this in ['true', 'false']"},
+					{ordinal: 2, name: "pressed", default: components.entityDefaults["toggle_demo"]["pressed"], type: "string", cel: "this in ['true', 'false']"},
 				]
 			}
 			CollapsibleDemo: {
@@ -157,7 +157,7 @@ code: pronto.#App & {
 				durability: "tab"
 				fields: [
 					{ordinal: 1, name: "id", type: "string", pk: true, cel: "this.size() <= 64"},
-					{ordinal: 2, name: "open", type: "string", cel: "this in ['true', 'false']"},
+					{ordinal: 2, name: "open", default: components.entityDefaults["collapsible_demo"]["open"], type: "string", cel: "this in ['true', 'false']"},
 				]
 			}
 			// ToggleGroupDemo's shape with the option set renamed: the two
@@ -169,13 +169,13 @@ code: pronto.#App & {
 				durability: "tab"
 				fields: [
 					{ordinal: 1, name: "id", type: "string", pk: true, cel: "this.size() <= 64"},
-					{ordinal: 2, name: "value", type: "string", cel: "this in ['starter', 'pro', 'team']"},
-					{ordinal: 3, name: "chk_starter", type: "string", cel: "this in ['true', 'false']"},
-					{ordinal: 4, name: "chk_pro", type: "string", cel: "this in ['true', 'false']"},
-					{ordinal: 5, name: "chk_team", type: "string", cel: "this in ['true', 'false']"},
-					{ordinal: 6, name: "tab_starter", type: "string", cel: "this in ['0', '-1']"},
-					{ordinal: 7, name: "tab_pro", type: "string", cel: "this in ['0', '-1']"},
-					{ordinal: 8, name: "tab_team", type: "string", cel: "this in ['0', '-1']"},
+					{ordinal: 2, name: "value", default: components.entityDefaults["radio_group_demo"]["value"], type: "string", cel: "this in ['starter', 'pro', 'team']"},
+					{ordinal: 3, name: "chk_starter", default: components.entityDefaults["radio_group_demo"]["chk_starter"], type: "string", cel: "this in ['true', 'false']"},
+					{ordinal: 4, name: "chk_pro", default: components.entityDefaults["radio_group_demo"]["chk_pro"], type: "string", cel: "this in ['true', 'false']"},
+					{ordinal: 5, name: "chk_team", default: components.entityDefaults["radio_group_demo"]["chk_team"], type: "string", cel: "this in ['true', 'false']"},
+					{ordinal: 6, name: "tab_starter", default: components.entityDefaults["radio_group_demo"]["tab_starter"], type: "string", cel: "this in ['0', '-1']"},
+					{ordinal: 7, name: "tab_pro", default: components.entityDefaults["radio_group_demo"]["tab_pro"], type: "string", cel: "this in ['0', '-1']"},
+					{ordinal: 8, name: "tab_team", default: components.entityDefaults["radio_group_demo"]["tab_team"], type: "string", cel: "this in ['0', '-1']"},
 				]
 			}
 			// One aria-current column per page, because N positions share one
@@ -188,16 +188,16 @@ code: pronto.#App & {
 				durability: "tab"
 				fields: [
 					{ordinal: 1, name: "id", type: "string", pk: true, cel: "this.size() <= 64"},
-					{ordinal: 2, name: "page", type: "string", cel: "this in ['p1', 'p2', 'p3', 'p4', 'p5']"},
-					{ordinal: 3, name: "cur_p1", type: "string", cel: "this in ['page', 'false']"},
-					{ordinal: 4, name: "cur_p2", type: "string", cel: "this in ['page', 'false']"},
-					{ordinal: 5, name: "cur_p3", type: "string", cel: "this in ['page', 'false']"},
-					{ordinal: 6, name: "cur_p4", type: "string", cel: "this in ['page', 'false']"},
-					{ordinal: 7, name: "cur_p5", type: "string", cel: "this in ['page', 'false']"},
+					{ordinal: 2, name: "page", default: components.entityDefaults["pagination_demo"]["page"], type: "string", cel: "this in ['p1', 'p2', 'p3', 'p4', 'p5']"},
+					{ordinal: 3, name: "cur_p1", default: components.entityDefaults["pagination_demo"]["cur_p1"], type: "string", cel: "this in ['page', 'false']"},
+					{ordinal: 4, name: "cur_p2", default: components.entityDefaults["pagination_demo"]["cur_p2"], type: "string", cel: "this in ['page', 'false']"},
+					{ordinal: 5, name: "cur_p3", default: components.entityDefaults["pagination_demo"]["cur_p3"], type: "string", cel: "this in ['page', 'false']"},
+					{ordinal: 6, name: "cur_p4", default: components.entityDefaults["pagination_demo"]["cur_p4"], type: "string", cel: "this in ['page', 'false']"},
+					{ordinal: 7, name: "cur_p5", default: components.entityDefaults["pagination_demo"]["cur_p5"], type: "string", cel: "this in ['page', 'false']"},
 					// The empty string is what the binder removes, so it is the
 					// enabled value; the schema admits exactly the two.
-					{ordinal: 8, name: "dis_prev", type: "string", cel: "this in ['', 'disabled']"},
-					{ordinal: 9, name: "dis_next", type: "string", cel: "this in ['', 'disabled']"},
+					{ordinal: 8, name: "dis_prev", default: components.entityDefaults["pagination_demo"]["dis_prev"], type: "string", cel: "this in ['', 'disabled']"},
+					{ordinal: 9, name: "dis_next", default: components.entityDefaults["pagination_demo"]["dis_next"], type: "string", cel: "this in ['', 'disabled']"},
 				]
 			}
 			CarouselDemo: {
@@ -206,13 +206,13 @@ code: pronto.#App & {
 				durability: "tab"
 				fields: [
 					{ordinal: 1, name: "id", type: "string", pk: true, cel: "this.size() <= 64"},
-					{ordinal: 2, name: "slide", type: "string", cel: "this in ['s1', 's2', 's3', 's4']"},
-					{ordinal: 3, name: "cur_s1", type: "string", cel: "this in ['true', 'false']"},
-					{ordinal: 4, name: "cur_s2", type: "string", cel: "this in ['true', 'false']"},
-					{ordinal: 5, name: "cur_s3", type: "string", cel: "this in ['true', 'false']"},
-					{ordinal: 6, name: "cur_s4", type: "string", cel: "this in ['true', 'false']"},
-					{ordinal: 7, name: "dis_prev", type: "string", cel: "this in ['', 'disabled']"},
-					{ordinal: 8, name: "dis_next", type: "string", cel: "this in ['', 'disabled']"},
+					{ordinal: 2, name: "slide", default: components.entityDefaults["carousel_demo"]["slide"], type: "string", cel: "this in ['s1', 's2', 's3', 's4']"},
+					{ordinal: 3, name: "cur_s1", default: components.entityDefaults["carousel_demo"]["cur_s1"], type: "string", cel: "this in ['true', 'false']"},
+					{ordinal: 4, name: "cur_s2", default: components.entityDefaults["carousel_demo"]["cur_s2"], type: "string", cel: "this in ['true', 'false']"},
+					{ordinal: 5, name: "cur_s3", default: components.entityDefaults["carousel_demo"]["cur_s3"], type: "string", cel: "this in ['true', 'false']"},
+					{ordinal: 6, name: "cur_s4", default: components.entityDefaults["carousel_demo"]["cur_s4"], type: "string", cel: "this in ['true', 'false']"},
+					{ordinal: 7, name: "dis_prev", default: components.entityDefaults["carousel_demo"]["dis_prev"], type: "string", cel: "this in ['', 'disabled']"},
+					{ordinal: 8, name: "dis_next", default: components.entityDefaults["carousel_demo"]["dis_next"], type: "string", cel: "this in ['', 'disabled']"},
 				]
 			}
 			// No column for the deadline: the wait is the terminal's, and a
@@ -224,7 +224,7 @@ code: pronto.#App & {
 				durability: "tab"
 				fields: [
 					{ordinal: 1, name: "id", type: "string", pk: true, cel: "this.size() <= 64"},
-					{ordinal: 2, name: "state", type: "string", cel: "this in ['closed', 'open']"},
+					{ordinal: 2, name: "state", default: components.entityDefaults["toast_demo"]["state"], type: "string", cel: "this in ['closed', 'open']"},
 				]
 			}
 			// Two columns, because a machine's field is a STATE column and a
@@ -238,8 +238,8 @@ code: pronto.#App & {
 				durability: "tab"
 				fields: [
 					{ordinal: 1, name: "id", type: "string", pk: true, cel: "this.size() <= 64"},
-					{ordinal: 2, name: "phase", type: "string", cel: "this in ['live']"},
-					{ordinal: 3, name: "volume", type: "int32", cel: "this >= 0 && this <= 100"},
+					{ordinal: 2, name: "phase", default: components.entityDefaults["slider_demo"]["phase"], type: "string", cel: "this in ['live']"},
+					{ordinal: 3, name: "volume", default: components.entityDefaults["slider_demo"]["volume"], type: "int32", cel: "this >= 0 && this <= 100"},
 				]
 			}
 			// A bar's row, with no state column at all: the component has no
@@ -263,8 +263,8 @@ code: pronto.#App & {
 				durability: "tab"
 				fields: [
 					{ordinal: 1, name: "id", type: "string", pk: true, cel: "this.size() <= 64"},
-					{ordinal: 2, name: "state", type: "string", cel: "this == 'sizing'"},
-					{ordinal: 3, name: "split", type: "int32", cel: components.resizableDemo.splitCel},
+					{ordinal: 2, name: "state", default: components.entityDefaults["resizable_demo"]["state"], type: "string", cel: "this == 'sizing'"},
+					{ordinal: 3, name: "split", default: components.entityDefaults["resizable_demo"]["split"], type: "int32", cel: components.resizableDemo.splitCel},
 				]
 			}
 			// What the reader typed, and one state to hold it in: the arrow is
@@ -278,12 +278,12 @@ code: pronto.#App & {
 				durability: "tab"
 				fields: [
 					{ordinal: 1, name: "id", type: "string", pk: true, cel: "this.size() <= 64"},
-					{ordinal: 2, name: "state", type: "string", cel: "this == 'typing'"},
-					{ordinal: 3, name: "query", type: "string", cel: components.commandDemo.queryCel},
+					{ordinal: 2, name: "state", default: components.entityDefaults["command_demo"]["state"], type: "string", cel: "this == 'typing'"},
+					{ordinal: 3, name: "query", default: components.entityDefaults["command_demo"]["query"], type: "string", cel: components.commandDemo.queryCel},
 					// The caret and the choice, which are not one column: the
 					// option a reader stands on is not the one they ran.
-					{ordinal: 4, name: "active", type: "string", cel: "this.size() <= 32"},
-					{ordinal: 5, name: "chosen", type: "string", cel: "this.size() <= 32"},
+					{ordinal: 4, name: "active", default: components.entityDefaults["command_demo"]["active"], type: "string", cel: "this.size() <= 32"},
+					{ordinal: 5, name: "chosen", default: components.entityDefaults["command_demo"]["chosen"], type: "string", cel: "this.size() <= 32"},
 				]
 				seed: [components.commandDemo.querySeed]
 			}
@@ -339,12 +339,12 @@ code: pronto.#App & {
 				durability: "tab"
 				fields: [
 					{ordinal: 1, name: "id", type: "string", pk: true, cel: "this.size() <= 64"},
-					{ordinal: 2, name: "chk_bookmarks", type: "string", cel: "this in ['true', 'false']"},
-					{ordinal: 3, name: "chk_urls", type: "string", cel: "this in ['true', 'false']"},
-					{ordinal: 4, name: "caret", type: "string", cel: "this in ['bookmarks', 'urls']"},
-					{ordinal: 5, name: "cur_bookmarks", type: "string", cel: "this in ['true', 'false']"},
-					{ordinal: 6, name: "cur_urls", type: "string", cel: "this in ['true', 'false']"},
-					{ordinal: 7, name: "prefix", type: "string", cel: "this.size() <= 32"},
+					{ordinal: 2, name: "chk_bookmarks", default: components.entityDefaults["menu_option_demo"]["chk_bookmarks"], type: "string", cel: "this in ['true', 'false']"},
+					{ordinal: 3, name: "chk_urls", default: components.entityDefaults["menu_option_demo"]["chk_urls"], type: "string", cel: "this in ['true', 'false']"},
+					{ordinal: 4, name: "caret", default: components.entityDefaults["menu_option_demo"]["caret"], type: "string", cel: "this in ['bookmarks', 'urls']"},
+					{ordinal: 5, name: "cur_bookmarks", default: components.entityDefaults["menu_option_demo"]["cur_bookmarks"], type: "string", cel: "this in ['true', 'false']"},
+					{ordinal: 6, name: "cur_urls", default: components.entityDefaults["menu_option_demo"]["cur_urls"], type: "string", cel: "this in ['true', 'false']"},
+					{ordinal: 7, name: "prefix", default: components.entityDefaults["menu_option_demo"]["prefix"], type: "string", cel: "this.size() <= 32"},
 				]
 			}
 			// The Go menu holds no item state at all — three links — so its row
@@ -355,11 +355,11 @@ code: pronto.#App & {
 				durability: "tab"
 				fields: [
 					{ordinal: 1, name: "id", type: "string", pk: true, cel: "this.size() <= 64"},
-					{ordinal: 2, name: "caret", type: "string", cel: "this in ['tabs', 'accordion', 'toast']"},
-					{ordinal: 3, name: "cur_tabs", type: "string", cel: "this in ['true', 'false']"},
-					{ordinal: 4, name: "cur_accordion", type: "string", cel: "this in ['true', 'false']"},
-					{ordinal: 5, name: "cur_toast", type: "string", cel: "this in ['true', 'false']"},
-					{ordinal: 6, name: "prefix", type: "string", cel: "this.size() <= 32"},
+					{ordinal: 2, name: "caret", default: components.entityDefaults["menu_go_demo"]["caret"], type: "string", cel: "this in ['tabs', 'accordion', 'toast']"},
+					{ordinal: 3, name: "cur_tabs", default: components.entityDefaults["menu_go_demo"]["cur_tabs"], type: "string", cel: "this in ['true', 'false']"},
+					{ordinal: 4, name: "cur_accordion", default: components.entityDefaults["menu_go_demo"]["cur_accordion"], type: "string", cel: "this in ['true', 'false']"},
+					{ordinal: 5, name: "cur_toast", default: components.entityDefaults["menu_go_demo"]["cur_toast"], type: "string", cel: "this in ['true', 'false']"},
+					{ordinal: 6, name: "prefix", default: components.entityDefaults["menu_go_demo"]["prefix"], type: "string", cel: "this.size() <= 32"},
 				]
 			}
 			// The bar's own tab stop, which APG gives it one of. No buffer: a
@@ -371,11 +371,11 @@ code: pronto.#App & {
 				durability: "tab"
 				fields: [
 					{ordinal: 1, name: "id", type: "string", pk: true, cel: "this.size() <= 64"},
-					{ordinal: 2, name: "caret", type: "string", cel: "this in ['view', 'go']"},
-					{ordinal: 3, name: "cur_view", type: "string", cel: "this in ['true', 'false']"},
-					{ordinal: 4, name: "cur_go", type: "string", cel: "this in ['true', 'false']"},
-					{ordinal: 5, name: "tab_view", type: "string", cel: "this in ['0', '-1']"},
-					{ordinal: 6, name: "tab_go", type: "string", cel: "this in ['0', '-1']"},
+					{ordinal: 2, name: "caret", default: components.entityDefaults["menubar_demo"]["caret"], type: "string", cel: "this in ['view', 'go']"},
+					{ordinal: 3, name: "cur_view", default: components.entityDefaults["menubar_demo"]["cur_view"], type: "string", cel: "this in ['true', 'false']"},
+					{ordinal: 4, name: "cur_go", default: components.entityDefaults["menubar_demo"]["cur_go"], type: "string", cel: "this in ['true', 'false']"},
+					{ordinal: 5, name: "tab_view", default: components.entityDefaults["menubar_demo"]["tab_view"], type: "string", cel: "this in ['0', '-1']"},
+					{ordinal: 6, name: "tab_go", default: components.entityDefaults["menubar_demo"]["tab_go"], type: "string", cel: "this in ['0', '-1']"},
 				]
 			}
 			// The right-click menu's one row: whether it stands, and where the
@@ -389,14 +389,14 @@ code: pronto.#App & {
 				durability: "tab"
 				fields: [
 					{ordinal: 1, name: "id", type: "string", pk: true, cel: "this.size() <= 64"},
-					{ordinal: 2, name: "open", type: "string", cel: "this in ['true', 'false']"},
-					{ordinal: 3, name: "x", type: "int32", cel: "this >= 0 && this <= 1000"},
-					{ordinal: 4, name: "y", type: "int32", cel: "this >= 0 && this <= 1000"},
-					{ordinal: 5, name: "caret", type: "string", cel: "this in ['popover', 'sheet', 'overlays']"},
-					{ordinal: 6, name: "cur_popover", type: "string", cel: "this in ['true', 'false']"},
-					{ordinal: 7, name: "cur_sheet", type: "string", cel: "this in ['true', 'false']"},
-					{ordinal: 8, name: "cur_overlays", type: "string", cel: "this in ['true', 'false']"},
-					{ordinal: 9, name: "prefix", type: "string", cel: "this.size() <= 32"},
+					{ordinal: 2, name: "open", default: components.entityDefaults["context_menu_demo"]["open"], type: "string", cel: "this in ['true', 'false']"},
+					{ordinal: 3, name: "x", default: components.entityDefaults["context_menu_demo"]["x"], type: "int32", cel: "this >= 0 && this <= 1000"},
+					{ordinal: 4, name: "y", default: components.entityDefaults["context_menu_demo"]["y"], type: "int32", cel: "this >= 0 && this <= 1000"},
+					{ordinal: 5, name: "caret", default: components.entityDefaults["context_menu_demo"]["caret"], type: "string", cel: "this in ['popover', 'sheet', 'overlays']"},
+					{ordinal: 6, name: "cur_popover", default: components.entityDefaults["context_menu_demo"]["cur_popover"], type: "string", cel: "this in ['true', 'false']"},
+					{ordinal: 7, name: "cur_sheet", default: components.entityDefaults["context_menu_demo"]["cur_sheet"], type: "string", cel: "this in ['true', 'false']"},
+					{ordinal: 8, name: "cur_overlays", default: components.entityDefaults["context_menu_demo"]["cur_overlays"], type: "string", cel: "this in ['true', 'false']"},
+					{ordinal: 9, name: "prefix", default: components.entityDefaults["context_menu_demo"]["prefix"], type: "string", cel: "this.size() <= 32"},
 				]
 			}
 			MenuProfileDemo: {
@@ -405,18 +405,18 @@ code: pronto.#App & {
 				durability: "tab"
 				fields: [
 					{ordinal: 1, name: "id", type: "string", pk: true, cel: "this.size() <= 64"},
-					{ordinal: 2, name: "profile", type: "string", cel: "this in ['andy', 'benoit', 'luis']"},
-					{ordinal: 3, name: "chk_andy", type: "string", cel: "this in ['true', 'false']"},
-					{ordinal: 4, name: "chk_benoit", type: "string", cel: "this in ['true', 'false']"},
-					{ordinal: 5, name: "chk_luis", type: "string", cel: "this in ['true', 'false']"},
-					{ordinal: 6, name: "caret", type: "string", cel: "this in ['switch', 'checkbox', 'radio_group', 'andy', 'benoit', 'luis']"},
-					{ordinal: 7, name: "cur_switch", type: "string", cel: "this in ['true', 'false']"},
-					{ordinal: 8, name: "cur_checkbox", type: "string", cel: "this in ['true', 'false']"},
-					{ordinal: 9, name: "cur_radio_group", type: "string", cel: "this in ['true', 'false']"},
-					{ordinal: 10, name: "cur_andy", type: "string", cel: "this in ['true', 'false']"},
-					{ordinal: 11, name: "cur_benoit", type: "string", cel: "this in ['true', 'false']"},
-					{ordinal: 12, name: "cur_luis", type: "string", cel: "this in ['true', 'false']"},
-					{ordinal: 13, name: "prefix", type: "string", cel: "this.size() <= 32"},
+					{ordinal: 2, name: "profile", default: components.entityDefaults["menu_profile_demo"]["profile"], type: "string", cel: "this in ['andy', 'benoit', 'luis']"},
+					{ordinal: 3, name: "chk_andy", default: components.entityDefaults["menu_profile_demo"]["chk_andy"], type: "string", cel: "this in ['true', 'false']"},
+					{ordinal: 4, name: "chk_benoit", default: components.entityDefaults["menu_profile_demo"]["chk_benoit"], type: "string", cel: "this in ['true', 'false']"},
+					{ordinal: 5, name: "chk_luis", default: components.entityDefaults["menu_profile_demo"]["chk_luis"], type: "string", cel: "this in ['true', 'false']"},
+					{ordinal: 6, name: "caret", default: components.entityDefaults["menu_profile_demo"]["caret"], type: "string", cel: "this in ['switch', 'checkbox', 'radio_group', 'andy', 'benoit', 'luis']"},
+					{ordinal: 7, name: "cur_switch", default: components.entityDefaults["menu_profile_demo"]["cur_switch"], type: "string", cel: "this in ['true', 'false']"},
+					{ordinal: 8, name: "cur_checkbox", default: components.entityDefaults["menu_profile_demo"]["cur_checkbox"], type: "string", cel: "this in ['true', 'false']"},
+					{ordinal: 9, name: "cur_radio_group", default: components.entityDefaults["menu_profile_demo"]["cur_radio_group"], type: "string", cel: "this in ['true', 'false']"},
+					{ordinal: 10, name: "cur_andy", default: components.entityDefaults["menu_profile_demo"]["cur_andy"], type: "string", cel: "this in ['true', 'false']"},
+					{ordinal: 11, name: "cur_benoit", default: components.entityDefaults["menu_profile_demo"]["cur_benoit"], type: "string", cel: "this in ['true', 'false']"},
+					{ordinal: 12, name: "cur_luis", default: components.entityDefaults["menu_profile_demo"]["cur_luis"], type: "string", cel: "this in ['true', 'false']"},
+					{ordinal: 13, name: "prefix", default: components.entityDefaults["menu_profile_demo"]["prefix"], type: "string", cel: "this.size() <= 32"},
 				]
 			}
 			// The one row a form edits, and the two ways a column can be
@@ -464,8 +464,8 @@ code: pronto.#App & {
 				durability: "tab"
 				fields: [
 					{ordinal: 1, name: "id", type: "string", pk: true, cel: "this.size() <= 64"},
-					{ordinal: 2, name: "state", type: "string", cel: "this in ['pending', 'typing']"},
-					{ordinal: 3, name: "query", type: "string", cel: components.tableDemo.queryCel},
+					{ordinal: 2, name: "state", default: components.entityDefaults["table_query"]["state"], type: "string", cel: "this in ['pending', 'typing']"},
+					{ordinal: 3, name: "query", default: components.entityDefaults["table_query"]["query"], type: "string", cel: components.tableDemo.queryCel},
 				]
 			}
 			// The first seeded collection in the app, and the correction three
@@ -499,20 +499,20 @@ code: pronto.#App & {
 				seed: [components.dataTable.cursorSeed]
 				fields: [
 					{ordinal: 1, name: "id", type: "string", pk: true, cel: "this.size() <= 64"},
-					{ordinal: 2, name: "state", type: "string", cel: "this == 'typing'"},
-					{ordinal: 3, name: "query", type: "string", cel: components.dataTable.queryCel},
-					{ordinal: 4, name: "cursor", type: "string", cel: "this.size() <= 24"},
+					{ordinal: 2, name: "state", default: components.entityDefaults["data_cursor"]["state"], type: "string", cel: "this == 'typing'"},
+					{ordinal: 3, name: "query", default: components.entityDefaults["data_cursor"]["query"], type: "string", cel: components.dataTable.queryCel},
+					{ordinal: 4, name: "cursor", default: components.entityDefaults["data_cursor"]["cursor"], type: "string", cel: "this.size() <= 24"},
 					// Which of the orders the header offers the grid is read
 					// in. A KEY of the map the markup states, never a clause:
 					// one sentence generates the constraint and the map, so a
 					// value the region could not read is unstorable.
-					{ordinal: 5, name: "sort", type: "string", cel: components.dataTable.sortCel},
+					{ordinal: 5, name: "sort", default: components.entityDefaults["data_cursor"]["sort"], type: "string", cel: components.dataTable.sortCel},
 					// aria-sort, one column per sortable header. The order is
 					// one fact and the attribute is per column, so the
 					// comparison is made where the write is — literals of
 					// whichever form was pressed, moving as one row.
-					{ordinal: 6, name: "srt_id", type: "string", cel: components.dataTable.sortStateCel},
-					{ordinal: 7, name: "srt_amount", type: "string", cel: components.dataTable.sortStateCel},
+					{ordinal: 6, name: "srt_id", default: components.entityDefaults["data_cursor"]["srt_id"], type: "string", cel: components.dataTable.sortStateCel},
+					{ordinal: 7, name: "srt_amount", default: components.entityDefaults["data_cursor"]["srt_amount"], type: "string", cel: components.dataTable.sortStateCel},
 				]
 			}
 			// The rail's items, and the first item set in this app that is data
@@ -563,7 +563,7 @@ code: pronto.#App & {
 				durability: "tab"
 				fields: [
 					{ordinal: 1, name: "id", type: "string", pk: true, cel: "this.size() <= 64"},
-					{ordinal: 2, name: "open", type: "string", cel: "this in ['true', 'false']"},
+					{ordinal: 2, name: "open", default: components.entityDefaults["nav_sidebar_demo"]["open"], type: "string", cel: "this in ['true', 'false']"},
 				]
 			}
 			// The calendar's own row, and the one row on the screen anything
@@ -593,10 +593,10 @@ code: pronto.#App & {
 				durability: "tab"
 				fields: [
 					{ordinal: 1, name: "id", type: "string", pk: true, cel: "this.size() <= 64"},
-					{ordinal: 2, name: "state", type: "string", cel: "this in ['typing', 'complete', 'verified']"},
-					{ordinal: 3, name: "code", type: "string", cel: components.otpDemo.codeCel},
-					{ordinal: 4, name: "invalid", type: "string", cel: "this in ['true', 'false']"},
-					{ordinal: 5, name: "blocked", type: "string", cel: "this in ['', 'disabled']"},
+					{ordinal: 2, name: "state", default: components.entityDefaults["otp_demo"]["state"], type: "string", cel: "this in ['typing', 'complete', 'verified']"},
+					{ordinal: 3, name: "code", default: components.entityDefaults["otp_demo"]["code"], type: "string", cel: components.otpDemo.codeCel},
+					{ordinal: 4, name: "invalid", default: components.entityDefaults["otp_demo"]["invalid"], type: "string", cel: "this in ['true', 'false']"},
+					{ordinal: 5, name: "blocked", default: components.entityDefaults["otp_demo"]["blocked"], type: "string", cel: "this in ['', 'disabled']"},
 				]
 			}
 			// The points a chart draws, and they are the PROGRAM's: `seed`
@@ -642,9 +642,9 @@ code: pronto.#App & {
 				durability: "tab"
 				fields: [
 					{ordinal: 1, name: "id", type: "string", pk: true, cel: "this.size() <= 64"},
-					{ordinal: 2, name: "phase", type: "string", cel: "this in ['live']"},
-					{ordinal: 3, name: "query", type: "string", cel: "this.size() <= 64"},
-					{ordinal: 4, name: "last", type: "string", cel: "this.size() <= 32"},
+					{ordinal: 2, name: "phase", default: components.entityDefaults["composition_demo"]["phase"], type: "string", cel: "this in ['live']"},
+					{ordinal: 3, name: "query", default: components.entityDefaults["composition_demo"]["query"], type: "string", cel: "this.size() <= 64"},
+					{ordinal: 4, name: "last", default: components.entityDefaults["composition_demo"]["last"], type: "string", cel: "this.size() <= 32"},
 				]
 			}
 			// A transcript, and the first collection in this app a READER
@@ -695,17 +695,17 @@ code: pronto.#App & {
 				durability: "tab"
 				fields: [
 					{ordinal: 1, name: "id", type: "string", pk: true, cel: "this.size() <= 64"},
-					{ordinal: 2, name: "step", type: "string", cel: "this in ['one', 'two', 'three', 'done']"},
-					{ordinal: 3, name: "a_shape", type: "string", cel: "this.size() <= 32"},
-					{ordinal: 4, name: "a_state", type: "string", cel: "this.size() <= 32"},
-					{ordinal: 5, name: "a_note", type: "string", cel: "this.size() <= 80"},
-					{ordinal: 6, name: "blocked", type: "string", cel: "this in ['', 'disabled']"},
-					{ordinal: 7, name: "sel_one_markup", type: "string", cel: "this in ['true', 'false']"},
-					{ordinal: 8, name: "sel_one_chart", type: "string", cel: "this in ['true', 'false']"},
-					{ordinal: 9, name: "sel_one_library", type: "string", cel: "this in ['true', 'false']"},
-					{ordinal: 10, name: "sel_two_row", type: "string", cel: "this in ['true', 'false']"},
-					{ordinal: 11, name: "sel_two_dom", type: "string", cel: "this in ['true', 'false']"},
-					{ordinal: 12, name: "sel_two_memory", type: "string", cel: "this in ['true', 'false']"},
+					{ordinal: 2, name: "step", default: components.entityDefaults["quiz_demo"]["step"], type: "string", cel: "this in ['one', 'two', 'three', 'done']"},
+					{ordinal: 3, name: "a_shape", default: components.entityDefaults["quiz_demo"]["a_shape"], type: "string", cel: "this.size() <= 32"},
+					{ordinal: 4, name: "a_state", default: components.entityDefaults["quiz_demo"]["a_state"], type: "string", cel: "this.size() <= 32"},
+					{ordinal: 5, name: "a_note", default: components.entityDefaults["quiz_demo"]["a_note"], type: "string", cel: "this.size() <= 80"},
+					{ordinal: 6, name: "blocked", default: components.entityDefaults["quiz_demo"]["blocked"], type: "string", cel: "this in ['', 'disabled']"},
+					{ordinal: 7, name: "sel_one_markup", default: components.entityDefaults["quiz_demo"]["sel_one_markup"], type: "string", cel: "this in ['true', 'false']"},
+					{ordinal: 8, name: "sel_one_chart", default: components.entityDefaults["quiz_demo"]["sel_one_chart"], type: "string", cel: "this in ['true', 'false']"},
+					{ordinal: 9, name: "sel_one_library", default: components.entityDefaults["quiz_demo"]["sel_one_library"], type: "string", cel: "this in ['true', 'false']"},
+					{ordinal: 10, name: "sel_two_row", default: components.entityDefaults["quiz_demo"]["sel_two_row"], type: "string", cel: "this in ['true', 'false']"},
+					{ordinal: 11, name: "sel_two_dom", default: components.entityDefaults["quiz_demo"]["sel_two_dom"], type: "string", cel: "this in ['true', 'false']"},
+					{ordinal: 12, name: "sel_two_memory", default: components.entityDefaults["quiz_demo"]["sel_two_memory"], type: "string", cel: "this in ['true', 'false']"},
 				]
 			}
 			CalendarDemo: {
@@ -714,11 +714,11 @@ code: pronto.#App & {
 				durability: "tab"
 				fields: [
 					{ordinal: 1, name: "id", type: "string", pk: true, cel: "this.size() <= 64"},
-					{ordinal: 2, name: "state", type: "string", cel: "this in ['browsing']"},
-					{ordinal: 3, name: "month", type: "string", cel: "this.size() == 7"},
-					{ordinal: 4, name: "label", type: "string", cel: "this.size() <= 24"},
-					{ordinal: 5, name: "value", type: "string", cel: "this.size() <= 16"},
-					{ordinal: 6, name: "active", type: "string", cel: "this.size() <= 16"},
+					{ordinal: 2, name: "state", default: components.entityDefaults["calendar_demo"]["state"], type: "string", cel: "this in ['browsing']"},
+					{ordinal: 3, name: "month", default: components.entityDefaults["calendar_demo"]["month"], type: "string", cel: "this.size() == 7"},
+					{ordinal: 4, name: "label", default: components.entityDefaults["calendar_demo"]["label"], type: "string", cel: "this.size() <= 24"},
+					{ordinal: 5, name: "value", default: components.entityDefaults["calendar_demo"]["value"], type: "string", cel: "this.size() <= 16"},
+					{ordinal: 6, name: "active", default: components.entityDefaults["calendar_demo"]["active"], type: "string", cel: "this.size() <= 16"},
 				]
 				seed: components.calendarRows
 			}
@@ -2263,6 +2263,6 @@ loop: surface: checks: "gallery": {
 	note: "hydrates every emitted screen and drives each component's machine: toggles write rows, the initial state is synthesized, the readout agrees with the control, and a fact between two instances of one component holds still"
 }
 
-build: (pronto.#DefaultBuild & {"code": code, "loop": loop, "cluster": cluster}).out
+build: (pronto.#DefaultBuild & {"code": code, "loop": loop, "cluster": cluster, "terminal": terminal}).out
 
 out: pronto.#emit & {"code": code, "cluster": cluster, "terminal": terminal, "loop": loop, "build": build}

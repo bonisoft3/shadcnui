@@ -98,7 +98,6 @@ import (
 		_expansion: terminal.#Machine & {
 			field:   A.field
 			initial: "none"
-			context: A._allClosed
 			states: {
 				none: on: {for i in A.items {
 					("click@\(A._t[i.name])"): {target: i.name, assign: A._openOnly[i.name]}
@@ -140,7 +139,7 @@ import (
 	}
 
 	if A.type == "multiple" {
-		// The binary chart, one per row: no context and no derived column,
+		// The binary chart, one per row: no derived column,
 		// because at this arity the field IS aria-expanded's value.
 		machines: {for i in A.items {
 			(i.name): (_#Binary & {

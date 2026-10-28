@@ -1,0 +1,7061 @@
+{
+  "version": 1,
+  "types": {
+    "types": {
+      "string": {
+        "pg": "text",
+        "column": "plain",
+        "subset": true,
+        "base": [
+          "text",
+          "varchar",
+          "bpchar",
+          "tsvector"
+        ],
+        "json": "string",
+        "refuse": "\\x00",
+        "order": "text",
+        "beyond": [
+          "scalar-values"
+        ]
+      },
+      "bool": {
+        "pg": "boolean",
+        "column": "plain",
+        "subset": true,
+        "base": [
+          "bool",
+          "boolean"
+        ],
+        "json": "boolean",
+        "order": "boolean",
+        "beyond": []
+      },
+      "int32": {
+        "pg": "integer",
+        "column": "plain",
+        "subset": true,
+        "base": [
+          "int2",
+          "int4",
+          "integer",
+          "smallint"
+        ],
+        "json": "number",
+        "min": -2147483648,
+        "max": 2147483647,
+        "order": "number",
+        "beyond": []
+      },
+      "int64": {
+        "pg": "bigint",
+        "column": "domain",
+        "subset": false,
+        "sql": "portable_int64",
+        "base": [
+          "int8",
+          "bigint"
+        ],
+        "json": "string",
+        "pattern": "^(0|-?[1-9][0-9]*)$",
+        "order": "integer",
+        "beyond": [
+          "int64-range"
+        ]
+      },
+      "double": {
+        "pg": "double precision",
+        "column": "checked",
+        "subset": true,
+        "base": [
+          "float4",
+          "float8",
+          "double precision",
+          "real"
+        ],
+        "json": "number",
+        "order": "number",
+        "beyond": []
+      },
+      "bytes": {
+        "pg": "bytea",
+        "column": "domain",
+        "subset": false,
+        "sql": "portable_bytes",
+        "base": [
+          "bytea"
+        ],
+        "json": "string",
+        "pattern": "^([A-Za-z0-9+/]{4})*([A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$",
+        "order": "none",
+        "beyond": []
+      },
+      "uuid": {
+        "pg": "uuid",
+        "column": "plain",
+        "subset": true,
+        "base": [
+          "uuid"
+        ],
+        "json": "string",
+        "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$",
+        "order": "text",
+        "beyond": []
+      },
+      "timestamp": {
+        "pg": "timestamptz",
+        "column": "domain",
+        "subset": false,
+        "sql": "portable_timestamp",
+        "base": [
+          "timestamptz",
+          "timestamp with time zone"
+        ],
+        "json": "string",
+        "pattern": "^(000[1-9]|00[1-9][0-9]|0[1-9][0-9]{2}|[1-9][0-9]{3})-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])T([01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]\\.[0-9]{6}Z$",
+        "order": "text",
+        "beyond": [
+          "calendar"
+        ]
+      },
+      "duration": {
+        "pg": "interval",
+        "column": "domain",
+        "subset": false,
+        "sql": "portable_duration",
+        "base": [
+          "interval"
+        ],
+        "json": "string",
+        "pattern": "^PT(0|[1-9][0-9]*)(\\.[0-9]{0,5}[1-9])?S$",
+        "order": "duration",
+        "beyond": [
+          "duration-range"
+        ]
+      },
+      "decimal": {
+        "pg": "numeric",
+        "column": "domain",
+        "subset": false,
+        "base": [
+          "numeric",
+          "decimal"
+        ],
+        "json": "string",
+        "pattern": "^(0|-?[1-9][0-9]*|-?(0|[1-9][0-9]*)\\.[0-9]*[1-9])$",
+        "order": "decimal",
+        "beyond": [
+          "decimal-profile"
+        ]
+      },
+      "date": {
+        "pg": "date",
+        "column": "checked",
+        "subset": true,
+        "base": [
+          "date"
+        ],
+        "json": "string",
+        "pattern": "^(000[1-9]|00[1-9][0-9]|0[1-9][0-9]{2}|[1-9][0-9]{3})-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$",
+        "order": "text",
+        "beyond": [
+          "calendar"
+        ]
+      },
+      "time": {
+        "pg": "time(6)",
+        "column": "domain",
+        "subset": false,
+        "sql": "portable_time",
+        "base": [
+          "time",
+          "time without time zone"
+        ],
+        "json": "string",
+        "pattern": "^([01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]\\.[0-9]{6}$",
+        "order": "text",
+        "beyond": []
+      },
+      "timezone": {
+        "pg": "text",
+        "column": "checked",
+        "subset": true,
+        "base": [
+          "text"
+        ],
+        "json": "string",
+        "pattern": "^[A-Za-z0-9+_/-]+$",
+        "order": "none",
+        "beyond": [
+          "tzdb"
+        ]
+      },
+      "json": {
+        "pg": "json",
+        "column": "checked",
+        "subset": false,
+        "base": [
+          "json",
+          "jsonb"
+        ],
+        "json": "value",
+        "order": "none",
+        "beyond": [
+          "scalar-values",
+          "finite-numbers"
+        ]
+      },
+      "geojson": {
+        "pg": "json",
+        "column": "checked",
+        "subset": false,
+        "base": [
+          "json",
+          "jsonb",
+          "geometry",
+          "geography"
+        ],
+        "json": "value",
+        "order": "none",
+        "beyond": [
+          "scalar-values",
+          "finite-numbers",
+          "ring-closure"
+        ]
+      }
+    },
+    "aliases": {
+      "text": "string",
+      "int": "int32",
+      "bigint": "int64",
+      "timestamptz": "timestamp",
+      "tsvector": "string"
+    }
+  },
+  "entities": {
+    "SwitchDemo": {
+      "name": "SwitchDemo",
+      "ir": "SwitchDemo",
+      "table": "switch_demo",
+      "id": "0xcb4579e6dd7063cb",
+      "fields": [
+        {
+          "name": "id",
+          "ordinal": 1,
+          "retired": false,
+          "type": "string",
+          "pk": true,
+          "required": true,
+          "cel": "this.size() <= 64"
+        },
+        {
+          "name": "checked",
+          "ordinal": 2,
+          "retired": false,
+          "type": "string",
+          "pk": false,
+          "required": true,
+          "default": "'false'",
+          "cel": "this in ['true', 'false']"
+        }
+      ],
+      "seed": [],
+      "durability": "tab",
+      "level": "ephemeral",
+      "server": false,
+      "writers": [
+        {
+          "by": "SwitchDemo-checked",
+          "kind": "chart",
+          "ops": [
+            "update"
+          ]
+        }
+      ],
+      "cel": {
+        "checks": {},
+        "enums": {
+          "checked": [
+            "true",
+            "false"
+          ]
+        },
+        "bounds": {
+          "id": {
+            "sizeMax": 64
+          }
+        }
+      },
+      "uniques": [],
+      "validations": {}
+    },
+    "TabsDemo": {
+      "name": "TabsDemo",
+      "ir": "TabsDemo",
+      "table": "tabs_demo",
+      "id": "0xcbddef1e72659775",
+      "fields": [
+        {
+          "name": "id",
+          "ordinal": 1,
+          "retired": false,
+          "type": "string",
+          "pk": true,
+          "required": true,
+          "cel": "this.size() <= 64"
+        },
+        {
+          "name": "active",
+          "ordinal": 2,
+          "retired": false,
+          "type": "string",
+          "pk": false,
+          "required": true,
+          "default": "'account'",
+          "cel": "this in ['account', 'password']"
+        },
+        {
+          "name": "sel_account",
+          "ordinal": 3,
+          "retired": false,
+          "type": "string",
+          "pk": false,
+          "required": true,
+          "default": "'true'",
+          "cel": "this in ['true', 'false']"
+        },
+        {
+          "name": "sel_password",
+          "ordinal": 4,
+          "retired": false,
+          "type": "string",
+          "pk": false,
+          "required": true,
+          "default": "'false'",
+          "cel": "this in ['true', 'false']"
+        },
+        {
+          "name": "tab_account",
+          "ordinal": 5,
+          "retired": false,
+          "type": "string",
+          "pk": false,
+          "required": true,
+          "default": "'0'",
+          "cel": "this in ['0', '-1']"
+        },
+        {
+          "name": "tab_password",
+          "ordinal": 6,
+          "retired": false,
+          "type": "string",
+          "pk": false,
+          "required": true,
+          "default": "'-1'",
+          "cel": "this in ['0', '-1']"
+        }
+      ],
+      "seed": [],
+      "durability": "tab",
+      "level": "ephemeral",
+      "server": false,
+      "writers": [
+        {
+          "by": "TabsDemo-active",
+          "kind": "chart",
+          "ops": [
+            "update"
+          ]
+        }
+      ],
+      "cel": {
+        "checks": {},
+        "enums": {
+          "active": [
+            "account",
+            "password"
+          ],
+          "sel_account": [
+            "true",
+            "false"
+          ],
+          "sel_password": [
+            "true",
+            "false"
+          ],
+          "tab_account": [
+            "0",
+            "-1"
+          ],
+          "tab_password": [
+            "0",
+            "-1"
+          ]
+        },
+        "bounds": {
+          "id": {
+            "sizeMax": 64
+          }
+        }
+      },
+      "uniques": [],
+      "validations": {}
+    },
+    "PickerDemo": {
+      "name": "PickerDemo",
+      "ir": "PickerDemo",
+      "table": "picker_demo",
+      "id": "0x81ddda075765a099",
+      "fields": [
+        {
+          "name": "id",
+          "ordinal": 1,
+          "retired": false,
+          "type": "string",
+          "pk": true,
+          "required": true,
+          "cel": "this.size() <= 64"
+        },
+        {
+          "name": "choice",
+          "ordinal": 2,
+          "retired": false,
+          "type": "string",
+          "pk": false,
+          "required": true,
+          "default": "'apple'",
+          "cel": "this in ['apple', 'banana', 'cherry']"
+        },
+        {
+          "name": "label",
+          "ordinal": 3,
+          "retired": false,
+          "type": "string",
+          "pk": false,
+          "required": true,
+          "default": "'Apple'",
+          "cel": "this.size() <= 24"
+        },
+        {
+          "name": "sel_apple",
+          "ordinal": 4,
+          "retired": false,
+          "type": "string",
+          "pk": false,
+          "required": true,
+          "default": "'true'",
+          "cel": "this in ['true', 'false']"
+        },
+        {
+          "name": "sel_banana",
+          "ordinal": 5,
+          "retired": false,
+          "type": "string",
+          "pk": false,
+          "required": true,
+          "default": "'false'",
+          "cel": "this in ['true', 'false']"
+        },
+        {
+          "name": "sel_cherry",
+          "ordinal": 6,
+          "retired": false,
+          "type": "string",
+          "pk": false,
+          "required": true,
+          "default": "'false'",
+          "cel": "this in ['true', 'false']"
+        }
+      ],
+      "seed": [],
+      "durability": "tab",
+      "level": "ephemeral",
+      "server": false,
+      "writers": [
+        {
+          "by": "PickerDemo-choice",
+          "kind": "chart",
+          "ops": [
+            "update"
+          ]
+        }
+      ],
+      "cel": {
+        "checks": {},
+        "enums": {
+          "choice": [
+            "apple",
+            "banana",
+            "cherry"
+          ],
+          "sel_apple": [
+            "true",
+            "false"
+          ],
+          "sel_banana": [
+            "true",
+            "false"
+          ],
+          "sel_cherry": [
+            "true",
+            "false"
+          ]
+        },
+        "bounds": {
+          "id": {
+            "sizeMax": 64
+          },
+          "label": {
+            "sizeMax": 24
+          }
+        }
+      },
+      "uniques": [],
+      "validations": {}
+    },
+    "ToggleGroupDemo": {
+      "name": "ToggleGroupDemo",
+      "ir": "ToggleGroupDemo",
+      "table": "toggle_group_demo",
+      "id": "0x9cab1a9302ed5291",
+      "fields": [
+        {
+          "name": "id",
+          "ordinal": 1,
+          "retired": false,
+          "type": "string",
+          "pk": true,
+          "required": true,
+          "cel": "this.size() <= 64"
+        },
+        {
+          "name": "value",
+          "ordinal": 2,
+          "retired": false,
+          "type": "string",
+          "pk": false,
+          "required": true,
+          "default": "'left'",
+          "cel": "this in ['left', 'center', 'right']"
+        },
+        {
+          "name": "chk_left",
+          "ordinal": 3,
+          "retired": false,
+          "type": "string",
+          "pk": false,
+          "required": true,
+          "default": "'true'",
+          "cel": "this in ['true', 'false']"
+        },
+        {
+          "name": "chk_center",
+          "ordinal": 4,
+          "retired": false,
+          "type": "string",
+          "pk": false,
+          "required": true,
+          "default": "'false'",
+          "cel": "this in ['true', 'false']"
+        },
+        {
+          "name": "chk_right",
+          "ordinal": 5,
+          "retired": false,
+          "type": "string",
+          "pk": false,
+          "required": true,
+          "default": "'false'",
+          "cel": "this in ['true', 'false']"
+        },
+        {
+          "name": "tab_left",
+          "ordinal": 6,
+          "retired": false,
+          "type": "string",
+          "pk": false,
+          "required": true,
+          "default": "'0'",
+          "cel": "this in ['0', '-1']"
+        },
+        {
+          "name": "tab_center",
+          "ordinal": 7,
+          "retired": false,
+          "type": "string",
+          "pk": false,
+          "required": true,
+          "default": "'-1'",
+          "cel": "this in ['0', '-1']"
+        },
+        {
+          "name": "tab_right",
+          "ordinal": 8,
+          "retired": false,
+          "type": "string",
+          "pk": false,
+          "required": true,
+          "default": "'-1'",
+          "cel": "this in ['0', '-1']"
+        }
+      ],
+      "seed": [],
+      "durability": "tab",
+      "level": "ephemeral",
+      "server": false,
+      "writers": [
+        {
+          "by": "ToggleGroupDemo-value",
+          "kind": "chart",
+          "ops": [
+            "update"
+          ]
+        }
+      ],
+      "cel": {
+        "checks": {},
+        "enums": {
+          "value": [
+            "left",
+            "center",
+            "right"
+          ],
+          "chk_left": [
+            "true",
+            "false"
+          ],
+          "chk_center": [
+            "true",
+            "false"
+          ],
+          "chk_right": [
+            "true",
+            "false"
+          ],
+          "tab_left": [
+            "0",
+            "-1"
+          ],
+          "tab_center": [
+            "0",
+            "-1"
+          ],
+          "tab_right": [
+            "0",
+            "-1"
+          ]
+        },
+        "bounds": {
+          "id": {
+            "sizeMax": 64
+          }
+        }
+      },
+      "uniques": [],
+      "validations": {}
+    },
+    "AccordionSingleDemo": {
+      "name": "AccordionSingleDemo",
+      "ir": "AccordionSingleDemo",
+      "table": "accordion_single_demo",
+      "id": "0x8348aaaf29af748f",
+      "fields": [
+        {
+          "name": "id",
+          "ordinal": 1,
+          "retired": false,
+          "type": "string",
+          "pk": true,
+          "required": true,
+          "cel": "this.size() <= 64"
+        },
+        {
+          "name": "open",
+          "ordinal": 2,
+          "retired": false,
+          "type": "string",
+          "pk": false,
+          "required": true,
+          "default": "'none'",
+          "cel": "this in ['none', 'shipping', 'returns', 'support']"
+        },
+        {
+          "name": "exp_shipping",
+          "ordinal": 3,
+          "retired": false,
+          "type": "string",
+          "pk": false,
+          "required": true,
+          "default": "'false'",
+          "cel": "this in ['true', 'false']"
+        },
+        {
+          "name": "exp_returns",
+          "ordinal": 4,
+          "retired": false,
+          "type": "string",
+          "pk": false,
+          "required": true,
+          "default": "'false'",
+          "cel": "this in ['true', 'false']"
+        },
+        {
+          "name": "exp_support",
+          "ordinal": 5,
+          "retired": false,
+          "type": "string",
+          "pk": false,
+          "required": true,
+          "default": "'false'",
+          "cel": "this in ['true', 'false']"
+        },
+        {
+          "name": "caret",
+          "ordinal": 6,
+          "retired": false,
+          "type": "string",
+          "pk": false,
+          "required": true,
+          "default": "'shipping'",
+          "cel": "this in ['shipping', 'returns', 'support']"
+        },
+        {
+          "name": "cur_shipping",
+          "ordinal": 7,
+          "retired": false,
+          "type": "string",
+          "pk": false,
+          "required": true,
+          "default": "'true'",
+          "cel": "this in ['true', 'false']"
+        },
+        {
+          "name": "cur_returns",
+          "ordinal": 8,
+          "retired": false,
+          "type": "string",
+          "pk": false,
+          "required": true,
+          "default": "'false'",
+          "cel": "this in ['true', 'false']"
+        },
+        {
+          "name": "cur_support",
+          "ordinal": 9,
+          "retired": false,
+          "type": "string",
+          "pk": false,
+          "required": true,
+          "default": "'false'",
+          "cel": "this in ['true', 'false']"
+        }
+      ],
+      "seed": [],
+      "durability": "tab",
+      "level": "ephemeral",
+      "server": false,
+      "writers": [
+        {
+          "by": "AccordionSingleDemo-open",
+          "kind": "chart",
+          "ops": [
+            "update"
+          ]
+        },
+        {
+          "by": "AccordionSingleDemo-caret",
+          "kind": "chart",
+          "ops": [
+            "update"
+          ]
+        }
+      ],
+      "cel": {
+        "checks": {},
+        "enums": {
+          "open": [
+            "none",
+            "shipping",
+            "returns",
+            "support"
+          ],
+          "exp_shipping": [
+            "true",
+            "false"
+          ],
+          "exp_returns": [
+            "true",
+            "false"
+          ],
+          "exp_support": [
+            "true",
+            "false"
+          ],
+          "caret": [
+            "shipping",
+            "returns",
+            "support"
+          ],
+          "cur_shipping": [
+            "true",
+            "false"
+          ],
+          "cur_returns": [
+            "true",
+            "false"
+          ],
+          "cur_support": [
+            "true",
+            "false"
+          ]
+        },
+        "bounds": {
+          "id": {
+            "sizeMax": 64
+          }
+        }
+      },
+      "uniques": [],
+      "validations": {}
+    },
+    "AccordionMultiDemo": {
+      "name": "AccordionMultiDemo",
+      "ir": "AccordionMultiDemo",
+      "table": "accordion_multi_demo",
+      "id": "0xed447960798677ca",
+      "fields": [
+        {
+          "name": "id",
+          "ordinal": 1,
+          "retired": false,
+          "type": "string",
+          "pk": true,
+          "required": true,
+          "cel": "this in ['shipping', 'returns', 'support']"
+        },
+        {
+          "name": "open",
+          "ordinal": 2,
+          "retired": false,
+          "type": "string",
+          "pk": false,
+          "required": true,
+          "default": "'false'",
+          "cel": "this in ['true', 'false']"
+        }
+      ],
+      "seed": [],
+      "durability": "tab",
+      "level": "ephemeral",
+      "server": false,
+      "writers": [
+        {
+          "by": "AccordionMultiDemo-open",
+          "kind": "chart",
+          "ops": [
+            "update"
+          ]
+        }
+      ],
+      "cel": {
+        "checks": {},
+        "enums": {
+          "id": [
+            "shipping",
+            "returns",
+            "support"
+          ],
+          "open": [
+            "true",
+            "false"
+          ]
+        },
+        "bounds": {}
+      },
+      "uniques": [],
+      "validations": {}
+    },
+    "ComboboxDemo": {
+      "name": "ComboboxDemo",
+      "ir": "ComboboxDemo",
+      "table": "combobox_demo",
+      "id": "0x9b69f9a818b2542e",
+      "fields": [
+        {
+          "name": "id",
+          "ordinal": 1,
+          "retired": false,
+          "type": "string",
+          "pk": true,
+          "required": true,
+          "cel": "this.size() <= 64"
+        },
+        {
+          "name": "choice",
+          "ordinal": 2,
+          "retired": false,
+          "type": "string",
+          "pk": false,
+          "required": true,
+          "cel": "this in ['Next.js', 'SvelteKit', 'Nuxt', 'Remix', 'Astro']"
+        }
+      ],
+      "seed": [],
+      "durability": "tab",
+      "level": "ephemeral",
+      "server": false,
+      "writers": [
+        {
+          "by": "combobox",
+          "kind": "form",
+          "ops": [
+            "upsert"
+          ]
+        }
+      ],
+      "cel": {
+        "checks": {},
+        "enums": {
+          "choice": [
+            "Next.js",
+            "SvelteKit",
+            "Nuxt",
+            "Remix",
+            "Astro"
+          ]
+        },
+        "bounds": {
+          "id": {
+            "sizeMax": 64
+          }
+        }
+      },
+      "uniques": [],
+      "validations": {}
+    },
+    "CheckboxDemo": {
+      "name": "CheckboxDemo",
+      "ir": "CheckboxDemo",
+      "table": "checkbox_demo",
+      "id": "0x84d949fe4db94d38",
+      "fields": [
+        {
+          "name": "id",
+          "ordinal": 1,
+          "retired": false,
+          "type": "string",
+          "pk": true,
+          "required": true,
+          "cel": "this in ['terms']"
+        },
+        {
+          "name": "checked",
+          "ordinal": 2,
+          "retired": false,
+          "type": "string",
+          "pk": false,
+          "required": true,
+          "default": "'false'",
+          "cel": "this in ['true', 'false']"
+        }
+      ],
+      "seed": [],
+      "durability": "tab",
+      "level": "ephemeral",
+      "server": false,
+      "writers": [
+        {
+          "by": "CheckboxDemo-checked",
+          "kind": "chart",
+          "ops": [
+            "update"
+          ]
+        }
+      ],
+      "cel": {
+        "checks": {},
+        "enums": {
+          "id": [
+            "terms"
+          ],
+          "checked": [
+            "true",
+            "false"
+          ]
+        },
+        "bounds": {}
+      },
+      "uniques": [],
+      "validations": {}
+    },
+    "SelectAllDemo": {
+      "name": "SelectAllDemo",
+      "ir": "SelectAllDemo",
+      "table": "select_all_demo",
+      "id": "0xe6552e0edb88a82d",
+      "fields": [
+        {
+          "name": "id",
+          "ordinal": 1,
+          "retired": false,
+          "type": "string",
+          "pk": true,
+          "required": true,
+          "cel": "this in ['all']"
+        },
+        {
+          "name": "phase",
+          "ordinal": 2,
+          "retired": false,
+          "type": "string",
+          "pk": false,
+          "required": true,
+          "default": "'live'",
+          "cel": "this in ['live']"
+        },
+        {
+          "name": "checked",
+          "ordinal": 3,
+          "retired": false,
+          "type": "string",
+          "pk": false,
+          "required": true,
+          "default": "'mixed'",
+          "cel": "this in ['true', 'false', 'mixed']"
+        },
+        {
+          "name": "inc_docs",
+          "ordinal": 4,
+          "retired": false,
+          "type": "string",
+          "pk": false,
+          "required": true,
+          "default": "'true'",
+          "cel": "this in ['true', 'false']"
+        },
+        {
+          "name": "inc_images",
+          "ordinal": 5,
+          "retired": false,
+          "type": "string",
+          "pk": false,
+          "required": true,
+          "default": "'true'",
+          "cel": "this in ['true', 'false']"
+        },
+        {
+          "name": "inc_archive",
+          "ordinal": 6,
+          "retired": false,
+          "type": "string",
+          "pk": false,
+          "required": true,
+          "default": "'false'",
+          "cel": "this in ['true', 'false']"
+        }
+      ],
+      "seed": [],
+      "durability": "tab",
+      "level": "ephemeral",
+      "server": false,
+      "writers": [
+        {
+          "by": "SelectAllDemo-phase",
+          "kind": "chart",
+          "ops": [
+            "update"
+          ]
+        }
+      ],
+      "cel": {
+        "checks": {},
+        "enums": {
+          "id": [
+            "all"
+          ],
+          "phase": [
+            "live"
+          ],
+          "checked": [
+            "true",
+            "false",
+            "mixed"
+          ],
+          "inc_docs": [
+            "true",
+            "false"
+          ],
+          "inc_images": [
+            "true",
+            "false"
+          ],
+          "inc_archive": [
+            "true",
+            "false"
+          ]
+        },
+        "bounds": {}
+      },
+      "uniques": [],
+      "validations": {}
+    },
+    "ToggleDemo": {
+      "name": "ToggleDemo",
+      "ir": "ToggleDemo",
+      "table": "toggle_demo",
+      "id": "0xe323f6f02a10fbe4",
+      "fields": [
+        {
+          "name": "id",
+          "ordinal": 1,
+          "retired": false,
+          "type": "string",
+          "pk": true,
+          "required": true,
+          "cel": "this.size() <= 64"
+        },
+        {
+          "name": "pressed",
+          "ordinal": 2,
+          "retired": false,
+          "type": "string",
+          "pk": false,
+          "required": true,
+          "default": "'false'",
+          "cel": "this in ['true', 'false']"
+        }
+      ],
+      "seed": [],
+      "durability": "tab",
+      "level": "ephemeral",
+      "server": false,
+      "writers": [
+        {
+          "by": "ToggleDemo-pressed",
+          "kind": "chart",
+          "ops": [
+            "update"
+          ]
+        }
+      ],
+      "cel": {
+        "checks": {},
+        "enums": {
+          "pressed": [
+            "true",
+            "false"
+          ]
+        },
+        "bounds": {
+          "id": {
+            "sizeMax": 64
+          }
+        }
+      },
+      "uniques": [],
+      "validations": {}
+    },
+    "CollapsibleDemo": {
+      "name": "CollapsibleDemo",
+      "ir": "CollapsibleDemo",
+      "table": "collapsible_demo",
+      "id": "0xa845b2178aae0397",
+      "fields": [
+        {
+          "name": "id",
+          "ordinal": 1,
+          "retired": false,
+          "type": "string",
+          "pk": true,
+          "required": true,
+          "cel": "this.size() <= 64"
+        },
+        {
+          "name": "open",
+          "ordinal": 2,
+          "retired": false,
+          "type": "string",
+          "pk": false,
+          "required": true,
+          "default": "'false'",
+          "cel": "this in ['true', 'false']"
+        }
+      ],
+      "seed": [],
+      "durability": "tab",
+      "level": "ephemeral",
+      "server": false,
+      "writers": [
+        {
+          "by": "CollapsibleDemo-open",
+          "kind": "chart",
+          "ops": [
+            "update"
+          ]
+        }
+      ],
+      "cel": {
+        "checks": {},
+        "enums": {
+          "open": [
+            "true",
+            "false"
+          ]
+        },
+        "bounds": {
+          "id": {
+            "sizeMax": 64
+          }
+        }
+      },
+      "uniques": [],
+      "validations": {}
+    },
+    "RadioGroupDemo": {
+      "name": "RadioGroupDemo",
+      "ir": "RadioGroupDemo",
+      "table": "radio_group_demo",
+      "id": "0xcbd88f134d486212",
+      "fields": [
+        {
+          "name": "id",
+          "ordinal": 1,
+          "retired": false,
+          "type": "string",
+          "pk": true,
+          "required": true,
+          "cel": "this.size() <= 64"
+        },
+        {
+          "name": "value",
+          "ordinal": 2,
+          "retired": false,
+          "type": "string",
+          "pk": false,
+          "required": true,
+          "default": "'starter'",
+          "cel": "this in ['starter', 'pro', 'team']"
+        },
+        {
+          "name": "chk_starter",
+          "ordinal": 3,
+          "retired": false,
+          "type": "string",
+          "pk": false,
+          "required": true,
+          "default": "'true'",
+          "cel": "this in ['true', 'false']"
+        },
+        {
+          "name": "chk_pro",
+          "ordinal": 4,
+          "retired": false,
+          "type": "string",
+          "pk": false,
+          "required": true,
+          "default": "'false'",
+          "cel": "this in ['true', 'false']"
+        },
+        {
+          "name": "chk_team",
+          "ordinal": 5,
+          "retired": false,
+          "type": "string",
+          "pk": false,
+          "required": true,
+          "default": "'false'",
+          "cel": "this in ['true', 'false']"
+        },
+        {
+          "name": "tab_starter",
+          "ordinal": 6,
+          "retired": false,
+          "type": "string",
+          "pk": false,
+          "required": true,
+          "default": "'0'",
+          "cel": "this in ['0', '-1']"
+        },
+        {
+          "name": "tab_pro",
+          "ordinal": 7,
+          "retired": false,
+          "type": "string",
+          "pk": false,
+          "required": true,
+          "default": "'-1'",
+          "cel": "this in ['0', '-1']"
+        },
+        {
+          "name": "tab_team",
+          "ordinal": 8,
+          "retired": false,
+          "type": "string",
+          "pk": false,
+          "required": true,
+          "default": "'-1'",
+          "cel": "this in ['0', '-1']"
+        }
+      ],
+      "seed": [],
+      "durability": "tab",
+      "level": "ephemeral",
+      "server": false,
+      "writers": [
+        {
+          "by": "RadioGroupDemo-value",
+          "kind": "chart",
+          "ops": [
+            "update"
+          ]
+        }
+      ],
+      "cel": {
+        "checks": {},
+        "enums": {
+          "value": [
+            "starter",
+            "pro",
+            "team"
+          ],
+          "chk_starter": [
+            "true",
+            "false"
+          ],
+          "chk_pro": [
+            "true",
+            "false"
+          ],
+          "chk_team": [
+            "true",
+            "false"
+          ],
+          "tab_starter": [
+            "0",
+            "-1"
+          ],
+          "tab_pro": [
+            "0",
+            "-1"
+          ],
+          "tab_team": [
+            "0",
+            "-1"
+          ]
+        },
+        "bounds": {
+          "id": {
+            "sizeMax": 64
+          }
+        }
+      },
+      "uniques": [],
+      "validations": {}
+    },
+    "PaginationDemo": {
+      "name": "PaginationDemo",
+      "ir": "PaginationDemo",
+      "table": "pagination_demo",
+      "id": "0xb804cc1641ae503b",
+      "fields": [
+        {
+          "name": "id",
+          "ordinal": 1,
+          "retired": false,
+          "type": "string",
+          "pk": true,
+          "required": true,
+          "cel": "this.size() <= 64"
+        },
+        {
+          "name": "page",
+          "ordinal": 2,
+          "retired": false,
+          "type": "string",
+          "pk": false,
+          "required": true,
+          "default": "'p1'",
+          "cel": "this in ['p1', 'p2', 'p3', 'p4', 'p5']"
+        },
+        {
+          "name": "cur_p1",
+          "ordinal": 3,
+          "retired": false,
+          "type": "string",
+          "pk": false,
+          "required": true,
+          "default": "'page'",
+          "cel": "this in ['page', 'false']"
+        },
+        {
+          "name": "cur_p2",
+          "ordinal": 4,
+          "retired": false,
+          "type": "string",
+          "pk": false,
+          "required": true,
+          "default": "'false'",
+          "cel": "this in ['page', 'false']"
+        },
+        {
+          "name": "cur_p3",
+          "ordinal": 5,
+          "retired": false,
+          "type": "string",
+          "pk": false,
+          "required": true,
+          "default": "'false'",
+          "cel": "this in ['page', 'false']"
+        },
+        {
+          "name": "cur_p4",
+          "ordinal": 6,
+          "retired": false,
+          "type": "string",
+          "pk": false,
+          "required": true,
+          "default": "'false'",
+          "cel": "this in ['page', 'false']"
+        },
+        {
+          "name": "cur_p5",
+          "ordinal": 7,
+          "retired": false,
+          "type": "string",
+          "pk": false,
+          "required": true,
+          "default": "'false'",
+          "cel": "this in ['page', 'false']"
+        },
+        {
+          "name": "dis_prev",
+          "ordinal": 8,
+          "retired": false,
+          "type": "string",
+          "pk": false,
+          "required": true,
+          "default": "'disabled'",
+          "cel": "this in ['', 'disabled']"
+        },
+        {
+          "name": "dis_next",
+          "ordinal": 9,
+          "retired": false,
+          "type": "string",
+          "pk": false,
+          "required": true,
+          "default": "''",
+          "cel": "this in ['', 'disabled']"
+        }
+      ],
+      "seed": [],
+      "durability": "tab",
+      "level": "ephemeral",
+      "server": false,
+      "writers": [
+        {
+          "by": "PaginationDemo-page",
+          "kind": "chart",
+          "ops": [
+            "update"
+          ]
+        }
+      ],
+      "cel": {
+        "checks": {},
+        "enums": {
+          "page": [
+            "p1",
+            "p2",
+            "p3",
+            "p4",
+            "p5"
+          ],
+          "cur_p1": [
+            "page",
+            "false"
+          ],
+          "cur_p2": [
+            "page",
+            "false"
+          ],
+          "cur_p3": [
+            "page",
+            "false"
+          ],
+          "cur_p4": [
+            "page",
+            "false"
+          ],
+          "cur_p5": [
+            "page",
+            "false"
+          ],
+          "dis_prev": [
+            "",
+            "disabled"
+          ],
+          "dis_next": [
+            "",
+            "disabled"
+          ]
+        },
+        "bounds": {
+          "id": {
+            "sizeMax": 64
+          }
+        }
+      },
+      "uniques": [],
+      "validations": {}
+    },
+    "CarouselDemo": {
+      "name": "CarouselDemo",
+      "ir": "CarouselDemo",
+      "table": "carousel_demo",
+      "id": "0x8507b287f8e02005",
+      "fields": [
+        {
+          "name": "id",
+          "ordinal": 1,
+          "retired": false,
+          "type": "string",
+          "pk": true,
+          "required": true,
+          "cel": "this.size() <= 64"
+        },
+        {
+          "name": "slide",
+          "ordinal": 2,
+          "retired": false,
+          "type": "string",
+          "pk": false,
+          "required": true,
+          "default": "'s1'",
+          "cel": "this in ['s1', 's2', 's3', 's4']"
+        },
+        {
+          "name": "cur_s1",
+          "ordinal": 3,
+          "retired": false,
+          "type": "string",
+          "pk": false,
+          "required": true,
+          "default": "'true'",
+          "cel": "this in ['true', 'false']"
+        },
+        {
+          "name": "cur_s2",
+          "ordinal": 4,
+          "retired": false,
+          "type": "string",
+          "pk": false,
+          "required": true,
+          "default": "'false'",
+          "cel": "this in ['true', 'false']"
+        },
+        {
+          "name": "cur_s3",
+          "ordinal": 5,
+          "retired": false,
+          "type": "string",
+          "pk": false,
+          "required": true,
+          "default": "'false'",
+          "cel": "this in ['true', 'false']"
+        },
+        {
+          "name": "cur_s4",
+          "ordinal": 6,
+          "retired": false,
+          "type": "string",
+          "pk": false,
+          "required": true,
+          "default": "'false'",
+          "cel": "this in ['true', 'false']"
+        },
+        {
+          "name": "dis_prev",
+          "ordinal": 7,
+          "retired": false,
+          "type": "string",
+          "pk": false,
+          "required": true,
+          "default": "'disabled'",
+          "cel": "this in ['', 'disabled']"
+        },
+        {
+          "name": "dis_next",
+          "ordinal": 8,
+          "retired": false,
+          "type": "string",
+          "pk": false,
+          "required": true,
+          "default": "''",
+          "cel": "this in ['', 'disabled']"
+        }
+      ],
+      "seed": [],
+      "durability": "tab",
+      "level": "ephemeral",
+      "server": false,
+      "writers": [
+        {
+          "by": "CarouselDemo-slide",
+          "kind": "chart",
+          "ops": [
+            "update"
+          ]
+        }
+      ],
+      "cel": {
+        "checks": {},
+        "enums": {
+          "slide": [
+            "s1",
+            "s2",
+            "s3",
+            "s4"
+          ],
+          "cur_s1": [
+            "true",
+            "false"
+          ],
+          "cur_s2": [
+            "true",
+            "false"
+          ],
+          "cur_s3": [
+            "true",
+            "false"
+          ],
+          "cur_s4": [
+            "true",
+            "false"
+          ],
+          "dis_prev": [
+            "",
+            "disabled"
+          ],
+          "dis_next": [
+            "",
+            "disabled"
+          ]
+        },
+        "bounds": {
+          "id": {
+            "sizeMax": 64
+          }
+        }
+      },
+      "uniques": [],
+      "validations": {}
+    },
+    "ToastDemo": {
+      "name": "ToastDemo",
+      "ir": "ToastDemo",
+      "table": "toast_demo",
+      "id": "0xad9fb886c6b8ff70",
+      "fields": [
+        {
+          "name": "id",
+          "ordinal": 1,
+          "retired": false,
+          "type": "string",
+          "pk": true,
+          "required": true,
+          "cel": "this.size() <= 64"
+        },
+        {
+          "name": "state",
+          "ordinal": 2,
+          "retired": false,
+          "type": "string",
+          "pk": false,
+          "required": true,
+          "default": "'closed'",
+          "cel": "this in ['closed', 'open']"
+        }
+      ],
+      "seed": [],
+      "durability": "tab",
+      "level": "ephemeral",
+      "server": false,
+      "writers": [
+        {
+          "by": "ToastDemo-state",
+          "kind": "chart",
+          "ops": [
+            "update"
+          ]
+        }
+      ],
+      "cel": {
+        "checks": {},
+        "enums": {
+          "state": [
+            "closed",
+            "open"
+          ]
+        },
+        "bounds": {
+          "id": {
+            "sizeMax": 64
+          }
+        }
+      },
+      "uniques": [],
+      "validations": {}
+    },
+    "SliderDemo": {
+      "name": "SliderDemo",
+      "ir": "SliderDemo",
+      "table": "slider_demo",
+      "id": "0xffbbbfc23ba57b81",
+      "fields": [
+        {
+          "name": "id",
+          "ordinal": 1,
+          "retired": false,
+          "type": "string",
+          "pk": true,
+          "required": true,
+          "cel": "this.size() <= 64"
+        },
+        {
+          "name": "phase",
+          "ordinal": 2,
+          "retired": false,
+          "type": "string",
+          "pk": false,
+          "required": true,
+          "default": "'live'",
+          "cel": "this in ['live']"
+        },
+        {
+          "name": "volume",
+          "ordinal": 3,
+          "retired": false,
+          "type": "int32",
+          "pk": false,
+          "required": true,
+          "default": "50",
+          "cel": "this >= 0 && this <= 100"
+        }
+      ],
+      "seed": [],
+      "durability": "tab",
+      "level": "ephemeral",
+      "server": false,
+      "writers": [
+        {
+          "by": "SliderDemo-phase",
+          "kind": "chart",
+          "ops": [
+            "update"
+          ]
+        }
+      ],
+      "cel": {
+        "checks": {},
+        "enums": {
+          "phase": [
+            "live"
+          ]
+        },
+        "bounds": {
+          "id": {
+            "sizeMax": 64
+          },
+          "volume": {
+            "intMin": 0,
+            "intMax": 100
+          }
+        }
+      },
+      "uniques": [],
+      "validations": {}
+    },
+    "ProgressDemo": {
+      "name": "ProgressDemo",
+      "ir": "ProgressDemo",
+      "table": "progress_demo",
+      "id": "0x94082e6b913c00fe",
+      "fields": [
+        {
+          "name": "id",
+          "ordinal": 1,
+          "retired": false,
+          "type": "string",
+          "pk": true,
+          "required": true,
+          "cel": "this.size() <= 64"
+        },
+        {
+          "name": "done",
+          "ordinal": 2,
+          "retired": false,
+          "type": "int32",
+          "pk": false,
+          "required": true,
+          "cel": "this >= 0 && this <= 100"
+        }
+      ],
+      "seed": [],
+      "durability": "tab",
+      "level": "ephemeral",
+      "server": false,
+      "writers": [],
+      "cel": {
+        "checks": {},
+        "enums": {},
+        "bounds": {
+          "id": {
+            "sizeMax": 64
+          },
+          "done": {
+            "intMin": 0,
+            "intMax": 100
+          }
+        }
+      },
+      "uniques": [],
+      "validations": {}
+    },
+    "ResizableDemo": {
+      "name": "ResizableDemo",
+      "ir": "ResizableDemo",
+      "table": "resizable_demo",
+      "id": "0xd41d32bff7eb7078",
+      "fields": [
+        {
+          "name": "id",
+          "ordinal": 1,
+          "retired": false,
+          "type": "string",
+          "pk": true,
+          "required": true,
+          "cel": "this.size() <= 64"
+        },
+        {
+          "name": "state",
+          "ordinal": 2,
+          "retired": false,
+          "type": "string",
+          "pk": false,
+          "required": true,
+          "default": "'sizing'",
+          "cel": "this == 'sizing'"
+        },
+        {
+          "name": "split",
+          "ordinal": 3,
+          "retired": false,
+          "type": "int32",
+          "pk": false,
+          "required": true,
+          "default": "50",
+          "cel": "this >= 15 && this <= 85"
+        }
+      ],
+      "seed": [],
+      "durability": "tab",
+      "level": "ephemeral",
+      "server": false,
+      "writers": [
+        {
+          "by": "ResizableDemo-state",
+          "kind": "chart",
+          "ops": [
+            "update"
+          ]
+        }
+      ],
+      "cel": {
+        "checks": {},
+        "enums": {
+          "state": [
+            "sizing"
+          ]
+        },
+        "bounds": {
+          "id": {
+            "sizeMax": 64
+          },
+          "split": {
+            "intMin": 15,
+            "intMax": 85
+          }
+        }
+      },
+      "uniques": [],
+      "validations": {}
+    },
+    "CommandDemo": {
+      "name": "CommandDemo",
+      "ir": "CommandDemo",
+      "table": "command_demo",
+      "id": "0xcecfa9704ebe761e",
+      "fields": [
+        {
+          "name": "id",
+          "ordinal": 1,
+          "retired": false,
+          "type": "string",
+          "pk": true,
+          "required": true,
+          "cel": "this.size() <= 64"
+        },
+        {
+          "name": "state",
+          "ordinal": 2,
+          "retired": false,
+          "type": "string",
+          "pk": false,
+          "required": true,
+          "default": "'typing'",
+          "cel": "this == 'typing'"
+        },
+        {
+          "name": "query",
+          "ordinal": 3,
+          "retired": false,
+          "type": "string",
+          "pk": false,
+          "required": true,
+          "default": "''",
+          "cel": "this.size() <= 64"
+        },
+        {
+          "name": "active",
+          "ordinal": 4,
+          "retired": false,
+          "type": "string",
+          "pk": false,
+          "required": true,
+          "default": "''",
+          "cel": "this.size() <= 32"
+        },
+        {
+          "name": "chosen",
+          "ordinal": 5,
+          "retired": false,
+          "type": "string",
+          "pk": false,
+          "required": true,
+          "default": "''",
+          "cel": "this.size() <= 32"
+        }
+      ],
+      "seed": [
+        {
+          "id": "the",
+          "state": "typing",
+          "query": "",
+          "active": "",
+          "chosen": ""
+        }
+      ],
+      "durability": "tab",
+      "level": "ephemeral",
+      "server": false,
+      "writers": [
+        {
+          "by": "command",
+          "kind": "form",
+          "ops": [
+            "upsert"
+          ]
+        },
+        {
+          "by": "CommandDemo-state",
+          "kind": "chart",
+          "ops": [
+            "update"
+          ]
+        }
+      ],
+      "cel": {
+        "checks": {},
+        "enums": {
+          "state": [
+            "typing"
+          ]
+        },
+        "bounds": {
+          "id": {
+            "sizeMax": 64
+          },
+          "query": {
+            "sizeMax": 64
+          },
+          "active": {
+            "sizeMax": 32
+          },
+          "chosen": {
+            "sizeMax": 32
+          }
+        }
+      },
+      "uniques": [],
+      "validations": {}
+    },
+    "CommandItem": {
+      "name": "CommandItem",
+      "ir": "CommandItem",
+      "table": "command_item",
+      "id": "0xa4ec7e6b17f3234f",
+      "fields": [
+        {
+          "name": "id",
+          "ordinal": 1,
+          "retired": false,
+          "type": "string",
+          "pk": true,
+          "required": true,
+          "cel": "this.size() <= 32"
+        },
+        {
+          "name": "label",
+          "ordinal": 2,
+          "retired": false,
+          "type": "string",
+          "pk": false,
+          "required": true,
+          "cel": "this.size() <= 32"
+        },
+        {
+          "name": "group",
+          "ordinal": 3,
+          "retired": false,
+          "type": "string",
+          "pk": false,
+          "required": true,
+          "cel": "this.size() <= 32"
+        },
+        {
+          "name": "pos",
+          "ordinal": 4,
+          "retired": false,
+          "type": "int32",
+          "pk": false,
+          "required": true,
+          "cel": "this >= 1"
+        }
+      ],
+      "seed": [
+        {
+          "id": "calendar",
+          "label": "Calendar",
+          "group": "Suggestions",
+          "pos": 1
+        },
+        {
+          "id": "emoji",
+          "label": "Search Emoji",
+          "group": "Suggestions",
+          "pos": 2
+        },
+        {
+          "id": "calculator",
+          "label": "Calculator",
+          "group": "Suggestions",
+          "pos": 3
+        },
+        {
+          "id": "profile",
+          "label": "Profile",
+          "group": "Settings",
+          "pos": 4
+        },
+        {
+          "id": "billing",
+          "label": "Billing",
+          "group": "Settings",
+          "pos": 5
+        },
+        {
+          "id": "preferences",
+          "label": "Preferences",
+          "group": "Settings",
+          "pos": 6
+        }
+      ],
+      "durability": "tab",
+      "level": "ephemeral",
+      "server": false,
+      "writers": [],
+      "cel": {
+        "checks": {},
+        "enums": {},
+        "bounds": {
+          "id": {
+            "sizeMax": 32
+          },
+          "label": {
+            "sizeMax": 32
+          },
+          "group": {
+            "sizeMax": 32
+          },
+          "pos": {
+            "intMin": 1
+          }
+        }
+      },
+      "uniques": [],
+      "validations": {}
+    },
+    "SelectDemo": {
+      "name": "SelectDemo",
+      "ir": "SelectDemo",
+      "table": "select_demo",
+      "id": "0x9108c3b500c0bae2",
+      "fields": [
+        {
+          "name": "id",
+          "ordinal": 1,
+          "retired": false,
+          "type": "string",
+          "pk": true,
+          "required": true,
+          "cel": "this.size() <= 64"
+        },
+        {
+          "name": "choice",
+          "ordinal": 2,
+          "retired": false,
+          "type": "string",
+          "pk": false,
+          "required": true,
+          "cel": "this.size() <= 24"
+        }
+      ],
+      "seed": [],
+      "durability": "tab",
+      "level": "ephemeral",
+      "server": false,
+      "writers": [
+        {
+          "by": "select",
+          "kind": "form",
+          "ops": [
+            "upsert"
+          ]
+        }
+      ],
+      "cel": {
+        "checks": {},
+        "enums": {},
+        "bounds": {
+          "id": {
+            "sizeMax": 64
+          },
+          "choice": {
+            "sizeMax": 24
+          }
+        }
+      },
+      "uniques": [],
+      "validations": {}
+    },
+    "SelectOption": {
+      "name": "SelectOption",
+      "ir": "SelectOption",
+      "table": "select_option",
+      "id": "0xcec334bf6ba02549",
+      "fields": [
+        {
+          "name": "id",
+          "ordinal": 1,
+          "retired": false,
+          "type": "string",
+          "pk": true,
+          "required": true,
+          "cel": "this.size() >= 1 && this.size() <= 24"
+        }
+      ],
+      "seed": [],
+      "durability": "tab",
+      "level": "ephemeral",
+      "server": false,
+      "writers": [
+        {
+          "by": "select",
+          "kind": "form",
+          "ops": [
+            "upsert"
+          ]
+        }
+      ],
+      "cel": {
+        "checks": {},
+        "enums": {},
+        "bounds": {
+          "id": {
+            "sizeMin": 1,
+            "sizeMax": 24
+          }
+        }
+      },
+      "uniques": [],
+      "validations": {}
+    },
+    "MenuOptionDemo": {
+      "name": "MenuOptionDemo",
+      "ir": "MenuOptionDemo",
+      "table": "menu_option_demo",
+      "id": "0xa0b6976fd3a58d45",
+      "fields": [
+        {
+          "name": "id",
+          "ordinal": 1,
+          "retired": false,
+          "type": "string",
+          "pk": true,
+          "required": true,
+          "cel": "this.size() <= 64"
+        },
+        {
+          "name": "chk_bookmarks",
+          "ordinal": 2,
+          "retired": false,
+          "type": "string",
+          "pk": false,
+          "required": true,
+          "default": "'false'",
+          "cel": "this in ['true', 'false']"
+        },
+        {
+          "name": "chk_urls",
+          "ordinal": 3,
+          "retired": false,
+          "type": "string",
+          "pk": false,
+          "required": true,
+          "default": "'false'",
+          "cel": "this in ['true', 'false']"
+        },
+        {
+          "name": "caret",
+          "ordinal": 4,
+          "retired": false,
+          "type": "string",
+          "pk": false,
+          "required": true,
+          "default": "'bookmarks'",
+          "cel": "this in ['bookmarks', 'urls']"
+        },
+        {
+          "name": "cur_bookmarks",
+          "ordinal": 5,
+          "retired": false,
+          "type": "string",
+          "pk": false,
+          "required": true,
+          "default": "'true'",
+          "cel": "this in ['true', 'false']"
+        },
+        {
+          "name": "cur_urls",
+          "ordinal": 6,
+          "retired": false,
+          "type": "string",
+          "pk": false,
+          "required": true,
+          "default": "'false'",
+          "cel": "this in ['true', 'false']"
+        },
+        {
+          "name": "prefix",
+          "ordinal": 7,
+          "retired": false,
+          "type": "string",
+          "pk": false,
+          "required": true,
+          "default": "''",
+          "cel": "this.size() <= 32"
+        }
+      ],
+      "seed": [],
+      "durability": "tab",
+      "level": "ephemeral",
+      "server": false,
+      "writers": [
+        {
+          "by": "MenuOptionDemo-caret",
+          "kind": "chart",
+          "ops": [
+            "update"
+          ]
+        },
+        {
+          "by": "MenuOptionDemo-chk_bookmarks",
+          "kind": "chart",
+          "ops": [
+            "update"
+          ]
+        },
+        {
+          "by": "MenuOptionDemo-chk_urls",
+          "kind": "chart",
+          "ops": [
+            "update"
+          ]
+        }
+      ],
+      "cel": {
+        "checks": {},
+        "enums": {
+          "chk_bookmarks": [
+            "true",
+            "false"
+          ],
+          "chk_urls": [
+            "true",
+            "false"
+          ],
+          "caret": [
+            "bookmarks",
+            "urls"
+          ],
+          "cur_bookmarks": [
+            "true",
+            "false"
+          ],
+          "cur_urls": [
+            "true",
+            "false"
+          ]
+        },
+        "bounds": {
+          "id": {
+            "sizeMax": 64
+          },
+          "prefix": {
+            "sizeMax": 32
+          }
+        }
+      },
+      "uniques": [],
+      "validations": {}
+    },
+    "MenuGoDemo": {
+      "name": "MenuGoDemo",
+      "ir": "MenuGoDemo",
+      "table": "menu_go_demo",
+      "id": "0xe162d3dd6198217a",
+      "fields": [
+        {
+          "name": "id",
+          "ordinal": 1,
+          "retired": false,
+          "type": "string",
+          "pk": true,
+          "required": true,
+          "cel": "this.size() <= 64"
+        },
+        {
+          "name": "caret",
+          "ordinal": 2,
+          "retired": false,
+          "type": "string",
+          "pk": false,
+          "required": true,
+          "default": "'tabs'",
+          "cel": "this in ['tabs', 'accordion', 'toast']"
+        },
+        {
+          "name": "cur_tabs",
+          "ordinal": 3,
+          "retired": false,
+          "type": "string",
+          "pk": false,
+          "required": true,
+          "default": "'true'",
+          "cel": "this in ['true', 'false']"
+        },
+        {
+          "name": "cur_accordion",
+          "ordinal": 4,
+          "retired": false,
+          "type": "string",
+          "pk": false,
+          "required": true,
+          "default": "'false'",
+          "cel": "this in ['true', 'false']"
+        },
+        {
+          "name": "cur_toast",
+          "ordinal": 5,
+          "retired": false,
+          "type": "string",
+          "pk": false,
+          "required": true,
+          "default": "'false'",
+          "cel": "this in ['true', 'false']"
+        },
+        {
+          "name": "prefix",
+          "ordinal": 6,
+          "retired": false,
+          "type": "string",
+          "pk": false,
+          "required": true,
+          "default": "''",
+          "cel": "this.size() <= 32"
+        }
+      ],
+      "seed": [],
+      "durability": "tab",
+      "level": "ephemeral",
+      "server": false,
+      "writers": [
+        {
+          "by": "MenuGoDemo-caret",
+          "kind": "chart",
+          "ops": [
+            "update"
+          ]
+        }
+      ],
+      "cel": {
+        "checks": {},
+        "enums": {
+          "caret": [
+            "tabs",
+            "accordion",
+            "toast"
+          ],
+          "cur_tabs": [
+            "true",
+            "false"
+          ],
+          "cur_accordion": [
+            "true",
+            "false"
+          ],
+          "cur_toast": [
+            "true",
+            "false"
+          ]
+        },
+        "bounds": {
+          "id": {
+            "sizeMax": 64
+          },
+          "prefix": {
+            "sizeMax": 32
+          }
+        }
+      },
+      "uniques": [],
+      "validations": {}
+    },
+    "MenubarDemo": {
+      "name": "MenubarDemo",
+      "ir": "MenubarDemo",
+      "table": "menubar_demo",
+      "id": "0xb63233e52cf47513",
+      "fields": [
+        {
+          "name": "id",
+          "ordinal": 1,
+          "retired": false,
+          "type": "string",
+          "pk": true,
+          "required": true,
+          "cel": "this.size() <= 64"
+        },
+        {
+          "name": "caret",
+          "ordinal": 2,
+          "retired": false,
+          "type": "string",
+          "pk": false,
+          "required": true,
+          "default": "'view'",
+          "cel": "this in ['view', 'go']"
+        },
+        {
+          "name": "cur_view",
+          "ordinal": 3,
+          "retired": false,
+          "type": "string",
+          "pk": false,
+          "required": true,
+          "default": "'true'",
+          "cel": "this in ['true', 'false']"
+        },
+        {
+          "name": "cur_go",
+          "ordinal": 4,
+          "retired": false,
+          "type": "string",
+          "pk": false,
+          "required": true,
+          "default": "'false'",
+          "cel": "this in ['true', 'false']"
+        },
+        {
+          "name": "tab_view",
+          "ordinal": 5,
+          "retired": false,
+          "type": "string",
+          "pk": false,
+          "required": true,
+          "default": "'0'",
+          "cel": "this in ['0', '-1']"
+        },
+        {
+          "name": "tab_go",
+          "ordinal": 6,
+          "retired": false,
+          "type": "string",
+          "pk": false,
+          "required": true,
+          "default": "'-1'",
+          "cel": "this in ['0', '-1']"
+        }
+      ],
+      "seed": [],
+      "durability": "tab",
+      "level": "ephemeral",
+      "server": false,
+      "writers": [
+        {
+          "by": "MenubarDemo-caret",
+          "kind": "chart",
+          "ops": [
+            "update"
+          ]
+        }
+      ],
+      "cel": {
+        "checks": {},
+        "enums": {
+          "caret": [
+            "view",
+            "go"
+          ],
+          "cur_view": [
+            "true",
+            "false"
+          ],
+          "cur_go": [
+            "true",
+            "false"
+          ],
+          "tab_view": [
+            "0",
+            "-1"
+          ],
+          "tab_go": [
+            "0",
+            "-1"
+          ]
+        },
+        "bounds": {
+          "id": {
+            "sizeMax": 64
+          }
+        }
+      },
+      "uniques": [],
+      "validations": {}
+    },
+    "ContextMenuDemo": {
+      "name": "ContextMenuDemo",
+      "ir": "ContextMenuDemo",
+      "table": "context_menu_demo",
+      "id": "0xebdd7b970cae9382",
+      "fields": [
+        {
+          "name": "id",
+          "ordinal": 1,
+          "retired": false,
+          "type": "string",
+          "pk": true,
+          "required": true,
+          "cel": "this.size() <= 64"
+        },
+        {
+          "name": "open",
+          "ordinal": 2,
+          "retired": false,
+          "type": "string",
+          "pk": false,
+          "required": true,
+          "default": "'false'",
+          "cel": "this in ['true', 'false']"
+        },
+        {
+          "name": "x",
+          "ordinal": 3,
+          "retired": false,
+          "type": "int32",
+          "pk": false,
+          "required": true,
+          "default": "0",
+          "cel": "this >= 0 && this <= 1000"
+        },
+        {
+          "name": "y",
+          "ordinal": 4,
+          "retired": false,
+          "type": "int32",
+          "pk": false,
+          "required": true,
+          "default": "0",
+          "cel": "this >= 0 && this <= 1000"
+        },
+        {
+          "name": "caret",
+          "ordinal": 5,
+          "retired": false,
+          "type": "string",
+          "pk": false,
+          "required": true,
+          "default": "'popover'",
+          "cel": "this in ['popover', 'sheet', 'overlays']"
+        },
+        {
+          "name": "cur_popover",
+          "ordinal": 6,
+          "retired": false,
+          "type": "string",
+          "pk": false,
+          "required": true,
+          "default": "'true'",
+          "cel": "this in ['true', 'false']"
+        },
+        {
+          "name": "cur_sheet",
+          "ordinal": 7,
+          "retired": false,
+          "type": "string",
+          "pk": false,
+          "required": true,
+          "default": "'false'",
+          "cel": "this in ['true', 'false']"
+        },
+        {
+          "name": "cur_overlays",
+          "ordinal": 8,
+          "retired": false,
+          "type": "string",
+          "pk": false,
+          "required": true,
+          "default": "'false'",
+          "cel": "this in ['true', 'false']"
+        },
+        {
+          "name": "prefix",
+          "ordinal": 9,
+          "retired": false,
+          "type": "string",
+          "pk": false,
+          "required": true,
+          "default": "''",
+          "cel": "this.size() <= 32"
+        }
+      ],
+      "seed": [],
+      "durability": "tab",
+      "level": "ephemeral",
+      "server": false,
+      "writers": [
+        {
+          "by": "ContextMenuDemo-open",
+          "kind": "chart",
+          "ops": [
+            "update"
+          ]
+        },
+        {
+          "by": "ContextMenuDemo-caret",
+          "kind": "chart",
+          "ops": [
+            "update"
+          ]
+        }
+      ],
+      "cel": {
+        "checks": {},
+        "enums": {
+          "open": [
+            "true",
+            "false"
+          ],
+          "caret": [
+            "popover",
+            "sheet",
+            "overlays"
+          ],
+          "cur_popover": [
+            "true",
+            "false"
+          ],
+          "cur_sheet": [
+            "true",
+            "false"
+          ],
+          "cur_overlays": [
+            "true",
+            "false"
+          ]
+        },
+        "bounds": {
+          "id": {
+            "sizeMax": 64
+          },
+          "x": {
+            "intMin": 0,
+            "intMax": 1000
+          },
+          "y": {
+            "intMin": 0,
+            "intMax": 1000
+          },
+          "prefix": {
+            "sizeMax": 32
+          }
+        }
+      },
+      "uniques": [],
+      "validations": {}
+    },
+    "MenuProfileDemo": {
+      "name": "MenuProfileDemo",
+      "ir": "MenuProfileDemo",
+      "table": "menu_profile_demo",
+      "id": "0xe80290da8a951a37",
+      "fields": [
+        {
+          "name": "id",
+          "ordinal": 1,
+          "retired": false,
+          "type": "string",
+          "pk": true,
+          "required": true,
+          "cel": "this.size() <= 64"
+        },
+        {
+          "name": "profile",
+          "ordinal": 2,
+          "retired": false,
+          "type": "string",
+          "pk": false,
+          "required": true,
+          "default": "'andy'",
+          "cel": "this in ['andy', 'benoit', 'luis']"
+        },
+        {
+          "name": "chk_andy",
+          "ordinal": 3,
+          "retired": false,
+          "type": "string",
+          "pk": false,
+          "required": true,
+          "default": "'true'",
+          "cel": "this in ['true', 'false']"
+        },
+        {
+          "name": "chk_benoit",
+          "ordinal": 4,
+          "retired": false,
+          "type": "string",
+          "pk": false,
+          "required": true,
+          "default": "'false'",
+          "cel": "this in ['true', 'false']"
+        },
+        {
+          "name": "chk_luis",
+          "ordinal": 5,
+          "retired": false,
+          "type": "string",
+          "pk": false,
+          "required": true,
+          "default": "'false'",
+          "cel": "this in ['true', 'false']"
+        },
+        {
+          "name": "caret",
+          "ordinal": 6,
+          "retired": false,
+          "type": "string",
+          "pk": false,
+          "required": true,
+          "default": "'switch'",
+          "cel": "this in ['switch', 'checkbox', 'radio_group', 'andy', 'benoit', 'luis']"
+        },
+        {
+          "name": "cur_switch",
+          "ordinal": 7,
+          "retired": false,
+          "type": "string",
+          "pk": false,
+          "required": true,
+          "default": "'true'",
+          "cel": "this in ['true', 'false']"
+        },
+        {
+          "name": "cur_checkbox",
+          "ordinal": 8,
+          "retired": false,
+          "type": "string",
+          "pk": false,
+          "required": true,
+          "default": "'false'",
+          "cel": "this in ['true', 'false']"
+        },
+        {
+          "name": "cur_radio_group",
+          "ordinal": 9,
+          "retired": false,
+          "type": "string",
+          "pk": false,
+          "required": true,
+          "default": "'false'",
+          "cel": "this in ['true', 'false']"
+        },
+        {
+          "name": "cur_andy",
+          "ordinal": 10,
+          "retired": false,
+          "type": "string",
+          "pk": false,
+          "required": true,
+          "default": "'false'",
+          "cel": "this in ['true', 'false']"
+        },
+        {
+          "name": "cur_benoit",
+          "ordinal": 11,
+          "retired": false,
+          "type": "string",
+          "pk": false,
+          "required": true,
+          "default": "'false'",
+          "cel": "this in ['true', 'false']"
+        },
+        {
+          "name": "cur_luis",
+          "ordinal": 12,
+          "retired": false,
+          "type": "string",
+          "pk": false,
+          "required": true,
+          "default": "'false'",
+          "cel": "this in ['true', 'false']"
+        },
+        {
+          "name": "prefix",
+          "ordinal": 13,
+          "retired": false,
+          "type": "string",
+          "pk": false,
+          "required": true,
+          "default": "''",
+          "cel": "this.size() <= 32"
+        }
+      ],
+      "seed": [],
+      "durability": "tab",
+      "level": "ephemeral",
+      "server": false,
+      "writers": [
+        {
+          "by": "MenuProfileDemo-caret",
+          "kind": "chart",
+          "ops": [
+            "update"
+          ]
+        },
+        {
+          "by": "MenuProfileDemo-profile",
+          "kind": "chart",
+          "ops": [
+            "update"
+          ]
+        }
+      ],
+      "cel": {
+        "checks": {},
+        "enums": {
+          "profile": [
+            "andy",
+            "benoit",
+            "luis"
+          ],
+          "chk_andy": [
+            "true",
+            "false"
+          ],
+          "chk_benoit": [
+            "true",
+            "false"
+          ],
+          "chk_luis": [
+            "true",
+            "false"
+          ],
+          "caret": [
+            "switch",
+            "checkbox",
+            "radio_group",
+            "andy",
+            "benoit",
+            "luis"
+          ],
+          "cur_switch": [
+            "true",
+            "false"
+          ],
+          "cur_checkbox": [
+            "true",
+            "false"
+          ],
+          "cur_radio_group": [
+            "true",
+            "false"
+          ],
+          "cur_andy": [
+            "true",
+            "false"
+          ],
+          "cur_benoit": [
+            "true",
+            "false"
+          ],
+          "cur_luis": [
+            "true",
+            "false"
+          ]
+        },
+        "bounds": {
+          "id": {
+            "sizeMax": 64
+          },
+          "prefix": {
+            "sizeMax": 32
+          }
+        }
+      },
+      "uniques": [],
+      "validations": {}
+    },
+    "FormDemo": {
+      "name": "FormDemo",
+      "ir": "FormDemo",
+      "table": "form_demo",
+      "id": "0xeab5d2f0ca33fe36",
+      "fields": [
+        {
+          "name": "id",
+          "ordinal": 1,
+          "retired": false,
+          "type": "string",
+          "pk": true,
+          "required": true,
+          "cel": "this.size() <= 64"
+        },
+        {
+          "name": "handle",
+          "ordinal": 2,
+          "retired": false,
+          "type": "string",
+          "pk": false,
+          "required": true,
+          "cel": "this.matches('^[a-z][a-z0-9_]{2,23}$')"
+        },
+        {
+          "name": "bio",
+          "ordinal": 3,
+          "retired": false,
+          "type": "string",
+          "pk": false,
+          "required": true,
+          "cel": "this.size() <= 240"
+        }
+      ],
+      "seed": [],
+      "durability": "tab",
+      "level": "ephemeral",
+      "server": false,
+      "writers": [
+        {
+          "by": "form",
+          "kind": "form",
+          "ops": [
+            "upsert",
+            "delete"
+          ]
+        }
+      ],
+      "cel": {
+        "checks": {},
+        "enums": {},
+        "bounds": {
+          "id": {
+            "sizeMax": 64
+          },
+          "handle": {
+            "regex": "^[a-z][a-z0-9_]{2,23}$"
+          },
+          "bio": {
+            "sizeMax": 240
+          }
+        }
+      },
+      "uniques": [],
+      "validations": {}
+    },
+    "TableRow": {
+      "name": "TableRow",
+      "ir": "TableRow",
+      "table": "table_row",
+      "id": "0xa7c6c2b724ee48d8",
+      "fields": [
+        {
+          "name": "id",
+          "ordinal": 1,
+          "retired": false,
+          "type": "string",
+          "pk": true,
+          "required": true,
+          "cel": "this.size() >= 1 && this.size() <= 24"
+        },
+        {
+          "name": "payer",
+          "ordinal": 2,
+          "retired": false,
+          "type": "string",
+          "pk": false,
+          "required": true,
+          "cel": "this.size() <= 48"
+        },
+        {
+          "name": "status",
+          "ordinal": 3,
+          "retired": false,
+          "type": "string",
+          "pk": false,
+          "required": true,
+          "cel": "this in ['Paid', 'Pending', 'Unpaid']"
+        },
+        {
+          "name": "amount",
+          "ordinal": 4,
+          "retired": false,
+          "type": "string",
+          "pk": false,
+          "required": true,
+          "cel": "this.size() <= 12"
+        }
+      ],
+      "seed": [],
+      "durability": "tab",
+      "level": "ephemeral",
+      "server": false,
+      "writers": [
+        {
+          "by": "table",
+          "kind": "form",
+          "ops": [
+            "upsert"
+          ]
+        }
+      ],
+      "cel": {
+        "checks": {},
+        "enums": {
+          "status": [
+            "Paid",
+            "Pending",
+            "Unpaid"
+          ]
+        },
+        "bounds": {
+          "id": {
+            "sizeMin": 1,
+            "sizeMax": 24
+          },
+          "payer": {
+            "sizeMax": 48
+          },
+          "amount": {
+            "sizeMax": 12
+          }
+        }
+      },
+      "uniques": [],
+      "validations": {}
+    },
+    "TableQuery": {
+      "name": "TableQuery",
+      "ir": "TableQuery",
+      "table": "table_query",
+      "id": "0xe6e2932ebb764e26",
+      "fields": [
+        {
+          "name": "id",
+          "ordinal": 1,
+          "retired": false,
+          "type": "string",
+          "pk": true,
+          "required": true,
+          "cel": "this.size() <= 64"
+        },
+        {
+          "name": "state",
+          "ordinal": 2,
+          "retired": false,
+          "type": "string",
+          "pk": false,
+          "required": true,
+          "default": "'pending'",
+          "cel": "this in ['pending', 'typing']"
+        },
+        {
+          "name": "query",
+          "ordinal": 3,
+          "retired": false,
+          "type": "string",
+          "pk": false,
+          "required": true,
+          "default": "''",
+          "cel": "this.size() <= 48"
+        }
+      ],
+      "seed": [],
+      "durability": "tab",
+      "level": "ephemeral",
+      "server": false,
+      "writers": [
+        {
+          "by": "TableQuery-state",
+          "kind": "chart",
+          "ops": [
+            "update"
+          ]
+        }
+      ],
+      "cel": {
+        "checks": {},
+        "enums": {
+          "state": [
+            "pending",
+            "typing"
+          ]
+        },
+        "bounds": {
+          "id": {
+            "sizeMax": 64
+          },
+          "query": {
+            "sizeMax": 48
+          }
+        }
+      },
+      "uniques": [],
+      "validations": {}
+    },
+    "DataRow": {
+      "name": "DataRow",
+      "ir": "DataRow",
+      "table": "data_row",
+      "id": "0xefeb7d3267749a9a",
+      "fields": [
+        {
+          "name": "id",
+          "ordinal": 1,
+          "retired": false,
+          "type": "string",
+          "pk": true,
+          "required": true,
+          "cel": "this.size() >= 1 && this.size() <= 24"
+        },
+        {
+          "name": "payer",
+          "ordinal": 2,
+          "retired": false,
+          "type": "string",
+          "pk": false,
+          "required": true,
+          "cel": "this.size() <= 48"
+        },
+        {
+          "name": "status",
+          "ordinal": 3,
+          "retired": false,
+          "type": "string",
+          "pk": false,
+          "required": true,
+          "cel": "this in ['Paid', 'Pending', 'Unpaid']"
+        },
+        {
+          "name": "amount",
+          "ordinal": 4,
+          "retired": false,
+          "type": "string",
+          "pk": false,
+          "required": true,
+          "cel": "this.size() <= 12"
+        }
+      ],
+      "seed": [
+        {
+          "amount": "250.00",
+          "id": "INV-1024",
+          "payer": "Ada Lovelace",
+          "status": "Paid"
+        },
+        {
+          "amount": "150.00",
+          "id": "INV-1025",
+          "payer": "Grace Hopper",
+          "status": "Pending"
+        },
+        {
+          "amount": "80.00",
+          "id": "INV-1026",
+          "payer": "Ada Byron",
+          "status": "Unpaid"
+        },
+        {
+          "amount": "420.00",
+          "id": "INV-1027",
+          "payer": "Alan Turing",
+          "status": "Paid"
+        },
+        {
+          "amount": "95.00",
+          "id": "INV-1028",
+          "payer": "Barbara Liskov",
+          "status": "Pending"
+        },
+        {
+          "amount": "310.00",
+          "id": "INV-1029",
+          "payer": "Adele Goldberg",
+          "status": "Paid"
+        },
+        {
+          "amount": "60.00",
+          "id": "INV-1030",
+          "payer": "Frances Allen",
+          "status": "Unpaid"
+        },
+        {
+          "amount": "175.00",
+          "id": "INV-1031",
+          "payer": "Karen Sparck",
+          "status": "Paid"
+        }
+      ],
+      "durability": "tab",
+      "level": "ephemeral",
+      "server": false,
+      "writers": [],
+      "cel": {
+        "checks": {},
+        "enums": {
+          "status": [
+            "Paid",
+            "Pending",
+            "Unpaid"
+          ]
+        },
+        "bounds": {
+          "id": {
+            "sizeMin": 1,
+            "sizeMax": 24
+          },
+          "payer": {
+            "sizeMax": 48
+          },
+          "amount": {
+            "sizeMax": 12
+          }
+        }
+      },
+      "uniques": [],
+      "validations": {}
+    },
+    "DataCursor": {
+      "name": "DataCursor",
+      "ir": "DataCursor",
+      "table": "data_cursor",
+      "id": "0x91cb003a6b376546",
+      "fields": [
+        {
+          "name": "id",
+          "ordinal": 1,
+          "retired": false,
+          "type": "string",
+          "pk": true,
+          "required": true,
+          "cel": "this.size() <= 64"
+        },
+        {
+          "name": "state",
+          "ordinal": 2,
+          "retired": false,
+          "type": "string",
+          "pk": false,
+          "required": true,
+          "default": "'typing'",
+          "cel": "this == 'typing'"
+        },
+        {
+          "name": "query",
+          "ordinal": 3,
+          "retired": false,
+          "type": "string",
+          "pk": false,
+          "required": true,
+          "default": "''",
+          "cel": "this.size() <= 48"
+        },
+        {
+          "name": "cursor",
+          "ordinal": 4,
+          "retired": false,
+          "type": "string",
+          "pk": false,
+          "required": true,
+          "default": "'INV-1024'",
+          "cel": "this.size() <= 24"
+        },
+        {
+          "name": "sort",
+          "ordinal": 5,
+          "retired": false,
+          "type": "string",
+          "pk": false,
+          "required": true,
+          "default": "'id_asc'",
+          "cel": "this in ['id_asc', 'id_desc', 'amount_asc', 'amount_desc']"
+        },
+        {
+          "name": "srt_id",
+          "ordinal": 6,
+          "retired": false,
+          "type": "string",
+          "pk": false,
+          "required": true,
+          "default": "'ascending'",
+          "cel": "this in ['ascending', 'descending', 'none']"
+        },
+        {
+          "name": "srt_amount",
+          "ordinal": 7,
+          "retired": false,
+          "type": "string",
+          "pk": false,
+          "required": true,
+          "default": "'none'",
+          "cel": "this in ['ascending', 'descending', 'none']"
+        }
+      ],
+      "seed": [
+        {
+          "id": "the",
+          "state": "typing",
+          "query": "",
+          "cursor": "INV-1024",
+          "sort": "id_asc",
+          "srt_id": "ascending",
+          "srt_amount": "none"
+        }
+      ],
+      "durability": "tab",
+      "level": "ephemeral",
+      "server": false,
+      "writers": [
+        {
+          "by": "data-table",
+          "kind": "form",
+          "ops": [
+            "upsert"
+          ]
+        },
+        {
+          "by": "DataCursor-state",
+          "kind": "chart",
+          "ops": [
+            "update"
+          ]
+        }
+      ],
+      "cel": {
+        "checks": {},
+        "enums": {
+          "state": [
+            "typing"
+          ],
+          "sort": [
+            "id_asc",
+            "id_desc",
+            "amount_asc",
+            "amount_desc"
+          ],
+          "srt_id": [
+            "ascending",
+            "descending",
+            "none"
+          ],
+          "srt_amount": [
+            "ascending",
+            "descending",
+            "none"
+          ]
+        },
+        "bounds": {
+          "id": {
+            "sizeMax": 64
+          },
+          "query": {
+            "sizeMax": 48
+          },
+          "cursor": {
+            "sizeMax": 24
+          }
+        }
+      },
+      "uniques": [],
+      "validations": {}
+    },
+    "NavRailItem": {
+      "name": "NavRailItem",
+      "ir": "NavRailItem",
+      "table": "nav_rail_item",
+      "id": "0xfb2ca9da79abf89c",
+      "fields": [
+        {
+          "name": "id",
+          "ordinal": 1,
+          "retired": false,
+          "type": "string",
+          "pk": true,
+          "required": true,
+          "cel": "this.matches('^[a-z-]{1,32}$')"
+        },
+        {
+          "name": "label",
+          "ordinal": 2,
+          "retired": false,
+          "type": "string",
+          "pk": false,
+          "required": true,
+          "cel": "this.size() <= 32"
+        },
+        {
+          "name": "route",
+          "ordinal": 3,
+          "retired": false,
+          "type": "string",
+          "pk": false,
+          "required": true,
+          "cel": "this.matches('^[a-z-]{1,32}$')"
+        },
+        {
+          "name": "pos",
+          "ordinal": 4,
+          "retired": false,
+          "type": "int32",
+          "pk": false,
+          "required": true,
+          "cel": "this >= 1 && this <= 99"
+        }
+      ],
+      "seed": [
+        {
+          "id": "switch",
+          "label": "Switch",
+          "route": "switch",
+          "pos": 1
+        },
+        {
+          "id": "tabs",
+          "label": "Tabs",
+          "route": "tabs",
+          "pos": 2
+        },
+        {
+          "id": "menu",
+          "label": "Menu",
+          "route": "menu",
+          "pos": 3
+        },
+        {
+          "id": "navigation",
+          "label": "Navigation",
+          "route": "navigation",
+          "pos": 4
+        },
+        {
+          "id": "table",
+          "label": "Table",
+          "route": "table",
+          "pos": 5
+        }
+      ],
+      "durability": "tab",
+      "level": "ephemeral",
+      "server": false,
+      "writers": [],
+      "cel": {
+        "checks": {},
+        "enums": {},
+        "bounds": {
+          "id": {
+            "regex": "^[a-z-]{1,32}$"
+          },
+          "label": {
+            "sizeMax": 32
+          },
+          "route": {
+            "regex": "^[a-z-]{1,32}$"
+          },
+          "pos": {
+            "intMin": 1,
+            "intMax": 99
+          }
+        }
+      },
+      "uniques": [],
+      "validations": {}
+    },
+    "NavState": {
+      "name": "NavState",
+      "ir": "NavState",
+      "table": "nav_state",
+      "id": "0xd9e0e80a2c49d64e",
+      "fields": [
+        {
+          "name": "id",
+          "ordinal": 1,
+          "retired": false,
+          "type": "string",
+          "pk": true,
+          "required": true,
+          "cel": "this.size() <= 64"
+        },
+        {
+          "name": "current",
+          "ordinal": 2,
+          "retired": false,
+          "type": "string",
+          "pk": false,
+          "required": true,
+          "cel": "this.matches('^[a-z-]{1,32}$')"
+        }
+      ],
+      "seed": [
+        {
+          "id": "the",
+          "current": "navigation"
+        }
+      ],
+      "durability": "tab",
+      "level": "ephemeral",
+      "server": false,
+      "writers": [],
+      "cel": {
+        "checks": {},
+        "enums": {},
+        "bounds": {
+          "id": {
+            "sizeMax": 64
+          },
+          "current": {
+            "regex": "^[a-z-]{1,32}$"
+          }
+        }
+      },
+      "uniques": [],
+      "validations": {}
+    },
+    "NavSidebarDemo": {
+      "name": "NavSidebarDemo",
+      "ir": "NavSidebarDemo",
+      "table": "nav_sidebar_demo",
+      "id": "0xafdf1434e4e64c96",
+      "fields": [
+        {
+          "name": "id",
+          "ordinal": 1,
+          "retired": false,
+          "type": "string",
+          "pk": true,
+          "required": true,
+          "cel": "this.size() <= 64"
+        },
+        {
+          "name": "open",
+          "ordinal": 2,
+          "retired": false,
+          "type": "string",
+          "pk": false,
+          "required": true,
+          "default": "'true'",
+          "cel": "this in ['true', 'false']"
+        }
+      ],
+      "seed": [],
+      "durability": "tab",
+      "level": "ephemeral",
+      "server": false,
+      "writers": [
+        {
+          "by": "NavSidebarDemo-open",
+          "kind": "chart",
+          "ops": [
+            "update"
+          ]
+        }
+      ],
+      "cel": {
+        "checks": {},
+        "enums": {
+          "open": [
+            "true",
+            "false"
+          ]
+        },
+        "bounds": {
+          "id": {
+            "sizeMax": 64
+          }
+        }
+      },
+      "uniques": [],
+      "validations": {}
+    },
+    "OtpDemo": {
+      "name": "OtpDemo",
+      "ir": "OtpDemo",
+      "table": "otp_demo",
+      "id": "0xe9f4ef323c648a3f",
+      "fields": [
+        {
+          "name": "id",
+          "ordinal": 1,
+          "retired": false,
+          "type": "string",
+          "pk": true,
+          "required": true,
+          "cel": "this.size() <= 64"
+        },
+        {
+          "name": "state",
+          "ordinal": 2,
+          "retired": false,
+          "type": "string",
+          "pk": false,
+          "required": true,
+          "default": "'typing'",
+          "cel": "this in ['typing', 'complete', 'verified']"
+        },
+        {
+          "name": "code",
+          "ordinal": 3,
+          "retired": false,
+          "type": "string",
+          "pk": false,
+          "required": true,
+          "default": "''",
+          "cel": "this.size() <= 6"
+        },
+        {
+          "name": "invalid",
+          "ordinal": 4,
+          "retired": false,
+          "type": "string",
+          "pk": false,
+          "required": true,
+          "default": "'false'",
+          "cel": "this in ['true', 'false']"
+        },
+        {
+          "name": "blocked",
+          "ordinal": 5,
+          "retired": false,
+          "type": "string",
+          "pk": false,
+          "required": true,
+          "default": "'disabled'",
+          "cel": "this in ['', 'disabled']"
+        }
+      ],
+      "seed": [],
+      "durability": "tab",
+      "level": "ephemeral",
+      "server": false,
+      "writers": [
+        {
+          "by": "OtpDemo-state",
+          "kind": "chart",
+          "ops": [
+            "update"
+          ]
+        }
+      ],
+      "cel": {
+        "checks": {},
+        "enums": {
+          "state": [
+            "typing",
+            "complete",
+            "verified"
+          ],
+          "invalid": [
+            "true",
+            "false"
+          ],
+          "blocked": [
+            "",
+            "disabled"
+          ]
+        },
+        "bounds": {
+          "id": {
+            "sizeMax": 64
+          },
+          "code": {
+            "sizeMax": 6
+          }
+        }
+      },
+      "uniques": [],
+      "validations": {}
+    },
+    "ChartPoint": {
+      "name": "ChartPoint",
+      "ir": "ChartPoint",
+      "table": "chart_point",
+      "id": "0xc4365336f0e4f6ee",
+      "fields": [
+        {
+          "name": "id",
+          "ordinal": 1,
+          "retired": false,
+          "type": "string",
+          "pk": true,
+          "required": true,
+          "cel": "this.size() <= 16"
+        },
+        {
+          "name": "label",
+          "ordinal": 2,
+          "retired": false,
+          "type": "string",
+          "pk": false,
+          "required": true,
+          "cel": "this.size() <= 24"
+        },
+        {
+          "name": "value",
+          "ordinal": 3,
+          "retired": false,
+          "type": "int32",
+          "pk": false,
+          "required": true,
+          "cel": "this >= 0"
+        },
+        {
+          "name": "pos",
+          "ordinal": 4,
+          "retired": false,
+          "type": "int32",
+          "pk": false,
+          "required": true,
+          "cel": "this >= 1 && this <= 24"
+        },
+        {
+          "name": "nxt_value",
+          "ordinal": 5,
+          "retired": false,
+          "type": "int32",
+          "pk": false,
+          "required": true,
+          "cel": "this >= 0"
+        }
+      ],
+      "seed": [
+        {
+          "id": "jan",
+          "label": "January",
+          "value": 186,
+          "pos": 1,
+          "nxt_value": 305,
+          "nxt_pos": 2
+        },
+        {
+          "id": "feb",
+          "label": "February",
+          "value": 305,
+          "pos": 2,
+          "nxt_value": 237,
+          "nxt_pos": 3
+        },
+        {
+          "id": "mar",
+          "label": "March",
+          "value": 237,
+          "pos": 3,
+          "nxt_value": 173,
+          "nxt_pos": 4
+        },
+        {
+          "id": "apr",
+          "label": "April",
+          "value": 173,
+          "pos": 4,
+          "nxt_value": 209,
+          "nxt_pos": 5
+        },
+        {
+          "id": "may",
+          "label": "May",
+          "value": 209,
+          "pos": 5,
+          "nxt_value": 264,
+          "nxt_pos": 6
+        },
+        {
+          "id": "jun",
+          "label": "June",
+          "value": 264,
+          "pos": 6,
+          "nxt_value": 264,
+          "nxt_pos": 6
+        }
+      ],
+      "durability": "tab",
+      "level": "ephemeral",
+      "server": false,
+      "writers": [],
+      "cel": {
+        "checks": {},
+        "enums": {},
+        "bounds": {
+          "id": {
+            "sizeMax": 16
+          },
+          "label": {
+            "sizeMax": 24
+          },
+          "value": {
+            "intMin": 0
+          },
+          "pos": {
+            "intMin": 1,
+            "intMax": 24
+          },
+          "nxt_value": {
+            "intMin": 0
+          }
+        }
+      },
+      "uniques": [],
+      "validations": {}
+    },
+    "ChartCursor": {
+      "name": "ChartCursor",
+      "ir": "ChartCursor",
+      "table": "chart_cursor",
+      "id": "0xe132b74ac76aa2d4",
+      "fields": [
+        {
+          "name": "id",
+          "ordinal": 1,
+          "retired": false,
+          "type": "string",
+          "pk": true,
+          "required": true,
+          "cel": "this.size() <= 64"
+        },
+        {
+          "name": "active",
+          "ordinal": 2,
+          "retired": false,
+          "type": "string",
+          "pk": false,
+          "required": true,
+          "cel": "this.size() <= 16"
+        }
+      ],
+      "seed": [
+        {
+          "id": "the",
+          "active": "mar"
+        }
+      ],
+      "durability": "tab",
+      "level": "ephemeral",
+      "server": false,
+      "writers": [
+        {
+          "by": "chart",
+          "kind": "form",
+          "ops": [
+            "upsert"
+          ]
+        }
+      ],
+      "cel": {
+        "checks": {},
+        "enums": {},
+        "bounds": {
+          "id": {
+            "sizeMax": 64
+          },
+          "active": {
+            "sizeMax": 16
+          }
+        }
+      },
+      "uniques": [],
+      "validations": {}
+    },
+    "CompositionDemo": {
+      "name": "CompositionDemo",
+      "ir": "CompositionDemo",
+      "table": "composition_demo",
+      "id": "0xa9e851830b2fc897",
+      "fields": [
+        {
+          "name": "id",
+          "ordinal": 1,
+          "retired": false,
+          "type": "string",
+          "pk": true,
+          "required": true,
+          "cel": "this.size() <= 64"
+        },
+        {
+          "name": "phase",
+          "ordinal": 2,
+          "retired": false,
+          "type": "string",
+          "pk": false,
+          "required": true,
+          "default": "'live'",
+          "cel": "this in ['live']"
+        },
+        {
+          "name": "query",
+          "ordinal": 3,
+          "retired": false,
+          "type": "string",
+          "pk": false,
+          "required": true,
+          "default": "''",
+          "cel": "this.size() <= 64"
+        },
+        {
+          "name": "last",
+          "ordinal": 4,
+          "retired": false,
+          "type": "string",
+          "pk": false,
+          "required": true,
+          "default": "'nothing yet'",
+          "cel": "this.size() <= 32"
+        }
+      ],
+      "seed": [],
+      "durability": "tab",
+      "level": "ephemeral",
+      "server": false,
+      "writers": [
+        {
+          "by": "CompositionDemo-phase",
+          "kind": "chart",
+          "ops": [
+            "update"
+          ]
+        }
+      ],
+      "cel": {
+        "checks": {},
+        "enums": {
+          "phase": [
+            "live"
+          ]
+        },
+        "bounds": {
+          "id": {
+            "sizeMax": 64
+          },
+          "query": {
+            "sizeMax": 64
+          },
+          "last": {
+            "sizeMax": 32
+          }
+        }
+      },
+      "uniques": [],
+      "validations": {}
+    },
+    "ChatRow": {
+      "name": "ChatRow",
+      "ir": "ChatRow",
+      "table": "chat_row",
+      "id": "0xd92899defceca5b6",
+      "fields": [
+        {
+          "name": "id",
+          "ordinal": 1,
+          "retired": false,
+          "type": "string",
+          "pk": true,
+          "required": true,
+          "cel": "this.size() <= 64"
+        },
+        {
+          "name": "kind",
+          "ordinal": 2,
+          "retired": false,
+          "type": "string",
+          "pk": false,
+          "required": true,
+          "cel": "this in ['message', 'marker', 'file']"
+        },
+        {
+          "name": "seat",
+          "ordinal": 3,
+          "retired": false,
+          "type": "string",
+          "pk": false,
+          "required": true,
+          "cel": "this in ['you', 'them', 'none']"
+        },
+        {
+          "name": "who",
+          "ordinal": 4,
+          "retired": false,
+          "type": "string",
+          "pk": false,
+          "required": true,
+          "cel": "this.size() <= 24"
+        },
+        {
+          "name": "initials",
+          "ordinal": 5,
+          "retired": false,
+          "type": "string",
+          "pk": false,
+          "required": true,
+          "cel": "this.size() <= 2"
+        },
+        {
+          "name": "body",
+          "ordinal": 6,
+          "retired": false,
+          "type": "string",
+          "pk": false,
+          "required": true,
+          "cel": "this.size() <= 120"
+        },
+        {
+          "name": "note",
+          "ordinal": 7,
+          "retired": false,
+          "type": "string",
+          "pk": false,
+          "required": true,
+          "cel": "this.size() <= 48"
+        },
+        {
+          "name": "when",
+          "ordinal": 8,
+          "retired": false,
+          "type": "string",
+          "pk": false,
+          "required": true,
+          "cel": "this.size() <= 12"
+        },
+        {
+          "name": "at",
+          "ordinal": 9,
+          "retired": false,
+          "type": "string",
+          "pk": false,
+          "required": true,
+          "cel": "this.size() <= 32"
+        },
+        {
+          "name": "state",
+          "ordinal": 10,
+          "retired": false,
+          "type": "string",
+          "pk": false,
+          "required": true,
+          "cel": "this in ['done', 'uploading', 'error']"
+        }
+      ],
+      "seed": [
+        {
+          "id": "m1",
+          "kind": "message",
+          "seat": "them",
+          "who": "Ada",
+          "initials": "AL",
+          "body": "The walk drives the typeahead now — every arrow fires.",
+          "note": "",
+          "when": "09:58",
+          "at": "2026-09-04T09:58:00Z",
+          "state": "done"
+        },
+        {
+          "id": "m2",
+          "kind": "message",
+          "seat": "you",
+          "who": "You",
+          "initials": "YO",
+          "body": "Even the one two labels shared a letter with?",
+          "note": "",
+          "when": "10:01",
+          "at": "2026-09-04T10:01:00Z",
+          "state": "done"
+        },
+        {
+          "id": "m3",
+          "kind": "message",
+          "seat": "them",
+          "who": "Ada",
+          "initials": "AL",
+          "body": "That one is not drawn any more. It could never have been selected.",
+          "note": "",
+          "when": "10:02",
+          "at": "2026-09-04T10:02:00Z",
+          "state": "done"
+        },
+        {
+          "id": "k1",
+          "kind": "marker",
+          "seat": "none",
+          "who": "",
+          "initials": "",
+          "body": "Ada added Grace to the thread",
+          "note": "",
+          "when": "",
+          "at": "2026-09-04T10:03:00Z",
+          "state": "done"
+        },
+        {
+          "id": "f1",
+          "kind": "file",
+          "seat": "them",
+          "who": "Ada",
+          "initials": "AL",
+          "body": "walker-trace.json",
+          "note": "84 KB · uploading",
+          "when": "10:04",
+          "at": "2026-09-04T10:04:00Z",
+          "state": "uploading"
+        },
+        {
+          "id": "m4",
+          "kind": "message",
+          "seat": "them",
+          "who": "Ada",
+          "initials": "AL",
+          "body": "Trace attached. The advisory is gone on every app.",
+          "note": "",
+          "when": "10:04",
+          "at": "2026-09-04T10:04:30Z",
+          "state": "done"
+        }
+      ],
+      "durability": "tab",
+      "level": "ephemeral",
+      "server": false,
+      "writers": [
+        {
+          "by": "chat",
+          "kind": "form",
+          "ops": [
+            "create"
+          ]
+        }
+      ],
+      "cel": {
+        "checks": {},
+        "enums": {
+          "kind": [
+            "message",
+            "marker",
+            "file"
+          ],
+          "seat": [
+            "you",
+            "them",
+            "none"
+          ],
+          "state": [
+            "done",
+            "uploading",
+            "error"
+          ]
+        },
+        "bounds": {
+          "id": {
+            "sizeMax": 64
+          },
+          "who": {
+            "sizeMax": 24
+          },
+          "initials": {
+            "sizeMax": 2
+          },
+          "body": {
+            "sizeMax": 120
+          },
+          "note": {
+            "sizeMax": 48
+          },
+          "when": {
+            "sizeMax": 12
+          },
+          "at": {
+            "sizeMax": 32
+          }
+        }
+      },
+      "uniques": [],
+      "validations": {}
+    },
+    "ChatDemo": {
+      "name": "ChatDemo",
+      "ir": "ChatDemo",
+      "table": "chat_demo",
+      "id": "0x93513d99f178f9b3",
+      "fields": [
+        {
+          "name": "id",
+          "ordinal": 1,
+          "retired": false,
+          "type": "string",
+          "pk": true,
+          "required": true,
+          "cel": "this.size() <= 64"
+        }
+      ],
+      "seed": [
+        {
+          "id": "the"
+        }
+      ],
+      "durability": "tab",
+      "level": "ephemeral",
+      "server": false,
+      "writers": [],
+      "cel": {
+        "checks": {},
+        "enums": {},
+        "bounds": {
+          "id": {
+            "sizeMax": 64
+          }
+        }
+      },
+      "uniques": [],
+      "validations": {}
+    },
+    "QuizDemo": {
+      "name": "QuizDemo",
+      "ir": "QuizDemo",
+      "table": "quiz_demo",
+      "id": "0xe2cca40ee4f97553",
+      "fields": [
+        {
+          "name": "id",
+          "ordinal": 1,
+          "retired": false,
+          "type": "string",
+          "pk": true,
+          "required": true,
+          "cel": "this.size() <= 64"
+        },
+        {
+          "name": "step",
+          "ordinal": 2,
+          "retired": false,
+          "type": "string",
+          "pk": false,
+          "required": true,
+          "default": "'one'",
+          "cel": "this in ['one', 'two', 'three', 'done']"
+        },
+        {
+          "name": "a_shape",
+          "ordinal": 3,
+          "retired": false,
+          "type": "string",
+          "pk": false,
+          "required": true,
+          "default": "''",
+          "cel": "this.size() <= 32"
+        },
+        {
+          "name": "a_state",
+          "ordinal": 4,
+          "retired": false,
+          "type": "string",
+          "pk": false,
+          "required": true,
+          "default": "''",
+          "cel": "this.size() <= 32"
+        },
+        {
+          "name": "a_note",
+          "ordinal": 5,
+          "retired": false,
+          "type": "string",
+          "pk": false,
+          "required": true,
+          "default": "''",
+          "cel": "this.size() <= 80"
+        },
+        {
+          "name": "blocked",
+          "ordinal": 6,
+          "retired": false,
+          "type": "string",
+          "pk": false,
+          "required": true,
+          "default": "'disabled'",
+          "cel": "this in ['', 'disabled']"
+        },
+        {
+          "name": "sel_one_markup",
+          "ordinal": 7,
+          "retired": false,
+          "type": "string",
+          "pk": false,
+          "required": true,
+          "default": "'false'",
+          "cel": "this in ['true', 'false']"
+        },
+        {
+          "name": "sel_one_chart",
+          "ordinal": 8,
+          "retired": false,
+          "type": "string",
+          "pk": false,
+          "required": true,
+          "default": "'false'",
+          "cel": "this in ['true', 'false']"
+        },
+        {
+          "name": "sel_one_library",
+          "ordinal": 9,
+          "retired": false,
+          "type": "string",
+          "pk": false,
+          "required": true,
+          "default": "'false'",
+          "cel": "this in ['true', 'false']"
+        },
+        {
+          "name": "sel_two_row",
+          "ordinal": 10,
+          "retired": false,
+          "type": "string",
+          "pk": false,
+          "required": true,
+          "default": "'false'",
+          "cel": "this in ['true', 'false']"
+        },
+        {
+          "name": "sel_two_dom",
+          "ordinal": 11,
+          "retired": false,
+          "type": "string",
+          "pk": false,
+          "required": true,
+          "default": "'false'",
+          "cel": "this in ['true', 'false']"
+        },
+        {
+          "name": "sel_two_memory",
+          "ordinal": 12,
+          "retired": false,
+          "type": "string",
+          "pk": false,
+          "required": true,
+          "default": "'false'",
+          "cel": "this in ['true', 'false']"
+        }
+      ],
+      "seed": [],
+      "durability": "tab",
+      "level": "ephemeral",
+      "server": false,
+      "writers": [
+        {
+          "by": "QuizDemo-step",
+          "kind": "chart",
+          "ops": [
+            "update"
+          ]
+        }
+      ],
+      "cel": {
+        "checks": {},
+        "enums": {
+          "step": [
+            "one",
+            "two",
+            "three",
+            "done"
+          ],
+          "blocked": [
+            "",
+            "disabled"
+          ],
+          "sel_one_markup": [
+            "true",
+            "false"
+          ],
+          "sel_one_chart": [
+            "true",
+            "false"
+          ],
+          "sel_one_library": [
+            "true",
+            "false"
+          ],
+          "sel_two_row": [
+            "true",
+            "false"
+          ],
+          "sel_two_dom": [
+            "true",
+            "false"
+          ],
+          "sel_two_memory": [
+            "true",
+            "false"
+          ]
+        },
+        "bounds": {
+          "id": {
+            "sizeMax": 64
+          },
+          "a_shape": {
+            "sizeMax": 32
+          },
+          "a_state": {
+            "sizeMax": 32
+          },
+          "a_note": {
+            "sizeMax": 80
+          }
+        }
+      },
+      "uniques": [],
+      "validations": {}
+    },
+    "CalendarDemo": {
+      "name": "CalendarDemo",
+      "ir": "CalendarDemo",
+      "table": "calendar_demo",
+      "id": "0x9812c340555a0af2",
+      "fields": [
+        {
+          "name": "id",
+          "ordinal": 1,
+          "retired": false,
+          "type": "string",
+          "pk": true,
+          "required": true,
+          "cel": "this.size() <= 64"
+        },
+        {
+          "name": "state",
+          "ordinal": 2,
+          "retired": false,
+          "type": "string",
+          "pk": false,
+          "required": true,
+          "default": "'browsing'",
+          "cel": "this in ['browsing']"
+        },
+        {
+          "name": "month",
+          "ordinal": 3,
+          "retired": false,
+          "type": "string",
+          "pk": false,
+          "required": true,
+          "default": "'2026-09'",
+          "cel": "this.size() == 7"
+        },
+        {
+          "name": "label",
+          "ordinal": 4,
+          "retired": false,
+          "type": "string",
+          "pk": false,
+          "required": true,
+          "default": "'September 2026'",
+          "cel": "this.size() <= 24"
+        },
+        {
+          "name": "value",
+          "ordinal": 5,
+          "retired": false,
+          "type": "string",
+          "pk": false,
+          "required": true,
+          "default": "'2026-09-p15'",
+          "cel": "this.size() <= 16"
+        },
+        {
+          "name": "active",
+          "ordinal": 6,
+          "retired": false,
+          "type": "string",
+          "pk": false,
+          "required": true,
+          "default": "'2026-09-p15'",
+          "cel": "this.size() <= 16"
+        }
+      ],
+      "seed": [
+        {
+          "active": "2026-09-p15",
+          "id": "the",
+          "label": "September 2026",
+          "month": "2026-09",
+          "state": "browsing",
+          "value": "2026-09-p15"
+        },
+        {
+          "active": "2026-09-p15",
+          "id": "picker",
+          "label": "September 2026",
+          "month": "2026-09",
+          "state": "browsing",
+          "value": "2026-09-p15"
+        }
+      ],
+      "durability": "tab",
+      "level": "ephemeral",
+      "server": false,
+      "writers": [
+        {
+          "by": "calendar",
+          "kind": "form",
+          "ops": [
+            "upsert"
+          ]
+        },
+        {
+          "by": "CalendarDemo-state",
+          "kind": "chart",
+          "ops": [
+            "update"
+          ]
+        }
+      ],
+      "cel": {
+        "checks": {},
+        "enums": {
+          "state": [
+            "browsing"
+          ]
+        },
+        "bounds": {
+          "id": {
+            "sizeMax": 64
+          },
+          "month": {
+            "sizeMin": 7,
+            "sizeMax": 7
+          },
+          "label": {
+            "sizeMax": 24
+          },
+          "value": {
+            "sizeMax": 16
+          },
+          "active": {
+            "sizeMax": 16
+          }
+        }
+      },
+      "uniques": [],
+      "validations": {}
+    },
+    "CalendarCell": {
+      "name": "CalendarCell",
+      "ir": "CalendarCell",
+      "table": "calendar_cell",
+      "id": "0xaa32412758271c62",
+      "fields": [
+        {
+          "name": "id",
+          "ordinal": 1,
+          "retired": false,
+          "type": "string",
+          "pk": true,
+          "required": true,
+          "cel": "this.size() <= 16"
+        },
+        {
+          "name": "grid",
+          "ordinal": 2,
+          "retired": false,
+          "type": "string",
+          "pk": false,
+          "required": true,
+          "cel": "this.size() == 7"
+        },
+        {
+          "name": "month",
+          "ordinal": 3,
+          "retired": false,
+          "type": "string",
+          "pk": false,
+          "required": true,
+          "cel": "this.size() == 7"
+        },
+        {
+          "name": "week",
+          "ordinal": 4,
+          "retired": false,
+          "type": "string",
+          "pk": false,
+          "required": true,
+          "cel": "this in ['w1', 'w2', 'w3', 'w4', 'w5', 'w6']"
+        },
+        {
+          "name": "dow",
+          "ordinal": 5,
+          "retired": false,
+          "type": "string",
+          "pk": false,
+          "required": true,
+          "cel": "this in ['d0', 'd1', 'd2', 'd3', 'd4', 'd5', 'd6']"
+        },
+        {
+          "name": "pos",
+          "ordinal": 6,
+          "retired": false,
+          "type": "int32",
+          "pk": false,
+          "required": true,
+          "cel": "this >= 1 && this <= 42"
+        },
+        {
+          "name": "colpos",
+          "ordinal": 7,
+          "retired": false,
+          "type": "int32",
+          "pk": false,
+          "required": true,
+          "cel": "this >= 0 && this <= 65"
+        },
+        {
+          "name": "day",
+          "ordinal": 8,
+          "retired": false,
+          "type": "string",
+          "pk": false,
+          "required": true,
+          "cel": "this.size() <= 2"
+        },
+        {
+          "name": "date",
+          "ordinal": 9,
+          "retired": false,
+          "type": "string",
+          "pk": false,
+          "required": true,
+          "cel": "this.size() == 10"
+        }
+      ],
+      "seed": [
+        {
+          "id": "2026-07-p01",
+          "grid": "2026-07",
+          "month": "2026-06",
+          "week": "w1",
+          "dow": "d0",
+          "pos": 1,
+          "colpos": 0,
+          "day": "28",
+          "date": "2026-06-28"
+        },
+        {
+          "id": "2026-07-p02",
+          "grid": "2026-07",
+          "month": "2026-06",
+          "week": "w1",
+          "dow": "d1",
+          "pos": 2,
+          "colpos": 10,
+          "day": "29",
+          "date": "2026-06-29"
+        },
+        {
+          "id": "2026-07-p03",
+          "grid": "2026-07",
+          "month": "2026-06",
+          "week": "w1",
+          "dow": "d2",
+          "pos": 3,
+          "colpos": 20,
+          "day": "30",
+          "date": "2026-06-30"
+        },
+        {
+          "id": "2026-07-p04",
+          "grid": "2026-07",
+          "month": "2026-07",
+          "week": "w1",
+          "dow": "d3",
+          "pos": 4,
+          "colpos": 30,
+          "day": "1",
+          "date": "2026-07-01"
+        },
+        {
+          "id": "2026-07-p05",
+          "grid": "2026-07",
+          "month": "2026-07",
+          "week": "w1",
+          "dow": "d4",
+          "pos": 5,
+          "colpos": 40,
+          "day": "2",
+          "date": "2026-07-02"
+        },
+        {
+          "id": "2026-07-p06",
+          "grid": "2026-07",
+          "month": "2026-07",
+          "week": "w1",
+          "dow": "d5",
+          "pos": 6,
+          "colpos": 50,
+          "day": "3",
+          "date": "2026-07-03"
+        },
+        {
+          "id": "2026-07-p07",
+          "grid": "2026-07",
+          "month": "2026-07",
+          "week": "w1",
+          "dow": "d6",
+          "pos": 7,
+          "colpos": 60,
+          "day": "4",
+          "date": "2026-07-04"
+        },
+        {
+          "id": "2026-07-p08",
+          "grid": "2026-07",
+          "month": "2026-07",
+          "week": "w2",
+          "dow": "d0",
+          "pos": 8,
+          "colpos": 1,
+          "day": "5",
+          "date": "2026-07-05"
+        },
+        {
+          "id": "2026-07-p09",
+          "grid": "2026-07",
+          "month": "2026-07",
+          "week": "w2",
+          "dow": "d1",
+          "pos": 9,
+          "colpos": 11,
+          "day": "6",
+          "date": "2026-07-06"
+        },
+        {
+          "id": "2026-07-p10",
+          "grid": "2026-07",
+          "month": "2026-07",
+          "week": "w2",
+          "dow": "d2",
+          "pos": 10,
+          "colpos": 21,
+          "day": "7",
+          "date": "2026-07-07"
+        },
+        {
+          "id": "2026-07-p11",
+          "grid": "2026-07",
+          "month": "2026-07",
+          "week": "w2",
+          "dow": "d3",
+          "pos": 11,
+          "colpos": 31,
+          "day": "8",
+          "date": "2026-07-08"
+        },
+        {
+          "id": "2026-07-p12",
+          "grid": "2026-07",
+          "month": "2026-07",
+          "week": "w2",
+          "dow": "d4",
+          "pos": 12,
+          "colpos": 41,
+          "day": "9",
+          "date": "2026-07-09"
+        },
+        {
+          "id": "2026-07-p13",
+          "grid": "2026-07",
+          "month": "2026-07",
+          "week": "w2",
+          "dow": "d5",
+          "pos": 13,
+          "colpos": 51,
+          "day": "10",
+          "date": "2026-07-10"
+        },
+        {
+          "id": "2026-07-p14",
+          "grid": "2026-07",
+          "month": "2026-07",
+          "week": "w2",
+          "dow": "d6",
+          "pos": 14,
+          "colpos": 61,
+          "day": "11",
+          "date": "2026-07-11"
+        },
+        {
+          "id": "2026-07-p15",
+          "grid": "2026-07",
+          "month": "2026-07",
+          "week": "w3",
+          "dow": "d0",
+          "pos": 15,
+          "colpos": 2,
+          "day": "12",
+          "date": "2026-07-12"
+        },
+        {
+          "id": "2026-07-p16",
+          "grid": "2026-07",
+          "month": "2026-07",
+          "week": "w3",
+          "dow": "d1",
+          "pos": 16,
+          "colpos": 12,
+          "day": "13",
+          "date": "2026-07-13"
+        },
+        {
+          "id": "2026-07-p17",
+          "grid": "2026-07",
+          "month": "2026-07",
+          "week": "w3",
+          "dow": "d2",
+          "pos": 17,
+          "colpos": 22,
+          "day": "14",
+          "date": "2026-07-14"
+        },
+        {
+          "id": "2026-07-p18",
+          "grid": "2026-07",
+          "month": "2026-07",
+          "week": "w3",
+          "dow": "d3",
+          "pos": 18,
+          "colpos": 32,
+          "day": "15",
+          "date": "2026-07-15"
+        },
+        {
+          "id": "2026-07-p19",
+          "grid": "2026-07",
+          "month": "2026-07",
+          "week": "w3",
+          "dow": "d4",
+          "pos": 19,
+          "colpos": 42,
+          "day": "16",
+          "date": "2026-07-16"
+        },
+        {
+          "id": "2026-07-p20",
+          "grid": "2026-07",
+          "month": "2026-07",
+          "week": "w3",
+          "dow": "d5",
+          "pos": 20,
+          "colpos": 52,
+          "day": "17",
+          "date": "2026-07-17"
+        },
+        {
+          "id": "2026-07-p21",
+          "grid": "2026-07",
+          "month": "2026-07",
+          "week": "w3",
+          "dow": "d6",
+          "pos": 21,
+          "colpos": 62,
+          "day": "18",
+          "date": "2026-07-18"
+        },
+        {
+          "id": "2026-07-p22",
+          "grid": "2026-07",
+          "month": "2026-07",
+          "week": "w4",
+          "dow": "d0",
+          "pos": 22,
+          "colpos": 3,
+          "day": "19",
+          "date": "2026-07-19"
+        },
+        {
+          "id": "2026-07-p23",
+          "grid": "2026-07",
+          "month": "2026-07",
+          "week": "w4",
+          "dow": "d1",
+          "pos": 23,
+          "colpos": 13,
+          "day": "20",
+          "date": "2026-07-20"
+        },
+        {
+          "id": "2026-07-p24",
+          "grid": "2026-07",
+          "month": "2026-07",
+          "week": "w4",
+          "dow": "d2",
+          "pos": 24,
+          "colpos": 23,
+          "day": "21",
+          "date": "2026-07-21"
+        },
+        {
+          "id": "2026-07-p25",
+          "grid": "2026-07",
+          "month": "2026-07",
+          "week": "w4",
+          "dow": "d3",
+          "pos": 25,
+          "colpos": 33,
+          "day": "22",
+          "date": "2026-07-22"
+        },
+        {
+          "id": "2026-07-p26",
+          "grid": "2026-07",
+          "month": "2026-07",
+          "week": "w4",
+          "dow": "d4",
+          "pos": 26,
+          "colpos": 43,
+          "day": "23",
+          "date": "2026-07-23"
+        },
+        {
+          "id": "2026-07-p27",
+          "grid": "2026-07",
+          "month": "2026-07",
+          "week": "w4",
+          "dow": "d5",
+          "pos": 27,
+          "colpos": 53,
+          "day": "24",
+          "date": "2026-07-24"
+        },
+        {
+          "id": "2026-07-p28",
+          "grid": "2026-07",
+          "month": "2026-07",
+          "week": "w4",
+          "dow": "d6",
+          "pos": 28,
+          "colpos": 63,
+          "day": "25",
+          "date": "2026-07-25"
+        },
+        {
+          "id": "2026-07-p29",
+          "grid": "2026-07",
+          "month": "2026-07",
+          "week": "w5",
+          "dow": "d0",
+          "pos": 29,
+          "colpos": 4,
+          "day": "26",
+          "date": "2026-07-26"
+        },
+        {
+          "id": "2026-07-p30",
+          "grid": "2026-07",
+          "month": "2026-07",
+          "week": "w5",
+          "dow": "d1",
+          "pos": 30,
+          "colpos": 14,
+          "day": "27",
+          "date": "2026-07-27"
+        },
+        {
+          "id": "2026-07-p31",
+          "grid": "2026-07",
+          "month": "2026-07",
+          "week": "w5",
+          "dow": "d2",
+          "pos": 31,
+          "colpos": 24,
+          "day": "28",
+          "date": "2026-07-28"
+        },
+        {
+          "id": "2026-07-p32",
+          "grid": "2026-07",
+          "month": "2026-07",
+          "week": "w5",
+          "dow": "d3",
+          "pos": 32,
+          "colpos": 34,
+          "day": "29",
+          "date": "2026-07-29"
+        },
+        {
+          "id": "2026-07-p33",
+          "grid": "2026-07",
+          "month": "2026-07",
+          "week": "w5",
+          "dow": "d4",
+          "pos": 33,
+          "colpos": 44,
+          "day": "30",
+          "date": "2026-07-30"
+        },
+        {
+          "id": "2026-07-p34",
+          "grid": "2026-07",
+          "month": "2026-07",
+          "week": "w5",
+          "dow": "d5",
+          "pos": 34,
+          "colpos": 54,
+          "day": "31",
+          "date": "2026-07-31"
+        },
+        {
+          "id": "2026-07-p35",
+          "grid": "2026-07",
+          "month": "2026-08",
+          "week": "w5",
+          "dow": "d6",
+          "pos": 35,
+          "colpos": 64,
+          "day": "1",
+          "date": "2026-08-01"
+        },
+        {
+          "id": "2026-07-p36",
+          "grid": "2026-07",
+          "month": "2026-08",
+          "week": "w6",
+          "dow": "d0",
+          "pos": 36,
+          "colpos": 5,
+          "day": "2",
+          "date": "2026-08-02"
+        },
+        {
+          "id": "2026-07-p37",
+          "grid": "2026-07",
+          "month": "2026-08",
+          "week": "w6",
+          "dow": "d1",
+          "pos": 37,
+          "colpos": 15,
+          "day": "3",
+          "date": "2026-08-03"
+        },
+        {
+          "id": "2026-07-p38",
+          "grid": "2026-07",
+          "month": "2026-08",
+          "week": "w6",
+          "dow": "d2",
+          "pos": 38,
+          "colpos": 25,
+          "day": "4",
+          "date": "2026-08-04"
+        },
+        {
+          "id": "2026-07-p39",
+          "grid": "2026-07",
+          "month": "2026-08",
+          "week": "w6",
+          "dow": "d3",
+          "pos": 39,
+          "colpos": 35,
+          "day": "5",
+          "date": "2026-08-05"
+        },
+        {
+          "id": "2026-07-p40",
+          "grid": "2026-07",
+          "month": "2026-08",
+          "week": "w6",
+          "dow": "d4",
+          "pos": 40,
+          "colpos": 45,
+          "day": "6",
+          "date": "2026-08-06"
+        },
+        {
+          "id": "2026-07-p41",
+          "grid": "2026-07",
+          "month": "2026-08",
+          "week": "w6",
+          "dow": "d5",
+          "pos": 41,
+          "colpos": 55,
+          "day": "7",
+          "date": "2026-08-07"
+        },
+        {
+          "id": "2026-07-p42",
+          "grid": "2026-07",
+          "month": "2026-08",
+          "week": "w6",
+          "dow": "d6",
+          "pos": 42,
+          "colpos": 65,
+          "day": "8",
+          "date": "2026-08-08"
+        },
+        {
+          "id": "2026-08-p01",
+          "grid": "2026-08",
+          "month": "2026-07",
+          "week": "w1",
+          "dow": "d0",
+          "pos": 1,
+          "colpos": 0,
+          "day": "26",
+          "date": "2026-07-26"
+        },
+        {
+          "id": "2026-08-p02",
+          "grid": "2026-08",
+          "month": "2026-07",
+          "week": "w1",
+          "dow": "d1",
+          "pos": 2,
+          "colpos": 10,
+          "day": "27",
+          "date": "2026-07-27"
+        },
+        {
+          "id": "2026-08-p03",
+          "grid": "2026-08",
+          "month": "2026-07",
+          "week": "w1",
+          "dow": "d2",
+          "pos": 3,
+          "colpos": 20,
+          "day": "28",
+          "date": "2026-07-28"
+        },
+        {
+          "id": "2026-08-p04",
+          "grid": "2026-08",
+          "month": "2026-07",
+          "week": "w1",
+          "dow": "d3",
+          "pos": 4,
+          "colpos": 30,
+          "day": "29",
+          "date": "2026-07-29"
+        },
+        {
+          "id": "2026-08-p05",
+          "grid": "2026-08",
+          "month": "2026-07",
+          "week": "w1",
+          "dow": "d4",
+          "pos": 5,
+          "colpos": 40,
+          "day": "30",
+          "date": "2026-07-30"
+        },
+        {
+          "id": "2026-08-p06",
+          "grid": "2026-08",
+          "month": "2026-07",
+          "week": "w1",
+          "dow": "d5",
+          "pos": 6,
+          "colpos": 50,
+          "day": "31",
+          "date": "2026-07-31"
+        },
+        {
+          "id": "2026-08-p07",
+          "grid": "2026-08",
+          "month": "2026-08",
+          "week": "w1",
+          "dow": "d6",
+          "pos": 7,
+          "colpos": 60,
+          "day": "1",
+          "date": "2026-08-01"
+        },
+        {
+          "id": "2026-08-p08",
+          "grid": "2026-08",
+          "month": "2026-08",
+          "week": "w2",
+          "dow": "d0",
+          "pos": 8,
+          "colpos": 1,
+          "day": "2",
+          "date": "2026-08-02"
+        },
+        {
+          "id": "2026-08-p09",
+          "grid": "2026-08",
+          "month": "2026-08",
+          "week": "w2",
+          "dow": "d1",
+          "pos": 9,
+          "colpos": 11,
+          "day": "3",
+          "date": "2026-08-03"
+        },
+        {
+          "id": "2026-08-p10",
+          "grid": "2026-08",
+          "month": "2026-08",
+          "week": "w2",
+          "dow": "d2",
+          "pos": 10,
+          "colpos": 21,
+          "day": "4",
+          "date": "2026-08-04"
+        },
+        {
+          "id": "2026-08-p11",
+          "grid": "2026-08",
+          "month": "2026-08",
+          "week": "w2",
+          "dow": "d3",
+          "pos": 11,
+          "colpos": 31,
+          "day": "5",
+          "date": "2026-08-05"
+        },
+        {
+          "id": "2026-08-p12",
+          "grid": "2026-08",
+          "month": "2026-08",
+          "week": "w2",
+          "dow": "d4",
+          "pos": 12,
+          "colpos": 41,
+          "day": "6",
+          "date": "2026-08-06"
+        },
+        {
+          "id": "2026-08-p13",
+          "grid": "2026-08",
+          "month": "2026-08",
+          "week": "w2",
+          "dow": "d5",
+          "pos": 13,
+          "colpos": 51,
+          "day": "7",
+          "date": "2026-08-07"
+        },
+        {
+          "id": "2026-08-p14",
+          "grid": "2026-08",
+          "month": "2026-08",
+          "week": "w2",
+          "dow": "d6",
+          "pos": 14,
+          "colpos": 61,
+          "day": "8",
+          "date": "2026-08-08"
+        },
+        {
+          "id": "2026-08-p15",
+          "grid": "2026-08",
+          "month": "2026-08",
+          "week": "w3",
+          "dow": "d0",
+          "pos": 15,
+          "colpos": 2,
+          "day": "9",
+          "date": "2026-08-09"
+        },
+        {
+          "id": "2026-08-p16",
+          "grid": "2026-08",
+          "month": "2026-08",
+          "week": "w3",
+          "dow": "d1",
+          "pos": 16,
+          "colpos": 12,
+          "day": "10",
+          "date": "2026-08-10"
+        },
+        {
+          "id": "2026-08-p17",
+          "grid": "2026-08",
+          "month": "2026-08",
+          "week": "w3",
+          "dow": "d2",
+          "pos": 17,
+          "colpos": 22,
+          "day": "11",
+          "date": "2026-08-11"
+        },
+        {
+          "id": "2026-08-p18",
+          "grid": "2026-08",
+          "month": "2026-08",
+          "week": "w3",
+          "dow": "d3",
+          "pos": 18,
+          "colpos": 32,
+          "day": "12",
+          "date": "2026-08-12"
+        },
+        {
+          "id": "2026-08-p19",
+          "grid": "2026-08",
+          "month": "2026-08",
+          "week": "w3",
+          "dow": "d4",
+          "pos": 19,
+          "colpos": 42,
+          "day": "13",
+          "date": "2026-08-13"
+        },
+        {
+          "id": "2026-08-p20",
+          "grid": "2026-08",
+          "month": "2026-08",
+          "week": "w3",
+          "dow": "d5",
+          "pos": 20,
+          "colpos": 52,
+          "day": "14",
+          "date": "2026-08-14"
+        },
+        {
+          "id": "2026-08-p21",
+          "grid": "2026-08",
+          "month": "2026-08",
+          "week": "w3",
+          "dow": "d6",
+          "pos": 21,
+          "colpos": 62,
+          "day": "15",
+          "date": "2026-08-15"
+        },
+        {
+          "id": "2026-08-p22",
+          "grid": "2026-08",
+          "month": "2026-08",
+          "week": "w4",
+          "dow": "d0",
+          "pos": 22,
+          "colpos": 3,
+          "day": "16",
+          "date": "2026-08-16"
+        },
+        {
+          "id": "2026-08-p23",
+          "grid": "2026-08",
+          "month": "2026-08",
+          "week": "w4",
+          "dow": "d1",
+          "pos": 23,
+          "colpos": 13,
+          "day": "17",
+          "date": "2026-08-17"
+        },
+        {
+          "id": "2026-08-p24",
+          "grid": "2026-08",
+          "month": "2026-08",
+          "week": "w4",
+          "dow": "d2",
+          "pos": 24,
+          "colpos": 23,
+          "day": "18",
+          "date": "2026-08-18"
+        },
+        {
+          "id": "2026-08-p25",
+          "grid": "2026-08",
+          "month": "2026-08",
+          "week": "w4",
+          "dow": "d3",
+          "pos": 25,
+          "colpos": 33,
+          "day": "19",
+          "date": "2026-08-19"
+        },
+        {
+          "id": "2026-08-p26",
+          "grid": "2026-08",
+          "month": "2026-08",
+          "week": "w4",
+          "dow": "d4",
+          "pos": 26,
+          "colpos": 43,
+          "day": "20",
+          "date": "2026-08-20"
+        },
+        {
+          "id": "2026-08-p27",
+          "grid": "2026-08",
+          "month": "2026-08",
+          "week": "w4",
+          "dow": "d5",
+          "pos": 27,
+          "colpos": 53,
+          "day": "21",
+          "date": "2026-08-21"
+        },
+        {
+          "id": "2026-08-p28",
+          "grid": "2026-08",
+          "month": "2026-08",
+          "week": "w4",
+          "dow": "d6",
+          "pos": 28,
+          "colpos": 63,
+          "day": "22",
+          "date": "2026-08-22"
+        },
+        {
+          "id": "2026-08-p29",
+          "grid": "2026-08",
+          "month": "2026-08",
+          "week": "w5",
+          "dow": "d0",
+          "pos": 29,
+          "colpos": 4,
+          "day": "23",
+          "date": "2026-08-23"
+        },
+        {
+          "id": "2026-08-p30",
+          "grid": "2026-08",
+          "month": "2026-08",
+          "week": "w5",
+          "dow": "d1",
+          "pos": 30,
+          "colpos": 14,
+          "day": "24",
+          "date": "2026-08-24"
+        },
+        {
+          "id": "2026-08-p31",
+          "grid": "2026-08",
+          "month": "2026-08",
+          "week": "w5",
+          "dow": "d2",
+          "pos": 31,
+          "colpos": 24,
+          "day": "25",
+          "date": "2026-08-25"
+        },
+        {
+          "id": "2026-08-p32",
+          "grid": "2026-08",
+          "month": "2026-08",
+          "week": "w5",
+          "dow": "d3",
+          "pos": 32,
+          "colpos": 34,
+          "day": "26",
+          "date": "2026-08-26"
+        },
+        {
+          "id": "2026-08-p33",
+          "grid": "2026-08",
+          "month": "2026-08",
+          "week": "w5",
+          "dow": "d4",
+          "pos": 33,
+          "colpos": 44,
+          "day": "27",
+          "date": "2026-08-27"
+        },
+        {
+          "id": "2026-08-p34",
+          "grid": "2026-08",
+          "month": "2026-08",
+          "week": "w5",
+          "dow": "d5",
+          "pos": 34,
+          "colpos": 54,
+          "day": "28",
+          "date": "2026-08-28"
+        },
+        {
+          "id": "2026-08-p35",
+          "grid": "2026-08",
+          "month": "2026-08",
+          "week": "w5",
+          "dow": "d6",
+          "pos": 35,
+          "colpos": 64,
+          "day": "29",
+          "date": "2026-08-29"
+        },
+        {
+          "id": "2026-08-p36",
+          "grid": "2026-08",
+          "month": "2026-08",
+          "week": "w6",
+          "dow": "d0",
+          "pos": 36,
+          "colpos": 5,
+          "day": "30",
+          "date": "2026-08-30"
+        },
+        {
+          "id": "2026-08-p37",
+          "grid": "2026-08",
+          "month": "2026-08",
+          "week": "w6",
+          "dow": "d1",
+          "pos": 37,
+          "colpos": 15,
+          "day": "31",
+          "date": "2026-08-31"
+        },
+        {
+          "id": "2026-08-p38",
+          "grid": "2026-08",
+          "month": "2026-09",
+          "week": "w6",
+          "dow": "d2",
+          "pos": 38,
+          "colpos": 25,
+          "day": "1",
+          "date": "2026-09-01"
+        },
+        {
+          "id": "2026-08-p39",
+          "grid": "2026-08",
+          "month": "2026-09",
+          "week": "w6",
+          "dow": "d3",
+          "pos": 39,
+          "colpos": 35,
+          "day": "2",
+          "date": "2026-09-02"
+        },
+        {
+          "id": "2026-08-p40",
+          "grid": "2026-08",
+          "month": "2026-09",
+          "week": "w6",
+          "dow": "d4",
+          "pos": 40,
+          "colpos": 45,
+          "day": "3",
+          "date": "2026-09-03"
+        },
+        {
+          "id": "2026-08-p41",
+          "grid": "2026-08",
+          "month": "2026-09",
+          "week": "w6",
+          "dow": "d5",
+          "pos": 41,
+          "colpos": 55,
+          "day": "4",
+          "date": "2026-09-04"
+        },
+        {
+          "id": "2026-08-p42",
+          "grid": "2026-08",
+          "month": "2026-09",
+          "week": "w6",
+          "dow": "d6",
+          "pos": 42,
+          "colpos": 65,
+          "day": "5",
+          "date": "2026-09-05"
+        },
+        {
+          "id": "2026-09-p01",
+          "grid": "2026-09",
+          "month": "2026-08",
+          "week": "w1",
+          "dow": "d0",
+          "pos": 1,
+          "colpos": 0,
+          "day": "30",
+          "date": "2026-08-30"
+        },
+        {
+          "id": "2026-09-p02",
+          "grid": "2026-09",
+          "month": "2026-08",
+          "week": "w1",
+          "dow": "d1",
+          "pos": 2,
+          "colpos": 10,
+          "day": "31",
+          "date": "2026-08-31"
+        },
+        {
+          "id": "2026-09-p03",
+          "grid": "2026-09",
+          "month": "2026-09",
+          "week": "w1",
+          "dow": "d2",
+          "pos": 3,
+          "colpos": 20,
+          "day": "1",
+          "date": "2026-09-01"
+        },
+        {
+          "id": "2026-09-p04",
+          "grid": "2026-09",
+          "month": "2026-09",
+          "week": "w1",
+          "dow": "d3",
+          "pos": 4,
+          "colpos": 30,
+          "day": "2",
+          "date": "2026-09-02"
+        },
+        {
+          "id": "2026-09-p05",
+          "grid": "2026-09",
+          "month": "2026-09",
+          "week": "w1",
+          "dow": "d4",
+          "pos": 5,
+          "colpos": 40,
+          "day": "3",
+          "date": "2026-09-03"
+        },
+        {
+          "id": "2026-09-p06",
+          "grid": "2026-09",
+          "month": "2026-09",
+          "week": "w1",
+          "dow": "d5",
+          "pos": 6,
+          "colpos": 50,
+          "day": "4",
+          "date": "2026-09-04"
+        },
+        {
+          "id": "2026-09-p07",
+          "grid": "2026-09",
+          "month": "2026-09",
+          "week": "w1",
+          "dow": "d6",
+          "pos": 7,
+          "colpos": 60,
+          "day": "5",
+          "date": "2026-09-05"
+        },
+        {
+          "id": "2026-09-p08",
+          "grid": "2026-09",
+          "month": "2026-09",
+          "week": "w2",
+          "dow": "d0",
+          "pos": 8,
+          "colpos": 1,
+          "day": "6",
+          "date": "2026-09-06"
+        },
+        {
+          "id": "2026-09-p09",
+          "grid": "2026-09",
+          "month": "2026-09",
+          "week": "w2",
+          "dow": "d1",
+          "pos": 9,
+          "colpos": 11,
+          "day": "7",
+          "date": "2026-09-07"
+        },
+        {
+          "id": "2026-09-p10",
+          "grid": "2026-09",
+          "month": "2026-09",
+          "week": "w2",
+          "dow": "d2",
+          "pos": 10,
+          "colpos": 21,
+          "day": "8",
+          "date": "2026-09-08"
+        },
+        {
+          "id": "2026-09-p11",
+          "grid": "2026-09",
+          "month": "2026-09",
+          "week": "w2",
+          "dow": "d3",
+          "pos": 11,
+          "colpos": 31,
+          "day": "9",
+          "date": "2026-09-09"
+        },
+        {
+          "id": "2026-09-p12",
+          "grid": "2026-09",
+          "month": "2026-09",
+          "week": "w2",
+          "dow": "d4",
+          "pos": 12,
+          "colpos": 41,
+          "day": "10",
+          "date": "2026-09-10"
+        },
+        {
+          "id": "2026-09-p13",
+          "grid": "2026-09",
+          "month": "2026-09",
+          "week": "w2",
+          "dow": "d5",
+          "pos": 13,
+          "colpos": 51,
+          "day": "11",
+          "date": "2026-09-11"
+        },
+        {
+          "id": "2026-09-p14",
+          "grid": "2026-09",
+          "month": "2026-09",
+          "week": "w2",
+          "dow": "d6",
+          "pos": 14,
+          "colpos": 61,
+          "day": "12",
+          "date": "2026-09-12"
+        },
+        {
+          "id": "2026-09-p15",
+          "grid": "2026-09",
+          "month": "2026-09",
+          "week": "w3",
+          "dow": "d0",
+          "pos": 15,
+          "colpos": 2,
+          "day": "13",
+          "date": "2026-09-13"
+        },
+        {
+          "id": "2026-09-p16",
+          "grid": "2026-09",
+          "month": "2026-09",
+          "week": "w3",
+          "dow": "d1",
+          "pos": 16,
+          "colpos": 12,
+          "day": "14",
+          "date": "2026-09-14"
+        },
+        {
+          "id": "2026-09-p17",
+          "grid": "2026-09",
+          "month": "2026-09",
+          "week": "w3",
+          "dow": "d2",
+          "pos": 17,
+          "colpos": 22,
+          "day": "15",
+          "date": "2026-09-15"
+        },
+        {
+          "id": "2026-09-p18",
+          "grid": "2026-09",
+          "month": "2026-09",
+          "week": "w3",
+          "dow": "d3",
+          "pos": 18,
+          "colpos": 32,
+          "day": "16",
+          "date": "2026-09-16"
+        },
+        {
+          "id": "2026-09-p19",
+          "grid": "2026-09",
+          "month": "2026-09",
+          "week": "w3",
+          "dow": "d4",
+          "pos": 19,
+          "colpos": 42,
+          "day": "17",
+          "date": "2026-09-17"
+        },
+        {
+          "id": "2026-09-p20",
+          "grid": "2026-09",
+          "month": "2026-09",
+          "week": "w3",
+          "dow": "d5",
+          "pos": 20,
+          "colpos": 52,
+          "day": "18",
+          "date": "2026-09-18"
+        },
+        {
+          "id": "2026-09-p21",
+          "grid": "2026-09",
+          "month": "2026-09",
+          "week": "w3",
+          "dow": "d6",
+          "pos": 21,
+          "colpos": 62,
+          "day": "19",
+          "date": "2026-09-19"
+        },
+        {
+          "id": "2026-09-p22",
+          "grid": "2026-09",
+          "month": "2026-09",
+          "week": "w4",
+          "dow": "d0",
+          "pos": 22,
+          "colpos": 3,
+          "day": "20",
+          "date": "2026-09-20"
+        },
+        {
+          "id": "2026-09-p23",
+          "grid": "2026-09",
+          "month": "2026-09",
+          "week": "w4",
+          "dow": "d1",
+          "pos": 23,
+          "colpos": 13,
+          "day": "21",
+          "date": "2026-09-21"
+        },
+        {
+          "id": "2026-09-p24",
+          "grid": "2026-09",
+          "month": "2026-09",
+          "week": "w4",
+          "dow": "d2",
+          "pos": 24,
+          "colpos": 23,
+          "day": "22",
+          "date": "2026-09-22"
+        },
+        {
+          "id": "2026-09-p25",
+          "grid": "2026-09",
+          "month": "2026-09",
+          "week": "w4",
+          "dow": "d3",
+          "pos": 25,
+          "colpos": 33,
+          "day": "23",
+          "date": "2026-09-23"
+        },
+        {
+          "id": "2026-09-p26",
+          "grid": "2026-09",
+          "month": "2026-09",
+          "week": "w4",
+          "dow": "d4",
+          "pos": 26,
+          "colpos": 43,
+          "day": "24",
+          "date": "2026-09-24"
+        },
+        {
+          "id": "2026-09-p27",
+          "grid": "2026-09",
+          "month": "2026-09",
+          "week": "w4",
+          "dow": "d5",
+          "pos": 27,
+          "colpos": 53,
+          "day": "25",
+          "date": "2026-09-25"
+        },
+        {
+          "id": "2026-09-p28",
+          "grid": "2026-09",
+          "month": "2026-09",
+          "week": "w4",
+          "dow": "d6",
+          "pos": 28,
+          "colpos": 63,
+          "day": "26",
+          "date": "2026-09-26"
+        },
+        {
+          "id": "2026-09-p29",
+          "grid": "2026-09",
+          "month": "2026-09",
+          "week": "w5",
+          "dow": "d0",
+          "pos": 29,
+          "colpos": 4,
+          "day": "27",
+          "date": "2026-09-27"
+        },
+        {
+          "id": "2026-09-p30",
+          "grid": "2026-09",
+          "month": "2026-09",
+          "week": "w5",
+          "dow": "d1",
+          "pos": 30,
+          "colpos": 14,
+          "day": "28",
+          "date": "2026-09-28"
+        },
+        {
+          "id": "2026-09-p31",
+          "grid": "2026-09",
+          "month": "2026-09",
+          "week": "w5",
+          "dow": "d2",
+          "pos": 31,
+          "colpos": 24,
+          "day": "29",
+          "date": "2026-09-29"
+        },
+        {
+          "id": "2026-09-p32",
+          "grid": "2026-09",
+          "month": "2026-09",
+          "week": "w5",
+          "dow": "d3",
+          "pos": 32,
+          "colpos": 34,
+          "day": "30",
+          "date": "2026-09-30"
+        },
+        {
+          "id": "2026-09-p33",
+          "grid": "2026-09",
+          "month": "2026-10",
+          "week": "w5",
+          "dow": "d4",
+          "pos": 33,
+          "colpos": 44,
+          "day": "1",
+          "date": "2026-10-01"
+        },
+        {
+          "id": "2026-09-p34",
+          "grid": "2026-09",
+          "month": "2026-10",
+          "week": "w5",
+          "dow": "d5",
+          "pos": 34,
+          "colpos": 54,
+          "day": "2",
+          "date": "2026-10-02"
+        },
+        {
+          "id": "2026-09-p35",
+          "grid": "2026-09",
+          "month": "2026-10",
+          "week": "w5",
+          "dow": "d6",
+          "pos": 35,
+          "colpos": 64,
+          "day": "3",
+          "date": "2026-10-03"
+        },
+        {
+          "id": "2026-09-p36",
+          "grid": "2026-09",
+          "month": "2026-10",
+          "week": "w6",
+          "dow": "d0",
+          "pos": 36,
+          "colpos": 5,
+          "day": "4",
+          "date": "2026-10-04"
+        },
+        {
+          "id": "2026-09-p37",
+          "grid": "2026-09",
+          "month": "2026-10",
+          "week": "w6",
+          "dow": "d1",
+          "pos": 37,
+          "colpos": 15,
+          "day": "5",
+          "date": "2026-10-05"
+        },
+        {
+          "id": "2026-09-p38",
+          "grid": "2026-09",
+          "month": "2026-10",
+          "week": "w6",
+          "dow": "d2",
+          "pos": 38,
+          "colpos": 25,
+          "day": "6",
+          "date": "2026-10-06"
+        },
+        {
+          "id": "2026-09-p39",
+          "grid": "2026-09",
+          "month": "2026-10",
+          "week": "w6",
+          "dow": "d3",
+          "pos": 39,
+          "colpos": 35,
+          "day": "7",
+          "date": "2026-10-07"
+        },
+        {
+          "id": "2026-09-p40",
+          "grid": "2026-09",
+          "month": "2026-10",
+          "week": "w6",
+          "dow": "d4",
+          "pos": 40,
+          "colpos": 45,
+          "day": "8",
+          "date": "2026-10-08"
+        },
+        {
+          "id": "2026-09-p41",
+          "grid": "2026-09",
+          "month": "2026-10",
+          "week": "w6",
+          "dow": "d5",
+          "pos": 41,
+          "colpos": 55,
+          "day": "9",
+          "date": "2026-10-09"
+        },
+        {
+          "id": "2026-09-p42",
+          "grid": "2026-09",
+          "month": "2026-10",
+          "week": "w6",
+          "dow": "d6",
+          "pos": 42,
+          "colpos": 65,
+          "day": "10",
+          "date": "2026-10-10"
+        },
+        {
+          "id": "2026-10-p01",
+          "grid": "2026-10",
+          "month": "2026-09",
+          "week": "w1",
+          "dow": "d0",
+          "pos": 1,
+          "colpos": 0,
+          "day": "27",
+          "date": "2026-09-27"
+        },
+        {
+          "id": "2026-10-p02",
+          "grid": "2026-10",
+          "month": "2026-09",
+          "week": "w1",
+          "dow": "d1",
+          "pos": 2,
+          "colpos": 10,
+          "day": "28",
+          "date": "2026-09-28"
+        },
+        {
+          "id": "2026-10-p03",
+          "grid": "2026-10",
+          "month": "2026-09",
+          "week": "w1",
+          "dow": "d2",
+          "pos": 3,
+          "colpos": 20,
+          "day": "29",
+          "date": "2026-09-29"
+        },
+        {
+          "id": "2026-10-p04",
+          "grid": "2026-10",
+          "month": "2026-09",
+          "week": "w1",
+          "dow": "d3",
+          "pos": 4,
+          "colpos": 30,
+          "day": "30",
+          "date": "2026-09-30"
+        },
+        {
+          "id": "2026-10-p05",
+          "grid": "2026-10",
+          "month": "2026-10",
+          "week": "w1",
+          "dow": "d4",
+          "pos": 5,
+          "colpos": 40,
+          "day": "1",
+          "date": "2026-10-01"
+        },
+        {
+          "id": "2026-10-p06",
+          "grid": "2026-10",
+          "month": "2026-10",
+          "week": "w1",
+          "dow": "d5",
+          "pos": 6,
+          "colpos": 50,
+          "day": "2",
+          "date": "2026-10-02"
+        },
+        {
+          "id": "2026-10-p07",
+          "grid": "2026-10",
+          "month": "2026-10",
+          "week": "w1",
+          "dow": "d6",
+          "pos": 7,
+          "colpos": 60,
+          "day": "3",
+          "date": "2026-10-03"
+        },
+        {
+          "id": "2026-10-p08",
+          "grid": "2026-10",
+          "month": "2026-10",
+          "week": "w2",
+          "dow": "d0",
+          "pos": 8,
+          "colpos": 1,
+          "day": "4",
+          "date": "2026-10-04"
+        },
+        {
+          "id": "2026-10-p09",
+          "grid": "2026-10",
+          "month": "2026-10",
+          "week": "w2",
+          "dow": "d1",
+          "pos": 9,
+          "colpos": 11,
+          "day": "5",
+          "date": "2026-10-05"
+        },
+        {
+          "id": "2026-10-p10",
+          "grid": "2026-10",
+          "month": "2026-10",
+          "week": "w2",
+          "dow": "d2",
+          "pos": 10,
+          "colpos": 21,
+          "day": "6",
+          "date": "2026-10-06"
+        },
+        {
+          "id": "2026-10-p11",
+          "grid": "2026-10",
+          "month": "2026-10",
+          "week": "w2",
+          "dow": "d3",
+          "pos": 11,
+          "colpos": 31,
+          "day": "7",
+          "date": "2026-10-07"
+        },
+        {
+          "id": "2026-10-p12",
+          "grid": "2026-10",
+          "month": "2026-10",
+          "week": "w2",
+          "dow": "d4",
+          "pos": 12,
+          "colpos": 41,
+          "day": "8",
+          "date": "2026-10-08"
+        },
+        {
+          "id": "2026-10-p13",
+          "grid": "2026-10",
+          "month": "2026-10",
+          "week": "w2",
+          "dow": "d5",
+          "pos": 13,
+          "colpos": 51,
+          "day": "9",
+          "date": "2026-10-09"
+        },
+        {
+          "id": "2026-10-p14",
+          "grid": "2026-10",
+          "month": "2026-10",
+          "week": "w2",
+          "dow": "d6",
+          "pos": 14,
+          "colpos": 61,
+          "day": "10",
+          "date": "2026-10-10"
+        },
+        {
+          "id": "2026-10-p15",
+          "grid": "2026-10",
+          "month": "2026-10",
+          "week": "w3",
+          "dow": "d0",
+          "pos": 15,
+          "colpos": 2,
+          "day": "11",
+          "date": "2026-10-11"
+        },
+        {
+          "id": "2026-10-p16",
+          "grid": "2026-10",
+          "month": "2026-10",
+          "week": "w3",
+          "dow": "d1",
+          "pos": 16,
+          "colpos": 12,
+          "day": "12",
+          "date": "2026-10-12"
+        },
+        {
+          "id": "2026-10-p17",
+          "grid": "2026-10",
+          "month": "2026-10",
+          "week": "w3",
+          "dow": "d2",
+          "pos": 17,
+          "colpos": 22,
+          "day": "13",
+          "date": "2026-10-13"
+        },
+        {
+          "id": "2026-10-p18",
+          "grid": "2026-10",
+          "month": "2026-10",
+          "week": "w3",
+          "dow": "d3",
+          "pos": 18,
+          "colpos": 32,
+          "day": "14",
+          "date": "2026-10-14"
+        },
+        {
+          "id": "2026-10-p19",
+          "grid": "2026-10",
+          "month": "2026-10",
+          "week": "w3",
+          "dow": "d4",
+          "pos": 19,
+          "colpos": 42,
+          "day": "15",
+          "date": "2026-10-15"
+        },
+        {
+          "id": "2026-10-p20",
+          "grid": "2026-10",
+          "month": "2026-10",
+          "week": "w3",
+          "dow": "d5",
+          "pos": 20,
+          "colpos": 52,
+          "day": "16",
+          "date": "2026-10-16"
+        },
+        {
+          "id": "2026-10-p21",
+          "grid": "2026-10",
+          "month": "2026-10",
+          "week": "w3",
+          "dow": "d6",
+          "pos": 21,
+          "colpos": 62,
+          "day": "17",
+          "date": "2026-10-17"
+        },
+        {
+          "id": "2026-10-p22",
+          "grid": "2026-10",
+          "month": "2026-10",
+          "week": "w4",
+          "dow": "d0",
+          "pos": 22,
+          "colpos": 3,
+          "day": "18",
+          "date": "2026-10-18"
+        },
+        {
+          "id": "2026-10-p23",
+          "grid": "2026-10",
+          "month": "2026-10",
+          "week": "w4",
+          "dow": "d1",
+          "pos": 23,
+          "colpos": 13,
+          "day": "19",
+          "date": "2026-10-19"
+        },
+        {
+          "id": "2026-10-p24",
+          "grid": "2026-10",
+          "month": "2026-10",
+          "week": "w4",
+          "dow": "d2",
+          "pos": 24,
+          "colpos": 23,
+          "day": "20",
+          "date": "2026-10-20"
+        },
+        {
+          "id": "2026-10-p25",
+          "grid": "2026-10",
+          "month": "2026-10",
+          "week": "w4",
+          "dow": "d3",
+          "pos": 25,
+          "colpos": 33,
+          "day": "21",
+          "date": "2026-10-21"
+        },
+        {
+          "id": "2026-10-p26",
+          "grid": "2026-10",
+          "month": "2026-10",
+          "week": "w4",
+          "dow": "d4",
+          "pos": 26,
+          "colpos": 43,
+          "day": "22",
+          "date": "2026-10-22"
+        },
+        {
+          "id": "2026-10-p27",
+          "grid": "2026-10",
+          "month": "2026-10",
+          "week": "w4",
+          "dow": "d5",
+          "pos": 27,
+          "colpos": 53,
+          "day": "23",
+          "date": "2026-10-23"
+        },
+        {
+          "id": "2026-10-p28",
+          "grid": "2026-10",
+          "month": "2026-10",
+          "week": "w4",
+          "dow": "d6",
+          "pos": 28,
+          "colpos": 63,
+          "day": "24",
+          "date": "2026-10-24"
+        },
+        {
+          "id": "2026-10-p29",
+          "grid": "2026-10",
+          "month": "2026-10",
+          "week": "w5",
+          "dow": "d0",
+          "pos": 29,
+          "colpos": 4,
+          "day": "25",
+          "date": "2026-10-25"
+        },
+        {
+          "id": "2026-10-p30",
+          "grid": "2026-10",
+          "month": "2026-10",
+          "week": "w5",
+          "dow": "d1",
+          "pos": 30,
+          "colpos": 14,
+          "day": "26",
+          "date": "2026-10-26"
+        },
+        {
+          "id": "2026-10-p31",
+          "grid": "2026-10",
+          "month": "2026-10",
+          "week": "w5",
+          "dow": "d2",
+          "pos": 31,
+          "colpos": 24,
+          "day": "27",
+          "date": "2026-10-27"
+        },
+        {
+          "id": "2026-10-p32",
+          "grid": "2026-10",
+          "month": "2026-10",
+          "week": "w5",
+          "dow": "d3",
+          "pos": 32,
+          "colpos": 34,
+          "day": "28",
+          "date": "2026-10-28"
+        },
+        {
+          "id": "2026-10-p33",
+          "grid": "2026-10",
+          "month": "2026-10",
+          "week": "w5",
+          "dow": "d4",
+          "pos": 33,
+          "colpos": 44,
+          "day": "29",
+          "date": "2026-10-29"
+        },
+        {
+          "id": "2026-10-p34",
+          "grid": "2026-10",
+          "month": "2026-10",
+          "week": "w5",
+          "dow": "d5",
+          "pos": 34,
+          "colpos": 54,
+          "day": "30",
+          "date": "2026-10-30"
+        },
+        {
+          "id": "2026-10-p35",
+          "grid": "2026-10",
+          "month": "2026-10",
+          "week": "w5",
+          "dow": "d6",
+          "pos": 35,
+          "colpos": 64,
+          "day": "31",
+          "date": "2026-10-31"
+        },
+        {
+          "id": "2026-10-p36",
+          "grid": "2026-10",
+          "month": "2026-11",
+          "week": "w6",
+          "dow": "d0",
+          "pos": 36,
+          "colpos": 5,
+          "day": "1",
+          "date": "2026-11-01"
+        },
+        {
+          "id": "2026-10-p37",
+          "grid": "2026-10",
+          "month": "2026-11",
+          "week": "w6",
+          "dow": "d1",
+          "pos": 37,
+          "colpos": 15,
+          "day": "2",
+          "date": "2026-11-02"
+        },
+        {
+          "id": "2026-10-p38",
+          "grid": "2026-10",
+          "month": "2026-11",
+          "week": "w6",
+          "dow": "d2",
+          "pos": 38,
+          "colpos": 25,
+          "day": "3",
+          "date": "2026-11-03"
+        },
+        {
+          "id": "2026-10-p39",
+          "grid": "2026-10",
+          "month": "2026-11",
+          "week": "w6",
+          "dow": "d3",
+          "pos": 39,
+          "colpos": 35,
+          "day": "4",
+          "date": "2026-11-04"
+        },
+        {
+          "id": "2026-10-p40",
+          "grid": "2026-10",
+          "month": "2026-11",
+          "week": "w6",
+          "dow": "d4",
+          "pos": 40,
+          "colpos": 45,
+          "day": "5",
+          "date": "2026-11-05"
+        },
+        {
+          "id": "2026-10-p41",
+          "grid": "2026-10",
+          "month": "2026-11",
+          "week": "w6",
+          "dow": "d5",
+          "pos": 41,
+          "colpos": 55,
+          "day": "6",
+          "date": "2026-11-06"
+        },
+        {
+          "id": "2026-10-p42",
+          "grid": "2026-10",
+          "month": "2026-11",
+          "week": "w6",
+          "dow": "d6",
+          "pos": 42,
+          "colpos": 65,
+          "day": "7",
+          "date": "2026-11-07"
+        },
+        {
+          "id": "2026-11-p01",
+          "grid": "2026-11",
+          "month": "2026-11",
+          "week": "w1",
+          "dow": "d0",
+          "pos": 1,
+          "colpos": 0,
+          "day": "1",
+          "date": "2026-11-01"
+        },
+        {
+          "id": "2026-11-p02",
+          "grid": "2026-11",
+          "month": "2026-11",
+          "week": "w1",
+          "dow": "d1",
+          "pos": 2,
+          "colpos": 10,
+          "day": "2",
+          "date": "2026-11-02"
+        },
+        {
+          "id": "2026-11-p03",
+          "grid": "2026-11",
+          "month": "2026-11",
+          "week": "w1",
+          "dow": "d2",
+          "pos": 3,
+          "colpos": 20,
+          "day": "3",
+          "date": "2026-11-03"
+        },
+        {
+          "id": "2026-11-p04",
+          "grid": "2026-11",
+          "month": "2026-11",
+          "week": "w1",
+          "dow": "d3",
+          "pos": 4,
+          "colpos": 30,
+          "day": "4",
+          "date": "2026-11-04"
+        },
+        {
+          "id": "2026-11-p05",
+          "grid": "2026-11",
+          "month": "2026-11",
+          "week": "w1",
+          "dow": "d4",
+          "pos": 5,
+          "colpos": 40,
+          "day": "5",
+          "date": "2026-11-05"
+        },
+        {
+          "id": "2026-11-p06",
+          "grid": "2026-11",
+          "month": "2026-11",
+          "week": "w1",
+          "dow": "d5",
+          "pos": 6,
+          "colpos": 50,
+          "day": "6",
+          "date": "2026-11-06"
+        },
+        {
+          "id": "2026-11-p07",
+          "grid": "2026-11",
+          "month": "2026-11",
+          "week": "w1",
+          "dow": "d6",
+          "pos": 7,
+          "colpos": 60,
+          "day": "7",
+          "date": "2026-11-07"
+        },
+        {
+          "id": "2026-11-p08",
+          "grid": "2026-11",
+          "month": "2026-11",
+          "week": "w2",
+          "dow": "d0",
+          "pos": 8,
+          "colpos": 1,
+          "day": "8",
+          "date": "2026-11-08"
+        },
+        {
+          "id": "2026-11-p09",
+          "grid": "2026-11",
+          "month": "2026-11",
+          "week": "w2",
+          "dow": "d1",
+          "pos": 9,
+          "colpos": 11,
+          "day": "9",
+          "date": "2026-11-09"
+        },
+        {
+          "id": "2026-11-p10",
+          "grid": "2026-11",
+          "month": "2026-11",
+          "week": "w2",
+          "dow": "d2",
+          "pos": 10,
+          "colpos": 21,
+          "day": "10",
+          "date": "2026-11-10"
+        },
+        {
+          "id": "2026-11-p11",
+          "grid": "2026-11",
+          "month": "2026-11",
+          "week": "w2",
+          "dow": "d3",
+          "pos": 11,
+          "colpos": 31,
+          "day": "11",
+          "date": "2026-11-11"
+        },
+        {
+          "id": "2026-11-p12",
+          "grid": "2026-11",
+          "month": "2026-11",
+          "week": "w2",
+          "dow": "d4",
+          "pos": 12,
+          "colpos": 41,
+          "day": "12",
+          "date": "2026-11-12"
+        },
+        {
+          "id": "2026-11-p13",
+          "grid": "2026-11",
+          "month": "2026-11",
+          "week": "w2",
+          "dow": "d5",
+          "pos": 13,
+          "colpos": 51,
+          "day": "13",
+          "date": "2026-11-13"
+        },
+        {
+          "id": "2026-11-p14",
+          "grid": "2026-11",
+          "month": "2026-11",
+          "week": "w2",
+          "dow": "d6",
+          "pos": 14,
+          "colpos": 61,
+          "day": "14",
+          "date": "2026-11-14"
+        },
+        {
+          "id": "2026-11-p15",
+          "grid": "2026-11",
+          "month": "2026-11",
+          "week": "w3",
+          "dow": "d0",
+          "pos": 15,
+          "colpos": 2,
+          "day": "15",
+          "date": "2026-11-15"
+        },
+        {
+          "id": "2026-11-p16",
+          "grid": "2026-11",
+          "month": "2026-11",
+          "week": "w3",
+          "dow": "d1",
+          "pos": 16,
+          "colpos": 12,
+          "day": "16",
+          "date": "2026-11-16"
+        },
+        {
+          "id": "2026-11-p17",
+          "grid": "2026-11",
+          "month": "2026-11",
+          "week": "w3",
+          "dow": "d2",
+          "pos": 17,
+          "colpos": 22,
+          "day": "17",
+          "date": "2026-11-17"
+        },
+        {
+          "id": "2026-11-p18",
+          "grid": "2026-11",
+          "month": "2026-11",
+          "week": "w3",
+          "dow": "d3",
+          "pos": 18,
+          "colpos": 32,
+          "day": "18",
+          "date": "2026-11-18"
+        },
+        {
+          "id": "2026-11-p19",
+          "grid": "2026-11",
+          "month": "2026-11",
+          "week": "w3",
+          "dow": "d4",
+          "pos": 19,
+          "colpos": 42,
+          "day": "19",
+          "date": "2026-11-19"
+        },
+        {
+          "id": "2026-11-p20",
+          "grid": "2026-11",
+          "month": "2026-11",
+          "week": "w3",
+          "dow": "d5",
+          "pos": 20,
+          "colpos": 52,
+          "day": "20",
+          "date": "2026-11-20"
+        },
+        {
+          "id": "2026-11-p21",
+          "grid": "2026-11",
+          "month": "2026-11",
+          "week": "w3",
+          "dow": "d6",
+          "pos": 21,
+          "colpos": 62,
+          "day": "21",
+          "date": "2026-11-21"
+        },
+        {
+          "id": "2026-11-p22",
+          "grid": "2026-11",
+          "month": "2026-11",
+          "week": "w4",
+          "dow": "d0",
+          "pos": 22,
+          "colpos": 3,
+          "day": "22",
+          "date": "2026-11-22"
+        },
+        {
+          "id": "2026-11-p23",
+          "grid": "2026-11",
+          "month": "2026-11",
+          "week": "w4",
+          "dow": "d1",
+          "pos": 23,
+          "colpos": 13,
+          "day": "23",
+          "date": "2026-11-23"
+        },
+        {
+          "id": "2026-11-p24",
+          "grid": "2026-11",
+          "month": "2026-11",
+          "week": "w4",
+          "dow": "d2",
+          "pos": 24,
+          "colpos": 23,
+          "day": "24",
+          "date": "2026-11-24"
+        },
+        {
+          "id": "2026-11-p25",
+          "grid": "2026-11",
+          "month": "2026-11",
+          "week": "w4",
+          "dow": "d3",
+          "pos": 25,
+          "colpos": 33,
+          "day": "25",
+          "date": "2026-11-25"
+        },
+        {
+          "id": "2026-11-p26",
+          "grid": "2026-11",
+          "month": "2026-11",
+          "week": "w4",
+          "dow": "d4",
+          "pos": 26,
+          "colpos": 43,
+          "day": "26",
+          "date": "2026-11-26"
+        },
+        {
+          "id": "2026-11-p27",
+          "grid": "2026-11",
+          "month": "2026-11",
+          "week": "w4",
+          "dow": "d5",
+          "pos": 27,
+          "colpos": 53,
+          "day": "27",
+          "date": "2026-11-27"
+        },
+        {
+          "id": "2026-11-p28",
+          "grid": "2026-11",
+          "month": "2026-11",
+          "week": "w4",
+          "dow": "d6",
+          "pos": 28,
+          "colpos": 63,
+          "day": "28",
+          "date": "2026-11-28"
+        },
+        {
+          "id": "2026-11-p29",
+          "grid": "2026-11",
+          "month": "2026-11",
+          "week": "w5",
+          "dow": "d0",
+          "pos": 29,
+          "colpos": 4,
+          "day": "29",
+          "date": "2026-11-29"
+        },
+        {
+          "id": "2026-11-p30",
+          "grid": "2026-11",
+          "month": "2026-11",
+          "week": "w5",
+          "dow": "d1",
+          "pos": 30,
+          "colpos": 14,
+          "day": "30",
+          "date": "2026-11-30"
+        },
+        {
+          "id": "2026-11-p31",
+          "grid": "2026-11",
+          "month": "2026-12",
+          "week": "w5",
+          "dow": "d2",
+          "pos": 31,
+          "colpos": 24,
+          "day": "1",
+          "date": "2026-12-01"
+        },
+        {
+          "id": "2026-11-p32",
+          "grid": "2026-11",
+          "month": "2026-12",
+          "week": "w5",
+          "dow": "d3",
+          "pos": 32,
+          "colpos": 34,
+          "day": "2",
+          "date": "2026-12-02"
+        },
+        {
+          "id": "2026-11-p33",
+          "grid": "2026-11",
+          "month": "2026-12",
+          "week": "w5",
+          "dow": "d4",
+          "pos": 33,
+          "colpos": 44,
+          "day": "3",
+          "date": "2026-12-03"
+        },
+        {
+          "id": "2026-11-p34",
+          "grid": "2026-11",
+          "month": "2026-12",
+          "week": "w5",
+          "dow": "d5",
+          "pos": 34,
+          "colpos": 54,
+          "day": "4",
+          "date": "2026-12-04"
+        },
+        {
+          "id": "2026-11-p35",
+          "grid": "2026-11",
+          "month": "2026-12",
+          "week": "w5",
+          "dow": "d6",
+          "pos": 35,
+          "colpos": 64,
+          "day": "5",
+          "date": "2026-12-05"
+        },
+        {
+          "id": "2026-11-p36",
+          "grid": "2026-11",
+          "month": "2026-12",
+          "week": "w6",
+          "dow": "d0",
+          "pos": 36,
+          "colpos": 5,
+          "day": "6",
+          "date": "2026-12-06"
+        },
+        {
+          "id": "2026-11-p37",
+          "grid": "2026-11",
+          "month": "2026-12",
+          "week": "w6",
+          "dow": "d1",
+          "pos": 37,
+          "colpos": 15,
+          "day": "7",
+          "date": "2026-12-07"
+        },
+        {
+          "id": "2026-11-p38",
+          "grid": "2026-11",
+          "month": "2026-12",
+          "week": "w6",
+          "dow": "d2",
+          "pos": 38,
+          "colpos": 25,
+          "day": "8",
+          "date": "2026-12-08"
+        },
+        {
+          "id": "2026-11-p39",
+          "grid": "2026-11",
+          "month": "2026-12",
+          "week": "w6",
+          "dow": "d3",
+          "pos": 39,
+          "colpos": 35,
+          "day": "9",
+          "date": "2026-12-09"
+        },
+        {
+          "id": "2026-11-p40",
+          "grid": "2026-11",
+          "month": "2026-12",
+          "week": "w6",
+          "dow": "d4",
+          "pos": 40,
+          "colpos": 45,
+          "day": "10",
+          "date": "2026-12-10"
+        },
+        {
+          "id": "2026-11-p41",
+          "grid": "2026-11",
+          "month": "2026-12",
+          "week": "w6",
+          "dow": "d5",
+          "pos": 41,
+          "colpos": 55,
+          "day": "11",
+          "date": "2026-12-11"
+        },
+        {
+          "id": "2026-11-p42",
+          "grid": "2026-11",
+          "month": "2026-12",
+          "week": "w6",
+          "dow": "d6",
+          "pos": 42,
+          "colpos": 65,
+          "day": "12",
+          "date": "2026-12-12"
+        }
+      ],
+      "durability": "tab",
+      "level": "ephemeral",
+      "server": false,
+      "writers": [],
+      "cel": {
+        "checks": {},
+        "enums": {
+          "week": [
+            "w1",
+            "w2",
+            "w3",
+            "w4",
+            "w5",
+            "w6"
+          ],
+          "dow": [
+            "d0",
+            "d1",
+            "d2",
+            "d3",
+            "d4",
+            "d5",
+            "d6"
+          ]
+        },
+        "bounds": {
+          "id": {
+            "sizeMax": 16
+          },
+          "grid": {
+            "sizeMin": 7,
+            "sizeMax": 7
+          },
+          "month": {
+            "sizeMin": 7,
+            "sizeMax": 7
+          },
+          "pos": {
+            "intMin": 1,
+            "intMax": 42
+          },
+          "colpos": {
+            "intMin": 0,
+            "intMax": 65
+          },
+          "day": {
+            "sizeMax": 2
+          },
+          "date": {
+            "sizeMin": 10,
+            "sizeMax": 10
+          }
+        }
+      },
+      "uniques": [],
+      "validations": {}
+    }
+  },
+  "hybrids": {},
+  "hatches": {},
+  "rawMigrations": [],
+  "duckstreams": {}
+}

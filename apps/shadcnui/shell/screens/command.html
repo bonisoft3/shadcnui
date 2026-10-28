@@ -17,7 +17,7 @@
   <div class="demo-stage">
 <omnishell--command>
   <div class="cmd" data-live="command_demo" data-filter="id=eq.the"
-       data-machine='{"field":"state","initial":"typing","context":{"query":"","active":"","chosen":""},"states":{"typing":{"on":{"input@command-query":{"assign":{"query":{"type":"event","params":{"field":"value"}},"active":""}}}}}}'>
+       data-machine='{"field":"state","initial":"typing","states":{"typing":{"on":{"input@command-query":{"assign":{"query":{"type":"event","params":{"field":"value"}},"active":""}}}}}}'>
     <template data-item>
       <div class="cmd-hold">
         <form class="cmd-run" id="command-run" data-form="command-run"
@@ -145,11 +145,6 @@
     <pre class="machine-json">{
   "field": "state",
   "initial": "typing",
-  "context": {
-    "query": "",
-    "active": "",
-    "chosen": ""
-  },
   "states": {
     "typing": {
       "on": {

@@ -4,9 +4,8 @@
 // The rows are `seed:`. A tab entity has no migration to render into, so the
 // terminal writes the rows itself when it first opens the collection
 // (plugins/pronto/schema.cue). No minting form ships, and the chart has no
-// arrival state: the cursor row is seeded too, from the machine's own initial
-// world — one CUE value emitted three times, as the seed, as the machine's
-// context and as the readout's data-empty-row, so the three cannot disagree.
+// arrival state: the cursor seed, entity defaults and readout's empty row
+// share the component declaration.
 //
 // Selection is a derived column, which is why no machine here writes one, and
 // it is the only ARIA state a row carries. The screen's panes carry the rest:
@@ -137,15 +136,11 @@ import (
 	// types and stays (decision-23, decision-24). /table's `pending` state and
 	// its after: {"0": …} exist only to state a row nothing else could write;
 	// the seed states this one, so there is no arrival to draw.
+	defaults: {query: "", cursor: D.opensOn, sort: D.opensSorted, for col, v in D._sortState[D.opensSorted] {(col): v}}
+
 	machine: terminal.#Machine & {
 		field:   D.field
 		initial: "typing"
-		context: {
-			query:  ""
-			cursor: D.opensOn
-			sort:   D.opensSorted
-			for col, v in D._sortState[D.opensSorted] {(col): v}
-		}
 		states: typing: on: ("input@" + D._input): {
 			assign: {
 				query: {type: "event", params: field: "value"}
@@ -156,13 +151,11 @@ import (
 		}
 	}
 
-	// The machine's initial world as a row. The entity seeds it, the readout
-	// falls back to it, and the machine states it — one value, so decision-07's
-	// agreement is by construction rather than by review.
+	// The seed and readout share the same declared initial values as the entity defaults.
 	cursorSeed: {
 		id:         D.row
 		(D.field):  D.machine.initial
-		for k, v in D.machine.context {(k): v}
+		for k, v in D.defaults {(k): v}
 	}
 	emptyRow: (omni.#attrJSON & {in: D.cursorSeed}).out
 

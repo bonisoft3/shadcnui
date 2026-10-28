@@ -51,7 +51,7 @@
     </fieldset>
   </form>
   <div class="tbl-field" data-live="table_query" data-filter="id=eq.the"
-       data-machine='{"field":"state","initial":"pending","context":{"query":""},"states":{"pending":{"after":{"0":"typing"}},"typing":{"on":{"input@table-filter":{"assign":{"query":{"type":"event","params":{"field":"value"}}}}}}}}'>
+       data-machine='{"field":"state","initial":"pending","states":{"pending":{"after":{"0":"typing"}},"typing":{"on":{"input@table-filter":{"assign":{"query":{"type":"event","params":{"field":"value"}}}}}}}}'>
     <label class="tbl-label" for="table-filter">Filter by payer</label>
     <input class="tbl-input" id="table-filter" type="search" value="{query}"
            placeholder="Ada" autocomplete="off" spellcheck="false"
@@ -135,9 +135,6 @@
     <pre class="machine-json">{
   "field": "state",
   "initial": "pending",
-  "context": {
-    "query": ""
-  },
   "states": {
     "pending": {
       "after": {

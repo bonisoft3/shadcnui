@@ -17,7 +17,7 @@
   <div class="demo-stage">
 <omnishell--slider>
   <div class="slider" data-live="slider_demo" data-filter="id=eq.the"
-       data-machine='{"field":"phase","initial":"live","context":{"volume":50},"states":{"live":{"on":{"input@slider-volume-input":{"assign":{"volume":{"type":"event","params":{"field":"valueAsNumber"}}}}}}}}'>
+       data-machine='{"field":"phase","initial":"live","states":{"live":{"on":{"input@slider-volume-input":{"assign":{"volume":{"type":"event","params":{"field":"valueAsNumber"}}}}}}}}'>
     <label class="slider-label" for="slider-volume-input">Volume</label>
     <input type="range" id="slider-volume-input" class="slider-input"
            min="0" max="100" step="1" value="{volume}">
@@ -74,9 +74,6 @@
     <pre class="machine-json">{
   "field": "phase",
   "initial": "live",
-  "context": {
-    "volume": 50
-  },
   "states": {
     "live": {
       "on": {

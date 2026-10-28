@@ -80,38 +80,38 @@ seed:
       group: Settings
       pos: 6
   data_row:
-    - id: INV-1024
+    - amount: '250.00'
+      id: INV-1024
       payer: Ada Lovelace
       status: Paid
-      amount: '250.00'
-    - id: INV-1025
+    - amount: '150.00'
+      id: INV-1025
       payer: Grace Hopper
       status: Pending
-      amount: '150.00'
-    - id: INV-1026
+    - amount: '80.00'
+      id: INV-1026
       payer: Ada Byron
       status: Unpaid
-      amount: '80.00'
-    - id: INV-1027
+    - amount: '420.00'
+      id: INV-1027
       payer: Alan Turing
       status: Paid
-      amount: '420.00'
-    - id: INV-1028
+    - amount: '95.00'
+      id: INV-1028
       payer: Barbara Liskov
       status: Pending
-      amount: '95.00'
-    - id: INV-1029
+    - amount: '310.00'
+      id: INV-1029
       payer: Adele Goldberg
       status: Paid
-      amount: '310.00'
-    - id: INV-1030
+    - amount: '60.00'
+      id: INV-1030
       payer: Frances Allen
       status: Unpaid
-      amount: '60.00'
-    - id: INV-1031
+    - amount: '175.00'
+      id: INV-1031
       payer: Karen Sparck
       status: Paid
-      amount: '175.00'
   data_cursor:
     - id: the
       state: typing
@@ -149,38 +149,38 @@ seed:
       label: January
       value: 186
       pos: 1
-      nxt_pos: 2
       nxt_value: 305
+      nxt_pos: 2
     - id: feb
       label: February
       value: 305
       pos: 2
-      nxt_pos: 3
       nxt_value: 237
+      nxt_pos: 3
     - id: mar
       label: March
       value: 237
       pos: 3
-      nxt_pos: 4
       nxt_value: 173
+      nxt_pos: 4
     - id: apr
       label: April
       value: 173
       pos: 4
-      nxt_pos: 5
       nxt_value: 209
+      nxt_pos: 5
     - id: may
       label: May
       value: 209
       pos: 5
-      nxt_pos: 6
       nxt_value: 264
+      nxt_pos: 6
     - id: jun
       label: June
       value: 264
       pos: 6
-      nxt_pos: 6
       nxt_value: 264
+      nxt_pos: 6
   chart_cursor:
     - id: the
       active: mar
@@ -248,18 +248,18 @@ seed:
   chat_demo:
     - id: the
   calendar_demo:
-    - id: the
-      state: browsing
-      month: 2026-09
+    - active: 2026-09-p15
+      id: the
       label: September 2026
-      value: 2026-09-p15
-      active: 2026-09-p15
-    - id: picker
-      state: browsing
       month: 2026-09
-      label: September 2026
+      state: browsing
       value: 2026-09-p15
-      active: 2026-09-p15
+    - active: 2026-09-p15
+      id: picker
+      label: September 2026
+      month: 2026-09
+      state: browsing
+      value: 2026-09-p15
   calendar_cell:
     - id: 2026-07-p01
       grid: 2026-07
@@ -2716,7 +2716,9 @@ schema:
         pk: true
         type: string
         required: true
-      - enum:
+      - default: 'false'
+        defaulted: true
+        enum:
           - 'true'
           - 'false'
         name: checked
@@ -2731,31 +2733,41 @@ schema:
         pk: true
         type: string
         required: true
-      - enum:
+      - default: account
+        defaulted: true
+        enum:
           - account
           - password
         name: active
         type: string
         required: true
-      - enum:
+      - default: 'true'
+        defaulted: true
+        enum:
           - 'true'
           - 'false'
         name: sel_account
         type: string
         required: true
-      - enum:
+      - default: 'false'
+        defaulted: true
+        enum:
           - 'true'
           - 'false'
         name: sel_password
         type: string
         required: true
-      - enum:
+      - default: '0'
+        defaulted: true
+        enum:
           - '0'
           - '-1'
         name: tab_account
         type: string
         required: true
-      - enum:
+      - default: '-1'
+        defaulted: true
+        enum:
           - '0'
           - '-1'
         name: tab_password
@@ -2770,7 +2782,9 @@ schema:
         pk: true
         type: string
         required: true
-      - enum:
+      - default: apple
+        defaulted: true
+        enum:
           - apple
           - banana
           - cherry
@@ -2779,22 +2793,30 @@ schema:
         required: true
       - bounds:
           sizeMax: 24
+        default: Apple
+        defaulted: true
         name: label
         type: string
         required: true
-      - enum:
+      - default: 'true'
+        defaulted: true
+        enum:
           - 'true'
           - 'false'
         name: sel_apple
         type: string
         required: true
-      - enum:
+      - default: 'false'
+        defaulted: true
+        enum:
           - 'true'
           - 'false'
         name: sel_banana
         type: string
         required: true
-      - enum:
+      - default: 'false'
+        defaulted: true
+        enum:
           - 'true'
           - 'false'
         name: sel_cherry
@@ -2809,44 +2831,58 @@ schema:
         pk: true
         type: string
         required: true
-      - enum:
+      - default: left
+        defaulted: true
+        enum:
           - left
           - center
           - right
         name: value
         type: string
         required: true
-      - enum:
+      - default: 'true'
+        defaulted: true
+        enum:
           - 'true'
           - 'false'
         name: chk_left
         type: string
         required: true
-      - enum:
+      - default: 'false'
+        defaulted: true
+        enum:
           - 'true'
           - 'false'
         name: chk_center
         type: string
         required: true
-      - enum:
+      - default: 'false'
+        defaulted: true
+        enum:
           - 'true'
           - 'false'
         name: chk_right
         type: string
         required: true
-      - enum:
+      - default: '0'
+        defaulted: true
+        enum:
           - '0'
           - '-1'
         name: tab_left
         type: string
         required: true
-      - enum:
+      - default: '-1'
+        defaulted: true
+        enum:
           - '0'
           - '-1'
         name: tab_center
         type: string
         required: true
-      - enum:
+      - default: '-1'
+        defaulted: true
+        enum:
           - '0'
           - '-1'
         name: tab_right
@@ -2861,7 +2897,9 @@ schema:
         pk: true
         type: string
         required: true
-      - enum:
+      - default: none
+        defaulted: true
+        enum:
           - none
           - shipping
           - returns
@@ -2869,44 +2907,58 @@ schema:
         name: open
         type: string
         required: true
-      - enum:
+      - default: 'false'
+        defaulted: true
+        enum:
           - 'true'
           - 'false'
         name: exp_shipping
         type: string
         required: true
-      - enum:
+      - default: 'false'
+        defaulted: true
+        enum:
           - 'true'
           - 'false'
         name: exp_returns
         type: string
         required: true
-      - enum:
+      - default: 'false'
+        defaulted: true
+        enum:
           - 'true'
           - 'false'
         name: exp_support
         type: string
         required: true
-      - enum:
+      - default: shipping
+        defaulted: true
+        enum:
           - shipping
           - returns
           - support
         name: caret
         type: string
         required: true
-      - enum:
+      - default: 'true'
+        defaulted: true
+        enum:
           - 'true'
           - 'false'
         name: cur_shipping
         type: string
         required: true
-      - enum:
+      - default: 'false'
+        defaulted: true
+        enum:
           - 'true'
           - 'false'
         name: cur_returns
         type: string
         required: true
-      - enum:
+      - default: 'false'
+        defaulted: true
+        enum:
           - 'true'
           - 'false'
         name: cur_support
@@ -2923,7 +2975,9 @@ schema:
         pk: true
         type: string
         required: true
-      - enum:
+      - default: 'false'
+        defaulted: true
+        enum:
           - 'true'
           - 'false'
         name: open
@@ -2956,7 +3010,9 @@ schema:
         pk: true
         type: string
         required: true
-      - enum:
+      - default: 'false'
+        defaulted: true
+        enum:
           - 'true'
           - 'false'
         name: checked
@@ -2971,31 +3027,41 @@ schema:
         pk: true
         type: string
         required: true
-      - enum:
+      - default: live
+        defaulted: true
+        enum:
           - live
         name: phase
         type: string
         required: true
-      - enum:
+      - default: mixed
+        defaulted: true
+        enum:
           - 'true'
           - 'false'
           - mixed
         name: checked
         type: string
         required: true
-      - enum:
+      - default: 'true'
+        defaulted: true
+        enum:
           - 'true'
           - 'false'
         name: inc_docs
         type: string
         required: true
-      - enum:
+      - default: 'true'
+        defaulted: true
+        enum:
           - 'true'
           - 'false'
         name: inc_images
         type: string
         required: true
-      - enum:
+      - default: 'false'
+        defaulted: true
+        enum:
           - 'true'
           - 'false'
         name: inc_archive
@@ -3010,7 +3076,9 @@ schema:
         pk: true
         type: string
         required: true
-      - enum:
+      - default: 'false'
+        defaulted: true
+        enum:
           - 'true'
           - 'false'
         name: pressed
@@ -3025,7 +3093,9 @@ schema:
         pk: true
         type: string
         required: true
-      - enum:
+      - default: 'false'
+        defaulted: true
+        enum:
           - 'true'
           - 'false'
         name: open
@@ -3040,44 +3110,58 @@ schema:
         pk: true
         type: string
         required: true
-      - enum:
+      - default: starter
+        defaulted: true
+        enum:
           - starter
           - pro
           - team
         name: value
         type: string
         required: true
-      - enum:
+      - default: 'true'
+        defaulted: true
+        enum:
           - 'true'
           - 'false'
         name: chk_starter
         type: string
         required: true
-      - enum:
+      - default: 'false'
+        defaulted: true
+        enum:
           - 'true'
           - 'false'
         name: chk_pro
         type: string
         required: true
-      - enum:
+      - default: 'false'
+        defaulted: true
+        enum:
           - 'true'
           - 'false'
         name: chk_team
         type: string
         required: true
-      - enum:
+      - default: '0'
+        defaulted: true
+        enum:
           - '0'
           - '-1'
         name: tab_starter
         type: string
         required: true
-      - enum:
+      - default: '-1'
+        defaulted: true
+        enum:
           - '0'
           - '-1'
         name: tab_pro
         type: string
         required: true
-      - enum:
+      - default: '-1'
+        defaulted: true
+        enum:
           - '0'
           - '-1'
         name: tab_team
@@ -3092,7 +3176,9 @@ schema:
         pk: true
         type: string
         required: true
-      - enum:
+      - default: p1
+        defaulted: true
+        enum:
           - p1
           - p2
           - p3
@@ -3101,43 +3187,57 @@ schema:
         name: page
         type: string
         required: true
-      - enum:
+      - default: page
+        defaulted: true
+        enum:
           - page
           - 'false'
         name: cur_p1
         type: string
         required: true
-      - enum:
+      - default: 'false'
+        defaulted: true
+        enum:
           - page
           - 'false'
         name: cur_p2
         type: string
         required: true
-      - enum:
+      - default: 'false'
+        defaulted: true
+        enum:
           - page
           - 'false'
         name: cur_p3
         type: string
         required: true
-      - enum:
+      - default: 'false'
+        defaulted: true
+        enum:
           - page
           - 'false'
         name: cur_p4
         type: string
         required: true
-      - enum:
+      - default: 'false'
+        defaulted: true
+        enum:
           - page
           - 'false'
         name: cur_p5
         type: string
         required: true
-      - enum:
+      - default: disabled
+        defaulted: true
+        enum:
           - ''
           - disabled
         name: dis_prev
         type: string
         required: true
-      - enum:
+      - default: ''
+        defaulted: true
+        enum:
           - ''
           - disabled
         name: dis_next
@@ -3152,7 +3252,9 @@ schema:
         pk: true
         type: string
         required: true
-      - enum:
+      - default: s1
+        defaulted: true
+        enum:
           - s1
           - s2
           - s3
@@ -3160,37 +3262,49 @@ schema:
         name: slide
         type: string
         required: true
-      - enum:
+      - default: 'true'
+        defaulted: true
+        enum:
           - 'true'
           - 'false'
         name: cur_s1
         type: string
         required: true
-      - enum:
+      - default: 'false'
+        defaulted: true
+        enum:
           - 'true'
           - 'false'
         name: cur_s2
         type: string
         required: true
-      - enum:
+      - default: 'false'
+        defaulted: true
+        enum:
           - 'true'
           - 'false'
         name: cur_s3
         type: string
         required: true
-      - enum:
+      - default: 'false'
+        defaulted: true
+        enum:
           - 'true'
           - 'false'
         name: cur_s4
         type: string
         required: true
-      - enum:
+      - default: disabled
+        defaulted: true
+        enum:
           - ''
           - disabled
         name: dis_prev
         type: string
         required: true
-      - enum:
+      - default: ''
+        defaulted: true
+        enum:
           - ''
           - disabled
         name: dis_next
@@ -3205,7 +3319,9 @@ schema:
         pk: true
         type: string
         required: true
-      - enum:
+      - default: closed
+        defaulted: true
+        enum:
           - closed
           - open
         name: state
@@ -3220,7 +3336,9 @@ schema:
         pk: true
         type: string
         required: true
-      - enum:
+      - default: live
+        defaulted: true
+        enum:
           - live
         name: phase
         type: string
@@ -3228,6 +3346,8 @@ schema:
       - bounds:
           intMin: 0
           intMax: 100
+        default: 50
+        defaulted: true
         name: volume
         type: int32
         required: true
@@ -3255,7 +3375,9 @@ schema:
         pk: true
         type: string
         required: true
-      - enum:
+      - default: sizing
+        defaulted: true
+        enum:
           - sizing
         name: state
         type: string
@@ -3263,6 +3385,8 @@ schema:
       - bounds:
           intMin: 15
           intMax: 85
+        default: 50
+        defaulted: true
         name: split
         type: int32
         required: true
@@ -3275,23 +3399,31 @@ schema:
         pk: true
         type: string
         required: true
-      - enum:
+      - default: typing
+        defaulted: true
+        enum:
           - typing
         name: state
         type: string
         required: true
       - bounds:
           sizeMax: 64
+        default: ''
+        defaulted: true
         name: query
         type: string
         required: true
       - bounds:
           sizeMax: 32
+        default: ''
+        defaulted: true
         name: active
         type: string
         required: true
       - bounds:
           sizeMax: 32
+        default: ''
+        defaulted: true
         name: chosen
         type: string
         required: true
@@ -3352,31 +3484,41 @@ schema:
         pk: true
         type: string
         required: true
-      - enum:
+      - default: 'false'
+        defaulted: true
+        enum:
           - 'true'
           - 'false'
         name: chk_bookmarks
         type: string
         required: true
-      - enum:
+      - default: 'false'
+        defaulted: true
+        enum:
           - 'true'
           - 'false'
         name: chk_urls
         type: string
         required: true
-      - enum:
+      - default: bookmarks
+        defaulted: true
+        enum:
           - bookmarks
           - urls
         name: caret
         type: string
         required: true
-      - enum:
+      - default: 'true'
+        defaulted: true
+        enum:
           - 'true'
           - 'false'
         name: cur_bookmarks
         type: string
         required: true
-      - enum:
+      - default: 'false'
+        defaulted: true
+        enum:
           - 'true'
           - 'false'
         name: cur_urls
@@ -3384,6 +3526,8 @@ schema:
         required: true
       - bounds:
           sizeMax: 32
+        default: ''
+        defaulted: true
         name: prefix
         type: string
         required: true
@@ -3396,26 +3540,34 @@ schema:
         pk: true
         type: string
         required: true
-      - enum:
+      - default: tabs
+        defaulted: true
+        enum:
           - tabs
           - accordion
           - toast
         name: caret
         type: string
         required: true
-      - enum:
+      - default: 'true'
+        defaulted: true
+        enum:
           - 'true'
           - 'false'
         name: cur_tabs
         type: string
         required: true
-      - enum:
+      - default: 'false'
+        defaulted: true
+        enum:
           - 'true'
           - 'false'
         name: cur_accordion
         type: string
         required: true
-      - enum:
+      - default: 'false'
+        defaulted: true
+        enum:
           - 'true'
           - 'false'
         name: cur_toast
@@ -3423,6 +3575,8 @@ schema:
         required: true
       - bounds:
           sizeMax: 32
+        default: ''
+        defaulted: true
         name: prefix
         type: string
         required: true
@@ -3435,31 +3589,41 @@ schema:
         pk: true
         type: string
         required: true
-      - enum:
+      - default: view
+        defaulted: true
+        enum:
           - view
           - go
         name: caret
         type: string
         required: true
-      - enum:
+      - default: 'true'
+        defaulted: true
+        enum:
           - 'true'
           - 'false'
         name: cur_view
         type: string
         required: true
-      - enum:
+      - default: 'false'
+        defaulted: true
+        enum:
           - 'true'
           - 'false'
         name: cur_go
         type: string
         required: true
-      - enum:
+      - default: '0'
+        defaulted: true
+        enum:
           - '0'
           - '-1'
         name: tab_view
         type: string
         required: true
-      - enum:
+      - default: '-1'
+        defaulted: true
+        enum:
           - '0'
           - '-1'
         name: tab_go
@@ -3474,7 +3638,9 @@ schema:
         pk: true
         type: string
         required: true
-      - enum:
+      - default: 'false'
+        defaulted: true
+        enum:
           - 'true'
           - 'false'
         name: open
@@ -3483,35 +3649,47 @@ schema:
       - bounds:
           intMin: 0
           intMax: 1000
+        default: 0
+        defaulted: true
         name: x
         type: int32
         required: true
       - bounds:
           intMin: 0
           intMax: 1000
+        default: 0
+        defaulted: true
         name: 'y'
         type: int32
         required: true
-      - enum:
+      - default: popover
+        defaulted: true
+        enum:
           - popover
           - sheet
           - overlays
         name: caret
         type: string
         required: true
-      - enum:
+      - default: 'true'
+        defaulted: true
+        enum:
           - 'true'
           - 'false'
         name: cur_popover
         type: string
         required: true
-      - enum:
+      - default: 'false'
+        defaulted: true
+        enum:
           - 'true'
           - 'false'
         name: cur_sheet
         type: string
         required: true
-      - enum:
+      - default: 'false'
+        defaulted: true
+        enum:
           - 'true'
           - 'false'
         name: cur_overlays
@@ -3519,6 +3697,8 @@ schema:
         required: true
       - bounds:
           sizeMax: 32
+        default: ''
+        defaulted: true
         name: prefix
         type: string
         required: true
@@ -3531,32 +3711,42 @@ schema:
         pk: true
         type: string
         required: true
-      - enum:
+      - default: andy
+        defaulted: true
+        enum:
           - andy
           - benoit
           - luis
         name: profile
         type: string
         required: true
-      - enum:
+      - default: 'true'
+        defaulted: true
+        enum:
           - 'true'
           - 'false'
         name: chk_andy
         type: string
         required: true
-      - enum:
+      - default: 'false'
+        defaulted: true
+        enum:
           - 'true'
           - 'false'
         name: chk_benoit
         type: string
         required: true
-      - enum:
+      - default: 'false'
+        defaulted: true
+        enum:
           - 'true'
           - 'false'
         name: chk_luis
         type: string
         required: true
-      - enum:
+      - default: switch
+        defaulted: true
+        enum:
           - switch
           - checkbox
           - radio_group
@@ -3566,37 +3756,49 @@ schema:
         name: caret
         type: string
         required: true
-      - enum:
+      - default: 'true'
+        defaulted: true
+        enum:
           - 'true'
           - 'false'
         name: cur_switch
         type: string
         required: true
-      - enum:
+      - default: 'false'
+        defaulted: true
+        enum:
           - 'true'
           - 'false'
         name: cur_checkbox
         type: string
         required: true
-      - enum:
+      - default: 'false'
+        defaulted: true
+        enum:
           - 'true'
           - 'false'
         name: cur_radio_group
         type: string
         required: true
-      - enum:
+      - default: 'false'
+        defaulted: true
+        enum:
           - 'true'
           - 'false'
         name: cur_andy
         type: string
         required: true
-      - enum:
+      - default: 'false'
+        defaulted: true
+        enum:
           - 'true'
           - 'false'
         name: cur_benoit
         type: string
         required: true
-      - enum:
+      - default: 'false'
+        defaulted: true
+        enum:
           - 'true'
           - 'false'
         name: cur_luis
@@ -3604,6 +3806,8 @@ schema:
         required: true
       - bounds:
           sizeMax: 32
+        default: ''
+        defaulted: true
         name: prefix
         type: string
         required: true
@@ -3662,7 +3866,9 @@ schema:
         pk: true
         type: string
         required: true
-      - enum:
+      - default: pending
+        defaulted: true
+        enum:
           - pending
           - typing
         name: state
@@ -3670,6 +3876,8 @@ schema:
         required: true
       - bounds:
           sizeMax: 48
+        default: ''
+        defaulted: true
         name: query
         type: string
         required: true
@@ -3709,22 +3917,30 @@ schema:
         pk: true
         type: string
         required: true
-      - enum:
+      - default: typing
+        defaulted: true
+        enum:
           - typing
         name: state
         type: string
         required: true
       - bounds:
           sizeMax: 48
+        default: ''
+        defaulted: true
         name: query
         type: string
         required: true
       - bounds:
           sizeMax: 24
+        default: INV-1024
+        defaulted: true
         name: cursor
         type: string
         required: true
-      - enum:
+      - default: id_asc
+        defaulted: true
+        enum:
           - id_asc
           - id_desc
           - amount_asc
@@ -3732,14 +3948,18 @@ schema:
         name: sort
         type: string
         required: true
-      - enum:
+      - default: ascending
+        defaulted: true
+        enum:
           - ascending
           - descending
           - none
         name: srt_id
         type: string
         required: true
-      - enum:
+      - default: none
+        defaulted: true
+        enum:
           - ascending
           - descending
           - none
@@ -3794,7 +4014,9 @@ schema:
         pk: true
         type: string
         required: true
-      - enum:
+      - default: 'true'
+        defaulted: true
+        enum:
           - 'true'
           - 'false'
         name: open
@@ -3809,7 +4031,9 @@ schema:
         pk: true
         type: string
         required: true
-      - enum:
+      - default: typing
+        defaulted: true
+        enum:
           - typing
           - complete
           - verified
@@ -3818,16 +4042,22 @@ schema:
         required: true
       - bounds:
           sizeMax: 6
+        default: ''
+        defaulted: true
         name: code
         type: string
         required: true
-      - enum:
+      - default: 'false'
+        defaulted: true
+        enum:
           - 'true'
           - 'false'
         name: invalid
         type: string
         required: true
-      - enum:
+      - default: disabled
+        defaulted: true
+        enum:
           - ''
           - disabled
         name: blocked
@@ -3886,18 +4116,24 @@ schema:
         pk: true
         type: string
         required: true
-      - enum:
+      - default: live
+        defaulted: true
+        enum:
           - live
         name: phase
         type: string
         required: true
       - bounds:
           sizeMax: 64
+        default: ''
+        defaulted: true
         name: query
         type: string
         required: true
       - bounds:
           sizeMax: 32
+        default: nothing yet
+        defaulted: true
         name: last
         type: string
         required: true
@@ -3979,7 +4215,9 @@ schema:
         pk: true
         type: string
         required: true
-      - enum:
+      - default: one
+        defaulted: true
+        enum:
           - one
           - two
           - three
@@ -3989,56 +4227,76 @@ schema:
         required: true
       - bounds:
           sizeMax: 32
+        default: ''
+        defaulted: true
         name: a_shape
         type: string
         required: true
       - bounds:
           sizeMax: 32
+        default: ''
+        defaulted: true
         name: a_state
         type: string
         required: true
       - bounds:
           sizeMax: 80
+        default: ''
+        defaulted: true
         name: a_note
         type: string
         required: true
-      - enum:
+      - default: disabled
+        defaulted: true
+        enum:
           - ''
           - disabled
         name: blocked
         type: string
         required: true
-      - enum:
+      - default: 'false'
+        defaulted: true
+        enum:
           - 'true'
           - 'false'
         name: sel_one_markup
         type: string
         required: true
-      - enum:
+      - default: 'false'
+        defaulted: true
+        enum:
           - 'true'
           - 'false'
         name: sel_one_chart
         type: string
         required: true
-      - enum:
+      - default: 'false'
+        defaulted: true
+        enum:
           - 'true'
           - 'false'
         name: sel_one_library
         type: string
         required: true
-      - enum:
+      - default: 'false'
+        defaulted: true
+        enum:
           - 'true'
           - 'false'
         name: sel_two_row
         type: string
         required: true
-      - enum:
+      - default: 'false'
+        defaulted: true
+        enum:
           - 'true'
           - 'false'
         name: sel_two_dom
         type: string
         required: true
-      - enum:
+      - default: 'false'
+        defaulted: true
+        enum:
           - 'true'
           - 'false'
         name: sel_two_memory
@@ -4053,7 +4311,9 @@ schema:
         pk: true
         type: string
         required: true
-      - enum:
+      - default: browsing
+        defaulted: true
+        enum:
           - browsing
         name: state
         type: string
@@ -4061,21 +4321,29 @@ schema:
       - bounds:
           sizeMin: 7
           sizeMax: 7
+        default: 2026-09
+        defaulted: true
         name: month
         type: string
         required: true
       - bounds:
           sizeMax: 24
+        default: September 2026
+        defaulted: true
         name: label
         type: string
         required: true
       - bounds:
           sizeMax: 16
+        default: 2026-09-p15
+        defaulted: true
         name: value
         type: string
         required: true
       - bounds:
           sizeMax: 16
+        default: 2026-09-p15
+        defaulted: true
         name: active
         type: string
         required: true

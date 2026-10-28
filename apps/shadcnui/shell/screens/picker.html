@@ -15,7 +15,7 @@
 <omnishell--picker>
   <div class="picker" data-live="picker_demo" data-filter="id=eq.the"
        data-state="{choice}"
-       data-machine='{"field":"choice","initial":"apple","context":{"label":"Apple","sel_apple":"true","sel_banana":"false","sel_cherry":"false"},"on":{"click@picker_demo-trigger-apple":{"target":"apple","assign":{"label":"Apple","sel_apple":"true","sel_banana":"false","sel_cherry":"false"}},"click@picker_demo-trigger-banana":{"target":"banana","assign":{"label":"Banana","sel_apple":"false","sel_banana":"true","sel_cherry":"false"}},"click@picker_demo-trigger-cherry":{"target":"cherry","assign":{"label":"Cherry","sel_apple":"false","sel_banana":"false","sel_cherry":"true"}}},"states":{"apple":{"on":{"click@picker_demo-trigger-apple":[]}},"banana":{"on":{"click@picker_demo-trigger-banana":[]}},"cherry":{"on":{"click@picker_demo-trigger-cherry":[]}}}}'>
+       data-machine='{"field":"choice","initial":"apple","on":{"click@picker_demo-trigger-apple":{"target":"apple","assign":{"label":"Apple","sel_apple":"true","sel_banana":"false","sel_cherry":"false"}},"click@picker_demo-trigger-banana":{"target":"banana","assign":{"label":"Banana","sel_apple":"false","sel_banana":"true","sel_cherry":"false"}},"click@picker_demo-trigger-cherry":{"target":"cherry","assign":{"label":"Cherry","sel_apple":"false","sel_banana":"false","sel_cherry":"true"}}},"states":{"apple":{"on":{"click@picker_demo-trigger-apple":[]}},"banana":{"on":{"click@picker_demo-trigger-banana":[]}},"cherry":{"on":{"click@picker_demo-trigger-cherry":[]}}}}'>
     <button type="button" id="picker-open-picker_demo" class="picker-trigger"
             commandfor="picker-pop-picker_demo" command="toggle-popover" aria-haspopup="listbox">
       <span class="picker-label">Favourite fruit</span>
@@ -51,12 +51,6 @@
     <pre class="machine-json">{
   "field": "choice",
   "initial": "apple",
-  "context": {
-    "label": "Apple",
-    "sel_apple": "true",
-    "sel_banana": "false",
-    "sel_cherry": "false"
-  },
   "on": {
     "click@picker_demo-trigger-apple": {
       "target": "apple",

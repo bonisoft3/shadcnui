@@ -1,0 +1,48 @@
+# generated from bayt.cue — do not edit
+services:
+  shadcnui-test:
+    build:
+      additional_contexts:
+        shadcnui-build: service:shadcnui-build
+      context: ..
+      dockerfile: .bayt/Dockerfile.test
+      target: test
+      tags:
+      - bayt-shadcnui-test:${BAYT_IMAGE_TAG:-${COMPOSE_PROJECT_NAME}}
+      - bayt-shadcnui-test:latest
+      args:
+        BAYT_DIR: ${MONOREPO_COMPOSE_MODE:+apps/shadcnui}
+        BUILDKIT_SYNTAX: >-
+          docker/dockerfile:1.27@sha256:4edf897a3ffa55b89f906fc8cc78afdb3f1834cc9c7083565e611a8a7d5fe99e
+    image: bayt-shadcnui-test:${BAYT_IMAGE_TAG:-${COMPOSE_PROJECT_NAME}}
+    scale: 0
+  shadcnui-test_bayt:
+    build:
+      additional_contexts:
+        shadcnui-build_bayt: service:shadcnui-build_bayt
+        shadcnui-generate_bayt: service:shadcnui-generate_bayt
+        shadcnui-setup_bayt: service:shadcnui-setup_bayt
+      context: ..
+      dockerfile: .bayt/Dockerfile.test
+      target: test_bayt
+      args:
+        BAYT_DIR: ${MONOREPO_COMPOSE_MODE:+apps/shadcnui}
+        BUILDKIT_SYNTAX: >-
+          docker/dockerfile:1.27@sha256:4edf897a3ffa55b89f906fc8cc78afdb3f1834cc9c7083565e611a8a7d5fe99e
+    image: bayt-shadcnui-test_bayt:latest
+    scale: 0
+  shadcnui-test_srcs:
+    build:
+      additional_contexts:
+        shadcnui-build_srcs: service:shadcnui-build_srcs
+        shadcnui-generate_srcs: service:shadcnui-generate_srcs
+        shadcnui-setup_srcs: service:shadcnui-setup_srcs
+      context: ..
+      dockerfile: .bayt/Dockerfile.test
+      target: test_srcs
+      args:
+        BAYT_DIR: ${MONOREPO_COMPOSE_MODE:+apps/shadcnui}
+        BUILDKIT_SYNTAX: >-
+          docker/dockerfile:1.27@sha256:4edf897a3ffa55b89f906fc8cc78afdb3f1834cc9c7083565e611a8a7d5fe99e
+    image: bayt-shadcnui-test_srcs:latest
+    scale: 0

@@ -1,0 +1,46 @@
+# generated from bayt.cue — do not edit
+services:
+  shadcnui-lint:
+    build:
+      additional_contexts:
+        shadcnui-generate: service:shadcnui-generate
+      context: ..
+      dockerfile: .bayt/Dockerfile.lint
+      target: lint
+      tags:
+      - bayt-shadcnui-lint:${BAYT_IMAGE_TAG:-${COMPOSE_PROJECT_NAME}}
+      - bayt-shadcnui-lint:latest
+      args:
+        BAYT_DIR: ${MONOREPO_COMPOSE_MODE:+apps/shadcnui}
+        BUILDKIT_SYNTAX: >-
+          docker/dockerfile:1.27@sha256:4edf897a3ffa55b89f906fc8cc78afdb3f1834cc9c7083565e611a8a7d5fe99e
+    image: bayt-shadcnui-lint:${BAYT_IMAGE_TAG:-${COMPOSE_PROJECT_NAME}}
+    scale: 0
+  shadcnui-lint_bayt:
+    build:
+      additional_contexts:
+        shadcnui-generate_bayt: service:shadcnui-generate_bayt
+        shadcnui-setup_bayt: service:shadcnui-setup_bayt
+      context: ..
+      dockerfile: .bayt/Dockerfile.lint
+      target: lint_bayt
+      args:
+        BAYT_DIR: ${MONOREPO_COMPOSE_MODE:+apps/shadcnui}
+        BUILDKIT_SYNTAX: >-
+          docker/dockerfile:1.27@sha256:4edf897a3ffa55b89f906fc8cc78afdb3f1834cc9c7083565e611a8a7d5fe99e
+    image: bayt-shadcnui-lint_bayt:latest
+    scale: 0
+  shadcnui-lint_srcs:
+    build:
+      additional_contexts:
+        shadcnui-generate_srcs: service:shadcnui-generate_srcs
+        shadcnui-setup_srcs: service:shadcnui-setup_srcs
+      context: ..
+      dockerfile: .bayt/Dockerfile.lint
+      target: lint_srcs
+      args:
+        BAYT_DIR: ${MONOREPO_COMPOSE_MODE:+apps/shadcnui}
+        BUILDKIT_SYNTAX: >-
+          docker/dockerfile:1.27@sha256:4edf897a3ffa55b89f906fc8cc78afdb3f1834cc9c7083565e611a8a7d5fe99e
+    image: bayt-shadcnui-lint_srcs:latest
+    scale: 0

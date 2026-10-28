@@ -103,7 +103,7 @@ import (
 	}}
 
 	// The buffer is a column like any other, and empty is where it rests.
-	_context: [
+	defaults: [
 		if O.typeahead {{for k, v in O._cols[O.names[0]] {(k): v}, prefix: ""}},
 		O._cols[O.names[0]],
 	][0]
@@ -184,7 +184,6 @@ import (
 	machine: terminal.#Machine & {
 		field:   O.field
 		initial: O.names[0]
-		context: O._context
 		states: {for i, s in O.names {
 			(s): {
 				if O.typeahead {

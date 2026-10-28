@@ -66,10 +66,11 @@ import (
 
 	// One state, one targetless arrow: it acts and stays, which is how a single
 	// state records a continuously changing value.
+	defaults: {query: "", active: "", chosen: ""}
+
 	machine: terminal.#Machine & {
 		field:   C.field
 		initial: "typing"
-		context: {query: "", active: "", chosen: ""}
 		states: typing: on: ("input@" + C._input): {
 			assign: {
 				query: {type: "event", params: field: "value"}
@@ -81,14 +82,11 @@ import (
 		}
 	}
 
-	// The machine's initial world as a row: the entity seeds it and the machine
-	// states it, one value, so decision-07's agreement is by construction. The
-	// seeding is also what gives the outer region a row to STAMP, which a nested
-	// region needs before it hydrates at all — the listbox is nested.
+	// The nested listbox needs a stored parent row before it can hydrate.
 	querySeed: {
 		id:        C.row
 		(C.field): C.machine.initial
-		for k, v in C.machine.context {(k): v}
+		for k, v in C.defaults {(k): v}
 	}
 	// `act` is the caret and `sel` is the choice: two answers over the same
 	// rows, because the option a reader is standing on is not the one they ran.

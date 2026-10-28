@@ -1,0 +1,5 @@
+# generated from bayt.cue — do not edit
+services:
+  shadcnui-caddy:
+    ports:
+    - ${CADDY_TLS_HOST_PORT:-20902}:8443

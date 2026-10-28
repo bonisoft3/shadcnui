@@ -16,7 +16,7 @@
   <div class="demo-stage">
 <omnishell--data-table>
   <div class="dt-field" data-live="data_cursor" data-filter="id=eq.the"
-       data-machine='{"field":"state","initial":"typing","context":{"query":"","cursor":"INV-1024","sort":"id_asc","srt_id":"ascending","srt_amount":"none"},"states":{"typing":{"on":{"input@dt-filter":{"assign":{"query":{"type":"event","params":{"field":"value"}},"cursor":""}}}}}}'>
+       data-machine='{"field":"state","initial":"typing","states":{"typing":{"on":{"input@dt-filter":{"assign":{"query":{"type":"event","params":{"field":"value"}},"cursor":""}}}}}}'>
     <label class="dt-label" for="dt-filter">Filter by payer</label>
     <input class="dt-input" id="dt-filter" type="search" value="{query}"
            placeholder="Ada" autocomplete="off" spellcheck="false"
@@ -177,12 +177,12 @@
     <a class="pane-link" data-route="table">Table</a>'s is: an interpolated
     filter is re-resolved when its parent's row moves, so the collection a
     keystroke writes is not the collection the grid reads. It is seeded from
-    the machine's own initial world — the seed, the machine's
-    <code>context</code> and the readout's <code>data-empty-row</code> are
+    the component's initial row — the seed, the entity defaults
+    and the readout's <code>data-empty-row</code> are
     one CUE value emitted three times, so the three cannot disagree about
     what the screen opens on. Two of them are observable: the seed is the row
-    the readout below prints, and the <code>context</code> is what the chart
-    carries. The third never runs — a read prepares its collection before it
+    the readout below prints, and the defaults supply the empty row. The third
+    never runs — a read prepares its collection before it
     answers, so the readout always finds its row — and it is emitted anyway
     because a guard stating a different world would be worse than one that is
     never reached.</p>
@@ -211,13 +211,6 @@
     <pre class="machine-json">{
   "field": "state",
   "initial": "typing",
-  "context": {
-    "query": "",
-    "cursor": "INV-1024",
-    "sort": "id_asc",
-    "srt_id": "ascending",
-    "srt_amount": "none"
-  },
   "states": {
     "typing": {
       "on": {
