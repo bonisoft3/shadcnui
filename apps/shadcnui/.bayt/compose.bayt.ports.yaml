@@ -3,3 +3,4 @@ services:
   shadcnui-caddy:
     ports:
     - ${CADDY_TLS_HOST_PORT:-20902}:8443
+    - ${CADDY_TLS_HOST_PORT:-20902}:8443/udp
