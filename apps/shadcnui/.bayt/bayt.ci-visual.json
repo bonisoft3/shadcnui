@@ -646,7 +646,7 @@
           "shell/handlers/unless-answered.js",
           "shell/handlers/unless-typed.js",
           "shell/shared/chrome.css",
-          "brief.html",
+          "journal.html",
           "ir.html",
           "ir/card.css",
           "acceptance.md",

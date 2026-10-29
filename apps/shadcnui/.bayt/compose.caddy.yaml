@@ -285,8 +285,8 @@ services:
         path: ../shell/shared/chrome.css
         target: /srv/shell/shared/chrome.css
       - action: rebuild
-        path: ../brief.html
-        target: /srv/docs/brief.html
+        path: ../journal.html
+        target: /srv/docs/journal.html
       - action: rebuild
         path: ../ir.html
         target: /srv/docs/ir.html

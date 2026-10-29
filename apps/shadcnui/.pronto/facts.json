@@ -1367,7 +1367,7 @@
   "artifact": [
     {"path":"program.cue","sha256":"43cbe8504a79c5f61f0b67839e1194e9846ce96a03167330312ab63266f4d53c","derived":false},
     {"path":"DESIGN.md","sha256":"6385fba2476c75bb186ac0d4a28c3a2b515182efce87b46e02f3486256cdff70","derived":false},
-    {"path":"ir.html","sha256":"62fea3932fca4f05b58e2ae471752dabd5111fa1ab3a833a6ae780f22256df78","derived":false},
+    {"path":"ir.html","sha256":"1d978c9288c4d5254b3eb8bb5e20a0a3f0622d8318792c71ebf479117aeb0629","derived":false},
     {"path":"acceptance.md","sha256":"9d1a9b1e36e19bfd19a6f80df04de0bb7b5c5812a0f03d5fdb7439581b465bea","derived":false},
     {"path":".pronto/cel.json","sha256":"b515ce5c5aeccc63bde1796aaa27a1eaac4a1396ea15501e33a6d26fefe52bf1","derived":true},
     {"path":"program_cel.cue","sha256":"9fd4e83a17388b59cad6afb2d2bc11590b5707ad2d558325f6ef6167e2de2a1b","derived":true},
@@ -5055,7 +5055,7 @@
     {"file":"shell/handlers/unless-answered.js","target":"/srv/shell/handlers/unless-answered.js"},
     {"file":"shell/handlers/unless-typed.js","target":"/srv/shell/handlers/unless-typed.js"},
     {"file":"shell/shared/chrome.css","target":"/srv/shell/shared/chrome.css"},
-    {"file":"brief.html","target":"/srv/docs/brief.html"},
+    {"file":"journal.html","target":"/srv/docs/journal.html"},
     {"file":"ir.html","target":"/srv/docs/ir.html"},
     {"file":"ir/card.css","target":"/srv/docs/ir/card.css"},
     {"file":"acceptance.md","target":"/srv/docs/acceptance.md"},

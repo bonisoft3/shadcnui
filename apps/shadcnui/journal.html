@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>omnishell/ui — shadcn, recompiled — Journal</title>
+<style>
+  :root { color-scheme: light dark; }
+  body { max-width: 48rem; margin: 2.5rem auto; padding: 0 1.25rem; font: 16px/1.6 system-ui, -apple-system, sans-serif; }
+  header { border-bottom: 1px solid color-mix(in srgb, currentColor 20%, transparent); padding-bottom: 1rem; margin-bottom: 2rem; }
+  .eyebrow { font: 600 0.75rem/1 ui-monospace, monospace; text-transform: uppercase; letter-spacing: 0.12em; opacity: 0.75; }
+  h1 { margin: 0.4rem 0; font-size: 2rem; line-height: 1.15; }
+  article { border-top: 1px solid color-mix(in srgb, currentColor 15%, transparent); padding-top: 1.5rem; margin-top: 1.5rem; }
+  article:first-of-type { border-top: 0; padding-top: 0; margin-top: 0; }
+  article time { font: 600 0.75rem/1 ui-monospace, monospace; text-transform: uppercase; letter-spacing: 0.1em; opacity: 0.7; display: block; margin-bottom: 0.4rem; }
+  code { font: 0.9em ui-monospace, monospace; }
+</style>
+</head>
+<body>
+  <header>
+    <div class="eyebrow">omnishell/ui · Project journal</div>
+    <h1>omnishell/ui — Declarative Component Gallery (shadcn/ui on Pronto)</h1>
+    <p>Forty-four shadcn/ui components—dialogs, drawers, comboboxes, data tables, command palettes, charts, and forms—recompiled into pure Omnishell HTML bindings, statecharts, and Open Props design tokens in light and dark appearances. <a href="#initial-brief">Latest product brief ↓</a></p>
+  </header>
+<main>
+  <article id="initial-brief">
+    <time datetime="2026-10-01">2026-10-01 · Initial Brief</time>
+    <h2>omnishell/ui — shadcn, recompiled</h2>
+    <p>shadcn/ui's thesis is "this is not a component library — it's code you own." pronto's thesis is the same sentence with a compiler behind it: everything an app ships is source someone can read, emitted from declarations someone reviewed. This app takes shadcn's catalog — the most copied component vocabulary of its generation — and restates it in omnishell's native terms: <strong>a component is a tag that expands to markup, a design-token stylesheet, and a state machine that is data.</strong> No React, no Radix, no runtime library, no <code>customElements.define</code>. The gallery you browse is the test suite, and the state you click is rows you can watch.</p>
+    <p>Three convergences make this a reimplementation rather than an imitation:</p>
+    <ul>
+      <li><strong>Radix's observable contract is <code>data-state</code>.</strong> Every Radix primitive communicates with CSS by stamping <code>data-state="checked"</code>, <code>data-state="active"</code>, <code>data-state="open"</code> onto its parts. Omnishell's binding vocabulary renders row fields into attributes and styles them with CSS — <code>data-state="{state}"</code> <em>is</em> the platform. The wire format survives; the engine changes.</li>
+      <li><strong>shadcn's theming is CSS variables.</strong> <code>--background</code>, <code>--foreground</code>, <code>--primary</code>, <code>--muted</code>, <code>--destructive</code>, <code>--radius</code> map one-to-one onto a <code>#Design</code> preset, with dark mode as <code>light-dark()</code> twins instead of a <code>.dark</code> class fork. This app contributes the <code>shadcn</code> preset upstream.</li>
+      <li><strong>The behavior layer has become browser primitives plus machines</strong> (<code>plugins/omnishell/docs/terminal.md</code>). Popover, dialog/inert, anchor positioning and <code>commandfor</code> cover dismissal, top-layer and placement with zero script. What remains is state, and state is a finite machine over one row field — data the terminal executes, validated by CUE, visualizable as XState.</li>
+    </ul>
+    <h3>Data</h3>
+    <p>Everything is <code>path: "tab"</code> — component state is the sitting's, not the server's. One collection per component family, one row per demo instance on a screen; the machine's field is the component's <code>data-state</code>, and <code>data-empty-row</code> is synthesized from the machine's <code>initial:</code> and the region's pk filter. No auth, no pipelines, no migrations: this app emits no server surface at all.</p>
+    <p>The rows are the product's honesty: every gallery screen shows the live row beside the rendered component. Click the switch, watch <code>checked</code> flip; reload, watch <code>tab</code> state die and <code>device</code> state survive — the durability ladder demonstrated rather than documented. <code>?seed=</code> and <code>?clock=manual</code> replay a session, because every transition rides the terminal's event machinery.</p>
+    <h3>The component idiom</h3>
+    <ul>
+      <li>Components are authored in CUE and used in screens as tags prefixed <code>omnishell--</code> (custom-element grammar, so the hyphen is load-bearing): <code>&lt;omnishell--switch&gt;</code>, <code>&lt;omnishell--tabs&gt;</code>. The emitter expands each tag into the existing binding vocabulary; the tag survives in the served HTML as an inert semantic wrapper — visible to devtools, CSS and visual lint, registered with nothing.</li>
+      <li>Behavior is a <code>#Machine</code> (the XState-JSON data subset: <code>field</code>, <code>initial</code>, <code>states</code>, <code>on</code>, with guards, actions, <code>entry</code>/<code>exit</code>, and nested and parallel states; <code>close()</code>d — a key outside the subset fails to unify). A machine authored through a component is valid by construction; hand-written <code>data-machine</code> JSON is vetted against the published definition at lint.</li>
+      <li><strong>State names are the ARIA attribute's values.</strong> The switch's states are <code>"true"</code> and <code>"false"</code> because <code>aria-checked</code> speaks that vocabulary, and one field binds both <code>aria-checked="{checked}"</code> and the styling hook. Style the semantics; never carry two spellings of one fact.</li>
+      <li>Zero-script primitives are used bare wherever they suffice: <code>popover</code> + <code>anchor-name</code> for dropdown/tooltip surfaces, <code>&lt;dialog&gt;</code> for modals, <code>commandfor</code> for triggers. A component earns a machine only when it has state the platform doesn't hold.</li>
+      <li>No shadow DOM, ever: the interpreter's walkers, the keyed reconciler and the design tokens assume one light tree, and encapsulation is precisely what a reviewable screen does not want.</li>
+    </ul>
+    <h3>Screens</h3>
+    <p>A gallery in shadcn's own shape: one screen per component family, each showing the component's variants, its states as storyboard frames, its live row, and its machine rendered as the JSON it is (paste it into a statechart visualizer — it's valid XState config). A strip screen indexes the catalog and carries the theme switch (the <code>shadcn</code> preset's light/dark twins) — the gallery must read perfectly in both appearances, since appearance is a token resolution, never a state.</p>
+    <h3>First two components</h3>
+    <p><strong><code>&lt;omnishell--switch&gt;</code></strong> — the smallest complete machine, and the whole idiom in one control:</p>
+    <p>``<code>json {"field": "checked", "initial": "false", "states": { "false": {"on": {"click": "true"}}, "true":  {"on": {"click": "false"}}}} </code>``</p>
+    <p>Expansion: a <code>role="switch"</code> button in a singleton region, <code>aria-checked="{checked}"</code>, thumb and track styled off the ARIA attribute with motion tokens. ARIA contract (WAI-ARIA APG switch): <code>role="switch"</code>, <code>aria-checked</code>, toggles on click and on Space/Enter (native button behavior). Done when the switch demo screen needs zero app JavaScript, zero <code>data-empty-row</code>, and replays under <code>?seed=</code>.</p>
+    <p><strong><code>&lt;omnishell--tabs&gt;</code></strong> — the third-case component, chosen <em>because</em> it forces the one open grammar question: N triggers share one machine, so transitions must say which trigger fired. The event already carries <code>from</code>; the discrimination spelling is <strong>component-generated, never hand-written</strong> — the expansion writes one transition per trigger, and whatever grammar it emits (<code>"click@trigger-billing"</code> or its successor) is an implementation detail of the component, not vocabulary an author learns. Panels are pure projection: the root binds <code>data-state="{active}"</code> and CSS shows the matching <code>[data-panel]</code>, exactly Radix's <code>data-state="active"</code> contract. ARIA contract phased honestly: <code>role="tablist"/"tab"/"tabpanel"</code>, <code>aria-selected</code>, click activation first; roving tabindex and arrow-key navigation land with the region-projection work (<code>plugins/omnishell/docs/accessibility.md</code>), not as ad-hoc script.</p>
+    <p>Immediately behind these, in order: <strong>toggle-group</strong> (segmented control, a sibling of tabs), <strong>accordion</strong> (per-item open state — the first multi-row machine question), <strong>dialog</strong> and <strong>tooltip</strong> (zero-script exercises, no machine at all), <strong>badge / card / alert</strong> (pure token styling, cheapest catalog breadth). The <strong>combobox stays deliberately last</strong>: its virtual-focus behavior is the one part with no declarative precedent.</p>
+    <h3>Graduation</h3>
+    <p>Components prove themselves here, then publish into the terminal's roster — <code>terminal.cue</code>'s advertised vocabulary — replacing the three row-backed widget kinds that have never mounted. This app is the forcing consumer the machine-and-components design has been waiting for: <code>#Machine</code>, the expansion mechanism, and the <code>omnishell--</code> namespace all land with their first real user, per the tree's deferral doctrine. When a component graduates, other apps use the tag; this gallery remains its acceptance suite.</p>
+    <h3>Behavior</h3>
+    <ul>
+      <li><strong>No DOM event is ever handed to app code.</strong> No screen carries a <code>data-on-*</code> binding or a <code>&lt;script&gt;</code>: behaviour is the chart, always. A Jessie module may exist only where a chart cannot compute the value it needs, and only as a leaf the chart names — the calendar's month arithmetic is the first and, so far, the only one. A module reachable any other way is a design failure surfaced early.</li>
+      <li><strong>Zero network after statics.</strong> All state is <code>tab</code>; the offline test is the same one truco passes.</li>
+      <li><strong>Every state reachable by keyboard</strong>, per each component's APG pattern, at the phase the component declares.</li>
+      <li><strong>Both appearances from one declaration</strong> — every screen's storyboard carries <code>-dark</code> frames; a color that exists in only one appearance is a build error, not a bug report.</li>
+      <li><strong>Reduced motion collapses to instant</strong> via the motion tokens; no component may depend on an animation having nonzero length.</li>
+      <li><strong>A session replays.</strong> <code>?seed=</code> and <code>?clock=manual</code> reproduce any reported state; a component whose state cannot be replayed does not ship.</li>
+    </ul>
+  </article>
+</main>
+</body>
+</html>
