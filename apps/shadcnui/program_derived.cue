@@ -654,3 +654,5 @@ _irAccepts: {
 if !_deriving {
 	code: meta: tests: [Id=string]: accepts: _irAccepts[Id]
 }
+
+code: meta: ladder: ["ir/neighbourhood-accordion.svg","ir/neighbourhood-app.svg","ir/neighbourhood-calendar.svg","ir/neighbourhood-chart.svg","ir/neighbourhood-chat.svg","ir/neighbourhood-checkbox.svg","ir/neighbourhood-combobox.svg","ir/neighbourhood-command.svg","ir/neighbourhood-composition.svg","ir/neighbourhood-data-table.svg","ir/neighbourhood-form.svg","ir/neighbourhood-input-otp.svg","ir/neighbourhood-menu.svg","ir/neighbourhood-navigation.svg","ir/neighbourhood-pagination.svg","ir/neighbourhood-picker.svg","ir/neighbourhood-questionnaire.svg","ir/neighbourhood-radio-group.svg","ir/neighbourhood-resizable.svg","ir/neighbourhood-select.svg","ir/neighbourhood-slider.svg","ir/neighbourhood-switch.svg","ir/neighbourhood-table.svg","ir/neighbourhood-tabs.svg","ir/neighbourhood-toast.svg","ir/neighbourhood-toggle-group.svg"]

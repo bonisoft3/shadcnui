@@ -485,6 +485,16 @@
         },
         {
           "action": "rebuild",
+          "path": "../brief.md",
+          "target": "/srv/docs/brief.md"
+        },
+        {
+          "action": "rebuild",
+          "path": "../brief.html",
+          "target": "/srv/docs/brief.html"
+        },
+        {
+          "action": "rebuild",
           "path": "../journal.html",
           "target": "/srv/docs/journal.html"
         },
@@ -507,6 +517,136 @@
           "action": "rebuild",
           "path": "../DESIGN.md",
           "target": "/srv/docs/DESIGN.md"
+        },
+        {
+          "action": "rebuild",
+          "path": "../ir/neighbourhood-accordion.svg",
+          "target": "/srv/docs/ir/neighbourhood-accordion.svg"
+        },
+        {
+          "action": "rebuild",
+          "path": "../ir/neighbourhood-app.svg",
+          "target": "/srv/docs/ir/neighbourhood-app.svg"
+        },
+        {
+          "action": "rebuild",
+          "path": "../ir/neighbourhood-calendar.svg",
+          "target": "/srv/docs/ir/neighbourhood-calendar.svg"
+        },
+        {
+          "action": "rebuild",
+          "path": "../ir/neighbourhood-chart.svg",
+          "target": "/srv/docs/ir/neighbourhood-chart.svg"
+        },
+        {
+          "action": "rebuild",
+          "path": "../ir/neighbourhood-chat.svg",
+          "target": "/srv/docs/ir/neighbourhood-chat.svg"
+        },
+        {
+          "action": "rebuild",
+          "path": "../ir/neighbourhood-checkbox.svg",
+          "target": "/srv/docs/ir/neighbourhood-checkbox.svg"
+        },
+        {
+          "action": "rebuild",
+          "path": "../ir/neighbourhood-combobox.svg",
+          "target": "/srv/docs/ir/neighbourhood-combobox.svg"
+        },
+        {
+          "action": "rebuild",
+          "path": "../ir/neighbourhood-command.svg",
+          "target": "/srv/docs/ir/neighbourhood-command.svg"
+        },
+        {
+          "action": "rebuild",
+          "path": "../ir/neighbourhood-composition.svg",
+          "target": "/srv/docs/ir/neighbourhood-composition.svg"
+        },
+        {
+          "action": "rebuild",
+          "path": "../ir/neighbourhood-data-table.svg",
+          "target": "/srv/docs/ir/neighbourhood-data-table.svg"
+        },
+        {
+          "action": "rebuild",
+          "path": "../ir/neighbourhood-form.svg",
+          "target": "/srv/docs/ir/neighbourhood-form.svg"
+        },
+        {
+          "action": "rebuild",
+          "path": "../ir/neighbourhood-input-otp.svg",
+          "target": "/srv/docs/ir/neighbourhood-input-otp.svg"
+        },
+        {
+          "action": "rebuild",
+          "path": "../ir/neighbourhood-menu.svg",
+          "target": "/srv/docs/ir/neighbourhood-menu.svg"
+        },
+        {
+          "action": "rebuild",
+          "path": "../ir/neighbourhood-navigation.svg",
+          "target": "/srv/docs/ir/neighbourhood-navigation.svg"
+        },
+        {
+          "action": "rebuild",
+          "path": "../ir/neighbourhood-pagination.svg",
+          "target": "/srv/docs/ir/neighbourhood-pagination.svg"
+        },
+        {
+          "action": "rebuild",
+          "path": "../ir/neighbourhood-picker.svg",
+          "target": "/srv/docs/ir/neighbourhood-picker.svg"
+        },
+        {
+          "action": "rebuild",
+          "path": "../ir/neighbourhood-questionnaire.svg",
+          "target": "/srv/docs/ir/neighbourhood-questionnaire.svg"
+        },
+        {
+          "action": "rebuild",
+          "path": "../ir/neighbourhood-radio-group.svg",
+          "target": "/srv/docs/ir/neighbourhood-radio-group.svg"
+        },
+        {
+          "action": "rebuild",
+          "path": "../ir/neighbourhood-resizable.svg",
+          "target": "/srv/docs/ir/neighbourhood-resizable.svg"
+        },
+        {
+          "action": "rebuild",
+          "path": "../ir/neighbourhood-select.svg",
+          "target": "/srv/docs/ir/neighbourhood-select.svg"
+        },
+        {
+          "action": "rebuild",
+          "path": "../ir/neighbourhood-slider.svg",
+          "target": "/srv/docs/ir/neighbourhood-slider.svg"
+        },
+        {
+          "action": "rebuild",
+          "path": "../ir/neighbourhood-switch.svg",
+          "target": "/srv/docs/ir/neighbourhood-switch.svg"
+        },
+        {
+          "action": "rebuild",
+          "path": "../ir/neighbourhood-table.svg",
+          "target": "/srv/docs/ir/neighbourhood-table.svg"
+        },
+        {
+          "action": "rebuild",
+          "path": "../ir/neighbourhood-tabs.svg",
+          "target": "/srv/docs/ir/neighbourhood-tabs.svg"
+        },
+        {
+          "action": "rebuild",
+          "path": "../ir/neighbourhood-toast.svg",
+          "target": "/srv/docs/ir/neighbourhood-toast.svg"
+        },
+        {
+          "action": "rebuild",
+          "path": "../ir/neighbourhood-toggle-group.svg",
+          "target": "/srv/docs/ir/neighbourhood-toggle-group.svg"
         },
         {
           "action": "rebuild",
