@@ -34,6 +34,7 @@ services:
   shadcnui-launch_bayt:
     build:
       additional_contexts:
+        shadcnui-build_bayt: service:shadcnui-build_bayt
         shadcnui-caddy_bayt: service:shadcnui-caddy_bayt
       context: ..
       dockerfile: .bayt/Dockerfile.launch

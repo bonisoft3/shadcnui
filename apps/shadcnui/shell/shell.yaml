@@ -2158,12 +2158,12 @@ routes:
     nav:
       label: Components
     files:
-      html: shell/screens/catalog.html
-      css: shell/screens/catalog.css
-      handlers: []
       adapters: []
+      handlers: []
       shared:
         - shell/shared/chrome.css
+      html: shell/screens/catalog.html
+      css: shell/screens/catalog.css
     ssr: spa
     states:
       - populated
@@ -2174,12 +2174,12 @@ routes:
       label: Switch
       strip: false
     files:
-      html: shell/screens/switch.html
-      css: shell/screens/switch.css
-      handlers: []
       adapters: []
+      handlers: []
       shared:
         - shell/shared/chrome.css
+      html: shell/screens/switch.html
+      css: shell/screens/switch.css
     ssr: spa
     states:
       - populated
@@ -2190,13 +2190,13 @@ routes:
       label: Tabs
       strip: false
     files:
-      html: shell/screens/tabs.html
-      css: shell/screens/tabs.css
+      adapters: []
       handlers:
         - shell/handlers/is-key.js
-      adapters: []
       shared:
         - shell/shared/chrome.css
+      html: shell/screens/tabs.html
+      css: shell/screens/tabs.css
     ssr: spa
     states:
       - populated
@@ -2207,12 +2207,12 @@ routes:
       label: Picker
       strip: false
     files:
-      html: shell/screens/picker.html
-      css: shell/screens/picker.css
-      handlers: []
       adapters: []
+      handlers: []
       shared:
         - shell/shared/chrome.css
+      html: shell/screens/picker.html
+      css: shell/screens/picker.css
     ssr: spa
     states:
       - populated
@@ -2223,13 +2223,13 @@ routes:
       label: Toggle group
       strip: false
     files:
-      html: shell/screens/toggle-group.html
-      css: shell/screens/toggle-group.css
+      adapters: []
       handlers:
         - shell/handlers/is-key.js
-      adapters: []
       shared:
         - shell/shared/chrome.css
+      html: shell/screens/toggle-group.html
+      css: shell/screens/toggle-group.css
     ssr: spa
     states:
       - populated
@@ -2240,13 +2240,13 @@ routes:
       label: Accordion
       strip: false
     files:
-      html: shell/screens/accordion.html
-      css: shell/screens/accordion.css
+      adapters: []
       handlers:
         - shell/handlers/is-key.js
-      adapters: []
       shared:
         - shell/shared/chrome.css
+      html: shell/screens/accordion.html
+      css: shell/screens/accordion.css
     ssr: spa
     states:
       - populated
@@ -2257,12 +2257,12 @@ routes:
       label: Overlays
       strip: false
     files:
-      html: shell/screens/overlays.html
-      css: shell/screens/overlays.css
-      handlers: []
       adapters: []
+      handlers: []
       shared:
         - shell/shared/chrome.css
+      html: shell/screens/overlays.html
+      css: shell/screens/overlays.css
     ssr: spa
     states:
       - populated
@@ -2273,12 +2273,12 @@ routes:
       label: Primitives
       strip: false
     files:
-      html: shell/screens/primitives.html
-      css: shell/screens/primitives.css
-      handlers: []
       adapters: []
+      handlers: []
       shared:
         - shell/shared/chrome.css
+      html: shell/screens/primitives.html
+      css: shell/screens/primitives.css
     ssr: spa
     states:
       - populated
@@ -2289,12 +2289,12 @@ routes:
       label: Combobox
       strip: false
     files:
-      html: shell/screens/combobox.html
-      css: shell/screens/combobox.css
-      handlers: []
       adapters: []
+      handlers: []
       shared:
         - shell/shared/chrome.css
+      html: shell/screens/combobox.html
+      css: shell/screens/combobox.css
     ssr: spa
     states:
       - populated
@@ -2306,14 +2306,14 @@ routes:
       label: Checkbox
       strip: false
     files:
-      html: shell/screens/checkbox.html
-      css: shell/screens/checkbox.css
+      adapters: []
       handlers:
         - shell/handlers/flip-of.js
         - shell/handlers/roll-up.js
-      adapters: []
       shared:
         - shell/shared/chrome.css
+      html: shell/screens/checkbox.html
+      css: shell/screens/checkbox.css
     ssr: spa
     states:
       - populated
@@ -2324,13 +2324,13 @@ routes:
       label: Radio group
       strip: false
     files:
-      html: shell/screens/radio-group.html
-      css: shell/screens/radio-group.css
+      adapters: []
       handlers:
         - shell/handlers/is-key.js
-      adapters: []
       shared:
         - shell/shared/chrome.css
+      html: shell/screens/radio-group.html
+      css: shell/screens/radio-group.css
     ssr: spa
     states:
       - populated
@@ -2341,12 +2341,12 @@ routes:
       label: Pagination
       strip: false
     files:
-      html: shell/screens/pagination.html
-      css: shell/screens/pagination.css
-      handlers: []
       adapters: []
+      handlers: []
       shared:
         - shell/shared/chrome.css
+      html: shell/screens/pagination.html
+      css: shell/screens/pagination.css
     ssr: spa
     states:
       - populated
@@ -2357,12 +2357,12 @@ routes:
       label: Toast
       strip: false
     files:
-      html: shell/screens/toast.html
-      css: shell/screens/toast.css
-      handlers: []
       adapters: []
+      handlers: []
       shared:
         - shell/shared/chrome.css
+      html: shell/screens/toast.html
+      css: shell/screens/toast.css
     ssr: spa
     states:
       - populated
@@ -2373,12 +2373,12 @@ routes:
       label: Slider
       strip: false
     files:
-      html: shell/screens/slider.html
-      css: shell/screens/slider.css
-      handlers: []
       adapters: []
+      handlers: []
       shared:
         - shell/shared/chrome.css
+      html: shell/screens/slider.html
+      css: shell/screens/slider.css
     ssr: spa
     states:
       - populated
@@ -2389,12 +2389,12 @@ routes:
       label: Resizable
       strip: false
     files:
-      html: shell/screens/resizable.html
-      css: shell/screens/resizable.css
-      handlers: []
       adapters: []
+      handlers: []
       shared:
         - shell/shared/chrome.css
+      html: shell/screens/resizable.html
+      css: shell/screens/resizable.css
     ssr: spa
     states:
       - populated
@@ -2405,12 +2405,12 @@ routes:
       label: Command
       strip: false
     files:
-      html: shell/screens/command.html
-      css: shell/screens/command.css
-      handlers: []
       adapters: []
+      handlers: []
       shared:
         - shell/shared/chrome.css
+      html: shell/screens/command.html
+      css: shell/screens/command.css
     ssr: spa
     states:
       - populated
@@ -2421,12 +2421,12 @@ routes:
       label: Select
       strip: false
     files:
-      html: shell/screens/select.html
-      css: shell/screens/select.css
-      handlers: []
       adapters: []
+      handlers: []
       shared:
         - shell/shared/chrome.css
+      html: shell/screens/select.html
+      css: shell/screens/select.css
     ssr: spa
     states:
       - populated
@@ -2439,12 +2439,12 @@ routes:
       label: Breadcrumb
       strip: false
     files:
-      html: shell/screens/breadcrumb.html
-      css: shell/screens/breadcrumb.css
-      handlers: []
       adapters: []
+      handlers: []
       shared:
         - shell/shared/chrome.css
+      html: shell/screens/breadcrumb.html
+      css: shell/screens/breadcrumb.css
     ssr: spa
     states:
       - populated
@@ -2455,17 +2455,17 @@ routes:
       label: Menu
       strip: false
     files:
-      html: shell/screens/menu.html
-      css: shell/screens/menu.css
+      adapters: []
       handlers:
         - shell/handlers/has-prefix.js
         - shell/handlers/is-key.js
         - shell/handlers/is-printable.js
         - shell/handlers/starts-with.js
         - shell/handlers/type-into.js
-      adapters: []
       shared:
         - shell/shared/chrome.css
+      html: shell/screens/menu.html
+      css: shell/screens/menu.css
     ssr: spa
     states:
       - populated
@@ -2476,12 +2476,12 @@ routes:
       label: Sheet
       strip: false
     files:
-      html: shell/screens/sheet.html
-      css: shell/screens/sheet.css
-      handlers: []
       adapters: []
+      handlers: []
       shared:
         - shell/shared/chrome.css
+      html: shell/screens/sheet.html
+      css: shell/screens/sheet.css
     ssr: spa
     states:
       - populated
@@ -2492,12 +2492,12 @@ routes:
       label: Form
       strip: false
     files:
-      html: shell/screens/form.html
-      css: shell/screens/form.css
-      handlers: []
       adapters: []
+      handlers: []
       shared:
         - shell/shared/chrome.css
+      html: shell/screens/form.html
+      css: shell/screens/form.css
     ssr: spa
     states:
       - populated
@@ -2511,12 +2511,12 @@ routes:
       label: Table
       strip: false
     files:
-      html: shell/screens/table.html
-      css: shell/screens/table.css
-      handlers: []
       adapters: []
+      handlers: []
       shared:
         - shell/shared/chrome.css
+      html: shell/screens/table.html
+      css: shell/screens/table.css
     ssr: spa
     states:
       - populated
@@ -2529,12 +2529,12 @@ routes:
       label: Data
       strip: false
     files:
-      html: shell/screens/data-table.html
-      css: shell/screens/data-table.css
-      handlers: []
       adapters: []
+      handlers: []
       shared:
         - shell/shared/chrome.css
+      html: shell/screens/data-table.html
+      css: shell/screens/data-table.css
     ssr: spa
     states:
       - populated
@@ -2545,12 +2545,12 @@ routes:
       label: Navigation
       strip: false
     files:
-      html: shell/screens/navigation.html
-      css: shell/screens/navigation.css
-      handlers: []
       adapters: []
+      handlers: []
       shared:
         - shell/shared/chrome.css
+      html: shell/screens/navigation.html
+      css: shell/screens/navigation.css
     ssr: spa
     states:
       - populated
@@ -2561,12 +2561,12 @@ routes:
       label: Popover
       strip: false
     files:
-      html: shell/screens/popover.html
-      css: shell/screens/popover.css
-      handlers: []
       adapters: []
+      handlers: []
       shared:
         - shell/shared/chrome.css
+      html: shell/screens/popover.html
+      css: shell/screens/popover.css
     ssr: spa
     states:
       - populated
@@ -2577,15 +2577,15 @@ routes:
       label: Input OTP
       strip: false
     files:
-      html: shell/screens/input-otp.html
-      css: shell/screens/input-otp.css
+      adapters: []
       handlers:
         - shell/handlers/has-nondigit.js
         - shell/handlers/is-code.js
         - shell/handlers/is-digits.js
-      adapters: []
       shared:
         - shell/shared/chrome.css
+      html: shell/screens/input-otp.html
+      css: shell/screens/input-otp.css
     ssr: spa
     states:
       - populated
@@ -2596,12 +2596,12 @@ routes:
       label: Hover card
       strip: false
     files:
-      html: shell/screens/hover-card.html
-      css: shell/screens/hover-card.css
-      handlers: []
       adapters: []
+      handlers: []
       shared:
         - shell/shared/chrome.css
+      html: shell/screens/hover-card.html
+      css: shell/screens/hover-card.css
     ssr: spa
     states:
       - populated
@@ -2612,12 +2612,12 @@ routes:
       label: Chart
       strip: false
     files:
-      html: shell/screens/chart.html
-      css: shell/screens/chart.css
-      handlers: []
       adapters: []
+      handlers: []
       shared:
         - shell/shared/chrome.css
+      html: shell/screens/chart.html
+      css: shell/screens/chart.css
     ssr: spa
     states:
       - populated
@@ -2628,12 +2628,12 @@ routes:
       label: Empty · Spinner · Kbd · Typography
       strip: false
     files:
-      html: shell/screens/atoms.html
-      css: shell/screens/atoms.css
-      handlers: []
       adapters: []
+      handlers: []
       shared:
         - shell/shared/chrome.css
+      html: shell/screens/atoms.html
+      css: shell/screens/atoms.css
     ssr: spa
     states:
       - populated
@@ -2644,12 +2644,12 @@ routes:
       label: Item · Input group · Button group
       strip: false
     files:
-      html: shell/screens/composition.html
-      css: shell/screens/composition.css
-      handlers: []
       adapters: []
+      handlers: []
       shared:
         - shell/shared/chrome.css
+      html: shell/screens/composition.html
+      css: shell/screens/composition.css
     ssr: spa
     states:
       - populated
@@ -2660,12 +2660,12 @@ routes:
       label: Message · Bubble · Marker · Attachment · Scroller
       strip: false
     files:
-      html: shell/screens/chat.html
-      css: shell/screens/chat.css
-      handlers: []
       adapters: []
+      handlers: []
       shared:
         - shell/shared/chrome.css
+      html: shell/screens/chat.html
+      css: shell/screens/chat.css
     ssr: spa
     states:
       - populated
@@ -2676,14 +2676,14 @@ routes:
       label: Questionnaire
       strip: false
     files:
-      html: shell/screens/questionnaire.html
-      css: shell/screens/questionnaire.css
+      adapters: []
       handlers:
         - shell/handlers/unless-answered.js
         - shell/handlers/unless-typed.js
-      adapters: []
       shared:
         - shell/shared/chrome.css
+      html: shell/screens/questionnaire.html
+      css: shell/screens/questionnaire.css
     ssr: spa
     states:
       - populated
@@ -2694,13 +2694,13 @@ routes:
       label: Calendar
       strip: false
     files:
-      html: shell/screens/calendar.html
-      css: shell/screens/calendar.css
+      adapters: []
       handlers:
         - shell/handlers/month-step.js
-      adapters: []
       shared:
         - shell/shared/chrome.css
+      html: shell/screens/calendar.html
+      css: shell/screens/calendar.css
     ssr: spa
     states:
       - populated
