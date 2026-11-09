@@ -42,6 +42,10 @@ jobs:
           version: v0.48.0
       - run: sayt setup
         working-directory: apps/shadcnui
+      - run: |
+          mise install
+          mise exec -- pnpm run bundle:mecha-client
+        working-directory: plugins/omnishell
       - run: sayt release@pages --snapshot --base="/${GITHUB_REPOSITORY##*/}"
         working-directory: apps/shadcnui
       - uses: actions/configure-pages@v5
