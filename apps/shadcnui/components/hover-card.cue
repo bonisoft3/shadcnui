@@ -18,7 +18,9 @@
 // focus with it, because the element holding it was gone.
 package components
 
-#HoverCard: H={
+#HoverCard: {
+	let H = self
+
 	// Distinguishes instances on one screen: ids must be unique per screen, and
 	// this one names both halves of the pair.
 	key: string

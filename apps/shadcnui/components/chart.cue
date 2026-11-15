@@ -30,7 +30,9 @@ import (
 	omni "bonisoft.org/plugins/omnishell/components"
 )
 
-#BarChart: C={
+#BarChart: {
+	let C = self
+
 	// The collection the points are rows of, and the one holding the caret. Two,
 	// for the reason /command's are two: a region's projection is re-resolved
 	// when the row it is nested in moves, so the table a keystroke writes must
@@ -46,7 +48,7 @@ import (
 	bars: [...{name: =~"^[a-z0-9]+$", label: string, value: int & >=0}] & [_, _, ...]
 	// Which bar the caret opens on. A member of `bars`, so the first key press
 	// has a neighbour to name.
-	opensOn: string
+	opensOn:        string
 	_opensOnIsABar: true & list.Contains([for b in C.bars {b.name}], C.opensOn)
 
 	// The scale, computed where the rows are stated. Emitted once, onto the
@@ -70,8 +72,8 @@ import (
 		label:     b.label
 		value:     b.value
 		pos:       i + 1
-		nxt_pos:   [if i + 1 < len(C.bars) {i + 2}, i + 1][0]
-		nxt_value: [if i + 1 < len(C.bars) {C.bars[i+1].value}, b.value][0]
+		nxt_pos:   [if i+1 < len(C.bars) {i + 2}, i + 1][0]
+		nxt_value: [if i+1 < len(C.bars) {C.bars[i+1].value}, b.value][0]
 	}]
 	cursorSeed: {id: C.row, active: C.opensOn}
 
@@ -86,28 +88,33 @@ import (
 
 	// Two answers over the points and the four ends of the walk. `act` is the
 	// caret; the rest are the neighbours a key lands on.
-	_project: (omni.#attrJSON & {in: {
-		act: eq: ["id", "{active}"]
-		nxt: "next"
-		prv: "prev"
-		fst: "first"
-		lst: "last"
-	}}).out
+	_project: (omni.#attrJSON & {
+		in: {
+			act: eq: ["id", "{active}"]
+			nxt: "next"
+			prv: "prev"
+			fst: "first"
+			lst: "last"
+		}
+	}).out
 
 	// The axis the bars are drawn on is the axis the keys walk: these are
 	// stacked, so a reader presses Down and not Right, and the two keys a
 	// column chart would answer are absent because nobody would press them.
-	_keys: (omni.#attrJSON & {in: {
-		ArrowDown: "\(C.key)-nx-{active}"
-		ArrowUp:   "\(C.key)-pv-{active}"
-		Home:      "\(C.key)-fs-{active}"
-		End:       "\(C.key)-ls-{active}"
-	}}).out
+	_keys: (omni.#attrJSON & {
+		in: {
+			ArrowDown: "\(C.key)-nx-{active}"
+			ArrowUp:   "\(C.key)-pv-{active}"
+			Home:      "\(C.key)-fs-{active}"
+			End:       "\(C.key)-ls-{active}"
+		}
+	}).out
 
 	// A move form states one column of the cursor row: two hidden inputs and no
 	// control, submitted by `data-key` the way a buttonless form submits on
 	// change.
-	#move: M={
+	#move: {
+		let M = self
 		id: string
 		to: string
 		out: """

@@ -31,11 +31,13 @@ import (
 
 // The wrapper for items that carry no region of their own. The heading's id is
 // the group's name and the group's only non-item child, hence aria-hidden.
-#MenuGroup: G={
+#MenuGroup: {
+	let G = self
+
 	// Unique per screen: this is the heading's id, and an ID reference
 	// resolving to a duplicate names whichever the document reaches first.
-	key:  =~"^[a-z0-9_]+$"
-	name: string
+	key:   =~"^[a-z0-9_]+$"
+	name:  string
 	items: [...string] & [_, ...]
 
 	_label: "menu-group-\(G.key)"
@@ -50,7 +52,8 @@ import (
 
 // A navigation item. It carries an id because the surface's caret narrows an
 // arrow to it: a walk that could not name a link would stop at the first one.
-#MenuLink: L={
+#MenuLink: {
+	let L = self
 	label: string
 	// A route of this app, named by its screen; the binder composes the href.
 	route: string
@@ -69,7 +72,8 @@ import (
 // aria-checked over two values is _#Binary's chart, the fifth control in this
 // gallery to run it. What a menu item adds is the role and the tick; the
 // states, the arrow and its narrowing are the generator's.
-#MenuCheckItem: I={
+#MenuCheckItem: {
+	let I = self
 	collection: string
 	row:        *"the" | string
 	field:      *"checked" | string
@@ -84,7 +88,7 @@ import (
 	// which is also what says who runs this item's chart. A surface with a caret
 	// owns the row every item writes, so the item is markup; without one the
 	// item is a region of its own, as it was before any surface had a caret.
-	focus: *"" | string
+	focus:      *"" | string
 	_focusAttr: [if I.focus != "" {" data-cur=\"{\(I.focus)}\""}, ""][0]
 	_own: [if I.focus == "" {"""
 		
@@ -96,7 +100,7 @@ import (
 		field:   I.field
 		initial: "false"
 		trigger: I._trigger
-		next: {"false": "true", "true": "false"}
+		next:    {"false": "true", "true": "false"}
 		implies: {}
 	}
 	// The surface runs it: an item that owned a region could not be walked by a
@@ -118,16 +122,17 @@ import (
 // The region IS the group, so the heading this wrapper carries is the same
 // aria-hidden node #MenuGroup's is; the two cannot share a definition because
 // only this one has a machine to host.
-#MenuRadioGroup: R={
+#MenuRadioGroup: {
+	let R = self
 	collection: string
 	row:        *"the" | string
 	field:      *"choice" | string
 	key:        =~"^[a-z0-9_]+$"
 	name:       string
-	items: [...{name: =~"^[a-z0-9_]+$", label: string}] & [_, _, ...]
+	items:      [...{name: =~"^[a-z0-9_]+$", label: string}] & [_, _, ...]
 
 	_label: "menu-group-\(R.key)"
-	_id: {for i in R.items {(i.name): "mi-\(R.key)-\(i.name)"}}
+	_id:    {for i in R.items {(i.name): "mi-\(R.key)-\(i.name)"}}
 
 	// Column per item saying the caret is on it, "" where the surface has none —
 	// which is also what says who runs this group's chart, as #MenuCheckItem's
@@ -149,8 +154,8 @@ import (
 	_choice: #OneOf & {
 		field:  R.field
 		prefix: "chk_"
-		names: [for i in R.items {i.name}]
-		id: R._id
+		names:  [for i in R.items {i.name}]
+		id:     R._id
 	}
 	// The surface runs it, beside the caret and beside every other item's:
 	// a group nested in the surface's region would never hydrate, and one
@@ -175,8 +180,9 @@ import (
 // The surface both containers open. Separators are drawn BETWEEN groups rather
 // than declared with them, so no caller can leave one at an edge, where it
 // would separate a group from nothing.
-_#Surface: S={
-	key: =~"^[a-z0-9_]+$"
+_#Surface: {
+	let S = self
+	key:    =~"^[a-z0-9_]+$"
 	groups: [...string] & [_, ...]
 
 	// The row every chart on this surface writes. `role="menu"` is a promise
@@ -189,7 +195,7 @@ _#Surface: S={
 	// decision-29 rather than here.
 	// The id is the caller's, not derived here: each item kind already spells
 	// its own, and a second spelling would be an id that agreed by luck.
-	items: [...{name: =~"^[a-z0-9_]+$", label: string, id: string}] | *[]
+	items:      [...{name: =~"^[a-z0-9_]+$", label: string, id: string}] | *[]
 	collection: *"" | string
 	row:        *"the" | string
 	// Charts the items contribute, run beside the caret's over disjoint columns
@@ -203,7 +209,7 @@ _#Surface: S={
 
 	_id:      "menu-\(S.key)"
 	_trigger: "menu-\(S.key)-trigger"
-	_itemId: {for i in S.items {(i.name): i.id}}
+	_itemId:  {for i in S.items {(i.name): i.id}}
 
 	if len(S.items) > 0 {
 		// One chart, because typeahead moves the caret and the caret is what it
@@ -217,9 +223,9 @@ _#Surface: S={
 			typeahead: true
 			clicks:    false
 			axis:      "vertical"
-			names: [for i in S.items {i.name}]
-			label: {for i in S.items {(i.name): i.label}}
-			id: S._itemId
+			names:     [for i in S.items {i.name}]
+			label:     {for i in S.items {(i.name): i.label}}
+			id:        S._itemId
 		}
 
 		charts: list.Concat([[S._caret.machine], S.itemCharts])
@@ -236,7 +242,7 @@ _#Surface: S={
 		}
 	}
 	if len(S.items) == 0 {
-		charts: []
+		charts:  []
 		_region: ""
 	}
 
@@ -253,13 +259,14 @@ _#Surface: S={
 
 // aria-expanded is written nowhere: the UA supplies it for a popover invoker,
 // and a second spelling of it would be a fact the browser already states.
-#DropdownMenu: D={
-	key:   =~"^[a-z0-9_]+$"
-	label: string
-	groups: [...string] & [_, ...]
+#DropdownMenu: {
+	let D = self
+	key:        =~"^[a-z0-9_]+$"
+	label:      string
+	groups:     [...string] & [_, ...]
 	collection: *"" | string
 	row:        *"the" | string
-	items: [...{name: string, label: string, id: string}] | *[]
+	items:      [...{name: string, label: string, id: string}] | *[]
 	itemCharts: [...] | *[]
 
 	_surface: _#Surface & {
@@ -294,18 +301,20 @@ _#Surface: S={
 // pattern the standard hands a single tab stop, and the arrows are horizontal
 // because a bar runs across. The surfaces it opens each keep their own caret,
 // which is vertical and theirs.
-#Menubar: M={
+#Menubar: {
+	let M = self
+
 	// Optional: a bar standing inside a <nav> that already carries the name
 	// would hand a reader the same string twice, once per node.
 	label?: string
 	menus: [...{
-		key: =~"^[a-z0-9_]+$"
-		label: string
+		key:    =~"^[a-z0-9_]+$"
+		label:  string
 		groups: [...string] & [_, ...]
 		// The surface's own row and items, as the dropdown's are.
 		collection: *"" | string
 		row:        *"the" | string
-		items: [...{name: string, label: string, id: string}] | *[]
+		items:      [...{name: string, label: string, id: string}] | *[]
 		itemCharts: [...] | *[]
 	}] & [_, _, ...]
 
@@ -335,8 +344,8 @@ _#Surface: S={
 			roving: true
 			clicks: false
 			axis:   "horizontal"
-			names: [for m in M.menus {m.key}]
-			id: {for i, m in M.menus {(m.key): M._surfaces[i]._trigger}}
+			names:  [for m in M.menus {m.key}]
+			id:     {for i, m in M.menus {(m.key): M._surfaces[i]._trigger}}
 		}
 		_barRegion: """
 			
@@ -347,7 +356,7 @@ _#Surface: S={
 	}
 	if M.collection == "" {
 		_barRegion: ""
-		_barStop: {for m in M.menus {(m.key): ""}}
+		_barStop:   {for m in M.menus {(m.key): ""}}
 	}
 
 	_triggers: strings.Join([for i, m in M.menus {
@@ -382,7 +391,8 @@ _#Surface: S={
 // are fractions of the target's box, and CSS multiplies them back out against
 // the anchor. Nothing on the screen holds a pixel, so nothing has to know how
 // large the window was when the reader clicked.
-#ContextMenu: C={
+#ContextMenu: {
+	let C = self
 	collection: string
 	row:        *"the" | string
 	field:      *"open" | string
@@ -390,8 +400,8 @@ _#Surface: S={
 	// What the target says to a reader who can see it, and what the SURFACE is
 	// called: an invoker's own words name the button, never the menu it opens,
 	// so a menu whose trigger is a whole panel needs a name of its own.
-	label: string
-	name:  string
+	label:  string
+	name:   string
 	groups: [...string] & [_, ...]
 
 	// Items in document order, for the caret. Empty leaves the surface as it
@@ -412,9 +422,9 @@ _#Surface: S={
 			typeahead: true
 			clicks:    false
 			axis:      "vertical"
-			names: [for i in C.items {i.name}]
-			label: {for i in C.items {(i.name): i.label}}
-			id: {for i in C.items {(i.name): i.id}}
+			names:     [for i in C.items {i.name}]
+			label:     {for i in C.items {(i.name): i.label}}
+			id:        {for i in C.items {(i.name): i.id}}
 		}
 		_charts: [C.machine, C._caret.machine]
 	}

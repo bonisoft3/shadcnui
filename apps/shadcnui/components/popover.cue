@@ -36,16 +36,18 @@ _placeNotes: {
 // a cell a reader could reword.
 placementRows: strings.Join([for r in placements {
 	"        <tr data-place=\"\(r.place)\"><td><code>\(r.place)</code></td>" +
-	"<td><code>position-area: \(r.place)</code></td>" +
-	"<td><code>\(r.fallback)</code></td><td>\(r.says)</td></tr>"
+		"<td><code>position-area: \(r.place)</code></td>" +
+		"<td><code>\(r.fallback)</code></td><td>\(r.says)</td></tr>"
 }], "\n")
 
-#Popover: P={
+#Popover: {
+	let P = self
+
 	// Distinguishes instances on one screen; ids must be unique per screen, and
 	// this one names both halves of the pair the stylesheet anchors.
 	key:   string
 	label: string
-	body: string
+	body:  string
 
 	place: *"block-end" | "block-start" | "inline-start" | "inline-end"
 

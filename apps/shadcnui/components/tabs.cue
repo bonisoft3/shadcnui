@@ -18,16 +18,17 @@ import (
 	omni "bonisoft.org/plugins/omnishell/components"
 )
 
-#Tabs: T={
+#Tabs: {
+	let T = self
 	collection: string
 	row:        *"the" | string
 	field:      *"active" | string
 	// Prefixes every id this instance emits. aria-controls and
 	// aria-labelledby are ID references, so two instances sharing a prefix
 	// point a reader's tab at the other one's panel.
-	key: *T.collection | string
-	label:      string
-	tabs: [...{name: string, label: string, body: string}] & [_, _, ...]
+	key:   *T.collection | string
+	label: string
+	tabs:  [...{name: string, label: string, body: string}] & [_, _, ...]
 
 	_id: {for t in T.tabs {(t.name): "\(T.key)-trigger-\(t.name)"}}
 
@@ -36,8 +37,8 @@ import (
 		roving: true
 		field:  T.field
 		prefix: "sel_"
-		names: [for t in T.tabs {t.name}]
-		id: T._id
+		names:  [for t in T.tabs {t.name}]
+		id:     T._id
 	}
 	machine: _choice.machine
 

@@ -20,7 +20,8 @@ package components
 // One row of a transcript, whatever kind it is. The kind decides the template,
 // and the templates are named so the region can re-render without sweeping
 // them (decision-33).
-#Transcript: T={
+#Transcript: {
+	let T = self
 	collection: string
 	// The row a composer writes into, and the column it grows.
 	composer: string
@@ -124,7 +125,8 @@ package components
 
 // The seeded transcript: rows the program states, so the screen stands on its
 // first paint and a reader's own message is the only thing that grows it.
-#ChatSeed: S={
+#ChatSeed: {
+	let S = self
 	rows: [...{
 		id:       =~"^[a-z0-9-]+$"
 		kind:     *"message" | "marker" | "file"

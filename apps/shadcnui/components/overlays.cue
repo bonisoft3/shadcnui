@@ -26,7 +26,8 @@
 // closed — the announcement a disclosure exists to defer.
 package components
 
-#Dialog: D={
+#Dialog: {
+	let D = self
 	key:         string
 	trigger:     string
 	title:       string
@@ -72,7 +73,7 @@ package components
 	// content dialog emits neither and the markup carries no default spelled out.
 	_edgeAttr: [if D.edge != "none" {" data-edge=\"\(D.edge)\""}, ""][0]
 	_roleAttr: [if D.ask != "" {" role=\"alertdialog\""}, ""][0]
-	_answer: [if D.ask != "" {"\n        <button type=\"button\" class=\"dialog-ask\" commandfor=\"\(D._id)\" command=\"close\">\(D.ask)</button>"}, ""][0]
+	_answer:   [if D.ask != "" {"\n        <button type=\"button\" class=\"dialog-ask\" commandfor=\"\(D._id)\" command=\"close\">\(D.ask)</button>"}, ""][0]
 
 	// autofocus on the dismiss button: engines differ on whether focus
 	// otherwise lands on the surface itself, and the least destructive control
@@ -115,7 +116,8 @@ package components
 	}
 }
 
-#Tooltip: T={
+#Tooltip: {
+	let T = self
 	key:   string
 	label: string
 	text:  string
@@ -153,7 +155,8 @@ package components
 // surface HOVERABLE, and nothing else — no row, no chart, no column. Openness
 // nobody stores cannot disagree with anything, which is the same licence the
 // dialogs on this screen already run on.
-#HoverTip: H={
+#HoverTip: {
+	let H = self
 	key:   string
 	label: string
 	text:  string

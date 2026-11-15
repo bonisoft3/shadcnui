@@ -1,5 +1,4 @@
 ---
-preset: "press"
 colors:
   neutral: "#FAFAFA"
   surface: "#FFFFFF"
@@ -22,6 +21,8 @@ rounded:
   sm: "6px"
   md: "10px"
   full: "999px"
+shell:
+  nav: "topbar"
 ---
 
 # omnishell/ui — the reference, not a brand

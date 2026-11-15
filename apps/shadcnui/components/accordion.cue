@@ -33,7 +33,8 @@ import (
 	terminal "bonisoft.org/plugins/omnishell:terminal"
 )
 
-#Accordion: A={
+#Accordion: {
+	let A = self
 	collection: string
 	field:      *"open" | string
 	// Distinguishes instances sharing a screen; every id this component emits
@@ -82,8 +83,8 @@ import (
 			prefix: "cur_"
 			walk:   true
 			axis:   "vertical"
-			names: [for i in A.items {i.name}]
-			id: A._t
+			names:  [for i in A.items {i.name}]
+			id:     A._t
 		}
 
 		_allClosed: {for u in A.items {("exp_\(u.name)"): "false"}}
@@ -146,7 +147,7 @@ import (
 				field:   A.field
 				initial: "false"
 				trigger: A._t[i.name]
-				next: {"false": "true", "true": "false"}
+				next:    {"false": "true", "true": "false"}
 				implies: {}
 			}).machine
 		}}

@@ -6,8 +6,8 @@
 // string it writes comes from here. It is the fold seat's shape in one line:
 // the previous value and the event, and nothing else in scope.
 //
-// state   {items: [row]} — the surface's row, for the buffer standing before
+// context {items: [row]} — the surface's row, for the buffer standing before
 //         this keystroke.
 // event   the keydown that fired.
 // params  none.
-(state, event, params) => String(state.items[0].prefix ?? "") + event.key;
+({ context, event }, params) => String(context.items[0].prefix ?? "") + event.key;

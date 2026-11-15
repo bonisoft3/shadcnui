@@ -25,7 +25,9 @@ import (
 // The route is a column the program states, not one the terminal supplies: a
 // screen is handed only the params its path declares (`{param.x}`), and a
 // static route declares none.
-_#Rail: R={
+_#Rail: {
+	let R = self
+
 	// Unique per screen: it is the nav's id, which the collapse control names.
 	key:   =~"^[a-z0-9_]+$"
 	label: string
@@ -69,7 +71,8 @@ _#Rail: R={
 // width — cannot be expressed here: an icon per item is a column these rows do
 // not carry, and a glyph per route in CSS would be the compile-time list the
 // rows were adopted to retire.
-#Sidebar: S={
+#Sidebar: {
+	let S = self
 	key:   =~"^[a-z0-9_]+$"
 	label: string
 	board: *"inline" | "sheet"
@@ -96,7 +99,7 @@ _#Rail: R={
 			field:   S.field
 			initial: "true"
 			trigger: S._toggle
-			next: {"true": "false", "false": "true"}
+			next:    {"true": "false", "false": "true"}
 			implies: {}
 		}
 		machine: _gen.machine
@@ -155,7 +158,8 @@ _#Rail: R={
 // route this app serves. The bar carries no aria-label of its own — the <nav>
 // around it is named, and a widget inside a landmark of the same name would
 // hand a reader the string twice.
-#NavigationMenu: N={
+#NavigationMenu: {
+	let N = self
 	label: string
 	sections: [...{
 		key:   =~"^[a-z0-9_]+$"
@@ -168,8 +172,8 @@ _#Rail: R={
 	// role="group" around a single set would separate it from nothing.
 	_bar: #Menubar & {
 		menus: [for s in N.sections {{
-			key:   s.key
-			label: s.label
+			key:    s.key
+			label:  s.label
 			groups: [strings.Join([for i in s.items {(#MenuLink & {label: i.label, route: i.route}).markup}], "\n")]
 		}}]
 	}

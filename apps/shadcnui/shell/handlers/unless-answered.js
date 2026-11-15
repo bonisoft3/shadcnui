@@ -11,7 +11,7 @@
 // leaf that preferred the event would read every Back and every Next as an
 // unanswered question and block a step the reader had already answered.
 //
-// state   {items: [row]} — the questionnaire's own row.
+// context {items: [row]} — the questionnaire's own row.
 // event   the click; unread, deliberately.
 // params  {col} — the column the destination's answer lives in.
-(state, event, params) => (String(state.items[0][params.col] ?? "") === "" ? "disabled" : "");
+({ context }, params) => (String(context.items[0][params.col] ?? "") === "" ? "disabled" : "");

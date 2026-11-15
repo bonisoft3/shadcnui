@@ -18,7 +18,9 @@ import (
 	"strings"
 )
 
-#Empty: E={
+#Empty: {
+	let E = self
+
 	// The glyph is drawn rather than named: an icon font is a second asset and
 	// an <img> is a request, where a box the stylesheet fills is neither.
 	glyph:       *"folder" | "search" | "alert"
@@ -48,7 +50,8 @@ import (
 // animation. `prefers-reduced-motion` collapses the spin to nothing, so what is
 // left has to carry the fact by itself — which is why the label is not
 // decoration and role="status" is not optional.
-#Spinner: S={
+#Spinner: {
+	let S = self
 	label: string
 	size:  *"md" | "sm" | "lg"
 
@@ -66,7 +69,9 @@ import (
 // this catalog already uses it — the menu screen prints its shortcuts in one —
 // so the component is a class and a rule, and a chord is two elements rather
 // than a string with a plus in it.
-#Kbd: K={
+#Kbd: {
+	let K = self
+
 	// Each key as its own element: "Ctrl+K" in one box is one key with a
 	// strange name, and a reader hears it that way too.
 	keys: [...string] & [_, ...]

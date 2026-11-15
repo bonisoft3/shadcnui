@@ -43,14 +43,16 @@ import (
 	head: string
 	// What the minting form offers for it. A `select` carries its own options;
 	// a `text` carries a placeholder.
-	control: "text" | "select"
-	options?: [...string]
+	control:      "text" | "select"
+	options?:     [...string]
 	placeholder?: string
 	// A number reads down its own edge, so it is set against it.
 	numeric: *false | bool
 }
 
-#ScrollArea: A={
+#ScrollArea: {
+	let A = self
+
 	// The accessible name — a scroll box is a tab stop, and an unnamed tab stop
 	// is a region a reader arrives in with nothing said. `name` is the text of
 	// it, unless `carriedBy` says it is the id of the element already stating
@@ -76,7 +78,9 @@ import (
 		"""
 }
 
-#AspectRatio: R={
+#AspectRatio: {
+	let R = self
+
 	// A closed vocabulary, so no instance carries a length of its own — the
 	// rule #Skeleton's shapes follow, one component on.
 	ratio: "16-9" | "4-3" | "1-1"
@@ -91,7 +95,9 @@ import (
 		"""
 }
 
-#Table: T={
+#Table: {
+	let T = self
+
 	// The collection the rows live in: one row of the table is one row of it.
 	collection: string
 	// The collection the filter is typed into. Two collections, for the reason
@@ -124,7 +130,7 @@ import (
 	// Stated once, emitted three times: the header row, the row template, and
 	// the minting form's controls. The first column is the row header, and its
 	// column is the collection's pk.
-	columns: [...#TableColumn] & [_, _, ...]
+	columns:     [...#TableColumn] & [_, _, ...]
 	mintForm:    string
 	mintLegend:  string
 	mintButton:  string
@@ -140,7 +146,7 @@ import (
 	_caption:  "\(T.key)-caption"
 	_template: "\(T.key)-row"
 	_head:     T.columns[0]
-	_rest: [for i, c in T.columns if i > 0 {c}]
+	_rest:     [for i, c in T.columns if i > 0 {c}]
 
 	// Two states, and both are load-bearing. `pending` states the query row on
 	// the terminal's own clock — the arrival arrow a screen draws when nothing else can state its row, here
@@ -240,13 +246,15 @@ import (
 // The one class a cell carries, and only where a column asked for it. The
 // prefix is the caller's, because two components own two stylesheets and
 // neither prefix is derivable from a component's `key`.
-#numeric: N={
+#numeric: {
+	let N = self
 	in:     {numeric: bool, ...}
 	prefix: string
-	out: [if N.in.numeric {" class=\"\(N.prefix)-num\""}, ""][0]
+	out:    [if N.in.numeric {" class=\"\(N.prefix)-num\""}, ""][0]
 }
 
-#mintControl: M={
+#mintControl: {
+	let M = self
 	key: string
 	col: #TableColumn
 	_id: "\(M.key)-mint-\(M.col.col)"

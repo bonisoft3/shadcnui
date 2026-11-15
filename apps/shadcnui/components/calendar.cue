@@ -36,16 +36,17 @@ import (
 // turns it into forty-two cells, and the numbers themselves are what a
 // calendar cannot derive from its key without a clock or a library.
 #CalendarMonth: {
-	key:   =~"^[0-9]{4}-[0-9]{2}$"
+	key: =~"^[0-9]{4}-[0-9]{2}$"
 	// The weekday the 1st falls on, 0 = Sunday: where the month starts in its
 	// first row of seven.
 	first: int & >=0 & <=6
 	len:   int & >=28 & <=31
-	prev: {key: =~"^[0-9]{4}-[0-9]{2}$", len: int & >=28 & <=31}
-	next: {key: =~"^[0-9]{4}-[0-9]{2}$"}
+	prev:  {key: =~"^[0-9]{4}-[0-9]{2}$", len: int & >=28 & <=31}
+	next:  {key: =~"^[0-9]{4}-[0-9]{2}$"}
 }
 
-#pad2: P={
+#pad2: {
+	let P = self
 	in:  int
 	out: [if P.in < 10 {"0\(P.in)"}, "\(P.in)"][0]
 }
@@ -54,7 +55,8 @@ import (
 // full and a cell's position in its week IS its aria-colindex; the days at
 // either end belong to the neighbouring months and say so through their own
 // `month` column, which is the column the projection compares.
-#GridCells: G={
+#GridCells: {
+	let G = self
 	month: #CalendarMonth
 	out: [
 		for i in list.Range(0, 42, 1)
@@ -66,14 +68,14 @@ import (
 			id:    "\(G.month.key)-p\((#pad2 & {in: i + 1}).out)"
 			grid:  G.month.key
 			month: owner
-			week:  "w\((i div 7) + 1)"
-			dow:   "d\(i mod 7)"
+			week:  "w\(div(i, 7)+1)"
+			dow:   "d\(mod(i, 7))"
 			pos:   i + 1
 			// Down each weekday column, then across: the order the vertical
 			// arrows read, where the neighbour is a week away. The order alone
 			// is not the lane — `dow` is what partitions it, or the foot of one
 			// column would name the head of the next.
-			colpos: (i mod 7) * 10 + (i div 7)
+			colpos: mod(i, 7)*10 + div(i, 7)
 			day:    "\(num)"
 			date:   "\(owner)-\((#pad2 & {in: num}).out)"
 		},
@@ -83,14 +85,15 @@ import (
 // One month step, as the three columns it moves. Every value is the same leaf
 // under different params, which is what params are for: the window's ends are
 // data in the chart, so one module serves both arrows and both instances.
-#MonthStep: M={
+#MonthStep: {
+	let M = self
 	module: string
 	by:     int
 	min:    string
 	max:    string
 	_ref: {
 		emit: string
-		out: {type: M.module, params: {by: M.by, min: M.min, max: M.max, "emit": emit}}
+		out:  {type: M.module, params: {by: M.by, min: M.min, max: M.max, "emit": emit}}
 	}
 	out: {
 		month:  (M._ref & {emit: "month"}).out
@@ -99,7 +102,9 @@ import (
 	}
 }
 
-#Calendar: C={
+#Calendar: {
+	let C = self
+
 	// The row the visible month and the pick live on, and the collection the
 	// day cells are rows of. Two collections, because a filter interpolating
 	// the enclosing row is re-resolved when that row moves: the table a pick
@@ -121,7 +126,7 @@ import (
 	module:     *"month-step" | string
 	// Sunday first, seven of them: the column headers, and the only place the
 	// week's shape is written down.
-	weekdays: [...{short: string, name: string}] & [_, _, _, _, _, _, _]
+	weekdays:    [...{short: string, name: string}] & [_, _, _, _, _, _, _]
 	chosenLabel: *"Chosen" | string
 
 	// The entity name the surface declares the two forms under; the markup
@@ -168,26 +173,30 @@ import (
 	// The grid renders stored rows, so seed the same initial row the entity defaults supply.
 	seedRow: {id: C.row} & C.defaults & {(C.field): C.machine.initial}
 
-	_keys: (omni.#attrJSON & {in: {
-		ArrowRight: "\(C.key)-nx-{active}"
-		ArrowLeft:  "\(C.key)-pv-{active}"
-		ArrowDown:  "\(C.key)-dn-{active}"
-		ArrowUp:    "\(C.key)-up-{active}"
-		Home:       "\(C.key)-hm-{active}"
-		End:        "\(C.key)-en-{active}"
-	}}).out
+	_keys: (omni.#attrJSON & {
+		in: {
+			ArrowRight: "\(C.key)-nx-{active}"
+			ArrowLeft:  "\(C.key)-pv-{active}"
+			ArrowDown:  "\(C.key)-dn-{active}"
+			ArrowUp:    "\(C.key)-up-{active}"
+			Home:       "\(C.key)-hm-{active}"
+			End:        "\(C.key)-en-{active}"
+		}
+	}).out
 
-	_project: (omni.#attrJSON & {in: {
-		// The three answers a day cell owes, none of them a stored column: it
-		// belongs to the grid's own month, it is the one the reader picked, and
-		// it sits at this position in its week.
-		inmonth: eq: ["month", "{month}"]
-		sel: eq: ["id", "{value}"]
-		colindex: "index"
-	}}).out
+	_project: (omni.#attrJSON & {
+		in: {
+			// The three answers a day cell owes, none of them a stored column: it
+			// belongs to the grid's own month, it is the one the reader picked, and
+			// it sits at this position in its week.
+			inmonth: eq: ["month", "{month}"]
+			sel: eq:     ["id", "{value}"]
+			colindex: "index"
+		}
+	}).out
 
 	_heads: strings.Join([for i, w in C.weekdays {
-		"          <div role=\"columnheader\" class=\"cal-wd\" aria-colindex=\"\(i + 1)\"><abbr title=\"\(w.name)\">\(w.short)</abbr></div>"
+		"          <div role=\"columnheader\" class=\"cal-wd\" aria-colindex=\"\(i+1)\"><abbr title=\"\(w.name)\">\(w.short)</abbr></div>"
 	}], "\n")
 
 	// THESE TEMPLATES ARE NAMED, AND THAT IS LOAD-BEARING. A region's render
@@ -219,8 +228,8 @@ import (
 		"""
 
 	_weeks: strings.Join([for i in list.Range(0, 6, 1) {"""
-		        <div role="row" class="cal-week" aria-rowindex="\(i + 2)"
-		             data-live="\(C.cells)" data-filter="grid=eq.{month}&week=eq.w\(i + 1)"
+		        <div role="row" class="cal-week" aria-rowindex="\(i+2)"
+		             data-live="\(C.cells)" data-filter="grid=eq.{month}&week=eq.w\(i+1)"
 		             data-order="pos.asc" data-template="\(C.key)-cell"
 		             data-project='\(C._project)'></div>
 		"""}], "\n")
@@ -228,7 +237,8 @@ import (
 	// One region per ORDER, because a region declares one: the cell an arrow
 	// key lands on is the neighbour in that region's reading, and the form each
 	// cell carries is what the key submits. Nothing here computes a position.
-	#Lane: L={
+	#Lane: {
+		let L = self
 		name:  string
 		fwd:   string
 		back:  string
@@ -292,7 +302,7 @@ import (
 	}
 
 	_across: #Lane & {name: "across", fwd: "nx", back: "pv", order: "pos.asc", ends: "week"}
-	_down:   #Lane & {name: "down", fwd:   "dn", back: "up", order: "colpos.asc", by: "dow"}
+	_down:   #Lane & {name: "down", fwd: "dn", back: "up", order: "colpos.asc", by: "dow"}
 
 	// The chosen date, read off the cell the pick named: the row holds the
 	// cell's key, and the date is that cell's own column. A SLOT rather than a
@@ -366,7 +376,8 @@ import (
 // catalog is paired with the role it names. The trigger prints the date it opens onto, through the
 // same two reads the calendar's own readout makes — the row holds a cell's
 // key, and the date is that cell's column.
-#DatePicker: D={
+#DatePicker: {
+	let D = self
 	calendar: #Calendar
 	trigger:  string
 	label:    string

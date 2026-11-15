@@ -3,7 +3,7 @@
 // literal or a leaf, and a month away from a month is neither — so the arrow
 // stays in the chart and the number it writes comes from here.
 //
-// state   {items: [row]} — the calendar row alone. The compartment endows
+// context {items: [row]} — the calendar row alone. The compartment endows
 //         nothing, so there is no clock in scope and no second row to read.
 // event   the click that fired; unread.
 // params  {by, min, max, emit} — the step, the ends of the seeded window, and
@@ -37,8 +37,8 @@ const monthKey = (n) => {
   return String((n - m) / 12) + "-" + String(m + 1).padStart(2, "0");
 };
 
-(state, event, params) => {
-  const row = state.items[0];
+({ context }, params) => {
+  const row = context.items[0];
   const n = ordinal(row.month) + params.by;
   const at = Math.min(Math.max(n, ordinal(params.min)), ordinal(params.max));
   if (params.emit === "month") return monthKey(at);

@@ -5,7 +5,7 @@
 // and the arrow BELOW it is the one that says so out loud: a code half typed
 // is not invalid, and only a character that can never be part of one is.
 //
-// state   unread.
+// context unread.
 // event   the input that fired; `value` is the control's own.
 // params  {value} — an exemplar this arrow admits, for the walk; unread here.
-(state, event, params) => String(event.value ?? "").split("").every((c) => c >= "0" && c <= "9");
+({ event }, params) => String(event.value ?? "").split("").every((c) => c >= "0" && c <= "9");

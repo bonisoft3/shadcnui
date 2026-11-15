@@ -27,7 +27,8 @@ import (
 	terminal "bonisoft.org/plugins/omnishell:terminal"
 )
 
-#Slider: S={
+#Slider: {
+	let S = self
 	collection: string
 	row:        *"the" | string
 	// Distinguishes instances sharing a screen; every id this component emits
@@ -55,7 +56,7 @@ import (
 		initial: S.state
 		states: {
 			(S.state): on: {
-				(("input@" + S._input)): {
+				("input@" + S._input): {
 					assign: {(S.value): {type: "event", params: {field: "valueAsNumber"}}}
 				}
 			}
@@ -84,7 +85,8 @@ import (
 		"""
 }
 
-#Progress: P={
+#Progress: {
+	let P = self
 	collection: string
 	row:        *"the" | string
 	key:        =~"^[a-z0-9_]+$"

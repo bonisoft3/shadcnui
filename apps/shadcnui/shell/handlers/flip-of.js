@@ -12,7 +12,7 @@
 // partially checked select-all checks everything — which is the same sentence
 // as "mixed is not false".
 //
-// state   {items: [row]} — the control's own row.
+// context {items: [row]} — the control's own row.
 // event   the click; unread.
 // params  {col} — the column to read.
-(state, event, params) => (String(state.items[0][params.col]) === "true" ? "false" : "true");
+({ context }, params) => (String(context.items[0][params.col]) === "true" ? "false" : "true");

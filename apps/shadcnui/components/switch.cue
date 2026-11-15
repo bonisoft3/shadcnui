@@ -15,7 +15,8 @@ import (
 	terminal "bonisoft.org/plugins/omnishell:terminal"
 )
 
-#Switch: S={
+#Switch: {
+	let S = self
 	collection: string
 	row:        *"the" | string
 	field:      *"checked" | string
@@ -26,7 +27,7 @@ import (
 		initial: "false"
 		states: {
 			"false": on: click: "true"
-			"true": on: click: "false"
+			"true": on: click:  "false"
 		}
 	}
 

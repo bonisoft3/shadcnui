@@ -26,7 +26,8 @@ package components
 // The label, and the only place a control's name is written. `for` is #Field's
 // to set: a label pointing at an id an author typed a second time is a label
 // pointing at nothing.
-#Label: L={
+#Label: {
+	let L = self
 	for:  string
 	text: string
 
@@ -38,7 +39,8 @@ package components
 // A single-line control. `column` is the row column it shows, bound as the
 // `value` ATTRIBUTE: the binder writes the control's default value, which a
 // dirty control ignores and a reset returns to.
-#Input: I={
+#Input: {
+	let I = self
 	id:          string
 	describedBy: string
 	name:        string
@@ -55,12 +57,12 @@ package components
 	// The same field as the program's surface declares it: one statement
 	// behind the control, the form object and the pane that prints it.
 	declared: {
-		name:            I.name
-		control:         "text"
-		required:        I.required
-		maxLength:       I.maxLength
-		placeholder:     I.placeholder
-		invalidMessage:  I.invalidMessage
+		name:           I.name
+		control:        "text"
+		required:       I.required
+		maxLength:      I.maxLength
+		placeholder:    I.placeholder
+		invalidMessage: I.invalidMessage
 	}
 
 	markup: """
@@ -76,7 +78,8 @@ package components
 // A multi-line control. Its content IS its default value, so `data-text` is
 // the binding that makes a reset land on the row; the element ships empty, so
 // the placeholder text of an unbound column is never painted.
-#Textarea: T={
+#Textarea: {
+	let T = self
 	id:          string
 	describedBy: string
 	name:        string
@@ -106,10 +109,11 @@ package components
 // three ids are written. The label's `for`, the control's own id and the
 // `aria-describedby` that reaches the hint are all unified from `id`, so the
 // association cannot drift into a reference that resolves to nothing.
-#Field: F={
-	id:      string
-	hintId:  "\(F.id)-hint"
-	label:   #Label & {for: F.id}
+#Field: {
+	let F = self
+	id:     string
+	hintId: "\(F.id)-hint"
+	label:  #Label & {for: F.id}
 	// Open: what a field holds is one of the control definitions above, and
 	// what #Field requires of it is only the three names it writes into.
 	control: {id: F.id, describedBy: F.hintId, markup: string, declared: _, ...}
@@ -129,7 +133,8 @@ package components
 // that does nothing, which decision-09's catalog rule refuses. `type` is not a
 // parameter either: the shell resets the form itself on an undisturbed success
 // (screen.js:765), so every button here submits.
-#Button: B={
+#Button: {
+	let B = self
 	variant: "primary" | "danger"
 	label:   string
 

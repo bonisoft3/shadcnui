@@ -6,7 +6,7 @@
 // the arrow that extends the buffer without moving the caret — a reader
 // mid-word whose letters name nothing yet.
 //
-// state   unread: what makes a key typing is the key.
+// context unread: what makes a key typing is the key.
 // event   the keydown.
 // params  none.
-(state, event, params) => typeof event.key === "string" && event.key.length === 1;
+({ event }, params) => typeof event.key === "string" && event.key.length === 1;

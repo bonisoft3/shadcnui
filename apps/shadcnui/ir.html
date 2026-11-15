@@ -7277,7 +7277,7 @@ and a shortcut outside the surface has no source to come from.</p></section>
 
 <section id="decision-40" data-kind="decision"><p>A binding may target a
 STYLESHEET, and this is the first one in THIS catalog that does — though not
-the first anywhere: <code>apps/xpense</code> and <code>apps/truco</code> bind
+the first anywhere: <code>apps/truco</code> binds
 columns into a <code>style</code> already, which is the reason the paragraph
 below is a rule this screen keeps rather than one the platform enforces. The
 group carries
@@ -7332,8 +7332,7 @@ none of it deferred, so the roving-tabstop deferral
 grouped patterns carry does not apply to it at all. What it spends is the
 binding: a form resets on success, so after a pick the control shows its prompt
 again and the row is where the choice lives. The picker is a bound state; this
-is a committed act, which is how the precedent in
-<code>apps/xpense</code> uses it, and neither reading supersedes the other.
+is a committed act, and neither reading supersedes the other.
 Bound selection AND live options cannot be had together today, and the reason
 is mechanical rather than a matter of taste: binding the control back means a
 machine (the event leaf writes the value the control was showing straight into

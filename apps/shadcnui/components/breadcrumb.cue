@@ -116,30 +116,32 @@ ariaParts: [
 ]
 
 _ariaSays: {
-	in: [...{k: string, v: string}]
+	in:     [...{k: string, v: string}]
 	_cells: [for a in in {"<code>\(a.k)=\"\([if a.v == "*" {"…"}, a.v][0])\"</code>"}]
-	out: [if len(_cells) == 0 {"—"}, strings.Join(_cells, " ")][0]
+	out:    [if len(_cells) == 0 {"—"}, strings.Join(_cells, " ")][0]
 }
 
 // The table above as the screen's rows, printed the way a stateful screen
 // prints its chart: the component's whole content, as data.
 ariaRows: strings.Join([for r in ariaParts {
 	"        <tr data-sel='\(json.Marshal(r.sel))' data-attrs='\(json.Marshal(r.says))'>" +
-	"<td>\(r.part)</td><td>\((_ariaSays & {in: r.says}).out)</td><td>\(r.why)</td></tr>"
+		"<td>\(r.part)</td><td>\((_ariaSays & {in: r.says}).out)</td><td>\(r.why)</td></tr>"
 }], "\n")
 
-#Breadcrumb: B={
+#Breadcrumb: {
+	let B = self
+
 	// The ancestors, in order, each a link to a route that exists; the page the
 	// reader is on is text and is the shape's last member by construction, so a
 	// trail cannot be authored with two current pages or none.
-	trail: [...{text: string, route: string}]
+	trail:   [...{text: string, route: string}]
 	current: string
 
 	_items: strings.Join([for c in B.trail {
 		"""
-		      <li class="breadcrumb-item"><a class="breadcrumb-link" data-route="\(c.route)">\(c.text)</a></li>
-		      <li class="breadcrumb-sep" aria-hidden="true">/</li>
-		"""
+			      <li class="breadcrumb-item"><a class="breadcrumb-link" data-route="\(c.route)">\(c.text)</a></li>
+			      <li class="breadcrumb-sep" aria-hidden="true">/</li>
+			"""
 	}], "\n")
 
 	markup: """
@@ -154,10 +156,11 @@ ariaRows: strings.Join([for r in ariaParts {
 		"""
 }
 
-#Avatar: A={
-	name:      string
-	initials:  string
-	src?:      string
+#Avatar: {
+	let A = self
+	name:     string
+	initials: string
+	src?:     string
 	// Whether the avatar stands alone — and must then carry the name — or sits
 	// beside the name as text, where a second announcement of it is noise.
 	decorative: *false | bool
@@ -183,7 +186,9 @@ ariaRows: strings.Join([for r in ariaParts {
 		"""
 }
 
-#Separator: S={
+#Separator: {
+	let S = self
+
 	// A separator is decorative when the boundary is already stated by the
 	// markup around it, and semantic when the line is the only thing stating it.
 	decorative:  *true | bool
@@ -210,7 +215,9 @@ ariaRows: strings.Join([for r in ariaParts {
 	}
 }
 
-#Skeleton: K={
+#Skeleton: {
+	let K = self
+
 	// A closed shape vocabulary, so the measurements stay in the stylesheet and
 	// no instance carries a length of its own.
 	shape: "circle" | "line" | "line-short" | "block"

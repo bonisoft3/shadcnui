@@ -49,7 +49,9 @@ import (
 	sortable: *false | bool
 }
 
-#DataTable: D={
+#DataTable: {
+	let D = self
+
 	// The rows the grid renders: one row of the collection is one row of it.
 	collection: string
 	// Where the query and the cursor live. Two collections for the reason
@@ -85,10 +87,10 @@ import (
 	rows: [...{id: =~"^[A-Za-z][A-Za-z0-9_-]*$", ...}]
 	// Which row the grid opens on. A member of `rows`, or the grid opens with
 	// nothing chosen and the first arrow enters at the top.
-	opensOn: string
-	pickForm:   string
-	stepForm:   string
-	sortForm:   string
+	opensOn:  string
+	pickForm: string
+	stepForm: string
+	sortForm: string
 	// The verb in the pick button's accessible name. Its text is the invoice
 	// number, so without this a row header reads as a command with none.
 	pickLabel: string
@@ -104,19 +106,19 @@ import (
 	_entry:    "\(D.key)-entry"
 	_grid:     "\(D.key)-grid"
 	_head:     D.columns[0]
-	_rest: [for i, c in D.columns if i > 0 {c}]
+	_rest:     [for i, c in D.columns if i > 0 {c}]
 
 	// The row header names the row, and what names a row in the store is its
 	// pk — so the first column is `id`.
-	_pkFirst: true & (D._head.col == "id")
+	_pkFirst:       true & (D._head.col == "id")
 	_opensOnIsARow: true & list.Contains([for r in D.rows {r.id}], D.opensOn)
 
 	_sortable: [for c in D.columns if c.sortable {c}]
-	_dirs: [{k: "asc", aria: "ascending", label: "ascending"}, {k: "desc", aria: "descending", label: "descending"}]
+	_dirs:     [{k: "asc", aria: "ascending", label: "ascending"}, {k: "desc", aria: "descending", label: "descending"}]
 	// key → clause. The keys are what a row holds and the clauses what the
 	// store reads, so nothing outside this map can name an order.
-	_orderMap: {for c in D._sortable for d in D._dirs {"\(c.col)_\(d.k)": "\(c.col).\(d.k)"}}
-	_order: (omni.#attrJSON & {in: {by: "{sort}", of: D._orderMap}}).out
+	_orderMap:          {for c in D._sortable for d in D._dirs {"\(c.col)_\(d.k)": "\(c.col).\(d.k)"}}
+	_order:             (omni.#attrJSON & {in: {by: "{sort}", of: D._orderMap}}).out
 	_opensSortedIsAKey: true & list.Contains([for k, _ in D._orderMap {k}], D.opensSorted)
 
 	// aria-sort is per COLUMN and the order is one fact, so the header needs the
@@ -153,8 +155,8 @@ import (
 
 	// The seed and readout share the same declared initial values as the entity defaults.
 	cursorSeed: {
-		id:         D.row
-		(D.field):  D.machine.initial
+		id:        D.row
+		(D.field): D.machine.initial
 		for k, v in D.defaults {(k): v}
 	}
 	emptyRow: (omni.#attrJSON & {in: D.cursorSeed}).out
@@ -162,42 +164,48 @@ import (
 	// No index or count: the attributes they would land on are the ones the
 	// closing pane refuses, so asking for the clauses would compute an answer
 	// with nowhere to go.
-	_project: (omni.#attrJSON & {in: {
-		chosen: eq: ["id", "{cursor}"]
-		nxt:    "next"
-		prv:    "prev"
-		fst:    "first"
-		lst:    "last"
-	}}).out
+	_project: (omni.#attrJSON & {
+		in: {
+			chosen: eq: ["id", "{cursor}"]
+			nxt: "next"
+			prv: "prev"
+			fst: "first"
+			lst: "last"
+		}
+	}).out
 
 	// Ctrl, because APG says so for a grid: Home and End move within a ROW and
 	// the chord moves to the grid's ends. This grid's caret is a row and its
 	// cells are static text (decision-35), so there is no row to move within and
 	// the bare keys would name a movement the widget does not have.
-	_keys: (omni.#attrJSON & {in: {
-		ArrowDown:  "\(D.key)-next-{cursor}"
-		ArrowUp:    "\(D.key)-prev-{cursor}"
-		"Ctrl+Home": "\(D.key)-first-{cursor}"
-		"Ctrl+End":  "\(D.key)-last-{cursor}"
-	}}).out
+	_keys: (omni.#attrJSON & {
+		in: {
+			ArrowDown:   "\(D.key)-next-{cursor}"
+			ArrowUp:     "\(D.key)-prev-{cursor}"
+			"Ctrl+Home": "\(D.key)-first-{cursor}"
+			"Ctrl+End":  "\(D.key)-last-{cursor}"
+		}
+	}).out
 
 	// A sortable header is a th carrying aria-sort and two submit buttons, each
 	// its own form stating the whole order in literals. No control here toggles:
 	// pressing "ascending" twice states the same row twice.
-	_sortForms: {for c in D._sortable {(c.col): strings.Join([for d in D._dirs {
-		"""
-			                  <form id="\(D.key)-sort-\(c.col)-\(d.k)" data-form="\(D.sortForm)"
-			                        data-entity="\(D.cursors)" data-action="upsert">
-			                    <input type="hidden" name="id" data-value="\(D.row)">
-			                    <input type="hidden" name="sort" data-value="\(c.col)_\(d.k)">
-			\(strings.Join([for col, v in D._sortState["\(c.col)_\(d.k)"] {
-				"                    <input type=\"hidden\" name=\"\(col)\" data-value=\"\(v)\">"
-			}], "\n"))
-			                    <button type="submit" class="dt-sort" tabindex="-1"
-			                            aria-label="Sort by \(c.head), \(d.label)">\((#sortGlyph & {dir: d.k}).out)</button>
-			                  </form>
+	_sortForms: {for c in D._sortable {
+		(c.col): strings.Join([for d in D._dirs {
 			"""
-	}], "\n")}}
+				                  <form id="\(D.key)-sort-\(c.col)-\(d.k)" data-form="\(D.sortForm)"
+				                        data-entity="\(D.cursors)" data-action="upsert">
+				                    <input type="hidden" name="id" data-value="\(D.row)">
+				                    <input type="hidden" name="sort" data-value="\(c.col)_\(d.k)">
+				\(strings.Join([for col, v in D._sortState["\(c.col)_\(d.k)"] {
+					"                    <input type=\"hidden\" name=\"\(col)\" data-value=\"\(v)\">"
+				}], "\n"))
+				                    <button type="submit" class="dt-sort" tabindex="-1"
+				                            aria-label="Sort by \(c.head), \(d.label)">\((#sortGlyph & {dir: d.k}).out)</button>
+				                  </form>
+				"""
+		}], "\n")
+	}}
 
 	_headCells: strings.Join([for c in D.columns {
 		[
@@ -219,7 +227,7 @@ import (
 		"                <td\((#numeric & {in: c, prefix: "dt"}).out) data-text=\"{\(c.col)}\"></td>"
 	}], "\n")
 
-	_step: {form: D.stepForm, entity: D.cursors, pk: D.row}
+	_step:  {form: D.stepForm, entity: D.cursors, pk: D.row}
 	_next:  (#dataStep & _step & {id: "\(D.key)-next-{id}", to: "{nxt}"}).out
 	_prev:  (#dataStep & _step & {id: "\(D.key)-prev-{id}", to: "{prv}"}).out
 	_first: (#dataStep & _step & {id: "\(D.key)-first-{id}", to: "{fst}"}).out
@@ -311,7 +319,8 @@ import (
 // A step form states one column of one row, so it is two hidden inputs and no
 // control: `data-key` submits it, the way a form with no button submits on
 // change. `to` is where the key is going — a neighbour the projection named.
-#dataStep: S={
+#dataStep: {
+	let S = self
 	id:     string
 	to:     string
 	form:   string
@@ -329,7 +338,8 @@ import (
 // The glyph a sort command shows. Out of the accessibility tree: the button is
 // named by its aria-label, and a caret joining that name would read as part of
 // the command.
-#sortGlyph: G={
+#sortGlyph: {
+	let G = self
 	dir: "asc" | "desc"
 	_d:  [if G.dir == "asc" {"M5 12l5-5 5 5"}, "M5 8l5 5 5-5"][0]
 	out: """

@@ -24,7 +24,8 @@ import (
 	terminal "bonisoft.org/plugins/omnishell:terminal"
 )
 
-#Item: I={
+#Item: {
+	let I = self
 	title:       string
 	description: string
 	// Where the row goes, if anywhere. A row that goes nowhere is a <div> and
@@ -38,8 +39,8 @@ import (
 	// makes a list of them a toolbar nobody asked for.
 	action: *"" | string
 
-	_tag:  [if I.route != "" {"a"}, "div"][0]
-	_attr: [if I.route != "" {" data-route=\"\(I.route)\""}, ""][0]
+	_tag:    [if I.route != "" {"a"}, "div"][0]
+	_attr:   [if I.route != "" {" data-route=\"\(I.route)\""}, ""][0]
 	_action: [if I.action != "" {"\n    <span class=\"item-actions\"><span class=\"item-action\">\(I.action)</span></span>"}, ""][0]
 
 	markup: """
@@ -55,7 +56,8 @@ import (
 		"""
 }
 
-#InputGroup: G={
+#InputGroup: {
+	let G = self
 	key:   =~"^[a-z0-9_-]+$"
 	label: string
 	// The column the control writes, so this one is not a specimen.
@@ -85,10 +87,11 @@ import (
 
 // N independent actions under one border. NOT a choice: a group whose buttons
 // are one answer is ./one-of.cue's, and wears aria-checked and a tab stop.
-#ButtonGroup: B={
-	label: string
+#ButtonGroup: {
+	let B = self
+	label:   string
 	buttons: [...{name: =~"^[a-z0-9_]+$", label: string}] & [_, _, ...]
-	key: *"bg" | string
+	key:     *"bg" | string
 
 	_id: {for b in B.buttons {(b.name): "\(B.key)-\(b.name)"}}
 	_buttons: strings.Join([for b in B.buttons {
@@ -106,7 +109,8 @@ import (
 
 // The one chart this screen runs, and it is what keeps its controls from being
 // dead: the group's buttons act, and the field records what they did.
-#CompositionDemo: D={
+#CompositionDemo: {
+	let D = self
 	collection: string
 	row:        *"the" | string
 	field:      *"phase" | string
@@ -123,7 +127,7 @@ import (
 		field:   D.field
 		initial: D.state
 		states: (D.state): on: {
-			("input@\(D.search.key)"): assign: (D.search.value): {type: "event", params: field: "value"}
+			("input@\(D.search.key)"): assign: (D.search.value):       {type: "event", params: field: "value"}
 			("click@\(D.search.key)-clear"): assign: (D.search.value): ""
 			for b in D.group.buttons {
 				("click@\(D.group._id[b.name])"): assign: last: b.label

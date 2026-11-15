@@ -12,7 +12,9 @@ import (
 	terminal "bonisoft.org/plugins/omnishell:terminal"
 )
 
-#Command: C={
+#Command: {
+	let C = self
+
 	// The collection holding the one row the reader types into.
 	queries: string
 	// The collection the commands are rows of.
@@ -42,8 +44,8 @@ import (
 	// Both regions must read the same set — the head of the visible list and the
 	// head the first arrow lands on are the same row — so the filter and the
 	// order are stated here and interpolated twice.
-	_filter: "label=ilike.*{query}*"
-	_order:  "pos.asc"
+	_filter:   "label=ilike.*{query}*"
+	_order:    "pos.asc"
 	_endOrder: "pos.desc"
 
 	_input: "\(C.key)-query"
@@ -90,28 +92,33 @@ import (
 	}
 	// `act` is the caret and `sel` is the choice: two answers over the same
 	// rows, because the option a reader is standing on is not the one they ran.
-	_project: (omni.#attrJSON & {in: {
-		act: eq: ["id", "{active}"]
-		sel: eq: ["id", "{chosen}"]
-		nxt: "next"
-		prv: "prev"
-		// Unpartitioned: the palette is one flat list, so both ends of the lane
-		// are both ends of the set — and of whatever the filter has left of it.
-		fst: "first"
-		lst: "last"
-	}}).out
+	_project: (omni.#attrJSON & {
+		in: {
+			act: eq: ["id", "{active}"]
+			sel: eq: ["id", "{chosen}"]
+			nxt: "next"
+			prv: "prev"
+			// Unpartitioned: the palette is one flat list, so both ends of the lane
+			// are both ends of the set — and of whatever the filter has left of it.
+			fst: "first"
+			lst: "last"
+		}
+	}).out
 
-	_keys: (omni.#attrJSON & {in: {
-		ArrowDown: "\(C.key)-nx-{active}"
-		ArrowUp:   "\(C.key)-pv-{active}"
-		Home:      "\(C.key)-fs-{active}"
-		End:       "\(C.key)-ls-{active}"
-	}}).out
+	_keys: (omni.#attrJSON & {
+		in: {
+			ArrowDown: "\(C.key)-nx-{active}"
+			ArrowUp:   "\(C.key)-pv-{active}"
+			Home:      "\(C.key)-fs-{active}"
+			End:       "\(C.key)-ls-{active}"
+		}
+	}).out
 
 	// A move form states one column of the query row: two hidden inputs and no
 	// control, submitted by `data-key` the way a buttonless form submits on
 	// change.
-	#move: M={
+	#move: {
+		let M = self
 		id: string
 		to: string
 		out: """

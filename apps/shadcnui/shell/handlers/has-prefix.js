@@ -6,7 +6,7 @@
 // that changes nothing still wakes the store and re-renders everything reading
 // the row.
 //
-// state   {items: [row]} — the surface's row.
+// context {items: [row]} — the surface's row.
 // event   the timer's own; unread.
 // params  none.
-(state, event, params) => String(state.items[0].prefix ?? "") !== "";
+({ context }, params) => String(context.items[0].prefix ?? "") !== "";

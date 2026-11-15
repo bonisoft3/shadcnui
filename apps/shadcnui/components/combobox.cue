@@ -41,7 +41,8 @@ _optionClass: "A-Za-z0-9 .+#\\-"
 // punctuation rather than as a name.
 _optionHead: "A-Za-z0-9"
 
-#Combobox: C={
+#Combobox: {
+	let C = self
 	collection: string
 	row:        *"the" | string
 	field:      *"choice" | string
@@ -53,7 +54,7 @@ _optionHead: "A-Za-z0-9"
 	form: string
 	// Values as the reader types them: an <option> carries a value and its
 	// text and nothing else, so the written value IS the label.
-	options: [...string & =~"^[\(_optionClass)]+$"] & [_, _, ...]
+	options:     [...string & =~"^[\(_optionClass)]+$"] & [_, _, ...]
 	initial:     *C.options[0] | or([for o in C.options {o}])
 	placeholder: string
 	hint:        string

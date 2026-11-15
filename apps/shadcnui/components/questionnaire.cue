@@ -23,7 +23,8 @@ import (
 	terminal "bonisoft.org/plugins/omnishell:terminal"
 )
 
-#Questionnaire: Q={
+#Questionnaire: {
+	let Q = self
 	collection: string
 	row:        *"the" | string
 	field:      *"step" | string
@@ -33,12 +34,12 @@ import (
 	// last one may be freeform — which is a value rather than a choice, so it
 	// arrives off the event (decision-24).
 	steps: [...{
-		name:     =~"^[a-z0-9]+$"
-		ask:      string
-		col:      =~"^[a-z0-9_]+$"
-		freeform: *false | bool
+		name:      =~"^[a-z0-9]+$"
+		ask:       string
+		col:       =~"^[a-z0-9_]+$"
+		freeform:  *false | bool
 		skippable: *false | bool
-		options: [...{name: =~"^[a-z0-9_]+$", label: string}]
+		options:   [...{name: =~"^[a-z0-9_]+$", label: string}]
 		if freeform {options: []}
 		if !freeform {options: [_, _, ...]}
 	}] & [_, _, ...]
@@ -53,8 +54,8 @@ import (
 	// the answer's own words — the same per-option spelling ./one-of.cue uses,
 	// and the reason a chosen option can be styled by its own attribute rather
 	// than by a rule comparing two of them.
-	_sel: {for s in Q.steps {(s.name): {for o in s.options {(o.name): "sel_\(s.name)_\(o.name)"}}}}
-	_selOff: {for s in Q.steps {(s.name): {for o in s.options {(Q._sel[s.name][o.name]): "false"}}}}
+	_sel:     {for s in Q.steps {(s.name): {for o in s.options {(o.name): "sel_\(s.name)_\(o.name)"}}}}
+	_selOff:  {for s in Q.steps {(s.name): {for o in s.options {(Q._sel[s.name][o.name]): "false"}}}}
 	_note:    "\(Q.key)-note"
 	_nextId:  "\(Q.key)-next"
 	_backId:  "\(Q.key)-back"
@@ -71,7 +72,7 @@ import (
 	// Not one leaf preferring the event: every click carries a `value` — a
 	// button's own, which is the empty string — so the arrows would all read as
 	// unanswered.
-	#block: K={col: string, out: {type: "unless-answered", params: {col: K.col}}}
+	#block:      {let K = self, col: string, out: {type: "unless-answered", params: {col: K.col}}}
 	_typedBlock: {type: "unless-typed", params: {}}
 
 	// The world a first visit and a restart both land in: no answer, every

@@ -28,7 +28,9 @@ import (
 	"strings"
 )
 
-#Select: S={
+#Select: {
+	let S = self
+
 	// The collection the pick writes: one row, one column.
 	collection: string
 	// The collection the live option group reads. Its pk is the option's value
@@ -45,14 +47,14 @@ import (
 	// have held, printed beside the set it could not. Held to the same grammar
 	// a reader's is: an authored option a reader could not have minted would be
 	// one the pick column refuses.
-	authored: [...string & =~"^\(S.pattern)$"] & [_, _, ...]
+	authored:      [...string & =~"^\(S.pattern)$"] & [_, _, ...]
 	authoredLabel: string
 	liveLabel:     string
 	hint:          string
 	// The #Form ids this markup realizes, so the program and the markup name
 	// the same two forms.
-	pickForm: string
-	mintForm: string
+	pickForm:        string
+	mintForm:        string
 	mintLabel:       string
 	mintPlaceholder: string
 	mintButton:      string

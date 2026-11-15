@@ -16,7 +16,8 @@ import (
 	omni "bonisoft.org/plugins/omnishell/components"
 )
 
-#ToggleGroup: G={
+#ToggleGroup: {
+	let G = self
 	collection: string
 	row:        *"the" | string
 	field:      *"value" | string
@@ -25,7 +26,7 @@ import (
 	// tg-<key>-item-<name>. Neither part admits a hyphen, so the separator is
 	// unreachable from either side and two groups on one screen occupy
 	// disjoint namespaces — neither group's button can fire the other's arrow.
-	key: =~"^[a-z0-9_]+$" & (*G.collection | string)
+	key:   =~"^[a-z0-9_]+$" & (*G.collection | string)
 	items: [...{name: =~"^[a-z0-9_]+$", label: string}] & [_, _, ...]
 
 	_id: {for i in G.items {(i.name): "tg-\(G.key)-item-\(i.name)"}}
@@ -35,8 +36,8 @@ import (
 		roving: true
 		field:  G.field
 		prefix: "chk_"
-		names: [for i in G.items {i.name}]
-		id: G._id
+		names:  [for i in G.items {i.name}]
+		id:     G._id
 	}
 	machine: _choice.machine
 

@@ -6,7 +6,7 @@
 // always a keystroke behind. What the event carries is the value as it stands,
 // which is the same leaf ./unless-answered.js has over the other source.
 //
-// state   unread: what was typed is a fact about the event.
+// context unread: what was typed is a fact about the event.
 // event   the input that fired; `value` is the control's own.
 // params  none.
-(state, event, params) => (String(event.value ?? "") === "" ? "disabled" : "");
+({ event }, params) => (String(event.value ?? "") === "" ? "disabled" : "");

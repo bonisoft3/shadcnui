@@ -59,12 +59,13 @@ _tokenCell: {
 // print their machine JSON: the component's whole content, as data.
 tokenRows: strings.Join([for r in primitiveTokens {
 	"        <tr data-css='\(json.Marshal(r.css))'><td>\(r.part)</td><td>\(r.variant)</td>" +
-	"<td>\((_tokenCell & {in: r.background}).out)</td>" +
-	"<td>\((_tokenCell & {in: r.foreground}).out)</td>" +
-	"<td>\((_tokenCell & {in: r.edge}).out)</td></tr>"
+		"<td>\((_tokenCell & {in: r.background}).out)</td>" +
+		"<td>\((_tokenCell & {in: r.foreground}).out)</td>" +
+		"<td>\((_tokenCell & {in: r.edge}).out)</td></tr>"
 }], "\n")
 
-#Badge: B={
+#Badge: {
+	let B = self
 	variant: *"default" | "secondary" | "destructive" | "outline"
 	label:   string
 	icon?:   string
@@ -84,7 +85,9 @@ tokenRows: strings.Join([for r in primitiveTokens {
 		"""
 }
 
-#Card: C={
+#Card: {
+	let C = self
+
 	// Distinguishes instances on one screen; ids must be unique per screen.
 	key:         string
 	title:       string
@@ -94,8 +97,8 @@ tokenRows: strings.Join([for r in primitiveTokens {
 	footer?:     string
 
 	_titleId: "card-title-\(C.key)"
-	_action: [if C.action != _|_ {"\n      <div class=\"card-action\">" + C.action + "</div>"}, ""][0]
-	_footer: [if C.footer != _|_ {"\n    <footer class=\"card-footer\">" + C.footer + "</footer>"}, ""][0]
+	_action:  [if C.action != _|_ {"\n      <div class=\"card-action\">" + C.action + "</div>"}, ""][0]
+	_footer:  [if C.footer != _|_ {"\n    <footer class=\"card-footer\">" + C.footer + "</footer>"}, ""][0]
 
 	// The title is a real heading, diverging from shadcn's div: a card grid
 	// built from divs leaves the document with no outline, and the divergence
@@ -115,7 +118,8 @@ tokenRows: strings.Join([for r in primitiveTokens {
 		"""
 }
 
-#Alert: A={
+#Alert: {
+	let A = self
 	variant: *"default" | "destructive"
 	// role="alert" is assertive and interrupts; role="status" is its polite
 	// twin; a callout already on the screen when it paints announced nothing

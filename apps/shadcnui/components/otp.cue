@@ -21,7 +21,8 @@ import (
 	terminal "bonisoft.org/plugins/omnishell:terminal"
 )
 
-#Otp: O={
+#Otp: {
+	let O = self
 	collection: string
 	row:        *"the" | string
 	field:      *"state" | string
@@ -47,7 +48,7 @@ import (
 	// The empty world, stated once and emitted three times — as the machine's
 	// defaults, as the arrow that clears it, and as the fallback the readout
 	// beside this control binds before anything is typed (decision-07).
-	_empty: {code: "", invalid: "false", blocked: "disabled"}
+	_empty:   {code: "", invalid: "false", blocked: "disabled"}
 	emptyRow: (omni.#attrJSON & {in: {id: O.row, (O.field): "typing", for k, v in O._empty {(k): v}}}).out
 
 	// What a keystroke can mean, as three arrows asked in turn. Every one of
@@ -92,17 +93,17 @@ import (
 		field:   O.field
 		initial: "typing"
 		states: {
-			typing: on: (("input@" + O._input)): O._typed
+			typing: on: ("input@" + O._input): O._typed
 			complete: on: {
-				(("input@" + O._input)): O._typed
+				("input@" + O._input): O._typed
 				// Reachable from here alone, and not because a guard says so:
 				// the button is disabled everywhere else, and what disables it
 				// is a column this chart writes.
-				(("click@" + O._verify)): target: "verified"
+				("click@" + O._verify): target: "verified"
 			}
 			verified: on: {
-				(("input@" + O._input)): O._typed
-				(("click@" + O._reset)): {target: "typing", assign: O._empty}
+				("input@" + O._input): O._typed
+				("click@" + O._reset): {target: "typing", assign: O._empty}
 			}
 		}
 	}

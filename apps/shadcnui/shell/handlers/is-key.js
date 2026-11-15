@@ -5,9 +5,9 @@
 // selects it, so one module with the key as a param serves every arrow of
 // every group on the page.
 //
-// state   {items: [row]} — the group's own row; unread, because which key was
+// context {items: [row]} — the group's own row; unread, because which key was
 //         pressed is a fact about the event alone.
 // event   the keydown that fired; `key` is the DOM's own name for it.
 // params  {key} — the name this arrow answers to.
 // result  whether this arrow is the one.
-(state, event, params) => event.key === params.key;
+({ event }, params) => event.key === params.key;

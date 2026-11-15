@@ -185,7 +185,7 @@
     buttons, three columns each writes, and the leaf that computes them.</p>
     <p class="pane-note">All three values are the same leaf under different
     params. That is what params are for — the module is called
-    <code>(state, event, params)</code> and the thresholds live in the chart as
+    <code>({context, event}, params)</code> and the thresholds live in the chart as
     data, so one file serves both arrows and both instances on this page. What
     it is handed is <code>{items: [row]}</code>: the calendar's own row and
     nothing else, in a compartment endowed with nothing. No clock, no DOM, no

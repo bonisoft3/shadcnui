@@ -26,7 +26,8 @@ import (
 	terminal "bonisoft.org/plugins/omnishell:terminal"
 )
 
-_#Binary: B={
+_#Binary: {
+	let B = self
 	field:   string
 	initial: string
 	// The id every arrow is narrowed to (decision-13). `from` resolves to the
@@ -44,28 +45,31 @@ _#Binary: B={
 		field:   B.field
 		initial: B.initial
 		states: {for s, t in B.next {
-			(s): on: {("click@\(B.trigger)"): [
-				if len(B.implies[t]) > 0 {{target: t, assign: B.implies[t]}},
-				t,
-			][0]}
+			(s): on: {
+				("click@\(B.trigger)"): [
+					if len(B.implies[t]) > 0 {{target: t, assign: B.implies[t]}},
+					t,
+				][0]
+			}
 		}}
 	}
 }
 
-#Checkbox: C={
+#Checkbox: {
+	let C = self
 	collection: string
 	row:        *"the" | string
 	field:      *"checked" | string
 	// Distinguishes instances sharing a screen; the default keeps the row's
 	// name, which is already what separates two checkboxes on one collection.
-	key:   =~"^[a-z0-9_]+$" & (*C.row | string)
-	label: string
+	key:      =~"^[a-z0-9_]+$" & (*C.row | string)
+	label:    string
 	_trigger: "cb-\(C.key)-trigger"
 	_gen: _#Binary & {
 		field:   C.field
 		initial: "false"
 		trigger: C._trigger
-		next: {"false": "true", "true": "false"}
+		next:    {"false": "true", "true": "false"}
 		implies: {}
 	}
 	machine: _gen.machine
@@ -95,7 +99,8 @@ _#Binary: B={
 // So `mixed` is reachable, and this is the only control in the catalog whose
 // ARIA value nothing decides: every click writes what the items add up to, and
 // a reader gets back to mixed by unchecking one of three.
-#SelectAll: S={
+#SelectAll: {
+	let S = self
 	collection: string
 	row:        *"all" | string
 	// One state, because there is nothing to be in: what this control is
@@ -108,11 +113,11 @@ _#Binary: B={
 	prefix: *"inc_" | string
 	key:    =~"^[a-z0-9_]+$" & (*S.row | string)
 	label:  string
-	items: [...{name: =~"^[a-z0-9_]+$", label: string, initial: "true" | "false"}] & [_, _, ...]
+	items:  [...{name: =~"^[a-z0-9_]+$", label: string, initial: "true" | "false"}] & [_, _, ...]
 
 	_trigger: "sa-\(S.key)-trigger"
-	_id: {for i in S.items {(i.name): "sa-\(S.key)-item-\(i.name)"}}
-	_col: {for i in S.items {(i.name): "\(S.prefix)\(i.name)"}}
+	_id:      {for i in S.items {(i.name): "sa-\(S.key)-item-\(i.name)"}}
+	_col:     {for i in S.items {(i.name): "\(S.prefix)\(i.name)"}}
 
 	// The world the row opens in, stated once: the items the program seeds and
 	// the value they add up to, computed here so the two cannot disagree
@@ -146,7 +151,7 @@ _#Binary: B={
 			for i in S.items {
 				("click@\(S._id[i.name])"): assign: {
 					(S._col[i.name]): {type: "flip-of", params: {col: S._col[i.name]}}
-					(S.value): {type: "roll-up", params: {prefix: S.prefix, col: S._col[i.name]}}
+					(S.value):        {type: "roll-up", params: {prefix: S.prefix, col: S._col[i.name]}}
 				}
 			}
 		}
@@ -179,7 +184,8 @@ _#Binary: B={
 // The same chart under aria-pressed. shadcn's Toggle is a button that stays
 // down, and `pressed` is what a button's down-ness is called — so the field
 // renames and nothing else does.
-#Toggle: T={
+#Toggle: {
+	let T = self
 	collection: string
 	row:        *"the" | string
 	field:      *"pressed" | string
@@ -191,7 +197,7 @@ _#Binary: B={
 		field:   T.field
 		initial: "false"
 		trigger: T._trigger
-		next: {"false": "true", "true": "false"}
+		next:    {"false": "true", "true": "false"}
 		implies: {}
 	}
 	machine: _gen.machine
@@ -213,7 +219,8 @@ _#Binary: B={
 // with one item: the same trigger, the same panel keyed on the trigger's own
 // aria-expanded, the same two-state machine narrowed to one id. What it drops
 // is the item set and the group wrapper, and that is the whole difference.
-#Collapsible: L={
+#Collapsible: {
+	let L = self
 	collection: string
 	row:        *"the" | string
 	field:      *"open" | string
@@ -227,7 +234,7 @@ _#Binary: B={
 		field:   L.field
 		initial: "false"
 		trigger: L._trigger
-		next: {"false": "true", "true": "false"}
+		next:    {"false": "true", "true": "false"}
 		implies: {}
 	}
 	machine: _gen.machine

@@ -17,7 +17,8 @@ import (
 	omni "bonisoft.org/plugins/omnishell/components"
 )
 
-#RadioGroup: R={
+#RadioGroup: {
+	let R = self
 	collection: string
 	row:        *"the" | string
 	field:      *"value" | string
@@ -28,11 +29,11 @@ import (
 	// Distinguishes instances sharing one collection: every id is
 	// rg-<key>-item-<name> or rg-<key>-desc-<name>. Neither part admits a
 	// hyphen, so the separators are unreachable from either side.
-	key: =~"^[a-z0-9_]+$" & (*R.collection | string)
+	key:   =~"^[a-z0-9_]+$" & (*R.collection | string)
 	items: [...{name: =~"^[a-z0-9_]+$", label: string, description: string}] & [_, _, ...]
 
-	_id: {for i in R.items {(i.name): "rg-\(R.key)-item-\(i.name)"}}
-	_desc: {for i in R.items {(i.name): "rg-\(R.key)-desc-\(i.name)"}}
+	_id:     {for i in R.items {(i.name): "rg-\(R.key)-item-\(i.name)"}}
+	_desc:   {for i in R.items {(i.name): "rg-\(R.key)-desc-\(i.name)"}}
 	_legend: "rg-\(R.key)-legend"
 
 	_choice: #OneOf & {
@@ -40,8 +41,8 @@ import (
 		roving: true
 		field:  R.field
 		prefix: "chk_"
-		names: [for i in R.items {i.name}]
-		id: R._id
+		names:  [for i in R.items {i.name}]
+		id:     R._id
 	}
 	machine: _choice.machine
 

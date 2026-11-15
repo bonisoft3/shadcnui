@@ -27,7 +27,8 @@ import (
 	terminal "bonisoft.org/plugins/omnishell:terminal"
 )
 
-#Toast: T={
+#Toast: {
+	let T = self
 	collection: string
 	row:        *"the" | string
 	field:      *"state" | string
@@ -50,11 +51,11 @@ import (
 		field:   T.field
 		initial: "closed"
 		states: {
-			closed: on: {(("click@" + T._open)): "open"}
+			closed: on: {("click@" + T._open): "open"}
 			open: {
 				on: {
-					(("click@" + T._open)):  "open"
-					(("click@" + T._close)): "closed"
+					("click@" + T._open):  "open"
+					("click@" + T._close): "closed"
 				}
 				after: {("\(T.delay)"): "closed"}
 			}

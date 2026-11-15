@@ -44,7 +44,8 @@ import (
 // token vocabulary where aria-checked and aria-selected are booleans) and the
 // step arrows and their two disabled columns added. A fifth single-select
 // component belongs on one of these two and not on a third copy.
-#Ordinal: O={
+#Ordinal: {
+	let O = self
 	field: string
 	// The two halves of an id namespace the positions and the steps share.
 	// Neither admits a hyphen and no position may be named prev or next, so
@@ -58,7 +59,7 @@ import (
 	// is the wrapping component's business.
 	items: [...{name: =~"^[a-z0-9_]+$" & !="prev" & !="next", ...}] & [_, _, ...]
 
-	id: {for i in O.items {(i.name): "\(O.prefix)-\(O.key)-\(i.name)"}}
+	id:   {for i in O.items {(i.name): "\(O.prefix)-\(O.key)-\(i.name)"}}
 	prev: "\(O.prefix)-\(O.key)-prev"
 	next: "\(O.prefix)-\(O.key)-next"
 
@@ -97,26 +98,28 @@ import (
 // The screen's arrow census, measured off a machine rather than restated
 // beside one: a printed count that the generator does not produce is a count
 // that can be wrong.
-#Inventory: I={
+#Inventory: {
+	let I = self
 	machine:   terminal.#Machine
 	positions: len(I.machine.states)
 	arrows:    list.Sum([for _, s in I.machine.states {len(s.on)}])
 	absolute:  I.positions * (I.positions - 1)
 	step:      I.arrows - I.absolute
 	defaults: [string]: string
-	columns:   len(I.defaults)
+	columns: len(I.defaults)
 }
 
 // The page list is a <nav> of buttons, not of links: a page here is a column
 // of a row and has no URL, so shadcn's <a> would be a link to nowhere wearing
 // a link's role.
-#Pagination: P={
+#Pagination: {
+	let P = self
 	collection: string
 	row:        *"the" | string
 	field:      *"page" | string
 	key:        =~"^[a-z0-9_]+$"
 	label:      string
-	pages: [...{name: =~"^[a-z0-9_]+$", label: string}] & [_, _, ...]
+	pages:      [...{name: =~"^[a-z0-9_]+$", label: string}] & [_, _, ...]
 
 	_o: #Ordinal & {field: P.field, prefix: "pag", key: P.key, current: "page", items: P.pages}
 
@@ -156,13 +159,14 @@ import (
 // without it the change is silent. `polite` rather than `off` because this
 // carousel never auto-rotates, and aria-atomic="false" so the region reports
 // the slide that arrived rather than re-reading the whole viewport.
-#Carousel: C={
+#Carousel: {
+	let C = self
 	collection: string
 	row:        *"the" | string
 	field:      *"slide" | string
 	key:        =~"^[a-z0-9_]+$"
 	label:      string
-	slides: [...{name: =~"^[a-z0-9_]+$", label: string, body: string}] & [_, _, ...]
+	slides:     [...{name: =~"^[a-z0-9_]+$", label: string, body: string}] & [_, _, ...]
 
 	_o: #Ordinal & {field: C.field, prefix: "car", key: C.key, current: "true", items: C.slides}
 	_n: len(C.slides)

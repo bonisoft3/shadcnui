@@ -24,7 +24,8 @@ import (
 	terminal "bonisoft.org/plugins/omnishell:terminal"
 )
 
-#OneOf: O={
+#OneOf: {
+	let O = self
 	field:  string
 	prefix: string
 	// Option names in document order; the first is the machine's initial state.
@@ -39,14 +40,16 @@ import (
 	tab: {for n in O.names {(n): "tab_\(n)"}}
 
 	// The whole derived set as it stands with `n` chosen.
-	_cols: {for n in O.names {(n): {
-		for u in O.names {
-			(O.col[u]): [if u == n {"true"}, "false"][0]
-			if O.roving {
-				(O.tab[u]): [if u == n {"0"}, "-1"][0]
+	_cols: {for n in O.names {
+		(n): {
+			for u in O.names {
+				(O.col[u]): [if u == n {"true"}, "false"][0]
+				if O.roving {
+					(O.tab[u]): [if u == n {"0"}, "-1"][0]
+				}
 			}
 		}
-	}}}
+	}}
 
 	// Whether this chart moves a caret: the arrows that walk the options, and
 	// the focusin that records where a reader put themselves. Off by default,
@@ -74,7 +77,7 @@ import (
 	// keys its reader has no reason to press; APG names the axis per pattern.
 	axis: *"both" | "vertical" | "horizontal"
 
-	_vertical: [{key: "ArrowDown", to: 1}, {key: "ArrowUp", to: -1}]
+	_vertical:   [{key: "ArrowDown", to: 1}, {key: "ArrowUp", to: -1}]
 	_horizontal: [{key: "ArrowRight", to: 1}, {key: "ArrowLeft", to: -1}]
 	_axis: [
 		if O.axis == "vertical" {O._vertical},
@@ -93,7 +96,7 @@ import (
 	_moves: {for i, s in O.names {
 		(s): list.Concat([
 			[for m in O._axis {
-				{key: m.key, to: O.names[(i+m.to+O._len) mod O._len]}
+				{key: m.key, to: O.names[mod(i+m.to+O._len, O._len)]}
 			}],
 			[
 				{key: "Home", to: O.names[0]},
@@ -114,16 +117,16 @@ import (
 	// candidates are asked in, since the first guard to pass wins.
 	_lower: {for n in O.names {(n): strings.ToLower(O.label[n])}}
 	_reachedBy: {for i, n in O.names {
-		(n): [for k in list.Range(1, len(_lower[n])+1, 1)
-			if !list.Contains([for j, m in O.names if j < i {
-				strings.HasPrefix(_lower[m], strings.SliceRunes(_lower[n], 0, k))
-			}], true) {strings.SliceRunes(_lower[n], 0, k)}]
+		(n): [for k in list.Range(1, len(_lower[n]) + 1, 1)
+		if !list.Contains([for j, m in O.names if j < i {
+			strings.HasPrefix(_lower[m], strings.SliceRunes(_lower[n], 0, k))
+		}], true) {strings.SliceRunes(_lower[n], 0, k)}]
 	}}
 	// A label wholly carried by an earlier one is an item no typing can reach,
 	// and there is no prefix to state for it. Refused here rather than emitted
 	// as an arrow the walk would report dead every run.
 	_reachable: {for n in O.names {(n): true & (len(O._reachedBy[n]) > 0)}}
-	_reach: {for n in O.names {(n): O._reachedBy[n][0]}}
+	_reach:     {for n in O.names {(n): O._reachedBy[n][0]}}
 
 	// WHERE that arrow can be drawn, which a multi-character reach decides. Each
 	// keystroke before the last one moves the caret — it is answered by the
@@ -135,7 +138,7 @@ import (
 	//
 	// The reader loses nothing: from any state, "t" then "o" walks the Tabs
 	// arrow and then the Toast one, which is two arrows the chart does draw.
-	_stem: {for n in O.names {(n): strings.SliceRunes(O._reach[n], 0, len(O._reach[n])-1)}}
+	_stem: {for n in O.names {(n): strings.SliceRunes(O._reach[n], 0, len(O._reach[n]) - 1)}}
 	_livesIn: {for n in O.names {
 		(n): [
 			if len(O._stem[n]) == 0 {""},
@@ -174,7 +177,7 @@ import (
 				// The reader mid-word whose letters name nothing yet. A digit
 				// reaches it because every label here starts with a letter, so
 				// it is the keystroke that is typing and matches no item.
-				guard: {type: "is-printable", params: {key: "0"}}
+				guard:  {type: "is-printable", params: {key: "0"}}
 				target: s
 				assign: prefix: {type: "type-into", params: {}}
 			}],
@@ -229,7 +232,7 @@ import (
 						("keydown@\(O.id[s])"): list.Concat([
 							[for m in O._moves[s] if m.to != s {
 								{
-									guard: {type: "is-key", params: {key: m.key}}
+									guard:  {type: "is-key", params: {key: m.key}}
 									target: m.to
 									assign: O._cols[m.to]
 								}

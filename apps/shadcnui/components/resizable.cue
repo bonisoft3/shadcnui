@@ -16,7 +16,8 @@ import (
 	terminal "bonisoft.org/plugins/omnishell:terminal"
 )
 
-#Resizable: R={
+#Resizable: {
+	let R = self
 	collection: string
 	row:        *"the" | string
 	key:        *"rs" | string
@@ -27,14 +28,14 @@ import (
 	label: string
 	// The ends. Neither pane may reach zero: a pane with no width is one whose
 	// content has nowhere to go, and the handle would be the only thing left.
-	min:   *15 | int & >=1
-	max:   *85 | int & <=99
+	min: *15 | int & >=1
+	max: *85 | int & <=99
 	// The entity's constraint, generated from the same numbers the control
 	// carries — one declaration, so the gate and the schema cannot drift
 	// (decision-24's rule, one screen on).
 	splitCel: "this >= \(R.min) && this <= \(R.max)"
-	start: int & >=R.min & <=R.max
-	panes: [#ResizablePane, #ResizablePane]
+	start:    int & >=R.min & <=R.max
+	panes:    [#ResizablePane, #ResizablePane]
 
 	_input: "\(R.key)-handle"
 
@@ -45,7 +46,7 @@ import (
 	machine: terminal.#Machine & {
 		field:   R.field
 		initial: R.state
-		states: (R.state): on: (("input@" + R._input)): {
+		states: (R.state): on: ("input@" + R._input): {
 			assign: {(R.value): {type: "event", params: {field: "valueAsNumber"}}}
 		}
 	}
