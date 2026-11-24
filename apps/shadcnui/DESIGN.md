@@ -22,7 +22,7 @@ rounded:
   md: "10px"
   full: "999px"
 shell:
-  nav: "topbar"
+  nav: "none"
 ---
 
 # omnishell/ui — the reference, not a brand

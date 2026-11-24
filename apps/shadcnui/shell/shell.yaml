@@ -47,6 +47,7 @@ local:
   quiz_demo: tab
   calendar_demo: tab
   calendar_cell: tab
+nav: none
 seed:
   command_demo:
     - id: the
