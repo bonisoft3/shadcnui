@@ -1406,7 +1406,7 @@
     {"path":"shell/screens/toast.css","sha256":"5995e9f80fc910f0b2d2c3d8c486326d9786c19117a46a4b146a26ceb1067665","derived":false},
     {"path":"shell/screens/toggle-group.css","sha256":"91dcc7f456e81e04c1ab3c77fa03362d451cf57faf4ede53d986b8c8a27c0b53","derived":false},
     {"path":"shell/shared/chrome.css","sha256":"13ed8ac6b30699b9f74dbc7c2c74baf47e4e31ac55afccab94239582b982eb1b","derived":false},
-    {"path":"shell/design.css","sha256":"d284bb71a7f5c11d49759ecc45d49ee0d3b4f7843d6ddc5badde3b127773bd64","derived":true}
+    {"path":"shell/design.css","sha256":"2921842d582b7bf4693b687b832815f52b8f8650b6f2da58a1a8733e28d58539","derived":true}
   ],
   "cel_ir": [
     {"cel":"this == 'sizing'"},
